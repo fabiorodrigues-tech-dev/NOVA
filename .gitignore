@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+cp.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.mp3
+
+# IDE / Editor
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# H2 Database Locks (preserva o .mv.db para dados, ignora trace e lock)
+*.trace.db
+*.lock.db

@@ -1,0 +1,5 @@
+# Dependências da Camada de Voz (Voice AI Layer) - NOVA
+# Motor de Síntese Neural Humana & Reprodução de Áudio
+requests>=2.31.0
+edge-tts>=7.0.0
+SpeechRecognition>=3.10.0

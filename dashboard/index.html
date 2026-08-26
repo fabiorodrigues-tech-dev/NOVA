@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVA Control Center — Executive Voice & Engineering Dashboard</title>
+  <meta name="description" content="Dashboard Executivo do Ecossistema NOVA — Assistente de Voz Neural Integrado, Finanças H2, Candidaturas 360° e Trilha DIO.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="dabang-layout">
+
+    <!-- ==============================================
+         1. SIDEBAR LATERAL ESQUERDA (FIGMA DABANG)
+         ============================================== -->
+    <aside class="dabang-sidebar" id="sidebar">
+      
+      <!-- Logo Header -->
+      <div class="sidebar-logo-area">
+        <div class="logo-icon-cube">
+          <i data-lucide="orbit" class="icon-brand"></i>
+        </div>
+        <div class="logo-text-group">
+          <h2>NOVA</h2>
+          <span class="logo-badge">Control Center</span>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="sidebar-menu">
+        <div class="menu-category">MENU PRINCIPAL</div>
+        
+        <a href="#overview" class="menu-link active" id="menu-overview" onclick="selecionarMenu(this)">
+          <span class="menu-icon"><i data-lucide="layout-dashboard"></i></span>
+          <span class="menu-text">Dashboard</span>
+          <span class="menu-pill active-pill">Live</span>
+        </a>
+
+        <a href="#voice-assistant-section" class="menu-link" id="menu-voice-assistant" onclick="selecionarMenu(this)">
+          <span class="menu-icon"><i data-lucide="mic"></i></span>
+          <span class="menu-text">Assistente de Voz</span>
+          <span class="menu-pill voice-pill-active" id="sidebarVoicePill">Ativo</span>
+        </a>
+
+        <a href="#financas" class="menu-link" id="menu-financas" onclick="selecionarMenu(this)">
+          <span class="menu-icon"><i data-lucide="wallet"></i></span>
+          <span class="menu-text">Finanças (H2)</span>
+        </a>
+
+        <a href="#candidaturas" class="menu-link" id="menu-candidaturas" onclick="selecionarMenu(this)">
+          <span class="menu-icon"><i data-lucide="briefcase"></i></span>
+          <span class="menu-text">Candidaturas 360°</span>
+          <span class="menu-counter">4</span>
+        </a>
+
+        <a href="#estudos" class="menu-link" id="menu-estudos" onclick="selecionarMenu(this)">
+          <span class="menu-icon"><i data-lucide="graduation-cap"></i></span>
+          <span class="menu-text">Estudos (DIO)</span>
+        </a>
+
+        <div class="menu-category">SISTEMA & ENGENHARIA</div>
+
+        <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" class="menu-link">
+          <span class="menu-icon"><i data-lucide="zap"></i></span>
+          <span class="menu-text">Spring Boot API</span>
+          <span class="menu-tag">8081</span>
+        </a>
+
+        <a href="http://localhost:5050" target="_blank" class="menu-link">
+          <span class="menu-icon"><i data-lucide="sliders"></i></span>
+          <span class="menu-text">Voice Studio</span>
+          <span class="menu-tag">5050</span>
+        </a>
+      </nav>
+
+      <!-- Card Inferior "NOVA Intelligence" -->
+      <div class="sidebar-bottom-pro-card">
+        <div class="pro-card-header">
+          <i data-lucide="sparkles" class="pro-icon"></i>
+          <strong>NOVA Intelligence</strong>
+        </div>
+        <p class="pro-card-desc">Spring Boot 3.3 • H2 ACID • 15 Testes JUnit 5</p>
+        <div class="pro-card-status">
+          <span class="status-dot-green"></span>
+          <span>Microsserviço 8081 Online</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ==============================================
+         2. MAIN WRAPPER (HEADER + CONTENT)
+         ============================================== -->
+    <div class="dabang-main">
+
+      <!-- Header Superior -->
+      <header class="dabang-top-header">
+        <div class="header-search-wrap">
+          <i data-lucide="search" class="search-lens"></i>
+          <input type="text" id="globalSearchInput" placeholder="Digite um comando ou /atalhos..." class="header-search-input">
+          <span class="search-kbd">⌘K</span>
+        </div>
+
+        <div class="header-user-actions">
+          <!-- Voice Quick Indicator -->
+          <div class="header-voice-chip" onclick="focarNoAssistenteVoz()" title="Clique para abrir Assistente de Voz">
+            <span class="voice-wave-anim">
+              <span></span><span></span><span></span>
+            </span>
+            <span id="headerVoiceName">Voz: Francisca</span>
+          </div>
+
+          <!-- Refresh Button -->
+          <button class="btn-icon-refresh" onclick="recarregarDashboard()" title="Sincronizar Dados">
+            <i data-lucide="rotate-cw"></i>
+          </button>
+
+          <!-- User Profile -->
+          <div class="user-profile-badge">
+            <div class="user-avatar-circle">FR</div>
+            <div class="user-profile-details">
+              <span class="user-name-txt">Fábio Rodrigues</span>
+              <span class="user-role-txt">Java Back-end • Recife, PE</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Content -->
+      <main class="dabang-content-body">
+
+        <!-- ==============================================
+             CARD NOVO: NOVA VOICE ASSISTANT (HERO INTERATIVO)
+             ============================================== -->
+        <section class="voice-assistant-hero-card" id="voice-assistant-section">
+          
+          <div class="va-header-row">
+            <div class="va-brand-title">
+              <div class="va-icon-squircle">
+                <i data-lucide="sparkles"></i>
+              </div>
+              <div>
+                <h2>NOVA Voice Assistant</h2>
+                <span class="va-subtitle">Interação Bidirecional por Voz • Reconhecimento em Tempo Real & Síntese Neural Base64</span>
+              </div>
+            </div>
+
+            <!-- Voice Selector Pill -->
+            <div class="va-voice-select-box">
+              <label for="selectVoiceModel"><i data-lucide="volume-2"></i> Voz Ativa:</label>
+              <select id="selectVoiceModel" class="va-select-dropdown" onchange="trocarVozAtiva(this.value)">
+                <option value="pt-BR-FranciscaNeural" selected>Francisca (Feminina - Fluida / Acolhedora)</option>
+                <option value="pt-BR-AntonioNeural">Antônio (Masculino - Executivo / Natural)</option>
+                <option value="pt-BR-FabioNeural">Fábio (Masculino - Tom Direto / Ágil)</option>
+                <option value="pt-BR-ThalitaNeural">Thalita (Feminina - Expressiva / Dinâmica)</option>
+                <option value="en-US-GuyNeural">Guy (Inglês - International Tech Lead)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="va-main-grid">
+            
+            <!-- Coluna 1: Voice Orb & Microfone -->
+            <div class="va-orb-interactive-panel">
+              <div class="orb-visual-wrapper">
+                <div class="orb-outer-glow" id="orbOuterGlow"></div>
+                <div class="orb-apple-sphere" id="orbAppleSphere" onclick="toggleGravacaoVoz()" title="Clique no Orb ou no Microfone para falar">
+                  <div class="orb-wave-rings"></div>
+                  <i data-lucide="mic" id="orbCenterIcon"></i>
+                </div>
+              </div>
+
+              <div class="va-state-feedback">
+                <span class="state-dot" id="vaStateDot"></span>
+                <strong id="vaStateText">Pronto para ouvir</strong>
+              </div>
+
+              <button class="btn-mic-toggle" id="btnMicToggle" onclick="toggleGravacaoVoz()">
+                <i data-lucide="mic" id="btnMicIcon"></i>
+                <span id="btnMicLabel">Pressione para Falar</span>
+              </button>
+            </div>
+
+            <!-- Coluna 2: Live Conversation & Input -->
+            <div class="va-chat-transcription-panel">
+              
+              <div class="va-dialog-box" id="vaDialogBox">
+                <div class="va-message assistant">
+                  <div class="msg-avatar">🌌</div>
+                  <div class="msg-content">
+                    <span class="msg-author">NOVA</span>
+                    <p id="assistantWelcomeMsg">Olá, Fábio! Estou pronta para te ajudar. Você pode falar pelo microfone ou digitar qualquer comando sobre finanças, vagas ou estudos.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Input Bar & Presets -->
+              <div class="va-input-group">
+                <input type="text" id="vaTextInput" class="va-text-input" placeholder="Digite uma pergunta para o NOVA falar..." value="NOVA, qual é o meu saldo atual?">
+                <button class="btn-va-send" onclick="enviarTextoDigitado()">
+                  <i data-lucide="send"></i>
+                  <span>Enviar</span>
+                </button>
+              </div>
+
+              <div class="va-quick-prompts">
+                <span class="qp-label">Atalhos de Voz:</span>
+                <button class="btn-qp" onclick="executarPromptRapido('NOVA, qual é o meu saldo atual?')">💰 Saldo</button>
+                <button class="btn-qp" onclick="executarPromptRapido('quanto gastei em alimentação?')">🍔 Gastos Alimentação</button>
+                <button class="btn-qp" onclick="executarPromptRapido('status dos testes do backend')">🧪 Testes JUnit 5</button>
+                <button class="btn-qp" onclick="executarPromptRapido('quais são as minhas candidaturas ativas?')">💼 Vagas Ativas</button>
+                <button class="btn-qp" onclick="executarPromptRapido('qual o meu progresso na trilha DIO?')">🎓 Trilha DIO</button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ==============================================
+             3. TOP 4 SUMMARY CARDS (SQUIRCLE LUCIDE ICONS)
+             ============================================== -->
+        <section class="summary-cards-row" id="overview">
+          
+          <!-- Card 1: Saldo Líquido (Coral Pastel) -->
+          <div class="summary-card card-coral">
+            <div class="card-top-row">
+              <div class="summary-icon-box coral">
+                <i data-lucide="wallet"></i>
+              </div>
+              <span class="card-tag positive">+34.5%</span>
+            </div>
+            <div class="card-value-group">
+              <span class="card-label">Saldo Líquido (Agosto)</span>
+              <h2 class="card-big-num" id="kpiSaldo">+ R$ 589,23</h2>
+            </div>
+            <div class="card-footer-info">
+              <span>H2 Persistente • 100% Conciliado</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Total Recebido (Amarelo Pastel) -->
+          <div class="summary-card card-yellow">
+            <div class="card-top-row">
+              <div class="summary-icon-box yellow">
+                <i data-lucide="arrow-down-left"></i>
+              </div>
+              <span class="card-tag neutral">7 Entradas</span>
+            </div>
+            <div class="card-value-group">
+              <span class="card-label">Total Recebido</span>
+              <h2 class="card-big-num" id="kpiReceitas">R$ 2.299,00</h2>
+            </div>
+            <div class="card-footer-info">
+              <span>Ramon, Gildeth e Sheila</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Total Gasto (Verde Pastel) -->
+          <div class="summary-card card-green">
+            <div class="card-top-row">
+              <div class="summary-icon-box green">
+                <i data-lucide="arrow-up-right"></i>
+              </div>
+              <span class="card-tag negative">36 Saídas</span>
+            </div>
+            <div class="card-value-group">
+              <span class="card-label">Total Gasto</span>
+              <h2 class="card-big-num" id="kpiDespesas">R$ 1.709,77</h2>
+            </div>
+            <div class="card-footer-info">
+              <span>Alimentação, Transporte e Compras</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Trilha Santander DIO (Roxo Pastel) -->
+          <div class="summary-card card-purple">
+            <div class="card-top-row">
+              <div class="summary-icon-box purple">
+                <i data-lucide="award"></i>
+              </div>
+              <span class="card-tag purple-tag">Módulo 1</span>
+            </div>
+            <div class="card-value-group">
+              <span class="card-label">Trilha Santander 2026</span>
+              <h2 class="card-big-num" id="kpiDio">7.7% Concluído</h2>
+            </div>
+            <div class="card-mini-progress">
+              <div class="mini-progress-fill" id="kpiDioBar" style="width: 7.7%;"></div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==============================================
+             4. PAINEL CENTRAL DE GRÁFICOS (4 CHARTS)
+             ============================================== -->
+        <section class="charts-master-grid" id="financas">
+          
+          <!-- Chart 1: Evolução Financeira (Linha / Spline Suave) -->
+          <div class="chart-panel card-wide">
+            <div class="panel-head-row">
+              <div>
+                <h3 class="panel-heading">Evolução Financeira de Receitas vs Despesas</h3>
+                <span class="panel-subtext">Histórico comparativo semanal consolidado no banco H2 (Agosto/2026)</span>
+              </div>
+              <a href="/download/resumo/financeiro/relatorio_agosto_2026.pdf" target="_blank" class="btn-panel-ghost">
+                <i data-lucide="file-text"></i>
+                <span>Relatório PDF</span>
+              </a>
+            </div>
+            <div class="canvas-holder-large">
+              <canvas id="chartEvolucaoFinanceira"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Gastos por Categoria (Barras Coloridas) -->
+          <div class="chart-panel">
+            <div class="panel-head-row">
+              <div>
+                <h3 class="panel-heading">Gastos por Categoria</h3>
+                <span class="panel-subtext">Detalhamento por tipo de despesa</span>
+              </div>
+            </div>
+            <div class="canvas-holder-medium">
+              <canvas id="chartGastosCategoria"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 3: Target vs Reality (Metas Orçamentárias) -->
+          <div class="chart-panel">
+            <div class="panel-head-row">
+              <div>
+                <h3 class="panel-heading">Meta Orçamentária vs Realizado</h3>
+                <span class="panel-subtext">Planejado (Teto R$ 2.000) vs Gasto Real (R$ 1.709)</span>
+              </div>
+            </div>
+            <div class="canvas-holder-medium">
+              <canvas id="chartTargetVsReality"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 4: Match de Carreira das Vagas -->
+          <div class="chart-panel card-wide">
+            <div class="panel-head-row">
+              <div>
+                <h3 class="panel-heading">Aderência Técnica nas Vagas Mapeadas</h3>
+                <span class="panel-subtext">Scores de match calculados pelo motor analítico do NOVA</span>
+              </div>
+              <a href="/download/carreira/base/pdf/curriculo_fabio_rodrigues_pt.pdf" target="_blank" class="btn-panel-ghost">
+                <i data-lucide="file-check"></i>
+                <span>CV Base (PT)</span>
+              </a>
+            </div>
+            <div class="canvas-holder-horizontal">
+              <canvas id="chartMatchCarreira"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==============================================
+             5. TABELA DE CANDIDATURAS 360° (ESTILO TOP PRODUCTS)
+             ============================================== -->
+        <section class="table-panel-card" id="candidaturas">
+          <div class="panel-head-row">
+            <div>
+              <h3 class="panel-heading">Esteira de Candidaturas 360° & Vagas Analisadas</h3>
+              <span class="panel-subtext">Documentos oficiais em PDF Harvard Tech e Cover Letter em DOCX</span>
+            </div>
+            <div class="table-actions">
+              <span class="table-counter-pill">4 Empresas Ativas</span>
+            </div>
+          </div>
+
+          <div class="table-responsive-wrapper">
+            <table class="dabang-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>EMPRESA</th>
+                  <th>CARGO & LOCALIDADE</th>
+                  <th>MATCH TÉCNICO</th>
+                  <th>FAIXA SALARIAL</th>
+                  <th>DOCUMENTOS OFICIAIS</th>
+                  <th>ABORDAGEM</th>
+                </tr>
+              </thead>
+              <tbody id="candidatesTableBody">
+                <!-- Linhas injetadas via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==============================================
+             6. ESTUDOS & ENGENHARIA SUMMARY CARD
+             ============================================== -->
+        <section class="dio-summary-strip" id="estudos">
+          <div class="bottom-widget-card">
+            <div class="widget-head">
+              <div class="widget-title-group">
+                <span class="widget-icon"><i data-lucide="graduation-cap"></i></span>
+                <div>
+                  <h4>Trilha Santander 2026 & Engenharia Back-end</h4>
+                  <span class="widget-sub">DIO AI Java Back-end • Clean Architecture • Spring AI MCP</span>
+                </div>
+              </div>
+              <a href="/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf" target="_blank" class="btn-panel-ghost">
+                <i data-lucide="book-open"></i>
+                <span>Manual PDF (6 Pág.)</span>
+              </a>
+            </div>
+
+            <div class="dio-progress-content">
+              <div class="dio-bar-header">
+                <span>Progresso da Trilha Santander</span>
+                <strong>2 de 26 Módulos (7.7%)</strong>
+              </div>
+              <div class="dio-bar-track">
+                <div class="dio-bar-colored" style="width: 7.7%;"></div>
+              </div>
+
+              <div class="dio-metrics-grid">
+                <div class="dio-metric-item">
+                  <span class="d-label">Módulo Atual</span>
+                  <strong class="d-val">Dominando Java 21</strong>
+                </div>
+                <div class="dio-metric-item">
+                  <span class="d-label">Testes JUnit 5</span>
+                  <strong class="d-val text-green">15/15 Passando (100%)</strong>
+                </div>
+                <div class="dio-metric-item">
+                  <span class="d-label">Persistência</span>
+                  <strong class="d-val">H2 ACID em Arquivo</strong>
+                </div>
+                <div class="dio-metric-item">
+                  <span class="d-label">Protocolo MCP</span>
+                  <strong class="d-val">Spring AI Model Context</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Footer -->
+      <footer class="dabang-footer">
+        <span>NOVA Control Center • Sistema Multi-Agente • Desenvolvido para Fábio Rodrigues</span>
+        <span>Java 21 LTS • Spring Boot 3.3 • Spring AI MCP • Apple Voice Neural UI</span>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <!-- Modal Pitch LinkedIn -->
+  <div class="modal-overlay" id="pitchModal">
+    <div class="modal-window">
+      <div class="modal-top">
+        <div>
+          <h3 id="modalCompanyHeader">Pitch LinkedIn</h3>
+          <span class="modal-subheading" id="modalCompanySub">Mensagens customizadas prontas para copiar</span>
+        </div>
+        <button class="modal-close-btn" onclick="fecharModalPitch()">&times;</button>
+      </div>
+      <div class="modal-content-area">
+        <pre class="pitch-code-view" id="modalPitchBody"></pre>
+      </div>
+      <div class="modal-actions-area">
+        <button class="btn-copy-action" onclick="copiarPitchClipboard()">
+          <i data-lucide="copy"></i>
+          <span>Copiar Pitch para Área de Transferência</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-popup" id="toastBox">
+    <span id="toastText">Operação realizada com sucesso!</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

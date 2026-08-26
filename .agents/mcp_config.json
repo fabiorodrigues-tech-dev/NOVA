@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "agente-financeiro": {
+      "url": "http://localhost:8081/sse"
+    },
+    "Figma": {
+      "url": "https://mcp.figma.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: agente-financeiro-test
+
+  datasource:
+    url: jdbc:h2:mem:financadb_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  h2:
+    console:
+      enabled: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+  ai:
+    mcp:
+      server:
+        name: agente-financeiro-mcp-test
+        version: 1.0.0
+        type: SYNC
+        sse-message-endpoint: /mcp/message

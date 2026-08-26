@@ -1,0 +1,32 @@
+{
+  "voz_padrao": "pt-BR-FranciscaNeural",
+  "velocidade": "+0%",
+  "tom": "+0Hz",
+  "descricao": "Voz executiva masculina natural e articulada",
+  "vozes_disponiveis": {
+    "antonio": {
+      "id": "pt-BR-AntonioNeural",
+      "nome": "Antônio",
+      "genero": "Masculino",
+      "perfil": "Executivo, Natural, Articulado (Padrão)"
+    },
+    "francisca": {
+      "id": "pt-BR-FranciscaNeural",
+      "nome": "Francisca",
+      "genero": "Feminino",
+      "perfil": "Fluida, Humanizada, Clara"
+    },
+    "fabio": {
+      "id": "pt-BR-FabioNeural",
+      "nome": "Fábio",
+      "genero": "Masculino",
+      "perfil": "Tom Direto, Jovem, Ágil"
+    },
+    "thalita": {
+      "id": "pt-BR-ThalitaNeural",
+      "nome": "Thalita",
+      "genero": "Feminino",
+      "perfil": "Expressiva, Coloquial, Dinâmica"
+    }
+  }
+}
