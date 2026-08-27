@@ -43,9 +43,11 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 | Atalho | Alternativa | Descrição | Exemplo de Uso |
 | :--- | :--- | :--- | :--- |
 | **`/saldo`** | `!saldo` | Consulta imediata do saldo, receitas e despesas no banco H2 | `/saldo` |
+| **`/caixinhas`** | `!caixinhas`, `/patrimonio` | Consulta saldos de Caixinhas Nubank e Patrimônio Líquido Total | `/caixinhas` ou `/patrimonio` |
+| **`/importar`** | `!importar`, `/ofx` | Importa e deduplica arquivos `.ofx` em `financeiro/extratos_ofx/` | `/importar` |
 | **`/extrato`** | `!extrato` | Lista os últimos lançamentos financeiros conciliados | `/extrato` |
 | **`/gastos [categoria]`**| `!gastos` | Detalha as despesas de uma categoria (Alimentação, Transporte, etc.) | `/gastos alimentacao` |
-| **`/financeiro [mês]`** | `!financeiro` | Gera e abre o Relatório Financeiro Visual em PDF com gráficos | `/financeiro 08/2026` |
+| **`/financeiro [mês]`** | `!financeiro` | Gera e abre o Relatório Financeiro Visual em PDF (`financeiro/relatorios_pdf/`) | `/financeiro 08/2026` |
 
 ---
 

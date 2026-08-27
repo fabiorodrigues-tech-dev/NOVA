@@ -19,6 +19,7 @@ public record TransacaoResponse(
         LocalDate data
 ) {
     public static TransacaoResponse fromDomain(Transacao domain) {
+        if (domain == null) return null;
         return new TransacaoResponse(
                 domain.getId(),
                 domain.getDescricao(),
@@ -27,5 +28,9 @@ public record TransacaoResponse(
                 domain.getCategoria(),
                 domain.getData()
         );
+    }
+
+    public static TransacaoResponse deDominio(Transacao domain) {
+        return fromDomain(domain);
     }
 }

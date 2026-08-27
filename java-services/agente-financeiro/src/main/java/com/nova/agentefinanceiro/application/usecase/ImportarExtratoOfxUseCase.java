@@ -9,7 +9,10 @@ import com.nova.agentefinanceiro.domain.repository.TransacaoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -20,7 +23,8 @@ import java.util.regex.Pattern;
 
 /**
  * Caso de Uso para importação e processamento de extratos bancários (OFX / CSV),
- * com foco no padrão Nubank, categorização automática inteligente e deduplicação no banco H2.
+ * com foco no padrão Nubank, busca na pasta oficial financeiro/extratos_ofx/,
+ * categorização automática inteligente e deduplicação no banco H2.
  */
 @Service
 public class ImportarExtratoOfxUseCase {
@@ -37,6 +41,77 @@ public class ImportarExtratoOfxUseCase {
 
     public ImportarExtratoOfxUseCase(TransacaoRepository transacaoRepository) {
         this.transacaoRepository = transacaoRepository;
+    }
+
+    public ImportacaoExtratoResponse importarDiretorioPadrao() {
+        File dir = new File("financeiro/extratos_ofx");
+        if (!dir.exists()) {
+            dir = new File("../../financeiro/extratos_ofx");
+        }
+        if (!dir.exists()) {
+            dir = new File("../financeiro/extratos_ofx");
+        }
+        if (!dir.exists() || !dir.isDirectory()) {
+            return ImportacaoExtratoResponse.erro("Diretório 'financeiro/extratos_ofx' não encontrado.");
+        }
+
+        File[] files = dir.listFiles((d, name) -> name.toLowerCase().endsWith(".ofx") || name.toLowerCase().endsWith(".csv"));
+        if (files == null || files.length == 0) {
+            return ImportacaoExtratoResponse.sucesso(0, 0, 0, List.of());
+        }
+
+        int totalLidos = 0;
+        int totalImportados = 0;
+        int totalDuplicados = 0;
+        List<TransacaoResponse> todasImportadas = new ArrayList<>();
+
+        for (File file : files) {
+            try {
+                String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+                ImportacaoExtratoResponse res = executar(content);
+                totalLidos += res.totalLidos();
+                totalImportados += res.totalImportados();
+                totalDuplicados += res.totalDuplicados();
+                todasImportadas.addAll(res.transacoesImportadas());
+            } catch (Exception e) {
+                try {
+                    String content = Files.readString(file.toPath(), StandardCharsets.ISO_8859_1);
+                    ImportacaoExtratoResponse res = executar(content);
+                    totalLidos += res.totalLidos();
+                    totalImportados += res.totalImportados();
+                    totalDuplicados += res.totalDuplicados();
+                    todasImportadas.addAll(res.transacoesImportadas());
+                } catch (Exception ignored) {}
+            }
+        }
+        return ImportacaoExtratoResponse.sucesso(totalLidos, totalImportados, totalDuplicados, todasImportadas);
+    }
+
+    public ImportacaoExtratoResponse importarArquivo(String caminho) {
+        if (caminho == null || caminho.isBlank()) {
+            return importarDiretorioPadrao();
+        }
+        File file = new File(caminho);
+        if (!file.exists()) {
+            file = new File("financeiro/extratos_ofx/" + caminho);
+        }
+        if (!file.exists()) {
+            file = new File("../../financeiro/extratos_ofx/" + caminho);
+        }
+        if (!file.exists()) {
+            return ImportacaoExtratoResponse.erro("Arquivo não encontrado: " + caminho);
+        }
+        try {
+            String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+            return executar(content);
+        } catch (Exception e) {
+            try {
+                String content = Files.readString(file.toPath(), StandardCharsets.ISO_8859_1);
+                return executar(content);
+            } catch (Exception ex) {
+                return ImportacaoExtratoResponse.erro("Erro ao ler arquivo: " + ex.getMessage());
+            }
+        }
     }
 
     @Transactional

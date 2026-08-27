@@ -62,7 +62,7 @@ def gerar_relatorio_financeiro(mes=8, ano=2026, output_pdf=None):
     mes_ano_formatado = f"{mes_str}/{ano}"
 
     if output_pdf is None:
-        output_pdf = f"resumo/financeiro/relatorio_{mes_str.lower()}_{ano}.pdf"
+        output_pdf = f"financeiro/relatorios_pdf/relatorio_{mes_str.lower()}_{ano}.pdf"
 
     os.makedirs(os.path.dirname(os.path.abspath(output_pdf)), exist_ok=True)
 
@@ -247,7 +247,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Gerador de Relatório Financeiro Visual em PDF (NOVA)")
     parser.add_argument("--mes", type=int, default=8, help="Mês de referência (1-12)")
     parser.add_argument("--ano", type=int, default=2026, help="Ano de referência (ex: 2026)")
-    parser.add_argument("--output", default="resumo/financeiro/relatorio_agosto_2026.pdf", help="Caminho do PDF de saída")
+    parser.add_argument("--output", default="financeiro/relatorios_pdf/relatorio_agosto_2026.pdf", help="Caminho do PDF de saída")
 
     args = parser.parse_args()
     gerar_relatorio_financeiro(args.mes, args.ano, args.output)

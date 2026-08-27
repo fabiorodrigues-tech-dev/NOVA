@@ -72,6 +72,37 @@ def obter_projecao_financeira():
             "recomendacaoEstrategica": "Ritmo financeiro sob controle! Sugestão de aporte de R$ 167,98 nas caixinhas (Reserva de Emergência e Metas do Casal)."
         }
 
+def obter_caixinhas_patrimonio():
+    url = "http://localhost:8081/api/financeiro/caixinhas"
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'NOVA-Dashboard-Gateway'})
+        with urllib.request.urlopen(req, timeout=2) as response:
+            return json.loads(response.read().decode('utf-8'))
+    except Exception:
+        return {
+            "saldoContaCorrente": 589.23,
+            "totalInvestidoCaixinhas": 2500.00,
+            "patrimonioLiquidoTotal": 3089.23,
+            "caixinhas": [
+                {
+                    "id": 1,
+                    "nome": "Reserva de Emergência",
+                    "saldo": 1500.00,
+                    "tipo": "RESERVA_EMERGENCIA",
+                    "rendimentoMensalEstimado": 15.00,
+                    "dataAtualizacao": "2026-08-27"
+                },
+                {
+                    "id": 2,
+                    "nome": "Fundo do Casal",
+                    "saldo": 1000.00,
+                    "tipo": "FUNDO_CASAL",
+                    "rendimentoMensalEstimado": 10.00,
+                    "dataAtualizacao": "2026-08-27"
+                }
+            ]
+        }
+
 def obter_dados_candidaturas():
     empresas = [
         {
@@ -393,6 +424,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
             dados = {
                 "financas": obter_resumo_financeiro(),
                 "projecao": obter_projecao_financeira(),
+                "caixinhas": obter_caixinhas_patrimonio(),
                 "candidaturas": obter_dados_candidaturas(),
                 "voz": carregar_config_voz(),
                 "estudos": {
@@ -406,18 +438,21 @@ class DashboardHandler(BaseHTTPRequestHandler):
                     "manual_pdf": "/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
                 },
                 "engenharia": {
-                    "testes_total": 27,
-                    "testes_passando": 27,
+                    "testes_total": 40,
+                    "testes_passando": 40,
                     "taxa_sucesso": 100.0,
                     "spring_boot_porta": 8081,
                     "banco": "H2 Database (ACID - ./data/financiadb.mv.db)",
-                    "protocolos": ["REST (RFC 7807)", "Spring AI MCP (@Tool)", "edge-tts Voice AI", "OFX/CSV Importer"]
+                    "protocolos": ["REST (RFC 7807)", "Spring AI MCP (@Tool)", "edge-tts Voice AI", "OFX/CSV Importer", "Nubank Webhook", "Caixinhas Asset Management"]
                 }
             }
             self.send_json(dados)
 
         elif path == "/api/financeiro/projecao":
             self.send_json(obter_projecao_financeira())
+
+        elif path == "/api/financeiro/caixinhas":
+            self.send_json(obter_caixinhas_patrimonio())
 
         elif path == "/api/voice/config":
             self.send_json(carregar_config_voz())

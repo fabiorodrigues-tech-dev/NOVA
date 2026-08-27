@@ -30,9 +30,11 @@ O usuário pode enviar atalhos rápidos iniciando com `/` ou `!`. O MAIN Agent d
   - `/desafio [tema]`, `!desafio [tema]` ➔ Gerar desafio prático em Java 21 orientado a testes JUnit 5.
 - **Finanças:**
   - `/saldo`, `!saldo` ➔ Consultar e exibir o saldo consolidado no banco H2.
+  - `/caixinhas`, `!caixinhas`, `/patrimonio` ➔ Consultar saldos das Caixinhas Nubank (Reserva e Casal) e Patrimônio Líquido Total.
+  - `/importar`, `!importar` ➔ Importar todos os arquivos `.ofx` da pasta `financeiro/extratos_ofx/`.
   - `/extrato`, `!extrato` ➔ Listar lançamentos financeiros recentes.
   - `/gastos [categoria]`, `!gastos [categoria]` ➔ Exibir o total despendido na categoria informada.
-  - `/financeiro [mês]`, `!financeiro [mês]` ➔ Gerar relatório financeiro visual em PDF com gráficos.
+  - `/financeiro [mês]`, `!financeiro [mês]` ➔ Gerar relatório financeiro visual em PDF salvo em `financeiro/relatorios_pdf/`.
 - **Código & Engenharia:**
   - `/testes`, `!testes` ➔ Executar a suíte de testes JUnit 5 (`./run-tests.sh`).
   - `/review [arquivo]`, `!review [arquivo]` ➔ Executar revisão formal de código.

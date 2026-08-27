@@ -36,19 +36,22 @@ public class TransacaoController {
     private final CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase;
     private final ImportarExtratoOfxUseCase importarExtratoOfxUseCase;
     private final CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase;
+    private final com.nova.agentefinanceiro.application.usecase.ProcessarNotificacaoNubankUseCase processarNotificacaoNubankUseCase;
 
     public TransacaoController(
             CadastrarTransacaoUseCase cadastrarTransacaoUseCase,
             ListarTransacoesUseCase listarTransacoesUseCase,
             CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase,
             ImportarExtratoOfxUseCase importarExtratoOfxUseCase,
-            CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase
+            CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase,
+            com.nova.agentefinanceiro.application.usecase.ProcessarNotificacaoNubankUseCase processarNotificacaoNubankUseCase
     ) {
         this.cadastrarTransacaoUseCase = cadastrarTransacaoUseCase;
         this.listarTransacoesUseCase = listarTransacoesUseCase;
         this.calcularResumoFinanceiroUseCase = calcularResumoFinanceiroUseCase;
         this.importarExtratoOfxUseCase = importarExtratoOfxUseCase;
         this.calcularProjecaoFinanceiraUseCase = calcularProjecaoFinanceiraUseCase;
+        this.processarNotificacaoNubankUseCase = processarNotificacaoNubankUseCase;
     }
 
     @PostMapping
@@ -58,8 +61,35 @@ public class TransacaoController {
     }
 
     @PostMapping("/importar-ofx")
-    public ResponseEntity<ImportacaoExtratoResponse> importarOfx(@RequestBody String conteudo) {
+    public ResponseEntity<ImportacaoExtratoResponse> importarOfx(
+            @RequestBody(required = false) String conteudo,
+            @RequestParam(required = false) String arquivo
+    ) {
+        if (arquivo != null && !arquivo.isBlank()) {
+            return ResponseEntity.ok(importarExtratoOfxUseCase.importarArquivo(arquivo));
+        }
+        if (conteudo == null || conteudo.trim().isBlank()) {
+            return ResponseEntity.ok(importarExtratoOfxUseCase.importarDiretorioPadrao());
+        }
         ImportacaoExtratoResponse response = importarExtratoOfxUseCase.executar(conteudo);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/webhook-notificacao")
+    public ResponseEntity<TransacaoResponse> processarWebhookNotificacao(@RequestBody String payload) {
+        String texto = payload;
+        if (payload != null && payload.contains("\"textoNotificacao\"")) {
+            // Extrai campo se vier em JSON simples
+            try {
+                int start = payload.indexOf("\"textoNotificacao\"") + 18;
+                int valStart = payload.indexOf("\"", start) + 1;
+                int valEnd = payload.indexOf("\"", valStart);
+                if (valStart > 0 && valEnd > valStart) {
+                    texto = payload.substring(valStart, valEnd);
+                }
+            } catch (Exception ignored) {}
+        }
+        TransacaoResponse response = processarNotificacaoNubankUseCase.executar(texto);
         return ResponseEntity.ok(response);
     }
 

@@ -30,7 +30,7 @@
 |---|---|---|---|
 | **NOVA Control Center** | Python / HTML5 / Material 3 Expressive / Chart.js | `3000` | Dashboard visual unificado (Bento Grid, Living Shader, Projeção Preditiva, Voice Orb, downloads 1-clique) |
 | **NOVA Voice Studio** | Python / `edge-tts` / `afplay` | `5050` | Catálogo e teste de vozes neurais PT-BR e globais (Google Store layout) |
-| **Agente Financeiro API** | Java 21 / Spring Boot 3 / H2 / Spring AI | `8081` | REST + ferramentas MCP + importador OFX/CSV + Projeção Preditiva + endpoint de voz |
+| **Agente Financeiro API** | Java 21 / Spring Boot 3 / H2 / Spring AI | `8081` | REST + ferramentas MCP + Caixinhas Nubank + Webhook + Importador OFX/CSV + Projeção Preditiva + endpoint de voz |
 
 > **🚀 Scripts de Automação:**
 > - `start-all.sh`: Inicializa simultaneamente os 3 serviços em background com logs em `logs/`.
@@ -38,21 +38,22 @@
 
 ---
 
-## 3. O que foi entregue na Fase 9 (Inteligência Preditiva)
+## 3. Módulo Financeiro Consolidado & Caixinhas Nubank
 
-- ✅ **Caso de Uso de Projeção Financeira (`CalcularProjecaoFinanceiraUseCase.java`)**:
-  - Cálculo de Burn Rate diário médio (`totalGastos / diasDecorridos`).
-  - Projeção de despesas adicionais e saldo final no último dia do mês corrente.
-  - Classificação de risco: `SAUDAVEL` (Superávit), `ALERTA` (Margem apertada < 15%), `CRITICO` (Risco de déficit).
-  - Emissão de alertas acionáveis e recomendações de aportes na reserva de emergência e metas do casal.
-- ✅ **MCP Tool & Endpoint REST**:
-  - `@Tool(name="projecao_financeira")` no `FinanceiroMcpTools.java`.
-  - `GET /api/transacoes/projecao` no `TransacaoController.java`.
+- ✅ **Estrutura Oficial de Pastas `financeiro/`**:
+  - `financeiro/extratos_ofx/`: Repositório oficial para arquivos `.ofx` baixados do Nubank.
+  - `financeiro/investimentos_caixinhas/`: Repositório para comprovantes e saldos das Caixinhas (Reserva e Casal).
+  - `financeiro/relatorios_pdf/`: Destino dos relatórios executivos visuais gerados via ReportLab.
+- ✅ **Gestão de Caixinhas & Patrimônio Líquido**:
+  - Entidade `Caixinha`, Repositório `CaixinhaRepository` e Use Cases `SalvarCaixinhaUseCase` e `ListarCaixinhasUseCase`.
+  - Endpoints REST `POST /api/financeiro/caixinhas` e `GET /api/financeiro/caixinhas` (calcula Patrimônio Líquido Total).
+  - MCP Tools `@Tool(name="atualizar_caixinha")` e `@Tool(name="consultar_caixinhas")`.
+- ✅ **Webhook de Notificações Instantâneas Nubank**:
+  - `POST /api/transacoes/webhook-notificacao` com parser semântico automático de compras, transferências e pagamentos.
+- ✅ **Importador OFX/CSV com Busca Automática**:
+  - `ImportarExtratoOfxUseCase` configurado para varredura e deduplicação automática em `financeiro/extratos_ofx/`.
 - ✅ **Suíte JUnit 5 Expandida**:
-  - 27 testes automatizados com 100% de sucesso (`./run-tests.sh`).
-- ✅ **Dashboard Visual & Voz Integrados**:
-  - Card Bento de Projeção Financeira no NOVA Control Center (Porta 3000).
-  - Roteamento de comandos de voz para previsão de saldo falada naturalmente pela Francisca.
+  - **40 testes automatizados** cobrindo 100% dos use cases, controllers e MCP tools (`./run-tests.sh`).
 
 ---
 

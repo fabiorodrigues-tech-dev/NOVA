@@ -17,4 +17,8 @@ public record ImportacaoExtratoResponse(
                 lidos, importados, duplicados);
         return new ImportacaoExtratoResponse(lidos, importados, duplicados, transacoes, msg);
     }
+
+    public static ImportacaoExtratoResponse erro(String mensagem) {
+        return new ImportacaoExtratoResponse(0, 0, 0, List.of(), mensagem);
+    }
 }

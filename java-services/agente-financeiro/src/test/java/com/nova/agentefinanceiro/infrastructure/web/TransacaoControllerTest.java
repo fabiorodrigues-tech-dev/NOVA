@@ -54,6 +54,9 @@ class TransacaoControllerTest {
     @MockBean
     private com.nova.agentefinanceiro.application.usecase.CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase;
 
+    @MockBean
+    private com.nova.agentefinanceiro.application.usecase.ProcessarNotificacaoNubankUseCase processarNotificacaoNubankUseCase;
+
     @Test
     @DisplayName("POST /api/transacoes - Deve retornar 201 Created quando payload for válido")
     void deveCadastrarTransacaoComSucesso() throws Exception {
@@ -85,6 +88,28 @@ class TransacaoControllerTest {
                 .andExpect(jsonPath("$.valor").value(45.90))
                 .andExpect(jsonPath("$.tipo").value("DESPESA"))
                 .andExpect(jsonPath("$.categoria").value("ALIMENTACAO"));
+    }
+
+    @Test
+    @DisplayName("POST /api/transacoes/webhook-notificacao - Deve retornar 200 OK ao processar notificação Nubank")
+    void deveProcessarWebhookNotificacaoComSucesso() throws Exception {
+        TransacaoResponse response = new TransacaoResponse(
+                10L,
+                "Restaurante Fogão de Lenha",
+                new BigDecimal("45.90"),
+                TipoTransacao.DESPESA,
+                CategoriaTransacao.ALIMENTACAO,
+                LocalDate.now()
+        );
+
+        when(processarNotificacaoNubankUseCase.executar(any())).thenReturn(response);
+
+        mockMvc.perform(post("/api/transacoes/webhook-notificacao")
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .content("Compra de R$ 45,90 no Restaurante Fogão de Lenha aprovada"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.descricao").value("Restaurante Fogão de Lenha"))
+                .andExpect(jsonPath("$.valor").value(45.90));
     }
 
     @Test

@@ -44,6 +44,12 @@ class FinanceiroMcpToolsTest {
     @Mock
     private com.nova.agentefinanceiro.application.usecase.CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase;
 
+    @Mock
+    private com.nova.agentefinanceiro.application.usecase.SalvarCaixinhaUseCase salvarCaixinhaUseCase;
+
+    @Mock
+    private com.nova.agentefinanceiro.application.usecase.ListarCaixinhasUseCase listarCaixinhasUseCase;
+
     @InjectMocks
     private FinanceiroMcpTools financeiroMcpTools;
 
@@ -102,7 +108,7 @@ class FinanceiroMcpToolsTest {
         when(importarExtratoOfxUseCase.executar(any())).thenReturn(responseEsperada);
 
         com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse response =
-                financeiroMcpTools.importarExtratoOfx("conteudo fake");
+                financeiroMcpTools.importarExtratoOfx("conteudo fake", null);
 
         assertThat(response).isEqualTo(responseEsperada);
         verify(importarExtratoOfxUseCase).executar("conteudo fake");
@@ -125,5 +131,39 @@ class FinanceiroMcpToolsTest {
 
         assertThat(response).isEqualTo(projecaoEsperada);
         verify(calcularProjecaoFinanceiraUseCase).executar(null);
+    }
+
+    @Test
+    @DisplayName("Ferramenta atualizar_caixinha deve delegar ao use case de caixinhas")
+    void deveAtualizarCaixinhaViaMcpTool() {
+        com.nova.agentefinanceiro.application.dto.CaixinhaResponse responseEsperada =
+                new com.nova.agentefinanceiro.application.dto.CaixinhaResponse(
+                        1L, "Reserva de Emergência", new BigDecimal("1500.00"),
+                        com.nova.agentefinanceiro.domain.model.TipoCaixinha.RESERVA_EMERGENCIA,
+                        BigDecimal.ZERO, LocalDate.now()
+                );
+        when(salvarCaixinhaUseCase.executar(any())).thenReturn(responseEsperada);
+
+        com.nova.agentefinanceiro.application.dto.CaixinhaResponse response =
+                financeiroMcpTools.atualizarCaixinha("Reserva de Emergência", new BigDecimal("1500.00"), null, null);
+
+        assertThat(response).isEqualTo(responseEsperada);
+        verify(salvarCaixinhaUseCase).executar(any());
+    }
+
+    @Test
+    @DisplayName("Ferramenta consultar_caixinhas deve delegar ao use case de listagem")
+    void deveConsultarCaixinhasViaMcpTool() {
+        com.nova.agentefinanceiro.application.dto.PatrimonioLiquidoResponse responseEsperada =
+                new com.nova.agentefinanceiro.application.dto.PatrimonioLiquidoResponse(
+                        new BigDecimal("500.00"), new BigDecimal("1500.00"), new BigDecimal("2000.00"), List.of()
+                );
+        when(listarCaixinhasUseCase.executar()).thenReturn(responseEsperada);
+
+        com.nova.agentefinanceiro.application.dto.PatrimonioLiquidoResponse response =
+                financeiroMcpTools.consultarCaixinhas();
+
+        assertThat(response).isEqualTo(responseEsperada);
+        verify(listarCaixinhasUseCase).executar();
     }
 }

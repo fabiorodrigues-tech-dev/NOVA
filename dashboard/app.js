@@ -194,12 +194,39 @@ function alternarEstadoDashboard(estado) {
 function renderizarDadosNormal(data) {
   renderizarTopKPIs(data.financas, data.estudos);
   renderizarProjecaoFinanceira(data.projecao || data.financas);
+  renderizarCaixinhas(data.caixinhas);
   renderizarGraficoEvolucao(data.financas);
   renderizarGraficoCategorias(data.financas);
   renderizarGraficoTargetReality(data.financas);
   renderizarGraficoMatchCarreira(data.candidaturas);
   renderizarTabelaCandidaturas(data.candidaturas);
   if (window.lucide) lucide.createIcons();
+}
+
+function renderizarCaixinhas(caixinhasData) {
+  if (!caixinhasData) return;
+  const patTotalEl = document.getElementById('kpiPatrimonioTotal');
+  const resEl = document.getElementById('valReservaEmergencia');
+  const casalEl = document.getElementById('valFundoCasal');
+  const contaEl = document.getElementById('valSaldoConta');
+
+  if (patTotalEl) {
+    patTotalEl.textContent = `Patrimônio: R$ ${Number(caixinhasData.patrimonioLiquidoTotal || 3089.23).toFixed(2).replace('.', ',')}`;
+  }
+  if (contaEl) {
+    contaEl.textContent = `R$ ${Number(caixinhasData.saldoContaCorrente || 589.23).toFixed(2).replace('.', ',')}`;
+  }
+
+  if (caixinhasData.caixinhas && Array.isArray(caixinhasData.caixinhas)) {
+    caixinhasData.caixinhas.forEach(c => {
+      const nome = (c.nome || '').toLowerCase();
+      if (nome.includes('reserva') || c.tipo === 'RESERVA_EMERGENCIA') {
+        if (resEl) resEl.textContent = `R$ ${Number(c.saldo).toFixed(2).replace('.', ',')}`;
+      } else if (nome.includes('casal') || c.tipo === 'FUNDO_CASAL') {
+        if (casalEl) casalEl.textContent = `R$ ${Number(c.saldo).toFixed(2).replace('.', ',')}`;
+      }
+    });
+  }
 }
 
 function renderizarProjecaoFinanceira(proj) {

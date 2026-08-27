@@ -4,7 +4,7 @@
 ![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=flat&logo=openjdk&logoColor=white)
 ![Spring Boot 3](https://img.shields.io/badge/Spring%20Boot-3.3.3-6DB33F?style=flat&logo=springboot&logoColor=white)
 ![Spring AI MCP](https://img.shields.io/badge/Spring%20AI-MCP%20Tools-007ACC?style=flat&logo=spring&logoColor=white)
-![JUnit 5](https://img.shields.io/badge/JUnit%205-27%20Tests%20Passed-25A162?style=flat&logo=junit5&logoColor=white)
+![JUnit 5](https://img.shields.io/badge/JUnit%205-40%20Tests%20Passed-25A162?style=flat&logo=junit5&logoColor=white)
 ![Material 3 Expressive](https://img.shields.io/badge/Design%20System-Material%203%20Expressive-4285F4?style=flat&logo=google&logoColor=white)
 
 Bem-vindo ao ecossistema **NOVA**, seu ponto central de inteligência, produtividade e desenvolvimento profissional em arquitetura multi-agente, integrando o **Gemini via Google Antigravity**, microsserviços **Java 21 / Spring Boot 3** com Clean Architecture, **Model Context Protocol (MCP)**, **Voz Neural Humana** e o **NOVA Control Center** (Dashboard Visual Unificado com Material 3 Expressive e Living Shader).
@@ -116,9 +116,10 @@ nova/
 │   ├── trilha_tracker.md            # Rastreador oficial da Trilha Santander DIO
 │   └── guia_estudos_nova/           # Dossiê e Manual de Engenharia em PDF de 6 páginas
 │
-├── resumo/financeiro/               # 💰 Extratos, comprovantes e relatório financeiro mensal
-│   ├── relatorio_agosto_2026.pdf    # Relatório executivo visual em PDF
-│   └── *.jpeg                       # 16 comprovantes e extratos bancários de Agosto/2026
+├── financeiro/                      # 💰 Módulo Financeiro Oficial (OFX, Caixinhas e Relatórios)
+│   ├── extratos_ofx/                # Extratos bancários oficiais em .ofx do Nubank
+│   ├── investimentos_caixinhas/     # Prints e dados da Reserva de Emergência e Fundo do Casal
+│   └── relatorios_pdf/              # Relatórios executivos visuais em PDF compilados
 │
 ├── scripts/                         # 📊 Motor Central de Gráficos e Relatórios
 │   ├── chart_engine.py              # Motor Matplotlib (Match, Salário, Portfólio, Despesas, Balanço)
@@ -135,7 +136,7 @@ nova/
 └── java-services/
     └── agente-financeiro/           # Microsserviço Back-end Java 21 + Spring Boot 3 + Spring AI (MCP)
         ├── data/financiadb.mv.db    # Banco de dados H2 persistente em arquivo
-        └── run-tests.sh             # Suíte de testes automatizados JUnit 5 (27 testes - 100% sucesso)
+        └── run-tests.sh             # Suíte de testes automatizados JUnit 5 (40 testes - 100% sucesso)
 ```
 
 ---
