@@ -70,8 +70,8 @@
 
 ## 5. Regras de Ouro & Segurança
 
-1. **Modificador `(full access)` & Autonomia com Checkpoint:** Execução ponta a ponta sem interrupções com salvamento prévio em `.backups/ultimo_checkpoint/` e validação final via `./run-tests.sh`.
-2. **Sistema de Reversão (`/reverter`):** Restauração instantânea para o último checkpoint seguro.
+1. **Modificadores de Autonomia & Gatilhos `full access` (`full access`, `(full access)`, `full acess`, `(full acess)`, `/fullaccess`, `!fullaccess`):** Execução ponta a ponta sem interrupções com salvamento prévio em `.backups/ultimo_checkpoint/` e validação final via `./run-tests.sh`.
+2. **Sistema de Checkpoint & Reversão (`reverter`, `(reverter)`, `/reverter`, `!reverter`, `reverse`, `(reverse)`, `/reverse`, `!reverse`):** Restauração instantânea para o último checkpoint seguro.
 3. **Fidelidade Rigorosa às Bases Oficiais:** Nenhuma candidatura inventa ferramentas ou tecnologias fora das bases oficiais.
 4. **Segregação de Cabeçalhos por Trilha:** Tech usa LinkedIn; Marketing/Audiovisual usa Google Drive.
 5. **Postura Financeira Conservadora:** Organiza, prevê e dá clareza; nunca toma decisões arbitrárias pelo usuário.

@@ -12,7 +12,7 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 | **`/atalhos`** | `!atalhos`, `/menu`, `/comandos` | Exibe este painel completo de atalhos rápidos | `/atalhos` |
 | **`/ajuda`** | `!ajuda`, `/help` | Guia geral de suporte e recursos do ecossistema | `/ajuda` |
 | **`/status`** | `!status` | Exibe o estado real dos serviços, banco e roadmap | `/status` |
-| **`/reverter`** | `!reverter`, `reverter` | Restaura imediatamente o workspace para o último checkpoint seguro | `/reverter` |
+| **`/reverter`** | `!reverter`, `reverter`, `(reverter)`, `/reverse`, `!reverse`, `reverse`, `(reverse)` | Restaura imediatamente o workspace para o último checkpoint seguro | `/reverter` ou `reverse` |
 
 ---
 
@@ -76,3 +76,16 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 | **`/studio`** | `!studio` | Inicia e abre o Voice Studio Web na porta 5050 no navegador | `/studio` |
 | **`/voz`** | `!voz`, `/vozes` | Lista o catálogo de vozes neurais e a voz ativa | `/voz` |
 | **`/voz [nome]`** | `!voz [nome]` | Altera a voz padrão (Antônio, Francisca, Fábio, Thalita) | `/voz francisca` |
+
+---
+
+## ⚡ 8. Modificadores de Autonomia & Gatilhos `full access`
+
+Adicione qualquer uma das terminações abaixo ao final do seu comando ou prompt para acionar a **execução 100% autônoma** (sem pausas para confirmação, com backup automático prévio e execução final da suíte de testes):
+
+| Modificador / Gatilho | Formato Alternativo | Comportamento | Exemplo de Uso |
+| :--- | :--- | :--- | :--- |
+| **`(full access)`** | `full access` | Executa todas as etapas ponta a ponta com checkpoint seguro | `NOVA, execute a evolução do backend (full access)` |
+| **`(full acess)`** | `full acess` | Suporte tolerante a grafia alternativa | `NOVA, candidaturas 360 full acess` |
+| **`/fullaccess`** | `!fullaccess` | Prefixo de comando direto | `/fullaccess refatore o TransacaoController` |
+

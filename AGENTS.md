@@ -18,6 +18,7 @@ O usuário pode enviar atalhos rápidos iniciando com `/` ou `!`. O MAIN Agent d
   - `/atalhos`, `!atalhos`, `/comandos`, `/menu` ➔ Exibir imediatamente a tabela formatada e organizada de todos os atalhos disponíveis baseada em [`COMANDOS.md`](file:///Users/fabioandre/Downloads/nova:/COMANDOS.md).
   - `/ajuda`, `!ajuda` ➔ Apresentar guia rápido de suporte do ecossistema.
   - `/status`, `!status` ➔ Exibir o resumo do [`nova-status.md`](file:///Users/fabioandre/Downloads/nova:/nova-status.md).
+  - `/reverter`, `!reverter`, `reverter`, `/reverse`, `!reverse`, `reverse` ➔ Restaurar imediatamente o workspace para o último checkpoint seguro.
 - **Carreira:**
   - `/candidatura [link]`, `!candidatura [link]` ➔ Executar a esteira "Candidatura Completa 360°".
   - `/vagas`, `!vagas` ➔ Exibir o painel consolidado de candidaturas ativas.
@@ -111,6 +112,14 @@ Ao receber qualquer pergunta, requisição ou comando do usuário, o **MAIN Agen
 - **Qualidade de Código:** Sempre incentivar código limpo, moderno, tipado, com tratamento de erros adequado e seguindo as convenções Java/Spring.
 - **Didática Assertiva:** Ao explicar conceitos técnicos ou de estudo, balancear profundidade técnica com clareza e exemplos práticos.
 - **Proatividade Controlada:** Antecipe possíveis dúvidas ou próximos passos do desenvolvedor, sugerindo comandos ou ações práticas de forma sucinta.
-- **Modificador `(full access)` & Autonomia com Checkpoint:** Sempre que uma requisição ou comando terminar com `(full access)` ou `(full acess)`, o MAIN Agent deve executar todas as etapas de forma autônoma sem solicitar confirmações intermediárias. Obrigatoriamente, deve criar um ponto de restauração em `.backups/ultimo_checkpoint/` antes de iniciar e executar a suíte de testes `./run-tests.sh` ao concluir para garantir 100% de integridade.
-- **Sistema de Checkpoint & Reversão (`/reverter`, `!reverter`, `reverter`):** Permite restaurar imediatamente todos os arquivos e estados do workspace para o último checkpoint seguro salvo em `.backups/ultimo_checkpoint/`.
+- **Modificador de Autonomia & Gatilhos `full access`:** Sempre que uma requisição ou comando contiver ou terminar com qualquer uma das variações abaixo, o MAIN Agent deve executar todas as etapas de forma 100% autônoma sem solicitar confirmações intermediárias:
+  - `full access` ou `(full access)`
+  - `full acess` ou `(full acess)`
+  - `/fullaccess` ou `!fullaccess`
+  *Obrigatoriamente, deve criar um ponto de restauração em `.backups/ultimo_checkpoint/` antes de iniciar e executar a suíte de testes `./run-tests.sh` ao concluir para garantir 100% de integridade.*
+- **Sistema de Checkpoint, Reversão & Rollback:** Permite restaurar imediatamente todos os arquivos e estados do workspace para o último checkpoint seguro salvo em `.backups/ultimo_checkpoint/`. O MAIN Agent deve reconhecer instantaneamente qualquer um dos seguintes aliases como ordem direta de restauração:
+  - `reverter` ou `(reverter)`
+  - `/reverter` ou `!reverter`
+  - `reverse` ou `(reverse)`
+  - `/reverse` ou `!reverse`
 - **Evolução Contínua de Carreira:** Manter a documentação técnica, o currículo e o posicionamento profissional sempre vivos e alinhados às implementações reais do repositório.
