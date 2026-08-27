@@ -34,17 +34,17 @@ def obter_resumo_financeiro():
             return json.loads(response.read().decode('utf-8'))
     except Exception:
         return {
-            "totalGasto": 1709.77,
-            "totalReceitas": 2299.00,
-            "saldo": 589.23,
-            "quantidadeTransacoes": 43,
+            "totalGasto": 42500.00,
+            "totalReceitas": 150000.00,
+            "saldo": 107500.00,
+            "quantidadeTransacoes": 68,
             "periodoInicio": "2026-08-01",
             "periodoFim": "2026-08-31",
             "totalPorCategoria": {
-                "ALIMENTACAO": 728.38,
-                "TRANSPORTE": 151.87,
-                "COMPRAS": 318.52,
-                "TRANSFERENCIAS": 511.00
+                "INFRAESTRUTURA": 18000.00,
+                "ALIMENTACAO": 12500.00,
+                "SERVICOS": 8000.00,
+                "OPERACIONAL": 4000.00
             }
         }
 
@@ -60,16 +60,16 @@ def obter_projecao_financeira():
             "diasDecorridos": 27,
             "diasRestantes": 4,
             "totalDiasMes": 31,
-            "totalGastosAtual": 1709.77,
-            "totalReceitasAtual": 2299.00,
-            "saldoAtual": 589.23,
-            "burnRateDiario": 63.32,
-            "gastoAdicionalProjetado": 253.28,
-            "gastoTotalProjetado": 1963.05,
-            "saldoFinalProjetado": 335.95,
+            "totalGastosAtual": 42500.00,
+            "totalReceitasAtual": 150000.00,
+            "saldoAtual": 107500.00,
+            "burnRateDiario": 1574.07,
+            "gastoAdicionalProjetado": 6296.28,
+            "gastoTotalProjetado": 48796.28,
+            "saldoFinalProjetado": 101203.72,
             "statusOrcamentario": "SAUDAVEL",
-            "alertas": ["✅ Balanço Saudável: Superávit projetado de R$ 335,95 ao fim do mês."],
-            "recomendacaoEstrategica": "Ritmo financeiro sob controle! Sugestão de aporte de R$ 167,98 nas caixinhas (Reserva de Emergência e Metas do Casal)."
+            "alertas": ["✅ Balanço Saudável: Superávit projetado de R$ 101.203,72 ao fim do mês."],
+            "recomendacaoEstrategica": "Fluxo orçamentário sob controle! Sugestão de aporte de R$ 50.000,00 na Reserva Estratégica e Fundos de Longo Prazo."
         }
 
 def obter_caixinhas_patrimonio():
@@ -80,24 +80,24 @@ def obter_caixinhas_patrimonio():
             return json.loads(response.read().decode('utf-8'))
     except Exception:
         return {
-            "saldoContaCorrente": 589.23,
-            "totalInvestidoCaixinhas": 2500.00,
-            "patrimonioLiquidoTotal": 3089.23,
+            "saldoContaCorrente": 107500.00,
+            "totalInvestidoCaixinhas": 500000.00,
+            "patrimonioLiquidoTotal": 607500.00,
             "caixinhas": [
                 {
                     "id": 1,
-                    "nome": "Reserva de Emergência",
-                    "saldo": 1500.00,
+                    "nome": "Reserva de Emergência & Contingência",
+                    "saldo": 350000.00,
                     "tipo": "RESERVA_EMERGENCIA",
-                    "rendimentoMensalEstimado": 15.00,
+                    "rendimentoMensalEstimado": 3500.00,
                     "dataAtualizacao": "2026-08-27"
                 },
                 {
                     "id": 2,
-                    "nome": "Fundo do Casal",
-                    "saldo": 1000.00,
+                    "nome": "Fundo de Expansão & Metas",
+                    "saldo": 150000.00,
                     "tipo": "FUNDO_CASAL",
-                    "rendimentoMensalEstimado": 10.00,
+                    "rendimentoMensalEstimado": 1500.00,
                     "dataAtualizacao": "2026-08-27"
                 }
             ]

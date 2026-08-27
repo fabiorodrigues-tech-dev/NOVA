@@ -38,20 +38,20 @@ def buscar_dados_financeiros(mes=8, ano=2026, base_url="http://localhost:8081"):
 
         return resumo_data, transacoes_data
     except Exception as e:
-        print(f"⚠️ Aviso: Não foi possível conectar ao Spring Boot ({e}). Usando dados consolidados de fallback.")
-        # Dados consolidados reais de Agosto/2026
+        print(f"⚠️ Aviso: Não foi possível conectar ao Spring Boot ({e}). Usando dados simulados corporativos [MOCK].")
+        # Dados corporativos simulados de demonstração (Mock Corporativo / LGPD)
         resumo_fallback = {
-            "totalGasto": 1709.77,
-            "totalReceitas": 2299.00,
-            "saldo": 589.23,
-            "quantidadeTransacoes": 43,
+            "totalGasto": 42500.00,
+            "totalReceitas": 150000.00,
+            "saldo": 107500.00,
+            "quantidadeTransacoes": 68,
             "periodoInicio": f"{ano}-{mes:02d}-01",
             "periodoFim": f"{ano}-{mes:02d}-31",
             "totalPorCategoria": {
-                "ALIMENTACAO": 728.38,
-                "TRANSFERENCIAS": 511.00,
-                "COMPRAS": 318.52,
-                "TRANSPORTE": 151.87
+                "INFRAESTRUTURA": 18000.00,
+                "ALIMENTACAO": 12500.00,
+                "SERVICOS": 8000.00,
+                "OPERACIONAL": 4000.00
             }
         }
         return resumo_fallback, []

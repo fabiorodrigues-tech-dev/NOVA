@@ -211,19 +211,19 @@ function renderizarCaixinhas(caixinhasData) {
   const contaEl = document.getElementById('valSaldoConta');
 
   if (patTotalEl) {
-    patTotalEl.textContent = `Patrimônio: R$ ${Number(caixinhasData.patrimonioLiquidoTotal || 3089.23).toFixed(2).replace('.', ',')}`;
+    patTotalEl.textContent = `Patrimônio: R$ ${Number(caixinhasData.patrimonioLiquidoTotal || 607500.00).toFixed(2).replace('.', ',')}`;
   }
   if (contaEl) {
-    contaEl.textContent = `R$ ${Number(caixinhasData.saldoContaCorrente || 589.23).toFixed(2).replace('.', ',')}`;
+    contaEl.textContent = `R$ ${Number(caixinhasData.saldoContaCorrente || 107500.00).toFixed(2).replace('.', ',')}`;
   }
 
   if (caixinhasData.caixinhas && Array.isArray(caixinhasData.caixinhas)) {
     caixinhasData.caixinhas.forEach(c => {
       const nome = (c.nome || '').toLowerCase();
       if (nome.includes('reserva') || c.tipo === 'RESERVA_EMERGENCIA') {
-        if (resEl) resEl.textContent = `R$ ${Number(c.saldo).toFixed(2).replace('.', ',')}`;
-      } else if (nome.includes('casal') || c.tipo === 'FUNDO_CASAL') {
-        if (casalEl) casalEl.textContent = `R$ ${Number(c.saldo).toFixed(2).replace('.', ',')}`;
+        if (resEl) resEl.textContent = `R$ ${Number(c.saldo || 350000.00).toFixed(2).replace('.', ',')}`;
+      } else if (nome.includes('casal') || nome.includes('expansão') || c.tipo === 'FUNDO_CASAL') {
+        if (casalEl) casalEl.textContent = `R$ ${Number(c.saldo || 150000.00).toFixed(2).replace('.', ',')}`;
       }
     });
   }
@@ -239,13 +239,13 @@ function renderizarProjecaoFinanceira(proj) {
   const statusBadge = document.getElementById('projecaoStatusBadge');
   const recTxt = document.getElementById('projRecomendacaoTxt');
 
-  if (burnEl) burnEl.textContent = `R$ ${Number(proj.burnRateDiario || 63.32).toFixed(2).replace('.', ',')} / dia`;
+  if (burnEl) burnEl.textContent = `R$ ${Number(proj.burnRateDiario || 1574.07).toFixed(2).replace('.', ',')} / dia`;
   if (diasEl) diasEl.textContent = `${proj.diasDecorridos || 27} dias decorridos • ${proj.diasRestantes || 4} restantes`;
-  if (gastoAdicEl) gastoAdicEl.textContent = `R$ ${Number(proj.gastoAdicionalProjetado || 253.28).toFixed(2).replace('.', ',')}`;
-  if (gastoTotEl) gastoTotEl.textContent = `R$ ${Number(proj.gastoTotalProjetado || 1963.05).toFixed(2).replace('.', ',')}`;
+  if (gastoAdicEl) gastoAdicEl.textContent = `R$ ${Number(proj.gastoAdicionalProjetado || 6296.28).toFixed(2).replace('.', ',')}`;
+  if (gastoTotEl) gastoTotEl.textContent = `R$ ${Number(proj.gastoTotalProjetado || 48796.28).toFixed(2).replace('.', ',')}`;
   
   if (saldoFinEl) {
-    const val = Number(proj.saldoFinalProjetado || 335.95);
+    const val = Number(proj.saldoFinalProjetado || 101203.72);
     saldoFinEl.textContent = `${val >= 0 ? '+ ' : '- '}R$ ${Math.abs(val).toFixed(2).replace('.', ',')}`;
     saldoFinEl.className = `p-metric-val ${val >= 0 ? 'positive' : 'negative'}`;
   }

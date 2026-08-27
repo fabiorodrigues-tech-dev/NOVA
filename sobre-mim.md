@@ -36,19 +36,16 @@
 
 ---
 
-## 🗂️ 3. Minhas Prioridades Pessoais do Mês
-
-- Terminar o mês com saldo positivo.
-- Gastar apenas o necessário para começar o mês seguinte também no positivo.
-- Manter organizadas as duas caixinhas do Nubank: uma de reserva financeira, outra para o propósito do casal (investimento futuro).
-- Meta de médio prazo: tirar habilitação e depois comprar um veículo.
-- Ter controle total e real do meu financeiro (não só acompanhar, mas dominar).
+## 🗂️ 3. Minhas Prioridades de Engenharia & Gestão
+- Manter governança financeira e orçamentária rigorosa com superávit contínuo e previsão analítica.
+- Otimização de despesas e alocação estratégica de capital em reservas de alta liquidez e fundos de investimento.
+- Manter o microsserviço financeiro e módulos de Caixinhas perfeitamente conciliados via Clean Architecture.
+- Foco em evolução contínua de carreira, conclusão acelerada da Trilha Santander DIO e consolidação de portfólio.
 
 ---
 
-## 💰 4. Minha Meta Financeira Principal do Momento
-
-Saldo positivo todo mês + reserva financeira crescendo + fundo do casal preservado para investimento futuro, com visão de médio prazo voltada à habilitação e depois um veículo.
+## 💰 4. Governança Financeira & Gestão Patrimonial
+Balanço superavitário mês a mês + reserva de emergência e contingência corporativa blindada + alocação estratégica para metas e expansão patrimonial de médio e longo prazo.
 
 ---
 
