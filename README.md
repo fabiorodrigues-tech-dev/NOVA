@@ -11,8 +11,14 @@ Bem-vindo ao ecossistema **NOVA**, seu ponto central de inteligência, produtivi
 
 ---
 
-## 🧭 Painel Visual Unificado: NOVA Control Center (Porta 3000)
-Acesse a qualquer momento pelo navegador: **[http://localhost:3000](http://localhost:3000)** ou via comando `/dashboard`.
+## 🧭 NOVA Control Center (UI Preview)
+
+O **NOVA Control Center** é a interface executiva do ecossistema, projetada com base no Design System **Material 3 Expressive**, Bento Grid modular, WebGL Living Shader dinâmico, telemetria em tempo real via Chart.js e Voice Orb interativo com síntese neural. Acesse em **[http://localhost:3000](http://localhost:3000)** ou via comando `/dashboard`.
+
+| ☀️ Modo Dia (Light Theme) | 🌙 Modo Noite (Dark Theme) |
+| :---: | :---: |
+| <img src="docs/assets/nova-light-preview.png" width="100%" alt="NOVA Control Center - Light Theme"> | <img src="docs/assets/nova-dark-preview.png" width="100%" alt="NOVA Control Center - Dark Theme"> |
+| **Light Theme:** Máxima legibilidade com superfície tonal M3, contraste WCAG AAA e visual limpo para foco diurno. | **Dark Theme:** Glassmorphism profundo, Living Shader WebGL reativo, chips vibrantes e conforto visual. |
 
 ---
 

@@ -127,8 +127,17 @@ async def sintetizar_e_reproduzir_audio(texto: str, voz: str = VOZ_PADRAO, taxa:
         )
         await comunicador.save(temp_audio_path)
 
-        # Reprodução de áudio cristalino com afplay (nativo do macOS)
-        subprocess.run(["afplay", temp_audio_path], check=True)
+        # Reprodução de áudio cristalino: afplay (macOS) ou fallback suave em Linux/Headless
+        if sys.platform == "darwin":
+            try:
+                subprocess.run(["afplay", temp_audio_path], check=True)
+            except FileNotFoundError:
+                pass
+        elif sys.platform.startswith("linux"):
+            try:
+                subprocess.run(["aplay", temp_audio_path], check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except Exception:
+                pass
 
     except Exception as e:
         print(f"⚠️ Erro durante a síntese/reprodução neural: {e}")

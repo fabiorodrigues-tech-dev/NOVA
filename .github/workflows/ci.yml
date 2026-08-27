@@ -55,12 +55,13 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: 📦 Instalar Dependências de Voz
+      - name: 📦 Instalar Dependências e Ferramentas
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r voz/requirements.txt
-          pip install flake8
+          pip install flake8 reportlab matplotlib
 
-      - name: 🔍 Validar Sintaxe dos Scripts Python
+      - name: 🔍 Validar Sintaxe dos Scripts Python (Linter & Headless Check)
         run: |
           flake8 scripts/ dashboard/server.py voz/scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          python -m py_compile scripts/*.py dashboard/server.py voz/scripts/*.py
