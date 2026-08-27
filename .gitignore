@@ -31,10 +31,27 @@ ENV/
 *.swp
 *.swo
 
-# H2 Database Locks (preserva o .mv.db para dados, ignora trace e lock)
+# H2 Database & Local Data Protection (Isolamento de Dados)
+*.mv.db
 *.trace.db
 *.lock.db
+java-services/agente-financeiro/data/*.db
+java-services/agente-financeiro/data/*.mv.db
+
+# Dados Financeiros Pessoais & Extratos Sensíveis (LGPD / Privacy)
+financeiro/extratos_ofx/*.ofx
+financeiro/extratos_ofx/*.csv
+!financeiro/extratos_ofx/.gitkeep
+financeiro/investimentos_caixinhas/*
+!financeiro/investimentos_caixinhas/.gitkeep
+financeiro/relatorios_pdf/*.pdf
+!financeiro/relatorios_pdf/.gitkeep
+
+# Environment & Secrets
+.env
+.env.*
+*.pem
+*.key
 
 # NOVA Backups & Checkpoints
 .backups/
-
