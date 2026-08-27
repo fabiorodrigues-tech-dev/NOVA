@@ -32,7 +32,7 @@ class NumberedCanvas(canvas.Canvas):
         
         # Header (pages > 1)
         if self._pageNumber > 1:
-            self.drawString(54, 755, "NOVA Ecosystem — Dossiê Técnico & Parecer Arquitetural")
+            self.drawString(54, 755, "NOVA Ecosystem — Dossiê Master de Engenharia & Governança")
             self.drawRightString(612 - 54, 755, "Confidencial & Portfólio Executivo")
             self.setStrokeColor(colors.HexColor("#CBD5E1"))
             self.setLineWidth(0.5)
@@ -68,7 +68,10 @@ def render_code_block(text, style, max_lines_per_chunk=35):
     return flowables
 
 
-def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
+def gerar_dossie_pdf(output_path="docs/dossie_master_nova.pdf"):
+    # Garante existência da pasta docs
+    os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
+
     doc = SimpleDocTemplate(
         output_path,
         pagesize=letter,
@@ -80,7 +83,7 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
 
     styles = getSampleStyleSheet()
     
-    # Cores
+    # Cores Corporativas
     PRIMARY = colors.HexColor("#0F172A")     # Slate 900
     ACCENT = colors.HexColor("#2563EB")      # Blue 600
     SUCCESS = colors.HexColor("#059669")     # Emerald 600
@@ -93,8 +96,8 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
         'CoverTitle',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=22,
-        leading=26,
+        fontSize=21,
+        leading=25,
         textColor=PRIMARY,
         spaceAfter=4
     )
@@ -103,8 +106,8 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
         'CoverSub',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=11.5,
-        leading=15,
+        fontSize=11,
+        leading=14,
         textColor=ACCENT,
         spaceAfter=12
     )
@@ -113,10 +116,10 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
         'Header1',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=14,
-        leading=17,
+        fontSize=13.5,
+        leading=16.5,
         textColor=PRIMARY,
-        spaceBefore=14,
+        spaceBefore=12,
         spaceAfter=8,
         keepWithNext=True
     )
@@ -125,8 +128,8 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
         'BodyDark',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=9,
-        leading=13,
+        fontSize=8.8,
+        leading=12.5,
         textColor=colors.HexColor("#334155"),
         spaceAfter=6
     )
@@ -142,7 +145,7 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
         parent=styles['Normal'],
         fontName='Helvetica',
         fontSize=8.5,
-        leading=12.5,
+        leading=12,
         textColor=colors.HexColor("#1E293B")
     )
 
@@ -150,18 +153,18 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
         'CodeStyle',
         parent=styles['Normal'],
         fontName='Courier',
-        fontSize=7.5,
-        leading=9.5,
+        fontSize=7.2,
+        leading=9.2,
         textColor=CODE_TXT
     )
 
     story = []
 
     # =========================================================================
-    # CABEÇALHO DO DOSSIÊ
+    # CABEÇALHO DO DOSSIÊ MASTER
     # =========================================================================
-    story.append(Paragraph("🌌 DOSSIÊ TÉCNICO & AUDITORIA ARQUITETURAL", style_cover_title))
-    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.5 | Clean Architecture & Enterprise Readiness", style_cover_sub))
+    story.append(Paragraph("🌌 DOSSIÊ MASTER DE ENGENHARIA & GOVERNANÇA", style_cover_title))
+    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.5 | Clean Architecture & Enterprise Portfolio", style_cover_sub))
     story.append(HRFlowable(width="100%", thickness=1.5, color=ACCENT, spaceBefore=2, spaceAfter=10))
 
     # Meta Informações em Grid/Tabela
@@ -175,8 +178,8 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
             Paragraph("<b>Suíte de Testes:</b> 40/40 JUnit 5 Passando (100%)", style_body)
         ],
         [
-            Paragraph("<b>Data da Auditoria:</b> 27 de Agosto de 2026", style_body),
-            Paragraph("<b>Status Geral:</b> <font color='#059669'><b>APROVADO PARA PORTFÓLIO</b></font>", style_body)
+            Paragraph("<b>Privacidade & LGPD:</b> Mock Corporativo de Grande Porte", style_body),
+            Paragraph("<b>Status Geral:</b> <font color='#059669'><b>HOMOLOGADO PARA PORTFÓLIO</b></font>", style_body)
         ]
     ]
     meta_table = Table(meta_data, colWidths=[250, 254])
@@ -225,6 +228,11 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
 │   ├── styles.css                   # Design Tokens M3 Expressive, Glassmorphism profundo
 │   └── server.py                    # Gateway HTTP em Python com rotas REST e proxy reverso
 │
+├── docs/                            # Repositório Oficial de Documentação & Evidências
+│   ├── README.md                    # Índice técnico dos manuais e dossiês
+│   ├── dossie_master_nova.pdf       # Dossiê Master consolidado em PDF
+│   └── assets/                      # Previews em alta definição (Light e Dark Theme)
+│
 ├── estudos/                         # Trilha Santander 2026 DIO & Manuais Técnicos
 │   ├── trilha_tracker.md            # Acompanhamento detalhado módulo a módulo
 │   └── guia_estudos_nova/           # Dossiê e Manual de Engenharia e Arquitetura em PDF
@@ -263,8 +271,8 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
     story.append(PageBreak())
     story.append(Paragraph("2. Conteúdo Oficial do README.md (Documentação do Repositório)", style_h1))
     story.append(Paragraph(
-        "Apresentação integral da documentação do repositório, com badges de status, diagrama de arquitetura "
-        "e catálogo de atalhos rápidos.",
+        "Apresentação integral da documentação do repositório, com vitrine visual (UI Preview), "
+        "diagramas Mermaid, catálogo de comandos e tabela das 9 fases concluídas.",
         style_body
     ))
 
@@ -285,9 +293,9 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
     story.append(PageBreak())
     story.append(Paragraph("3. Validação de Segurança & Isolamento de Dados (.gitignore)", style_h1))
     story.append(Paragraph(
-        "<b>Parecer de Segurança da Informação:</b> O arquivo <code>.gitignore</code> foi auditado para garantir total conformidade com a LGPD "
-        "e as melhores práticas de segurança corporativa (DevSecOps). Nenhum dado bancário, extrato OFX real, print de saldo ou banco de dados "
-        "local é sincronizado com o GitHub público.",
+        "<b>Parecer de Segurança da Informação (DevSecOps & LGPD):</b> O arquivo <code>.gitignore</code> foi auditado para garantir total isolamento de "
+        "dados bancários e privacidade. Todos os extratos bancários OFX, comprovantes de investimento e arquivos locais do banco H2 estão "
+        "estritamente bloqueados e fora do controle de versão.",
         style_body
     ))
 
@@ -403,7 +411,8 @@ def gerar_dossie_pdf(output_path="dossie_tecnico_nova.pdf"):
 
     # Build PDF
     doc.build(story, canvasmaker=NumberedCanvas)
-    print(f"Dossiê Técnico gerado com sucesso em: {output_path}")
+    print(f"Dossiê Master gerado com sucesso em: {output_path}")
 
 if __name__ == "__main__":
-    gerar_dossie_pdf()
+    out = sys.argv[1] if len(sys.argv) > 1 else "docs/dossie_master_nova.pdf"
+    gerar_dossie_pdf(out)
