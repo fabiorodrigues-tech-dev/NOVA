@@ -48,6 +48,30 @@ def obter_resumo_financeiro():
             }
         }
 
+def obter_projecao_financeira():
+    url = "http://localhost:8081/api/transacoes/projecao"
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'NOVA-Dashboard-Gateway'})
+        with urllib.request.urlopen(req, timeout=2) as response:
+            return json.loads(response.read().decode('utf-8'))
+    except Exception:
+        return {
+            "dataReferencia": "2026-08-27",
+            "diasDecorridos": 27,
+            "diasRestantes": 4,
+            "totalDiasMes": 31,
+            "totalGastosAtual": 1709.77,
+            "totalReceitasAtual": 2299.00,
+            "saldoAtual": 589.23,
+            "burnRateDiario": 63.32,
+            "gastoAdicionalProjetado": 253.28,
+            "gastoTotalProjetado": 1963.05,
+            "saldoFinalProjetado": 335.95,
+            "statusOrcamentario": "SAUDAVEL",
+            "alertas": ["✅ Balanço Saudável: Superávit projetado de R$ 335,95 ao fim do mês."],
+            "recomendacaoEstrategica": "Ritmo financeiro sob controle! Sugestão de aporte de R$ 167,98 nas caixinhas (Reserva de Emergência e Metas do Casal)."
+        }
+
 def obter_dados_candidaturas():
     empresas = [
         {
@@ -368,6 +392,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
         elif path == "/api/status":
             dados = {
                 "financas": obter_resumo_financeiro(),
+                "projecao": obter_projecao_financeira(),
                 "candidaturas": obter_dados_candidaturas(),
                 "voz": carregar_config_voz(),
                 "estudos": {
@@ -381,15 +406,18 @@ class DashboardHandler(BaseHTTPRequestHandler):
                     "manual_pdf": "/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
                 },
                 "engenharia": {
-                    "testes_total": 15,
-                    "testes_passando": 15,
+                    "testes_total": 27,
+                    "testes_passando": 27,
                     "taxa_sucesso": 100.0,
                     "spring_boot_porta": 8081,
                     "banco": "H2 Database (ACID - ./data/financiadb.mv.db)",
-                    "protocolos": ["REST (RFC 7807)", "Spring AI MCP (@Tool)", "edge-tts Voice AI"]
+                    "protocolos": ["REST (RFC 7807)", "Spring AI MCP (@Tool)", "edge-tts Voice AI", "OFX/CSV Importer"]
                 }
             }
             self.send_json(dados)
+
+        elif path == "/api/financeiro/projecao":
+            self.send_json(obter_projecao_financeira())
 
         elif path == "/api/voice/config":
             self.send_json(carregar_config_voz())

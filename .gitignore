@@ -34,3 +34,7 @@ ENV/
 # H2 Database Locks (preserva o .mv.db para dados, ignora trace e lock)
 *.trace.db
 *.lock.db
+
+# NOVA Backups & Checkpoints
+.backups/
+

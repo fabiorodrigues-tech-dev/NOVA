@@ -1,10 +1,12 @@
 package com.nova.agentefinanceiro.infrastructure.mcp;
 
 import com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse;
+import com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse;
 import com.nova.agentefinanceiro.application.dto.ResumoFinanceiroResponse;
 import com.nova.agentefinanceiro.application.dto.TransacaoRequest;
 import com.nova.agentefinanceiro.application.dto.TransacaoResponse;
 import com.nova.agentefinanceiro.application.usecase.CadastrarTransacaoUseCase;
+import com.nova.agentefinanceiro.application.usecase.CalcularProjecaoFinanceiraUseCase;
 import com.nova.agentefinanceiro.application.usecase.CalcularResumoFinanceiroUseCase;
 import com.nova.agentefinanceiro.application.usecase.ImportarExtratoOfxUseCase;
 import com.nova.agentefinanceiro.application.usecase.ListarTransacoesUseCase;
@@ -28,17 +30,31 @@ public class FinanceiroMcpTools {
     private final ListarTransacoesUseCase listarTransacoesUseCase;
     private final CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase;
     private final ImportarExtratoOfxUseCase importarExtratoOfxUseCase;
+    private final CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase;
 
     public FinanceiroMcpTools(
             CadastrarTransacaoUseCase cadastrarTransacaoUseCase,
             ListarTransacoesUseCase listarTransacoesUseCase,
             CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase,
-            ImportarExtratoOfxUseCase importarExtratoOfxUseCase
+            ImportarExtratoOfxUseCase importarExtratoOfxUseCase,
+            CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase
     ) {
         this.cadastrarTransacaoUseCase = cadastrarTransacaoUseCase;
         this.listarTransacoesUseCase = listarTransacoesUseCase;
         this.calcularResumoFinanceiroUseCase = calcularResumoFinanceiroUseCase;
         this.importarExtratoOfxUseCase = importarExtratoOfxUseCase;
+        this.calcularProjecaoFinanceiraUseCase = calcularProjecaoFinanceiraUseCase;
+    }
+
+    @Tool(
+            name = "projecao_financeira",
+            description = "Calcula a inteligência preditiva e projeção financeira orçamentária do mês corrente, estimando o burn rate diário (ritmo de gastos), projeção de saldo final ao fechar o mês e alertas de risco."
+    )
+    public ProjecaoFinanceiraResponse projecaoFinanceira(
+            @ToolParam(required = false, description = "Data de referência para o cálculo no formato 'AAAA-MM-DD'. Se omitida, assume a data de hoje.")
+            LocalDate dataReferencia
+    ) {
+        return calcularProjecaoFinanceiraUseCase.executar(dataReferencia);
     }
 
     @Tool(

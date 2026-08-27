@@ -4,7 +4,7 @@
 ![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=flat&logo=openjdk&logoColor=white)
 ![Spring Boot 3](https://img.shields.io/badge/Spring%20Boot-3.3.3-6DB33F?style=flat&logo=springboot&logoColor=white)
 ![Spring AI MCP](https://img.shields.io/badge/Spring%20AI-MCP%20Tools-007ACC?style=flat&logo=spring&logoColor=white)
-![JUnit 5](https://img.shields.io/badge/JUnit%205-21%20Tests%20Passed-25A162?style=flat&logo=junit5&logoColor=white)
+![JUnit 5](https://img.shields.io/badge/JUnit%205-27%20Tests%20Passed-25A162?style=flat&logo=junit5&logoColor=white)
 ![Material 3 Expressive](https://img.shields.io/badge/Design%20System-Material%203%20Expressive-4285F4?style=flat&logo=google&logoColor=white)
 
 Bem-vindo ao ecossistema **NOVA**, seu ponto central de inteligência, produtividade e desenvolvimento profissional em arquitetura multi-agente, integrando o **Gemini via Google Antigravity**, microsserviços **Java 21 / Spring Boot 3** com Clean Architecture, **Model Context Protocol (MCP)**, **Voz Neural Humana** e o **NOVA Control Center** (Dashboard Visual Unificado com Material 3 Expressive e Living Shader).
@@ -135,5 +135,22 @@ nova/
 └── java-services/
     └── agente-financeiro/           # Microsserviço Back-end Java 21 + Spring Boot 3 + Spring AI (MCP)
         ├── data/financiadb.mv.db    # Banco de dados H2 persistente em arquivo
-        └── run-tests.sh             # Suíte de testes automatizados JUnit 5 (21 testes - 100% sucesso)
+        └── run-tests.sh             # Suíte de testes automatizados JUnit 5 (27 testes - 100% sucesso)
 ```
+
+---
+
+## 🗺️ Roadmap de Evolução — 9 Fases 100% Concluídas
+
+| Fase | Título | Status | Principais Tecnologias & Entregas |
+|:---:|---|:---:|---|
+| **1** | Multi-Agent Orchestration | ✅ 100% | Antigravity AI Orchestrator, 4 Agentes Especialistas (`.agents/skills/`) |
+| **2** | Java 21 & Clean Architecture | ✅ 100% | Spring Boot 3.3.3, Domain Models, Repository Pattern, Banco H2 Persistente |
+| **3** | Spring AI & Model Context Protocol | ✅ 100% | Tools MCP `@Tool` para manipulação autônoma de dados orçamentários por IA |
+| **4** | Esteira 360° Tech & Audiovisual | ✅ 100% | 8 Candidaturas completas (PDF Harvard Tech ATS, DOCX timbrado, Pitches) |
+| **5** | Motor Gráfico Executivo & Relatórios | ✅ 100% | `chart_engine.py` (Matplotlib), Relatórios Visuais PDF, Dossiê Santander DIO |
+| **6** | Interface de Voz Neural Humana | ✅ 100% | Síntese de alta fidelidade (`edge-tts` + `afplay`), Voice Studio Web (Porta 5050) |
+| **7** | NOVA Control Center (Dashboard M3) | ✅ 100% | Bento Grid, Living Shader Canvas, Material 3 Expressive, Chart.js (Porta 3000) |
+| **8** | CI/CD GitHub Actions & Parser OFX | ✅ 100% | `.github/workflows/ci.yml`, Parser OFX/CSV Nubank com deduplicação nativa |
+| **9** | Inteligência Preditiva & Projeção | ✅ 100% | Burn Rate diário, Projeção de Fechamento, Alertas Preditivos e Tool MCP |
+

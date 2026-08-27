@@ -1,10 +1,12 @@
 package com.nova.agentefinanceiro.infrastructure.web.controller;
 
 import com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse;
+import com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse;
 import com.nova.agentefinanceiro.application.dto.ResumoFinanceiroResponse;
 import com.nova.agentefinanceiro.application.dto.TransacaoRequest;
 import com.nova.agentefinanceiro.application.dto.TransacaoResponse;
 import com.nova.agentefinanceiro.application.usecase.CadastrarTransacaoUseCase;
+import com.nova.agentefinanceiro.application.usecase.CalcularProjecaoFinanceiraUseCase;
 import com.nova.agentefinanceiro.application.usecase.CalcularResumoFinanceiroUseCase;
 import com.nova.agentefinanceiro.application.usecase.ImportarExtratoOfxUseCase;
 import com.nova.agentefinanceiro.application.usecase.ListarTransacoesUseCase;
@@ -33,17 +35,20 @@ public class TransacaoController {
     private final ListarTransacoesUseCase listarTransacoesUseCase;
     private final CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase;
     private final ImportarExtratoOfxUseCase importarExtratoOfxUseCase;
+    private final CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase;
 
     public TransacaoController(
             CadastrarTransacaoUseCase cadastrarTransacaoUseCase,
             ListarTransacoesUseCase listarTransacoesUseCase,
             CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase,
-            ImportarExtratoOfxUseCase importarExtratoOfxUseCase
+            ImportarExtratoOfxUseCase importarExtratoOfxUseCase,
+            CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase
     ) {
         this.cadastrarTransacaoUseCase = cadastrarTransacaoUseCase;
         this.listarTransacoesUseCase = listarTransacoesUseCase;
         this.calcularResumoFinanceiroUseCase = calcularResumoFinanceiroUseCase;
         this.importarExtratoOfxUseCase = importarExtratoOfxUseCase;
+        this.calcularProjecaoFinanceiraUseCase = calcularProjecaoFinanceiraUseCase;
     }
 
     @PostMapping
@@ -74,5 +79,13 @@ public class TransacaoController {
     ) {
         ResumoFinanceiroResponse resumo = calcularResumoFinanceiroUseCase.executar(inicio, fim);
         return ResponseEntity.ok(resumo);
+    }
+
+    @GetMapping("/projecao")
+    public ResponseEntity<ProjecaoFinanceiraResponse> obterProjecao(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataReferencia
+    ) {
+        ProjecaoFinanceiraResponse projecao = calcularProjecaoFinanceiraUseCase.executar(dataReferencia);
+        return ResponseEntity.ok(projecao);
     }
 }

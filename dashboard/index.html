@@ -342,6 +342,7 @@
               <!-- Actions Slot: Suggestion Chips -->
               <div class="va-quick-prompts md3-card__actions-slot" data-slot="actions">
                 <span class="qp-label">Atalhos de Voz:</span>
+                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('NOVA, qual a previsão do meu saldo para o final do mês?')">📈 Previsão de Saldo</button>
                 <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('NOVA, qual é o meu saldo atual?')">💰 Saldo</button>
                 <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('quanto gastei em alimentação?')">🍔 Gastos Alimentação</button>
                 <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('status dos testes do backend')">🧪 Testes JUnit 5</button>
@@ -495,6 +496,65 @@
             </div>
           </div>
 
+        </section>
+
+        <!-- ==============================================
+             4.5. INTELIGÊNCIA PREDITIVA & CONSULTOR FINANCEIRO (FASE 9)
+             ============================================== -->
+        <section class="projecao-financeira-card md3-card md3-card--elevated" id="projecao-section">
+          <div class="panel-head-row md3-card__header-slot" data-slot="header">
+            <div class="projecao-title-group">
+              <div class="projecao-icon-squircle" title="Consultoria Preditiva H2">
+                <span class="material-symbols-rounded">insights</span>
+              </div>
+              <div>
+                <h3 class="panel-heading">Inteligência Preditiva & Projeção Orçamentária (Fase 9)</h3>
+                <span class="panel-subtext">Estimativa de fechamento de mês baseada em Burn Rate diário real no banco H2</span>
+              </div>
+            </div>
+            <div class="projecao-status-pill" id="projecaoStatusBadge">
+              <span class="md3-badge md3-badge--success" id="projecaoStatusTxt">SAUDÁVEL</span>
+            </div>
+          </div>
+
+          <div class="projecao-grid-body md3-card__content-slot" data-slot="content">
+            <!-- Metric 1: Burn Rate Diário -->
+            <div class="projecao-metric-box">
+              <span class="p-metric-label">Burn Rate Diário</span>
+              <div class="p-metric-val" id="projBurnRate">R$ 63,32 / dia</div>
+              <span class="p-metric-sub" id="projDiasInfo">27 dias decorridos • 4 restantes</span>
+            </div>
+
+            <!-- Metric 2: Gasto Adicional Estimado -->
+            <div class="projecao-metric-box">
+              <span class="p-metric-label">Gasto Adicional Estimado</span>
+              <div class="p-metric-val" id="projGastoAdicional">R$ 253,28</div>
+              <span class="p-metric-sub">Até 31 de Agosto</span>
+            </div>
+
+            <!-- Metric 3: Gasto Total Fechamento -->
+            <div class="projecao-metric-box">
+              <span class="p-metric-label">Gasto Total Projetado</span>
+              <div class="p-metric-val" id="projGastoTotal">R$ 1.963,05</div>
+              <span class="p-metric-sub">Planejado: R$ 2.000,00</span>
+            </div>
+
+            <!-- Metric 4: Saldo Final Estimado -->
+            <div class="projecao-metric-box highlight-box">
+              <span class="p-metric-label">Saldo Final Projetado</span>
+              <div class="p-metric-val positive" id="projSaldoFinal">+ R$ 335,95</div>
+              <span class="p-metric-sub">Superávit no Fechamento</span>
+            </div>
+          </div>
+
+          <!-- Recommendation Banner -->
+          <div class="projecao-recommendation-box" data-slot="supporting-text">
+            <span class="material-symbols-rounded rec-icon">psychology_alt</span>
+            <div class="rec-content">
+              <strong class="rec-title">Diagnóstico & Recomendação Estratégica do NOVA:</strong>
+              <p class="rec-desc" id="projRecomendacaoTxt">Ritmo financeiro sob controle! Sugestão de aporte de R$ 167,98 nas caixinhas (Reserva de Emergência e Metas do Casal).</p>
+            </div>
+          </div>
         </section>
 
         <!-- ==============================================

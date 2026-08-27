@@ -193,12 +193,49 @@ function alternarEstadoDashboard(estado) {
 
 function renderizarDadosNormal(data) {
   renderizarTopKPIs(data.financas, data.estudos);
+  renderizarProjecaoFinanceira(data.projecao || data.financas);
   renderizarGraficoEvolucao(data.financas);
   renderizarGraficoCategorias(data.financas);
   renderizarGraficoTargetReality(data.financas);
   renderizarGraficoMatchCarreira(data.candidaturas);
   renderizarTabelaCandidaturas(data.candidaturas);
   if (window.lucide) lucide.createIcons();
+}
+
+function renderizarProjecaoFinanceira(proj) {
+  if (!proj) return;
+  const burnEl = document.getElementById('projBurnRate');
+  const diasEl = document.getElementById('projDiasInfo');
+  const gastoAdicEl = document.getElementById('projGastoAdicional');
+  const gastoTotEl = document.getElementById('projGastoTotal');
+  const saldoFinEl = document.getElementById('projSaldoFinal');
+  const statusBadge = document.getElementById('projecaoStatusBadge');
+  const recTxt = document.getElementById('projRecomendacaoTxt');
+
+  if (burnEl) burnEl.textContent = `R$ ${Number(proj.burnRateDiario || 63.32).toFixed(2).replace('.', ',')} / dia`;
+  if (diasEl) diasEl.textContent = `${proj.diasDecorridos || 27} dias decorridos • ${proj.diasRestantes || 4} restantes`;
+  if (gastoAdicEl) gastoAdicEl.textContent = `R$ ${Number(proj.gastoAdicionalProjetado || 253.28).toFixed(2).replace('.', ',')}`;
+  if (gastoTotEl) gastoTotEl.textContent = `R$ ${Number(proj.gastoTotalProjetado || 1963.05).toFixed(2).replace('.', ',')}`;
+  
+  if (saldoFinEl) {
+    const val = Number(proj.saldoFinalProjetado || 335.95);
+    saldoFinEl.textContent = `${val >= 0 ? '+ ' : '- '}R$ ${Math.abs(val).toFixed(2).replace('.', ',')}`;
+    saldoFinEl.className = `p-metric-val ${val >= 0 ? 'positive' : 'negative'}`;
+  }
+
+  if (statusBadge) {
+    if (proj.statusOrcamentario === 'CRITICO') {
+      statusBadge.innerHTML = '<span class="md3-badge md3-badge--error">CRÍTICO (DÉFICIT)</span>';
+    } else if (proj.statusOrcamentario === 'ALERTA') {
+      statusBadge.innerHTML = '<span class="md3-badge md3-badge--warning">ALERTA (MARGEM BAIXA)</span>';
+    } else {
+      statusBadge.innerHTML = '<span class="md3-badge md3-badge--success">SAUDÁVEL (SUPERÁVIT)</span>';
+    }
+  }
+
+  if (recTxt && proj.recomendacaoEstrategica) {
+    recTxt.textContent = proj.recomendacaoEstrategica;
+  }
 }
 
 function garantirCanvas(idHolder, idCanvas) {

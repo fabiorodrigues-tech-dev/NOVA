@@ -23,13 +23,16 @@ public class ProcessarComandoVozUseCase {
 
     private final CalcularResumoFinanceiroUseCase calcularResumoUseCase;
     private final CadastrarTransacaoUseCase cadastrarTransacaoUseCase;
+    private final CalcularProjecaoFinanceiraUseCase calcularProjecaoUseCase;
 
     public ProcessarComandoVozUseCase(
             CalcularResumoFinanceiroUseCase calcularResumoUseCase,
-            CadastrarTransacaoUseCase cadastrarTransacaoUseCase
+            CadastrarTransacaoUseCase cadastrarTransacaoUseCase,
+            CalcularProjecaoFinanceiraUseCase calcularProjecaoUseCase
     ) {
         this.calcularResumoUseCase = calcularResumoUseCase;
         this.cadastrarTransacaoUseCase = cadastrarTransacaoUseCase;
+        this.calcularProjecaoUseCase = calcularProjecaoUseCase;
     }
 
     public VoiceCommandResponse executar(VoiceCommandRequest request) {
@@ -39,7 +42,32 @@ public class ProcessarComandoVozUseCase {
 
         String comando = request.comando().toLowerCase(Locale.ROOT).trim();
 
-        // 1. Intenção: Consulta de Saldo / Resumo Geral
+        // 1. Intenção: Projeção Financeira & Inteligência Preditiva (Fase 9)
+        if (comando.contains("previsao") || comando.contains("previsão") || comando.contains("projecao") ||
+                comando.contains("projeção") || comando.contains("burn rate") || comando.contains("fechar") ||
+                comando.contains("terminar o mes") || comando.contains("terminar o mês") || comando.contains("positivo")) {
+            var proj = calcularProjecaoUseCase.executar(null);
+            String msg;
+            if ("CRITICO".equals(proj.statusOrcamentario())) {
+                msg = String.format(
+                        Locale.forLanguageTag("pt-BR"),
+                        "Atenção Fábio! Seu burn rate é de R$ %.2f por dia. No ritmo atual, você fechará o mês com déficit estimado de R$ %.2f.",
+                        proj.burnRateDiario(),
+                        proj.saldoFinalProjetado().abs()
+                );
+            } else {
+                msg = String.format(
+                        Locale.forLanguageTag("pt-BR"),
+                        "Fábio, seu burn rate atual é de R$ %.2f por dia. A projeção ao fim do mês é positiva com saldo de R$ %.2f. %s",
+                        proj.burnRateDiario(),
+                        proj.saldoFinalProjetado(),
+                        proj.recomendacaoEstrategica()
+                );
+            }
+            return VoiceCommandResponse.sucesso(msg, proj);
+        }
+
+        // 2. Intenção: Consulta de Saldo / Resumo Geral
         if (comando.contains("saldo") || comando.contains("quanto eu tenho") || comando.contains("resumo") || comando.contains("balanço") || comando.contains("balanco")) {
             ResumoFinanceiroResponse resumo = calcularResumoUseCase.executar(null, null);
             String msg = String.format(

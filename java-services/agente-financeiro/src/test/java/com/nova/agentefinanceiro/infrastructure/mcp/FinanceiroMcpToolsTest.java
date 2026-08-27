@@ -41,6 +41,9 @@ class FinanceiroMcpToolsTest {
     @Mock
     private com.nova.agentefinanceiro.application.usecase.ImportarExtratoOfxUseCase importarExtratoOfxUseCase;
 
+    @Mock
+    private com.nova.agentefinanceiro.application.usecase.CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase;
+
     @InjectMocks
     private FinanceiroMcpTools financeiroMcpTools;
 
@@ -103,5 +106,24 @@ class FinanceiroMcpToolsTest {
 
         assertThat(response).isEqualTo(responseEsperada);
         verify(importarExtratoOfxUseCase).executar("conteudo fake");
+    }
+
+    @Test
+    @DisplayName("Ferramenta projecao_financeira deve delegar ao use case de projeção")
+    void deveObterProjecaoViaMcpTool() {
+        com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse projecaoEsperada =
+                new com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse(
+                        LocalDate.now(), 15, 16, 31,
+                        BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+                        BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+                        "SAUDAVEL", List.of(), "Recomendação OK"
+                );
+        when(calcularProjecaoFinanceiraUseCase.executar(any())).thenReturn(projecaoEsperada);
+
+        com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse response =
+                financeiroMcpTools.projecaoFinanceira(null);
+
+        assertThat(response).isEqualTo(projecaoEsperada);
+        verify(calcularProjecaoFinanceiraUseCase).executar(null);
     }
 }

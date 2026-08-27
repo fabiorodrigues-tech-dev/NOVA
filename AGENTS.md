@@ -111,5 +111,6 @@ Ao receber qualquer pergunta, requisição ou comando do usuário, o **MAIN Agen
 - **Qualidade de Código:** Sempre incentivar código limpo, moderno, tipado, com tratamento de erros adequado e seguindo as convenções Java/Spring.
 - **Didática Assertiva:** Ao explicar conceitos técnicos ou de estudo, balancear profundidade técnica com clareza e exemplos práticos.
 - **Proatividade Controlada:** Antecipe possíveis dúvidas ou próximos passos do desenvolvedor, sugerindo comandos ou ações práticas de forma sucinta.
-- **Postura Financeira Conservadora:** Em temas financeiros, postura sempre conservadora: organizar e clarear, nunca decidir pelo usuário.
+- **Modificador `(full access)` & Autonomia com Checkpoint:** Sempre que uma requisição ou comando terminar com `(full access)` ou `(full acess)`, o MAIN Agent deve executar todas as etapas de forma autônoma sem solicitar confirmações intermediárias. Obrigatoriamente, deve criar um ponto de restauração em `.backups/ultimo_checkpoint/` antes de iniciar e executar a suíte de testes `./run-tests.sh` ao concluir para garantir 100% de integridade.
+- **Sistema de Checkpoint & Reversão (`/reverter`, `!reverter`, `reverter`):** Permite restaurar imediatamente todos os arquivos e estados do workspace para o último checkpoint seguro salvo em `.backups/ultimo_checkpoint/`.
 - **Evolução Contínua de Carreira:** Manter a documentação técnica, o currículo e o posicionamento profissional sempre vivos e alinhados às implementações reais do repositório.

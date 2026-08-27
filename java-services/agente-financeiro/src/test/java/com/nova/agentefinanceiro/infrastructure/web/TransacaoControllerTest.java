@@ -51,6 +51,9 @@ class TransacaoControllerTest {
     @MockBean
     private com.nova.agentefinanceiro.application.usecase.ImportarExtratoOfxUseCase importarExtratoOfxUseCase;
 
+    @MockBean
+    private com.nova.agentefinanceiro.application.usecase.CalcularProjecaoFinanceiraUseCase calcularProjecaoFinanceiraUseCase;
+
     @Test
     @DisplayName("POST /api/transacoes - Deve retornar 201 Created quando payload for válido")
     void deveCadastrarTransacaoComSucesso() throws Exception {
@@ -156,5 +159,25 @@ class TransacaoControllerTest {
                 .andExpect(jsonPath("$.totalLidos").value(2))
                 .andExpect(jsonPath("$.totalImportados").value(2))
                 .andExpect(jsonPath("$.totalDuplicados").value(0));
+    }
+
+    @Test
+    @DisplayName("GET /api/transacoes/projecao - Deve retornar 200 OK com projeção financeira")
+    void deveRetornarProjecaoComSucesso() throws Exception {
+        com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse projecao =
+                new com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse(
+                        LocalDate.of(2026, 8, 15), 15, 16, 31,
+                        new BigDecimal("1000.00"), new BigDecimal("3000.00"), new BigDecimal("2000.00"),
+                        new BigDecimal("66.67"), new BigDecimal("1066.72"), new BigDecimal("2066.72"),
+                        new BigDecimal("933.28"), "SAUDAVEL", List.of("Alerta OK"), "Recomendação OK"
+                );
+
+        when(calcularProjecaoFinanceiraUseCase.executar(any())).thenReturn(projecao);
+
+        mockMvc.perform(get("/api/transacoes/projecao"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusOrcamentario").value("SAUDAVEL"))
+                .andExpect(jsonPath("$.burnRateDiario").value(66.67))
+                .andExpect(jsonPath("$.saldoFinalProjetado").value(933.28));
     }
 }

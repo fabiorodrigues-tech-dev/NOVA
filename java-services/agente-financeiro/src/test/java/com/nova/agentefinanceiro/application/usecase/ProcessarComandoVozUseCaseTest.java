@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,6 +33,9 @@ class ProcessarComandoVozUseCaseTest {
 
     @Mock
     private CadastrarTransacaoUseCase cadastrarTransacaoUseCase;
+
+    @Mock
+    private CalcularProjecaoFinanceiraUseCase calcularProjecaoUseCase;
 
     @InjectMocks
     private ProcessarComandoVozUseCase useCase;
@@ -57,6 +61,27 @@ class ProcessarComandoVozUseCaseTest {
         assertThat(response).isNotNull();
         assertThat(response.status()).isEqualTo("SUCESSO");
         assertThat(response.mensagemVoz()).contains("R$ 589,23").contains("43 lançamentos");
+    }
+
+    @Test
+    @DisplayName("Deve processar consulta de previsão e projeção financeira por voz")
+    void deveProcessarConsultaDeProjecaoPorVoz() {
+        com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse projMock =
+            new com.nova.agentefinanceiro.application.dto.ProjecaoFinanceiraResponse(
+                LocalDate.now(), 20, 11, 31,
+                new BigDecimal("1200.00"), new BigDecimal("2500.00"), new BigDecimal("1300.00"),
+                new BigDecimal("60.00"), new BigDecimal("660.00"), new BigDecimal("1860.00"),
+                new BigDecimal("640.00"), "SAUDAVEL", List.of("Balanço saudável"), "Mantenha o ritmo."
+            );
+
+        when(calcularProjecaoUseCase.executar(null)).thenReturn(projMock);
+
+        VoiceCommandRequest request = new VoiceCommandRequest("NOVA, qual a previsão do meu saldo para o final do mês?");
+        VoiceCommandResponse response = useCase.executar(request);
+
+        assertThat(response).isNotNull();
+        assertThat(response.status()).isEqualTo("SUCESSO");
+        assertThat(response.mensagemVoz()).contains("burn rate atual é de R$ 60,00").contains("saldo de R$ 640,00");
     }
 
     @Test

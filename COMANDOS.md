@@ -12,6 +12,7 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 | **`/atalhos`** | `!atalhos`, `/menu`, `/comandos` | Exibe este painel completo de atalhos rápidos | `/atalhos` |
 | **`/ajuda`** | `!ajuda`, `/help` | Guia geral de suporte e recursos do ecossistema | `/ajuda` |
 | **`/status`** | `!status` | Exibe o estado real dos serviços, banco e roadmap | `/status` |
+| **`/reverter`** | `!reverter`, `reverter` | Restaura imediatamente o workspace para o último checkpoint seguro | `/reverter` |
 
 ---
 
