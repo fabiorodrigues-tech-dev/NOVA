@@ -1,0 +1,47 @@
+<svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Soft blend so overlapping blobs read as one fused core, not four flat shapes -->
+    <filter id="novaGoo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="goo" />
+      <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+    </filter>
+
+    <radialGradient id="novaCoreHighlight" cx="42%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- ============ ICON MARK (100x100 art, positioned at 0,0 - 200,200) ============ -->
+  <g transform="translate(20,20)">
+
+    <!-- orbit ring: quiet nod to the cosmos naming (Nova, Orion, Vega...) -->
+    <circle cx="80" cy="80" r="94" fill="none" stroke="#C4C7CC" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round" />
+
+    <!-- 4 fused blobs = 4 domains merging into one core -->
+    <g filter="url(#novaGoo)">
+      <!-- Financeiro -->
+      <circle cx="55" cy="60" r="34" fill="#B8860B" />
+      <!-- Voz -->
+      <circle cx="106" cy="58" r="30" fill="#5B8A72" />
+      <!-- Dashboard / core orquestrador (maior, domina o centro) -->
+      <circle cx="80" cy="92" r="40" fill="#4A6FA5" />
+      <!-- Carreira -->
+      <circle cx="112" cy="102" r="24" fill="#8E6FA5" />
+    </g>
+
+    <!-- highlight to give the fused core depth/dimension, not flat -->
+    <circle cx="80" cy="80" r="58" fill="url(#novaCoreHighlight)" />
+
+    <!-- orbiting dot: status/"live" indicator language reused from the dashboard UI -->
+    <circle cx="164" cy="34" r="5" fill="#5B8A72" />
+  </g>
+
+  <!-- ============ WORDMARK ============ -->
+  <text x="235" y="122" font-family="'Google Sans Text','Inter',-apple-system,sans-serif"
+        font-size="72" font-weight="500" letter-spacing="1" fill="#1B1C1E">NOVA</text>
+  <text x="237" y="150" font-family="'Google Sans Text','Inter',-apple-system,sans-serif"
+        font-size="15" font-weight="400" letter-spacing="3" fill="#5B6068">CONTROL CENTER</text>
+</svg>

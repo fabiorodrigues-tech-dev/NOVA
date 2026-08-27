@@ -11,85 +11,169 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Material Symbols Rounded & Outlined (Google Fonts - M3 Expressive) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
   
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+  <!-- ==============================================
+       SPLASH SCREEN 3D DE ABERTURA — NOVA CONTROL CENTER
+       ============================================== -->
+  <div id="nova3dSplashScreen" class="nova-3d-splash-overlay" aria-hidden="true">
+    <div class="splash-3d-stage">
+      <svg class="splash-svg-canvas" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="novaGooSplash" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+            <feColorMatrix in="blur" mode="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo" />
+            <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+          </filter>
+          <radialGradient id="novaCoreHighlightSplash" cx="38%" cy="32%" r="68%">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75" />
+            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+
+        <!-- 1. ICON MARK (4 Blobs Convergentes) -->
+        <g class="splash-icon-group" transform="translate(10, 10)">
+          <!-- Anel de órbita 3D -->
+          <circle class="splash-orbit-ring" cx="80" cy="80" r="76" fill="none" stroke="#909099" stroke-opacity="0.35" stroke-width="1.8" stroke-dasharray="2 7" stroke-linecap="round" />
+
+          <!-- 4 Blobs que convergem e se fundem via filtro novaGoo -->
+          <g filter="url(#novaGooSplash)" class="splash-blobs-cluster">
+            <!-- Financeiro (Ouro M3) -->
+            <circle class="splash-blob splash-blob-fin" cx="55" cy="62" r="30" fill="#B8860B" />
+            <!-- Voz (Verde M3) -->
+            <circle class="splash-blob splash-blob-voz" cx="105" cy="60" r="28" fill="#5B8A72" />
+            <!-- Dashboard / Core (Azul M3) -->
+            <circle class="splash-blob splash-blob-core" cx="80" cy="94" r="36" fill="#4A6FA5" />
+            <!-- Carreira (Roxo M3) -->
+            <circle class="splash-blob splash-blob-car" cx="108" cy="102" r="22" fill="#8E6FA5" />
+          </g>
+
+          <!-- Destaque 3D Core -->
+          <circle class="splash-highlight" cx="80" cy="80" r="50" fill="url(#novaCoreHighlightSplash)" />
+
+          <!-- Ponto de status Live -->
+          <circle class="splash-live-dot" cx="148" cy="38" r="5" fill="#5B8A72" />
+        </g>
+
+        <!-- 2. WORDMARK INTEGRADO -->
+        <g class="splash-wordmark-group" transform="translate(170, 0)">
+          <text class="splash-title-text" x="0" y="102" font-family="'Plus Jakarta Sans', -apple-system, sans-serif"
+                font-size="64" font-weight="800" letter-spacing="2" fill="#E3E2E6">NOVA</text>
+          <text class="splash-sub-text" x="2" y="134" font-family="'Plus Jakarta Sans', -apple-system, sans-serif"
+                font-size="13" font-weight="600" letter-spacing="5" fill="#909099">CONTROL CENTER</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
   <div class="dabang-layout">
 
     <!-- ==============================================
-         1. SIDEBAR LATERAL ESQUERDA (FIGMA DABANG)
+         1. SIDEBAR / NAVIGATION DRAWER (M3 SLOTS)
          ============================================== -->
-    <aside class="dabang-sidebar" id="sidebar">
+    <aside class="dabang-sidebar md3-nav-drawer" id="sidebar" aria-label="Navegação Lateral do NOVA">
       
-      <!-- Logo Header -->
-      <div class="sidebar-logo-area">
-        <div class="logo-icon-cube">
-          <i data-lucide="orbit" class="icon-brand"></i>
+      <!-- Logo Header Slot -->
+      <div class="sidebar-logo-area md3-nav-drawer__header-slot" data-slot="drawer-header">
+        <div class="logo-icon-cube" title="NOVA Intelligence Core">
+          <img src="/assets/nova-logo-icon.svg" alt="Ícone Oficial do NOVA" class="sidebar-nova-icon">
         </div>
         <div class="logo-text-group">
           <h2>NOVA</h2>
-          <span class="logo-badge">Control Center</span>
+          <span class="logo-badge md3-badge">Control Center</span>
         </div>
       </div>
 
-      <!-- Navigation Menu -->
-      <nav class="sidebar-menu">
+      <!-- Navigation Destinations Slot -->
+      <nav class="sidebar-menu md3-nav-drawer__destinations-slot" data-slot="drawer-destinations" aria-label="Menu Principal">
         <div class="menu-category">MENU PRINCIPAL</div>
         
-        <a href="#overview" class="menu-link active" id="menu-overview" onclick="selecionarMenu(this)">
-          <span class="menu-icon"><i data-lucide="layout-dashboard"></i></span>
-          <span class="menu-text">Dashboard</span>
-          <span class="menu-pill active-pill">Live</span>
+        <a href="#overview" class="menu-link active md3-nav-item" id="menu-overview" onclick="selecionarMenu(this); navegarParaSecao('dashboard'); return false;" aria-label="Ir para a visão geral do Dashboard">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">dashboard</span></span>
+            <span class="menu-text md3-nav-item__label">Dashboard</span>
+            <span class="menu-pill active-pill md3-badge md3-badge--success" id="sidebarLivePill">Live</span>
+          </div>
         </a>
 
-        <a href="#voice-assistant-section" class="menu-link" id="menu-voice-assistant" onclick="selecionarMenu(this)">
-          <span class="menu-icon"><i data-lucide="mic"></i></span>
-          <span class="menu-text">Assistente de Voz</span>
-          <span class="menu-pill voice-pill-active" id="sidebarVoicePill">Ativo</span>
+        <a href="#voice-assistant-section" class="menu-link md3-nav-item" id="menu-voice-assistant" onclick="selecionarMenu(this); navegarParaSecao('assistant'); return false;" aria-label="Ir para o Assistente de Voz Neural">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">mic</span></span>
+            <span class="menu-text md3-nav-item__label">Assistente de Voz</span>
+            <span class="menu-pill voice-pill-active md3-badge md3-badge--success" id="sidebarVoicePill">Ativo</span>
+          </div>
         </a>
 
-        <a href="#financas" class="menu-link" id="menu-financas" onclick="selecionarMenu(this)">
-          <span class="menu-icon"><i data-lucide="wallet"></i></span>
-          <span class="menu-text">Finanças (H2)</span>
+        <a href="#voice-studio-section" class="menu-link md3-nav-item" id="menu-voice-studio" onclick="selecionarMenu(this); navegarParaSecao('voice-studio'); return false;" aria-label="Abrir catálogo e laboratório do Voice Studio">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">graphic_eq</span></span>
+            <span class="menu-text md3-nav-item__label">Voice Studio</span>
+            <span class="menu-tag md3-badge" id="sidebarVoiceStudioTag">Neural</span>
+          </div>
         </a>
 
-        <a href="#candidaturas" class="menu-link" id="menu-candidaturas" onclick="selecionarMenu(this)">
-          <span class="menu-icon"><i data-lucide="briefcase"></i></span>
-          <span class="menu-text">Candidaturas 360°</span>
-          <span class="menu-counter">4</span>
+        <a href="#financas" class="menu-link md3-nav-item" id="menu-financas" onclick="selecionarMenu(this); navegarParaSecao('dashboard', 'financas'); return false;" aria-label="Ir para o painel financeiro H2">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">account_balance_wallet</span></span>
+            <span class="menu-text md3-nav-item__label">Finanças (H2)</span>
+          </div>
         </a>
 
-        <a href="#estudos" class="menu-link" id="menu-estudos" onclick="selecionarMenu(this)">
-          <span class="menu-icon"><i data-lucide="graduation-cap"></i></span>
-          <span class="menu-text">Estudos (DIO)</span>
+        <a href="#candidaturas" class="menu-link md3-nav-item" id="menu-candidaturas" onclick="selecionarMenu(this); navegarParaSecao('dashboard', 'candidaturas'); return false;" aria-label="Ir para candidaturas 360 graus">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">work</span></span>
+            <span class="menu-text md3-nav-item__label">Candidaturas 360°</span>
+            <span class="menu-counter md3-badge" id="sidebarJobCounter">5</span>
+          </div>
+        </a>
+
+        <a href="#estudos" class="menu-link md3-nav-item" id="menu-estudos" onclick="selecionarMenu(this); navegarParaSecao('dashboard', 'estudos'); return false;" aria-label="Ir para o progresso da trilha Santander DIO">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">school</span></span>
+            <span class="menu-text md3-nav-item__label">Estudos (DIO)</span>
+          </div>
         </a>
 
         <div class="menu-category">SISTEMA & ENGENHARIA</div>
 
-        <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" class="menu-link">
-          <span class="menu-icon"><i data-lucide="zap"></i></span>
-          <span class="menu-text">Spring Boot API</span>
-          <span class="menu-tag">8081</span>
+        <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" class="menu-link md3-nav-item" aria-label="Abrir documentação Swagger da API Spring Boot">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">bolt</span></span>
+            <span class="menu-text md3-nav-item__label">Spring Boot API</span>
+            <span class="menu-tag md3-badge">8081</span>
+          </div>
         </a>
 
-        <a href="http://localhost:5050" target="_blank" class="menu-link">
-          <span class="menu-icon"><i data-lucide="sliders"></i></span>
-          <span class="menu-text">Voice Studio</span>
-          <span class="menu-tag">5050</span>
+        <a href="#voice-studio-section" class="menu-link md3-nav-item" onclick="document.getElementById('menu-voice-studio').click(); return false;" aria-label="Acessar Laboratório Integrado de Voz">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">equalizer</span></span>
+            <span class="menu-text md3-nav-item__label">Laboratório de Voz</span>
+            <span class="menu-tag md3-badge">Integrado</span>
+          </div>
         </a>
       </nav>
 
-      <!-- Card Inferior "NOVA Intelligence" -->
-      <div class="sidebar-bottom-pro-card">
+      <!-- Drawer Footer Slot -->
+      <div class="sidebar-bottom-pro-card md3-card md3-card--filled" data-slot="drawer-footer">
         <div class="pro-card-header">
-          <i data-lucide="sparkles" class="pro-icon"></i>
+          <span class="material-symbols-rounded pro-icon">auto_awesome</span>
           <strong>NOVA Intelligence</strong>
         </div>
         <p class="pro-card-desc">Spring Boot 3.3 • H2 ACID • 15 Testes JUnit 5</p>
@@ -102,35 +186,56 @@
     </aside>
 
     <!-- ==============================================
-         2. MAIN WRAPPER (HEADER + CONTENT)
+         2. MAIN WRAPPER (TOP APP BAR + CONTENT)
          ============================================== -->
     <div class="dabang-main">
 
-      <!-- Header Superior -->
-      <header class="dabang-top-header">
-        <div class="header-search-wrap">
-          <i data-lucide="search" class="search-lens"></i>
-          <input type="text" id="globalSearchInput" placeholder="Digite um comando ou /atalhos..." class="header-search-input">
-          <span class="search-kbd">⌘K</span>
+      <!-- Top App Bar (M3 Search Bar & Actions Slot) -->
+      <header class="dabang-top-header md3-top-app-bar" role="banner">
+        <div class="header-search-wrap md3-search-bar" data-slot="search">
+          <span class="material-symbols-rounded search-lens" aria-hidden="true">search</span>
+          <input type="text" id="globalSearchInput" placeholder="Digite um comando ou /atalhos..." class="header-search-input" aria-label="Buscar vagas ou executar comandos rápidos">
+          <span class="search-kbd" aria-hidden="true">⌘K</span>
         </div>
 
-        <div class="header-user-actions">
-          <!-- Voice Quick Indicator -->
-          <div class="header-voice-chip" onclick="focarNoAssistenteVoz()" title="Clique para abrir Assistente de Voz">
-            <span class="voice-wave-anim">
-              <span></span><span></span><span></span>
-            </span>
-            <span id="headerVoiceName">Voz: Francisca</span>
+        <div class="header-user-actions" data-slot="actions">
+          <!-- State Switcher para Revisão Rápida -->
+          <div class="state-switcher-box" title="Alternar Estado do Dashboard para Revisão">
+            <span class="state-label-txt">Estado:</span>
+            <select id="stateSelect" class="state-select-dropdown" onchange="alternarEstadoUI(this.value)" aria-label="Seletor de Estado da Interface">
+              <option value="normal" selected>🟢 Normal (Ao Vivo)</option>
+              <option value="loading">🟡 Loading (Skeleton)</option>
+              <option value="empty">⚪ Empty State (Vazio)</option>
+              <option value="error">🔴 Error State (Voz)</option>
+            </select>
           </div>
 
+          <!-- Active Voice Indicator Chip (Living Waveform) -->
+          <button class="header-voice-chip md3-chip md3-chip--assist" onclick="document.getElementById('menu-voice-studio').click()" title="Clique para abrir Voice Studio" aria-label="Voz Neural Ativa: Francisca. Clique para abrir o Voice Studio.">
+            <span class="living-ai-voice-mark" aria-hidden="true">
+              <span class="voice-wave-bar b1"></span>
+              <span class="voice-wave-bar b2"></span>
+              <span class="voice-wave-bar b3"></span>
+              <span class="voice-wave-bar b4"></span>
+              <span class="voice-wave-bar b5"></span>
+            </span>
+            <span id="headerVoiceName">Voz: Francisca</span>
+          </button>
+
+          <!-- Theme Toggle M3 (Sun/Moon) -->
+          <button id="btnThemeToggle" class="btn-theme-toggle" onclick="alternarTemaM3()" title="Alternar Modo Claro / Escuro (Material Design 3)" aria-label="Alternar Tema Claro / Escuro">
+            <span class="material-symbols-rounded theme-icon" id="themeIconSun" aria-hidden="true">light_mode</span>
+            <span class="material-symbols-rounded theme-icon" id="themeIconMoon" aria-hidden="true">dark_mode</span>
+          </button>
+
           <!-- Refresh Button -->
-          <button class="btn-icon-refresh" onclick="recarregarDashboard()" title="Sincronizar Dados">
-            <i data-lucide="rotate-cw"></i>
+          <button class="btn-icon-refresh" onclick="recarregarDashboard()" title="Sincronizar Dados" aria-label="Sincronizar dados do dashboard agora">
+            <span class="material-symbols-rounded" aria-hidden="true">refresh</span>
           </button>
 
           <!-- User Profile -->
-          <div class="user-profile-badge">
-            <div class="user-avatar-circle">FR</div>
+          <div class="user-profile-badge" aria-label="Perfil do Desenvolvedor: Fábio Rodrigues">
+            <div class="user-avatar-circle" aria-hidden="true">FR</div>
             <div class="user-profile-details">
               <span class="user-name-txt">Fábio Rodrigues</span>
               <span class="user-role-txt">Java Back-end • Recife, PE</span>
@@ -143,14 +248,21 @@
       <main class="dabang-content-body">
 
         <!-- ==============================================
-             CARD NOVO: NOVA VOICE ASSISTANT (HERO INTERATIVO)
+             SEÇÃO DASHBOARD PRINCIPAL
              ============================================== -->
-        <section class="voice-assistant-hero-card" id="voice-assistant-section">
+        <div id="dashboard-view" class="view-panel">
+
+        <!-- ==============================================
+             CARD HERO: NOVA VOICE ASSISTANT (LIVING SHADER ORB)
+             ============================================== -->
+        <section class="voice-assistant-hero-card md3-card md3-card--elevated" id="voice-assistant-section">
           
-          <div class="va-header-row">
+          <!-- Header Slot -->
+          <div class="va-header-row md3-card__header-slot" data-slot="header">
             <div class="va-brand-title">
-              <div class="va-icon-squircle">
-                <i data-lucide="sparkles"></i>
+              <div class="va-icon-squircle living-shader-icon" id="vaHeroIconSquircle" title="NOVA Living Neural Voice Core">
+                <canvas id="novaMiniShaderCanvas" class="nova-mini-shader-canvas" width="88" height="88"></canvas>
+                <span class="material-symbols-rounded va-squircle-symbol">auto_awesome</span>
               </div>
               <div>
                 <h2>NOVA Voice Assistant</h2>
@@ -158,9 +270,9 @@
               </div>
             </div>
 
-            <!-- Voice Selector Pill -->
+            <!-- Voice Selector Dropdown -->
             <div class="va-voice-select-box">
-              <label for="selectVoiceModel"><i data-lucide="volume-2"></i> Voz Ativa:</label>
+              <label for="selectVoiceModel"><span class="material-symbols-rounded">volume_up</span> Voz Ativa:</label>
               <select id="selectVoiceModel" class="va-select-dropdown" onchange="trocarVozAtiva(this.value)">
                 <option value="pt-BR-FranciscaNeural" selected>Francisca (Feminina - Fluida / Acolhedora)</option>
                 <option value="pt-BR-AntonioNeural">Antônio (Masculino - Executivo / Natural)</option>
@@ -171,15 +283,26 @@
             </div>
           </div>
 
-          <div class="va-main-grid">
+          <!-- Content Slot: Living Shader Voice Orb + Live Chat -->
+          <div class="va-main-grid md3-card__content-slot" data-slot="content">
             
-            <!-- Coluna 1: Voice Orb & Microfone -->
+            <!-- Coluna 1: Living Shader Voice Orb & Microfone -->
             <div class="va-orb-interactive-panel">
-              <div class="orb-visual-wrapper">
+              <div class="orb-visual-wrapper" id="orbVisualWrapper" title="Clique no Orb ou no Microfone para falar">
                 <div class="orb-outer-glow" id="orbOuterGlow"></div>
-                <div class="orb-apple-sphere" id="orbAppleSphere" onclick="toggleGravacaoVoz()" title="Clique no Orb ou no Microfone para falar">
-                  <div class="orb-wave-rings"></div>
-                  <i data-lucide="mic" id="orbCenterIcon"></i>
+                <div class="orb-ambient-rings" id="orbAmbientRings">
+                  <span class="ambient-ring r1"></span>
+                  <span class="ambient-ring r2"></span>
+                  <span class="ambient-ring r3"></span>
+                </div>
+                <!-- Living GPU Shader Canvas -->
+                <canvas id="novaShaderOrbCanvas" class="nova-shader-orb-canvas" width="280" height="280" onclick="toggleGravacaoVoz()"></canvas>
+                <!-- Glass Overlay Shield -->
+                <div class="orb-glass-shield" id="orbGlassShield" onclick="toggleGravacaoVoz()">
+                  <div class="orb-specular-highlight"></div>
+                  <div class="orb-center-icon-wrap" id="orbCenterIconWrap">
+                    <span class="material-symbols-rounded" id="orbCenterIcon">mic</span>
+                  </div>
                 </div>
               </div>
 
@@ -188,8 +311,8 @@
                 <strong id="vaStateText">Pronto para ouvir</strong>
               </div>
 
-              <button class="btn-mic-toggle" id="btnMicToggle" onclick="toggleGravacaoVoz()">
-                <i data-lucide="mic" id="btnMicIcon"></i>
+              <button class="btn-mic-toggle md3-button md3-button--filled" id="btnMicToggle" onclick="toggleGravacaoVoz()">
+                <span class="material-symbols-rounded" id="btnMicIcon">mic</span>
                 <span id="btnMicLabel">Pressione para Falar</span>
               </button>
             </div>
@@ -210,19 +333,20 @@
               <!-- Input Bar & Presets -->
               <div class="va-input-group">
                 <input type="text" id="vaTextInput" class="va-text-input" placeholder="Digite uma pergunta para o NOVA falar..." value="NOVA, qual é o meu saldo atual?">
-                <button class="btn-va-send" onclick="enviarTextoDigitado()">
-                  <i data-lucide="send"></i>
+                <button class="btn-va-send md3-button md3-button--filled" onclick="enviarTextoDigitado()">
+                  <span class="material-symbols-rounded">send</span>
                   <span>Enviar</span>
                 </button>
               </div>
 
-              <div class="va-quick-prompts">
+              <!-- Actions Slot: Suggestion Chips -->
+              <div class="va-quick-prompts md3-card__actions-slot" data-slot="actions">
                 <span class="qp-label">Atalhos de Voz:</span>
-                <button class="btn-qp" onclick="executarPromptRapido('NOVA, qual é o meu saldo atual?')">💰 Saldo</button>
-                <button class="btn-qp" onclick="executarPromptRapido('quanto gastei em alimentação?')">🍔 Gastos Alimentação</button>
-                <button class="btn-qp" onclick="executarPromptRapido('status dos testes do backend')">🧪 Testes JUnit 5</button>
-                <button class="btn-qp" onclick="executarPromptRapido('quais são as minhas candidaturas ativas?')">💼 Vagas Ativas</button>
-                <button class="btn-qp" onclick="executarPromptRapido('qual o meu progresso na trilha DIO?')">🎓 Trilha DIO</button>
+                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('NOVA, qual é o meu saldo atual?')">💰 Saldo</button>
+                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('quanto gastei em alimentação?')">🍔 Gastos Alimentação</button>
+                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('status dos testes do backend')">🧪 Testes JUnit 5</button>
+                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('quais são as minhas candidaturas ativas?')">💼 Vagas Ativas</button>
+                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('qual o meu progresso na trilha DIO?')">🎓 Trilha DIO</button>
               </div>
 
             </div>
@@ -232,141 +356,141 @@
         </section>
 
         <!-- ==============================================
-             3. TOP 4 SUMMARY CARDS (SQUIRCLE LUCIDE ICONS)
+             3. TOP 4 SUMMARY CARDS (M3 ELEVATED + SLOTS)
              ============================================== -->
         <section class="summary-cards-row" id="overview">
           
-          <!-- Card 1: Saldo Líquido (Coral Pastel) -->
-          <div class="summary-card card-coral">
-            <div class="card-top-row">
+          <!-- Card 1: Saldo Líquido (Secondary Role) -->
+          <div class="summary-card md3-card md3-card--elevated card-coral" data-card-type="kpi">
+            <div class="card-top-row md3-card__header-slot" data-slot="header">
               <div class="summary-icon-box coral">
-                <i data-lucide="wallet"></i>
+                <span class="material-symbols-rounded">account_balance_wallet</span>
               </div>
-              <span class="card-tag positive">+34.5%</span>
+              <span class="card-tag positive md3-badge md3-badge--success">+34.5%</span>
             </div>
-            <div class="card-value-group">
+            <div class="card-value-group md3-card__content-slot" data-slot="content">
               <span class="card-label">Saldo Líquido (Agosto)</span>
               <h2 class="card-big-num" id="kpiSaldo">+ R$ 589,23</h2>
             </div>
-            <div class="card-footer-info">
+            <div class="card-footer-info" data-slot="supporting-text">
               <span>H2 Persistente • 100% Conciliado</span>
             </div>
           </div>
 
-          <!-- Card 2: Total Recebido (Amarelo Pastel) -->
-          <div class="summary-card card-yellow">
-            <div class="card-top-row">
+          <!-- Card 2: Total Recebido (Tertiary Role) -->
+          <div class="summary-card md3-card md3-card--elevated card-yellow" data-card-type="kpi">
+            <div class="card-top-row md3-card__header-slot" data-slot="header">
               <div class="summary-icon-box yellow">
-                <i data-lucide="arrow-down-left"></i>
+                <span class="material-symbols-rounded">south_west</span>
               </div>
-              <span class="card-tag neutral">7 Entradas</span>
+              <span class="card-tag neutral md3-badge md3-badge--warning">7 Entradas</span>
             </div>
-            <div class="card-value-group">
+            <div class="card-value-group md3-card__content-slot" data-slot="content">
               <span class="card-label">Total Recebido</span>
               <h2 class="card-big-num" id="kpiReceitas">R$ 2.299,00</h2>
             </div>
-            <div class="card-footer-info">
+            <div class="card-footer-info" data-slot="supporting-text">
               <span>Ramon, Gildeth e Sheila</span>
             </div>
           </div>
 
-          <!-- Card 3: Total Gasto (Verde Pastel) -->
-          <div class="summary-card card-green">
-            <div class="card-top-row">
+          <!-- Card 3: Total Gasto (Primary Role) -->
+          <div class="summary-card md3-card md3-card--elevated card-green" data-card-type="kpi">
+            <div class="card-top-row md3-card__header-slot" data-slot="header">
               <div class="summary-icon-box green">
-                <i data-lucide="arrow-up-right"></i>
+                <span class="material-symbols-rounded">north_east</span>
               </div>
-              <span class="card-tag negative">36 Saídas</span>
+              <span class="card-tag negative md3-badge">36 Saídas</span>
             </div>
-            <div class="card-value-group">
+            <div class="card-value-group md3-card__content-slot" data-slot="content">
               <span class="card-label">Total Gasto</span>
               <h2 class="card-big-num" id="kpiDespesas">R$ 1.709,77</h2>
             </div>
-            <div class="card-footer-info">
+            <div class="card-footer-info" data-slot="supporting-text">
               <span>Alimentação, Transporte e Compras</span>
             </div>
           </div>
 
-          <!-- Card 4: Trilha Santander DIO (Roxo Pastel) -->
-          <div class="summary-card card-purple">
-            <div class="card-top-row">
+          <!-- Card 4: Trilha Santander DIO (Educational Role) -->
+          <div class="summary-card md3-card md3-card--elevated card-purple" data-card-type="kpi">
+            <div class="card-top-row md3-card__header-slot" data-slot="header">
               <div class="summary-icon-box purple">
-                <i data-lucide="award"></i>
+                <span class="material-symbols-rounded">school</span>
               </div>
-              <span class="card-tag purple-tag">Módulo 1</span>
+              <span class="card-tag purple-tag md3-badge">Módulo 1</span>
             </div>
-            <div class="card-value-group">
+            <div class="card-value-group md3-card__content-slot" data-slot="content">
               <span class="card-label">Trilha Santander 2026</span>
               <h2 class="card-big-num" id="kpiDio">7.7% Concluído</h2>
             </div>
-            <div class="card-mini-progress">
-              <div class="mini-progress-fill" id="kpiDioBar" style="width: 7.7%;"></div>
+            <div class="card-mini-progress md3-linear-progress" data-slot="progress">
+              <div class="mini-progress-fill md3-linear-progress__indicator" id="kpiDioBar" style="width: 7.7%;"></div>
             </div>
           </div>
 
         </section>
 
         <!-- ==============================================
-             4. PAINEL CENTRAL DE GRÁFICOS (4 CHARTS)
+             4. PAINEL CENTRAL DE GRÁFICOS (4 M3 PANELS)
              ============================================== -->
         <section class="charts-master-grid" id="financas">
           
-          <!-- Chart 1: Evolução Financeira (Linha / Spline Suave) -->
-          <div class="chart-panel card-wide">
-            <div class="panel-head-row">
+          <!-- Chart 1: Evolução Financeira -->
+          <div class="chart-panel md3-card md3-card--elevated card-wide">
+            <div class="panel-head-row md3-card__header-slot" data-slot="header">
               <div>
                 <h3 class="panel-heading">Evolução Financeira de Receitas vs Despesas</h3>
                 <span class="panel-subtext">Histórico comparativo semanal consolidado no banco H2 (Agosto/2026)</span>
               </div>
-              <a href="/download/resumo/financeiro/relatorio_agosto_2026.pdf" target="_blank" class="btn-panel-ghost">
-                <i data-lucide="file-text"></i>
+              <a href="/download/resumo/financeiro/relatorio_agosto_2026.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
+                <span class="material-symbols-rounded">description</span>
                 <span>Relatório PDF</span>
               </a>
             </div>
-            <div class="canvas-holder-large">
+            <div class="canvas-holder-large md3-card__media-slot" id="holderEvolucao" data-slot="media">
               <canvas id="chartEvolucaoFinanceira"></canvas>
             </div>
           </div>
 
-          <!-- Chart 2: Gastos por Categoria (Barras Coloridas) -->
-          <div class="chart-panel">
-            <div class="panel-head-row">
+          <!-- Chart 2: Gastos por Categoria -->
+          <div class="chart-panel md3-card md3-card--elevated">
+            <div class="panel-head-row md3-card__header-slot" data-slot="header">
               <div>
                 <h3 class="panel-heading">Gastos por Categoria</h3>
                 <span class="panel-subtext">Detalhamento por tipo de despesa</span>
               </div>
             </div>
-            <div class="canvas-holder-medium">
+            <div class="canvas-holder-medium md3-card__media-slot" id="holderCategorias" data-slot="media">
               <canvas id="chartGastosCategoria"></canvas>
             </div>
           </div>
 
-          <!-- Chart 3: Target vs Reality (Metas Orçamentárias) -->
-          <div class="chart-panel">
-            <div class="panel-head-row">
+          <!-- Chart 3: Target vs Reality -->
+          <div class="chart-panel md3-card md3-card--elevated">
+            <div class="panel-head-row md3-card__header-slot" data-slot="header">
               <div>
                 <h3 class="panel-heading">Meta Orçamentária vs Realizado</h3>
                 <span class="panel-subtext">Planejado (Teto R$ 2.000) vs Gasto Real (R$ 1.709)</span>
               </div>
             </div>
-            <div class="canvas-holder-medium">
+            <div class="canvas-holder-medium md3-card__media-slot" id="holderTarget" data-slot="media">
               <canvas id="chartTargetVsReality"></canvas>
             </div>
           </div>
 
           <!-- Chart 4: Match de Carreira das Vagas -->
-          <div class="chart-panel card-wide">
-            <div class="panel-head-row">
+          <div class="chart-panel md3-card md3-card--elevated card-wide">
+            <div class="panel-head-row md3-card__header-slot" data-slot="header">
               <div>
                 <h3 class="panel-heading">Aderência Técnica nas Vagas Mapeadas</h3>
                 <span class="panel-subtext">Scores de match calculados pelo motor analítico do NOVA</span>
               </div>
-              <a href="/download/carreira/base/pdf/curriculo_fabio_rodrigues_pt.pdf" target="_blank" class="btn-panel-ghost">
-                <i data-lucide="file-check"></i>
+              <a href="/download/carreira/base/pdf/curriculo_fabio_rodrigues_pt.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal" aria-label="Baixar Currículo Base oficial em PDF">
+                <span class="material-symbols-rounded">verified_user</span>
                 <span>CV Base (PT)</span>
               </a>
             </div>
-            <div class="canvas-holder-horizontal">
+            <div class="canvas-holder-horizontal md3-card__media-slot" id="holderMatch" data-slot="media">
               <canvas id="chartMatchCarreira"></canvas>
             </div>
           </div>
@@ -374,21 +498,21 @@
         </section>
 
         <!-- ==============================================
-             5. TABELA DE CANDIDATURAS 360° (ESTILO TOP PRODUCTS)
+             5. TABELA DE CANDIDATURAS 360° (M3 DATA TABLE)
              ============================================== -->
-        <section class="table-panel-card" id="candidaturas">
-          <div class="panel-head-row">
+        <section class="table-panel-card md3-card md3-card--elevated" id="candidaturas">
+          <div class="panel-head-row md3-card__header-slot" data-slot="header">
             <div>
               <h3 class="panel-heading">Esteira de Candidaturas 360° & Vagas Analisadas</h3>
               <span class="panel-subtext">Documentos oficiais em PDF Harvard Tech e Cover Letter em DOCX</span>
             </div>
             <div class="table-actions">
-              <span class="table-counter-pill">4 Empresas Ativas</span>
+              <span class="table-counter-pill md3-badge">4 Empresas Ativas</span>
             </div>
           </div>
 
-          <div class="table-responsive-wrapper">
-            <table class="dabang-table">
+          <div class="table-responsive-wrapper md3-card__content-slot" data-slot="content">
+            <table class="dabang-table md3-data-table">
               <thead>
                 <tr>
                   <th>#</th>
@@ -411,28 +535,28 @@
              6. ESTUDOS & ENGENHARIA SUMMARY CARD
              ============================================== -->
         <section class="dio-summary-strip" id="estudos">
-          <div class="bottom-widget-card">
-            <div class="widget-head">
+          <div class="bottom-widget-card md3-card md3-card--elevated">
+            <div class="widget-head md3-card__header-slot" data-slot="header">
               <div class="widget-title-group">
-                <span class="widget-icon"><i data-lucide="graduation-cap"></i></span>
+                <span class="widget-icon"><span class="material-symbols-rounded">school</span></span>
                 <div>
                   <h4>Trilha Santander 2026 & Engenharia Back-end</h4>
                   <span class="widget-sub">DIO AI Java Back-end • Clean Architecture • Spring AI MCP</span>
                 </div>
               </div>
-              <a href="/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf" target="_blank" class="btn-panel-ghost">
-                <i data-lucide="book-open"></i>
+              <a href="/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
+                <span class="material-symbols-rounded">menu_book</span>
                 <span>Manual PDF (6 Pág.)</span>
               </a>
             </div>
 
-            <div class="dio-progress-content">
+            <div class="dio-progress-content md3-card__content-slot" data-slot="content">
               <div class="dio-bar-header">
                 <span>Progresso da Trilha Santander</span>
                 <strong>2 de 26 Módulos (7.7%)</strong>
               </div>
-              <div class="dio-bar-track">
-                <div class="dio-bar-colored" style="width: 7.7%;"></div>
+              <div class="dio-bar-track md3-linear-progress">
+                <div class="dio-bar-colored md3-linear-progress__indicator" style="width: 7.7%;"></div>
               </div>
 
               <div class="dio-metrics-grid">
@@ -457,12 +581,180 @@
           </div>
         </section>
 
+        </div> <!-- /#dashboard-view -->
+
+        <!-- ==============================================
+             SEÇÃO UNIFICADA: NOVA VOICE STUDIO PRO (GOOGLE STORE & M3 SLOTS)
+             ============================================== -->
+        <div id="voice-studio-view" class="view-panel" style="display: none;">
+          
+          <!-- 1. Executive Showcase Bento Grid -->
+          <section class="vs-showcase-grid">
+            <!-- Banner Principal do Studio -->
+            <div class="vs-showcase-banner md3-card md3-card--elevated">
+              <div class="vs-banner-header">
+                <span class="vs-eyebrow-chip">
+                  <span class="material-symbols-rounded">graphic_eq</span>
+                  SPEECH INTELLIGENCE LAB
+                </span>
+                <span class="vs-tech-badge md3-badge">Edge-TTS • 24 kHz</span>
+              </div>
+              <h2 class="vs-banner-title">NOVA Voice Studio Pro</h2>
+              <p class="vs-banner-desc">
+                Laboratório de síntese neural de alta fidelidade e catálogo de vozes multilingue.
+                Ajuste prosódia, velocidade de fala e defina a personalidade vocal ideal para cada contexto do seu ecossistema.
+              </p>
+              <div class="vs-specs-pills">
+                <div class="vs-spec-pill">
+                  <span class="material-symbols-rounded">record_voice_over</span>
+                  <span><strong>6</strong> Modelos Neurais</span>
+                </div>
+                <div class="vs-spec-pill">
+                  <span class="material-symbols-rounded">speed</span>
+                  <span><strong>~120ms</strong> Latência Média</span>
+                </div>
+                <div class="vs-spec-pill">
+                  <span class="material-symbols-rounded">translate</span>
+                  <span><strong>PT-BR</strong> & <strong>EN-US</strong></span>
+                </div>
+                <div class="vs-spec-pill">
+                  <span class="material-symbols-rounded">bolt</span>
+                  <span>Síntese Local Base64</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card de Destaque: Voz Padrão Ativa -->
+            <div class="vs-active-showcase-card md3-card md3-card--filled">
+              <div class="vs-active-header">
+                <span class="vs-active-label">Voz Padrão do Sistema</span>
+                <span class="vs-status-dot-pulse"></span>
+              </div>
+              <div class="vs-active-profile">
+                <div class="vs-active-avatar" id="vsActiveAvatar">👩‍💼</div>
+                <div class="vs-active-meta">
+                  <h3 id="vsActiveVoiceTitle">Francisca</h3>
+                  <span class="vs-active-id" id="vsActiveVoiceId">pt-BR-FranciscaNeural</span>
+                  <span class="vs-active-tag" id="vsActiveVoiceTag">Acolhedora / Fluida • 🇧🇷 Brasil</span>
+                </div>
+              </div>
+              <div class="vs-active-audio-preview">
+                <div class="vs-audio-wave-bars">
+                  <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <button class="btn-vs-quick-listen md3-button md3-button--tonal" onclick="testarVozAtivaStudio()" title="Ouvir Demonstração da Voz Ativa">
+                  <span class="material-symbols-rounded">play_arrow</span>
+                  <span>Ouvir Frase Padrão</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 2. Laboratório de Síntese & Ajuste de Prosódia (Google Device Control Style) -->
+          <section class="vs-lab-card md3-card md3-card--elevated">
+            <div class="vs-lab-header md3-card__header-slot" data-slot="header">
+              <div class="vs-lab-title-group">
+                <div class="vs-lab-icon-squircle">
+                  <span class="material-symbols-rounded">tune</span>
+                </div>
+                <div>
+                  <h3>Laboratório de Síntese em Tempo Real</h3>
+                  <span class="vs-lab-subtitle">Digite um texto personalizado ou escolha um preset temático para testar com qualquer voz</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vs-lab-body md3-card__content-slot" data-slot="content">
+              <!-- Coluna de Texto & Presets -->
+              <div class="vs-lab-input-col">
+                <div class="vs-textarea-wrapper">
+                  <textarea id="vsTextInput" class="vs-custom-textarea" rows="3" placeholder="Digite uma frase personalizada para sintetizar...">Olá, Fábio! Todos os serviços do NOVA estão operacionais e prontos para uso.</textarea>
+                  <button class="btn-clear-text" onclick="document.getElementById('vsTextInput').value=''; document.getElementById('vsTextInput').focus();" title="Limpar texto">
+                    <span class="material-symbols-rounded">close</span>
+                  </button>
+                </div>
+                <div class="vs-presets-row">
+                  <span class="vs-presets-label">Sugestões Rápidas:</span>
+                  <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Olá, Fábio! Todos os serviços do NOVA estão operacionais e prontos para uso.')">🚀 Status Geral</button>
+                  <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Fábio, seu saldo líquido de Agosto é de R$ 589,23 com 43 lançamentos conciliados no H2.')">💰 Saldo Financeiro</button>
+                  <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Sua candidatura para Analista de Endomarketing no Grupo Luck atingiu 92% de match!')">💼 Vaga Grupo Luck</button>
+                  <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Você concluiu 2 módulos na Trilha Santander 2026 AI Java Back-end na DIO.')">🎓 Trilha DIO</button>
+                  <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Hello Fabio! Guy speaking. Your Java 21 Clean Architecture backend is fully verified.')">🌐 English Pitch</button>
+                </div>
+              </div>
+
+              <!-- Coluna de Controles de Prosódia & Botão Primário -->
+              <div class="vs-lab-controls-col">
+                <div class="vs-speed-box">
+                  <div class="vs-speed-label-row">
+                    <label for="vsSpeedSlider">
+                      <span class="material-symbols-rounded">speed</span>
+                      Velocidade da Fala
+                    </label>
+                    <span class="vs-speed-bubble md3-badge" id="vsSpeedDisplay">+0%</span>
+                  </div>
+                  <input type="range" id="vsSpeedSlider" min="-50" max="50" value="0" step="5" class="vs-slider-range" oninput="atualizarLabelVelocidade(this.value)" onchange="salvarVelocidadeStudio(this.value)">
+                  <div class="vs-speed-ticks">
+                    <span>-50% Lenta</span>
+                    <span>0% Natural</span>
+                    <span>+50% Rápida</span>
+                  </div>
+                </div>
+
+                <button class="btn-vs-synthesize-primary md3-button md3-button--filled" id="btnVsTestActive" onclick="testarVozAtivaStudio()">
+                  <span class="material-symbols-rounded" id="iconBtnTestActive">play_arrow</span>
+                  <span id="labelBtnTestActive">Sintetizar com Voz Ativa</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. Toolbar de Filtros & Busca do Catálogo -->
+          <div class="vs-filter-toolbar">
+            <div class="vs-filter-chips-group" id="vsFilterChips">
+              <button class="vs-filter-btn active md3-chip" onclick="filtrarCatalogoVozes('todos', this)">
+                <span class="material-symbols-rounded">auto_awesome</span>
+                <span>Todas as Vozes (6)</span>
+              </button>
+              <button class="vs-filter-btn md3-chip" onclick="filtrarCatalogoVozes('pt-br', this)">
+                <span>🇧🇷 Português BR</span>
+              </button>
+              <button class="vs-filter-btn md3-chip" onclick="filtrarCatalogoVozes('en-us', this)">
+                <span>🇺🇸 English US</span>
+              </button>
+              <button class="vs-filter-btn md3-chip" onclick="filtrarCatalogoVozes('feminino', this)">
+                <span>👩 Femininas</span>
+              </button>
+              <button class="vs-filter-btn md3-chip" onclick="filtrarCatalogoVozes('masculino', this)">
+                <span>👨 Masculinas</span>
+              </button>
+              <button class="vs-filter-btn md3-chip" onclick="filtrarCatalogoVozes('executiva', this)">
+                <span>💼 Executivas</span>
+              </button>
+            </div>
+
+            <div class="vs-search-box">
+              <span class="material-symbols-rounded">search</span>
+              <input type="text" id="vsSearchVoiceInput" placeholder="Buscar por voz, timbre ou sotaque..." oninput="buscarVozesCatalogo(this.value)">
+            </div>
+          </div>
+
+          <!-- 4. Grid Dinâmico de Cards de Vozes (Material 3 Card Slots) -->
+          <div class="vs-voice-grid" id="vsVoiceGrid">
+            <!-- Cards injetados dinamicamente via app.js com anatomia M3 -->
+          </div>
+
+          <!-- Hidden Audio Element para Reprodução -->
+          <audio id="vsAudioPlayer"></audio>
+
+        </div> <!-- /#voice-studio-view -->
+
       </main>
 
       <!-- Footer -->
       <footer class="dabang-footer">
         <span>NOVA Control Center • Sistema Multi-Agente • Desenvolvido para Fábio Rodrigues</span>
-        <span>Java 21 LTS • Spring Boot 3.3 • Spring AI MCP • Apple Voice Neural UI</span>
+        <span>Java 21 LTS • Spring Boot 3.3 • Spring AI MCP • Material 3 Expressive UI</span>
       </footer>
 
     </div>
@@ -484,7 +776,7 @@
       </div>
       <div class="modal-actions-area">
         <button class="btn-copy-action" onclick="copiarPitchClipboard()">
-          <i data-lucide="copy"></i>
+          <span class="material-symbols-rounded">content_copy</span>
           <span>Copiar Pitch para Área de Transferência</span>
         </button>
       </div>

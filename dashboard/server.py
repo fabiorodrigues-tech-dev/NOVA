@@ -61,11 +61,11 @@ def obter_dados_candidaturas():
             "salario_max": "R$ 8.500",
             "status": "Candidatura Pronta",
             "stack": ["Java 21", "Spring Boot 3", "Arquitetura Hexagonal", "TDD", "PostgreSQL"],
-            "cv_pdf": "/carreira/vagas_analisadas/capgemini/curriculo_fabio_rodrigues_capgemini.pdf",
-            "cover_pdf": "/carreira/vagas_analisadas/capgemini/cover_letter_fabio_rodrigues_capgemini.pdf",
-            "cover_docx": "/carreira/vagas_analisadas/capgemini/cover_letter_fabio_rodrigues_capgemini.docx",
-            "relatorio_pdf": "/carreira/vagas_analisadas/capgemini/relatorio_match_capgemini.pdf",
-            "pitch_file": "carreira/vagas_analisadas/capgemini/carta_apresentacao_recruiter.md"
+            "cv_pdf": "/carreira/vagas_analisadas/tech_dev/capgemini/curriculo_fabio_rodrigues_capgemini.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/tech_dev/capgemini/cover_letter_fabio_rodrigues_capgemini.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/tech_dev/capgemini/cover_letter_fabio_rodrigues_capgemini.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/tech_dev/capgemini/relatorio_match_capgemini.pdf",
+            "pitch_file": "carreira/vagas_analisadas/tech_dev/capgemini/carta_apresentacao_recruiter.md"
         },
         {
             "id": "accenture",
@@ -78,11 +78,11 @@ def obter_dados_candidaturas():
             "salario_max": "R$ 9.000",
             "status": "Candidatura Pronta",
             "stack": ["Java 21", "Spring Boot 3", "Clean Architecture", "JUnit 5", "Spring AI"],
-            "cv_pdf": "/carreira/vagas_analisadas/accenture/curriculo_fabio_rodrigues_accenture.pdf",
-            "cover_pdf": "/carreira/vagas_analisadas/accenture/cover_letter_fabio_rodrigues_accenture.pdf",
-            "cover_docx": "/carreira/vagas_analisadas/accenture/cover_letter_fabio_rodrigues_accenture.docx",
-            "relatorio_pdf": "/carreira/vagas_analisadas/accenture/relatorio_match_accenture.pdf",
-            "pitch_file": "carreira/vagas_analisadas/accenture/carta_apresentacao_recruiter.md"
+            "cv_pdf": "/carreira/vagas_analisadas/tech_dev/accenture/curriculo_fabio_rodrigues_accenture.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/tech_dev/accenture/cover_letter_fabio_rodrigues_accenture.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/tech_dev/accenture/cover_letter_fabio_rodrigues_accenture.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/tech_dev/accenture/relatorio_match_accenture.pdf",
+            "pitch_file": "carreira/vagas_analisadas/tech_dev/accenture/carta_apresentacao_recruiter.md"
         },
         {
             "id": "deloitte",
@@ -95,11 +95,79 @@ def obter_dados_candidaturas():
             "salario_max": "R$ 9.500",
             "status": "Candidatura Pronta",
             "stack": ["Java 21", "Spring Boot 3", "TypeScript", "Design Systems", "REST API"],
-            "cv_pdf": "/carreira/vagas_analisadas/deloitte/curriculo_fabio_rodrigues_deloitte.pdf",
-            "cover_pdf": "/carreira/vagas_analisadas/deloitte/cover_letter_fabio_rodrigues_deloitte.pdf",
-            "cover_docx": "/carreira/vagas_analisadas/deloitte/cover_letter_fabio_rodrigues_deloitte.docx",
-            "relatorio_pdf": "/carreira/vagas_analisadas/deloitte/relatorio_match_deloitte.pdf",
-            "pitch_file": "carreira/vagas_analisadas/deloitte/carta_apresentacao_recruiter.md"
+            "cv_pdf": "/carreira/vagas_analisadas/tech_dev/deloitte/curriculo_fabio_rodrigues_deloitte.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/tech_dev/deloitte/cover_letter_fabio_rodrigues_deloitte.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/tech_dev/deloitte/cover_letter_fabio_rodrigues_deloitte.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/tech_dev/deloitte/relatorio_match_deloitte.pdf",
+            "pitch_file": "carreira/vagas_analisadas/tech_dev/deloitte/carta_apresentacao_recruiter.md"
+        },
+        {
+            "id": "gummy",
+            "nome": "Gummy Original",
+            "cargo": "Analista de Marketing de Influência",
+            "local": "Recife, PE",
+            "modelo": "Híbrido / PJ",
+            "match": 96,
+            "salario_min": "R$ 3.800",
+            "salario_max": "R$ 5.500",
+            "status": "Candidatura Pronta",
+            "stack": ["Design (UniFBV)", "Influencer Marketing", "UGC / Hooks 3s", "ROAS / Sheets", "Recife Ordinário"],
+            "cv_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/gummy/curriculo_fabio_rodrigues_gummy.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/gummy/cover_letter_fabio_rodrigues_gummy.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/marketing_audiovisual/gummy/cover_letter_fabio_rodrigues_gummy.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/gummy/relatorio_match_gummy.pdf",
+            "pitch_file": "carreira/vagas_analisadas/marketing_audiovisual/gummy/carta_apresentacao_recruiter.md"
+        },
+        {
+            "id": "aposta_ganha",
+            "nome": "Grupo Aposta Ganha",
+            "cargo": "Analista de Copywriting",
+            "local": "Recife, PE",
+            "modelo": "Híbrido / CLT",
+            "match": 94,
+            "salario_min": "R$ 4.000",
+            "salario_max": "R$ 5.500",
+            "status": "Candidatura Pronta",
+            "stack": ["Design (UniFBV)", "Copywriting/Storytelling", "CRM/Push", "Final Cut/Logic", "Gildo/Primos"],
+            "cv_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/aposta_ganha/curriculo_fabio_rodrigues_aposta_ganha.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/aposta_ganha/cover_letter_fabio_rodrigues_aposta_ganha.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/marketing_audiovisual/aposta_ganha/cover_letter_fabio_rodrigues_aposta_ganha.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/aposta_ganha/relatorio_match_aposta_ganha.pdf",
+            "pitch_file": "carreira/vagas_analisadas/marketing_audiovisual/aposta_ganha/carta_apresentacao_recruiter.md"
+        },
+        {
+            "id": "rio_ave",
+            "nome": "RIO AVE",
+            "cargo": "Analista de Marketing Pleno",
+            "local": "Recife, PE",
+            "modelo": "Presencial / CLT",
+            "match": 95,
+            "salario_min": "R$ 4.984",
+            "salario_max": "R$ 4.985",
+            "status": "Candidatura Pronta",
+            "stack": ["Design (UniFBV)", "Final Cut Pro", "Canva/Figma", "Marketing Imobiliário", "DER-PE (Obras)"],
+            "cv_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/rio_ave/curriculo_fabio_rodrigues_rio_ave.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/rio_ave/cover_letter_fabio_rodrigues_rio_ave.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/marketing_audiovisual/rio_ave/cover_letter_fabio_rodrigues_rio_ave.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/rio_ave/relatorio_match_rio_ave.pdf",
+            "pitch_file": "carreira/vagas_analisadas/marketing_audiovisual/rio_ave/carta_apresentacao_recruiter.md"
+        },
+        {
+            "id": "grupo_luck",
+            "nome": "Grupo Luck",
+            "cargo": "Analista de Endomarketing CSC",
+            "local": "Recife, PE",
+            "modelo": "Presencial / CSC",
+            "match": 92,
+            "salario_min": "R$ 4.500",
+            "salario_max": "R$ 5.200",
+            "status": "Candidatura Pronta",
+            "stack": ["Design (UniFBV)", "Photoshop/Illustrator", "Premiere/CapCut", "Endomarketing", "IA Criativa"],
+            "cv_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/grupo_luck/curriculo_fabio_rodrigues_grupo_luck.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/grupo_luck/cover_letter_fabio_rodrigues_grupo_luck.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/marketing_audiovisual/grupo_luck/cover_letter_fabio_rodrigues_grupo_luck.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/grupo_luck/relatorio_match_grupo_luck.pdf",
+            "pitch_file": "carreira/vagas_analisadas/marketing_audiovisual/grupo_luck/carta_apresentacao_recruiter.md"
         },
         {
             "id": "fullstack",
@@ -112,11 +180,11 @@ def obter_dados_candidaturas():
             "salario_max": "$ 6,500/mês",
             "status": "Análise Estratégica",
             "stack": ["Java 21", "Spring Boot 3", "AI Agents", "Scrum Leadership", "English"],
-            "cv_pdf": "/carreira/vagas_analisadas/fullstack/curriculo_fabio_rodrigues_fullstack.pdf",
-            "cover_pdf": "/carreira/vagas_analisadas/fullstack/cover_letter_fabio_rodrigues_fullstack.pdf",
-            "cover_docx": "/carreira/vagas_analisadas/fullstack/cover_letter_fabio_rodrigues_fullstack.docx",
-            "relatorio_pdf": "/carreira/vagas_analisadas/fullstack/relatorio_match_fullstack.pdf",
-            "pitch_file": "carreira/vagas_analisadas/fullstack/carta_apresentacao_recruiter.md"
+            "cv_pdf": "/carreira/vagas_analisadas/tech_dev/fullstack/curriculo_fabio_rodrigues_fullstack.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/tech_dev/fullstack/cover_letter_fabio_rodrigues_fullstack.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/tech_dev/fullstack/cover_letter_fabio_rodrigues_fullstack.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/tech_dev/fullstack/relatorio_match_fullstack.pdf",
+            "pitch_file": "carreira/vagas_analisadas/tech_dev/fullstack/carta_apresentacao_recruiter.md"
         }
     ]
 
@@ -287,6 +355,15 @@ class DashboardHandler(BaseHTTPRequestHandler):
             self.serve_file(os.path.join(BASE_DIR, "styles.css"), "text/css; charset=utf-8")
         elif path == "/app.js":
             self.serve_file(os.path.join(BASE_DIR, "app.js"), "application/javascript; charset=utf-8")
+        elif path.startswith("/assets/"):
+            file_path = os.path.join(BASE_DIR, path.lstrip("/"))
+            if os.path.exists(file_path) and os.path.isfile(file_path):
+                mime_type, _ = mimetypes.guess_type(file_path)
+                self.serve_file(file_path, mime_type or "image/svg+xml")
+            else:
+                self.send_response(404)
+                self.end_headers()
+                self.wfile.write(b"Asset nao encontrado")
         
         elif path == "/api/status":
             dados = {
@@ -316,6 +393,15 @@ class DashboardHandler(BaseHTTPRequestHandler):
 
         elif path == "/api/voice/config":
             self.send_json(carregar_config_voz())
+
+        # Proxy Reverso: Voice Studio (Repassa /voice-studio/* para http://localhost:5050/*)
+        elif path.startswith("/voice-studio"):
+            subpath = path[len("/voice-studio"):]
+            if not subpath:
+                subpath = "/"
+            if parsed.query:
+                subpath += f"?{parsed.query}"
+            self.forward_to_voice_studio("GET", subpath, headers=dict(self.headers))
 
         elif path.startswith("/download/"):
             rel_path = path.replace("/download/", "")
@@ -389,9 +475,53 @@ class DashboardHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(str(e).encode('utf-8'))
 
+        # Proxy Reverso: Voice Studio POST (/voice-studio/* repassado para http://localhost:5050/*)
+        elif parsed.path.startswith("/voice-studio"):
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length) if content_length > 0 else None
+            subpath = parsed.path[len("/voice-studio"):]
+            if not subpath:
+                subpath = "/"
+            if parsed.query:
+                subpath += f"?{parsed.query}"
+            self.forward_to_voice_studio("POST", subpath, body=body, headers=dict(self.headers))
+
         else:
             self.send_response(404)
             self.end_headers()
+
+    def forward_to_voice_studio(self, method, subpath, body=None, headers=None):
+        target_url = f"http://127.0.0.1:5050{subpath}"
+        try:
+            req_headers = {}
+            if headers:
+                for k, v in headers.items():
+                    if k.lower() not in ['host', 'content-length', 'connection']:
+                        req_headers[k] = v
+            req = urllib.request.Request(target_url, data=body, headers=req_headers, method=method)
+            with urllib.request.urlopen(req, timeout=12) as resp:
+                resp_body = resp.read()
+                self.send_response(resp.status)
+                for k, v in resp.getheaders():
+                    if k.lower() not in ['transfer-encoding', 'content-length', 'connection']:
+                        self.send_header(k, v)
+                self.send_header('Content-Length', str(len(resp_body)))
+                self.end_headers()
+                self.wfile.write(resp_body)
+        except urllib.error.HTTPError as e:
+            err_body = e.read()
+            self.send_response(e.code)
+            for k, v in e.headers.items():
+                if k.lower() not in ['transfer-encoding', 'content-length', 'connection']:
+                    self.send_header(k, v)
+            self.send_header('Content-Length', str(len(err_body)))
+            self.end_headers()
+            self.wfile.write(err_body)
+        except Exception as e:
+            self.send_response(502)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(json.dumps({"erro": f"Voice Studio backend indisponível: {str(e)}"}).encode('utf-8'))
 
     def serve_file(self, file_path, content_type, as_attachment=False):
         try:

@@ -50,4 +50,9 @@ public class TransacaoRepositoryImpl implements TransacaoRepository {
         return springDataRepository.findById(id)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public boolean existe(LocalDate data, java.math.BigDecimal valor, String descricao) {
+        return springDataRepository.existsByDataAndValorAndDescricao(data, valor, descricao);
+    }
 }

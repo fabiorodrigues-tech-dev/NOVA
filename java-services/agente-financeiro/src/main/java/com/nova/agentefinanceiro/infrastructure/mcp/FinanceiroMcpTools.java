@@ -1,10 +1,12 @@
 package com.nova.agentefinanceiro.infrastructure.mcp;
 
+import com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse;
 import com.nova.agentefinanceiro.application.dto.ResumoFinanceiroResponse;
 import com.nova.agentefinanceiro.application.dto.TransacaoRequest;
 import com.nova.agentefinanceiro.application.dto.TransacaoResponse;
 import com.nova.agentefinanceiro.application.usecase.CadastrarTransacaoUseCase;
 import com.nova.agentefinanceiro.application.usecase.CalcularResumoFinanceiroUseCase;
+import com.nova.agentefinanceiro.application.usecase.ImportarExtratoOfxUseCase;
 import com.nova.agentefinanceiro.application.usecase.ListarTransacoesUseCase;
 import com.nova.agentefinanceiro.domain.model.CategoriaTransacao;
 import com.nova.agentefinanceiro.domain.model.TipoTransacao;
@@ -25,15 +27,29 @@ public class FinanceiroMcpTools {
     private final CadastrarTransacaoUseCase cadastrarTransacaoUseCase;
     private final ListarTransacoesUseCase listarTransacoesUseCase;
     private final CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase;
+    private final ImportarExtratoOfxUseCase importarExtratoOfxUseCase;
 
     public FinanceiroMcpTools(
             CadastrarTransacaoUseCase cadastrarTransacaoUseCase,
             ListarTransacoesUseCase listarTransacoesUseCase,
-            CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase
+            CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase,
+            ImportarExtratoOfxUseCase importarExtratoOfxUseCase
     ) {
         this.cadastrarTransacaoUseCase = cadastrarTransacaoUseCase;
         this.listarTransacoesUseCase = listarTransacoesUseCase;
         this.calcularResumoFinanceiroUseCase = calcularResumoFinanceiroUseCase;
+        this.importarExtratoOfxUseCase = importarExtratoOfxUseCase;
+    }
+
+    @Tool(
+            name = "importar_extrato_ofx",
+            description = "Importa e processa extratos bancários em formato OFX ou CSV (padrão Nubank e outros bancos), com categorização inteligente e deduplicação automática no banco de dados."
+    )
+    public ImportacaoExtratoResponse importarExtratoOfx(
+            @ToolParam(description = "Conteúdo textual completo do arquivo OFX ou CSV do extrato bancário.")
+            String conteudoExtrato
+    ) {
+        return importarExtratoOfxUseCase.executar(conteudoExtrato);
     }
 
     @Tool(

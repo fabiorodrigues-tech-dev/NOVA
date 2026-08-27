@@ -38,6 +38,9 @@ class FinanceiroMcpToolsTest {
     @Mock
     private CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase;
 
+    @Mock
+    private com.nova.agentefinanceiro.application.usecase.ImportarExtratoOfxUseCase importarExtratoOfxUseCase;
+
     @InjectMocks
     private FinanceiroMcpTools financeiroMcpTools;
 
@@ -86,5 +89,19 @@ class FinanceiroMcpToolsTest {
 
         assertThat(response).isEqualTo(resumoEsperado);
         verify(calcularResumoFinanceiroUseCase).executar(null, null);
+    }
+
+    @Test
+    @DisplayName("Ferramenta importar_extrato_ofx deve delegar ao use case de importação")
+    void deveImportarExtratoOfxViaMcpTool() {
+        com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse responseEsperada =
+                com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse.sucesso(2, 2, 0, List.of());
+        when(importarExtratoOfxUseCase.executar(any())).thenReturn(responseEsperada);
+
+        com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse response =
+                financeiroMcpTools.importarExtratoOfx("conteudo fake");
+
+        assertThat(response).isEqualTo(responseEsperada);
+        verify(importarExtratoOfxUseCase).executar("conteudo fake");
     }
 }

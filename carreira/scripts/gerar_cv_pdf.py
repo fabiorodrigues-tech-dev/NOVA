@@ -18,7 +18,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, HRFlowable, KeepTogether, Table, TableStyle, Image
+    SimpleDocTemplate, Paragraph, Spacer, HRFlowable, KeepTogether, Table, TableStyle, Image, PageBreak
 )
 
 # Adiciona o diretório scripts ao path para importar o chart_engine
@@ -70,7 +70,8 @@ def strip_emojis_and_symbols(text: str) -> str:
 def clean_markdown_inline(text: str) -> str:
     """Converte formatação inline básica de markdown para tags HTML suportadas pelo ReportLab."""
     text = strip_emojis_and_symbols(text)
-    # Links markdown [texto](url) -> texto
+    # Links markdown [texto](url) -> link clicavel no PDF
+    text = re.sub(r'\[([^\]]+)\]\((https?://[^\)]+)\)', r'<a href="\2"><font color="#2980B9"><u>\1</u></font></a>', text)
     text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
     # Negrito e Itálico combinados
     text = re.sub(r'\*\*\*([^\*]+)\*\*\*', r'<b><i>\1</i></b>', text)
@@ -355,6 +356,7 @@ def parse_cover_letter_to_pdf(markdown_path: str, output_pdf_path: str):
 def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
     """
     Gera um Relatório de Match Técnico Executivo em PDF com gráficos do chart_engine embutidos.
+    Suporta dinamicamente vagas de Tecnologia (Dev/TI) e de Marketing/Audiovisual/Criação.
     """
     if not os.path.exists(markdown_path):
         raise FileNotFoundError(f"Arquivo não encontrado: {markdown_path}")
@@ -371,22 +373,117 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
     vaga_match = re.search(r'#\s*🎯\s*Análise de Vaga & Match Técnico:\s*(.+)', content)
     if not vaga_match:
         vaga_match = re.search(r'#\s*(.+)', content)
-    vaga_titulo = vaga_match.group(1).split("—")[0].strip() if vaga_match else "Desenvolvedor Java Backend"
+    vaga_titulo = vaga_match.group(1).split("—")[0].strip() if vaga_match else "Analista / Especialista"
 
     score_match = re.search(r'SCORE DE ADERÊNCIA TÉCNICA:\s*(\d+)%', content)
-    score_val = score_match.group(1) if score_match else "90"
+    score_val = score_match.group(1) if score_match else "92"
 
-    # Competências extraídas para o gráfico
-    skills_map = {
-        'Java 21 / Spring Boot 3': (100, 100),
-        'Clean Architecture / SOLID': (100, 95),
-        'TDD (JUnit 5 / Mockito)': (100, 95),
-        'Bancos Relacionais (SQL/ACID)': (95, 90),
-        'APIs RESTful / Swagger': (95, 90),
-        'Spring AI (MCP Server)': (100, 75),
-        'TypeScript / Prototipagem': (90, 85),
-        'Inglês Avançado': (95, 90)
-    }
+    # 1. Parsing dinâmico de Competências / Skills
+    import json
+    skills_map = None
+    skills_json_match = re.search(r'<!--\s*SKILLS_JSON:\s*(\{.+?\})\s*-->', content, re.DOTALL)
+    if skills_json_match:
+        try:
+            skills_map = json.loads(skills_json_match.group(1))
+        except Exception:
+            skills_map = None
+
+    if not skills_map:
+        # Detecta se é perfil Marketing/Audiovisual ou Tech
+        if any(k in content.lower() for k in ["endomarketing", "audiovisual", "filmmaker", "edição", "marketing", "conteúdo", "vídeo"]):
+            skills_map = {
+                'Design & Identidade Visual': (100, 95),
+                'Pós-Produção & Edição de Vídeo': (100, 90),
+                'Storytelling & Redação': (95, 90),
+                'Comunicação Interna & CSC': (95, 90),
+                'Employer Branding & Cultura': (90, 85),
+                'Automação & IA Criativa': (100, 75),
+                'Photoshop / Illustrator / Premiere': (100, 95),
+                'Captação & Áudio / Foto': (90, 85)
+            }
+        else:
+            skills_map = {
+                'Java 21 / Spring Boot 3': (100, 100),
+                'Clean Architecture / SOLID': (100, 95),
+                'TDD (JUnit 5 / Mockito)': (100, 95),
+                'Bancos Relacionais (SQL/ACID)': (95, 90),
+                'APIs RESTful / Swagger': (95, 90),
+                'Spring AI (MCP Server)': (100, 75),
+                'TypeScript / Prototipagem': (90, 85),
+                'Inglês Avançado': (95, 90)
+            }
+
+    # 2. Parsing dinâmico de Faixa Salarial
+    sal_match = re.search(r'<!--\s*SALARIO:\s*([\d\.]+)\s*,\s*([\d\.]+)\s*,\s*([\d\.]+)\s*,\s*([\d\.]+)\s*-->', content)
+    if sal_match:
+        sal_min = float(sal_match.group(1))
+        sal_med = float(sal_match.group(2))
+        sal_pret = float(sal_match.group(3))
+        sal_teto = float(sal_match.group(4))
+    else:
+        if any(k in content.lower() for k in ["endomarketing", "audiovisual", "filmmaker", "marketing"]):
+            sal_min, sal_med, sal_pret, sal_teto = 3500.0, 4200.0, 4800.0, 6000.0
+        else:
+            sal_min, sal_med, sal_pret, sal_teto = 6500.0, 8500.0, 9000.0, 12000.0
+
+    # 3. Parsing dinâmico de KPIs
+    kpi_match = re.search(r'<!--\s*KPIS:\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*,\s*([^,]+)\s*-->', content)
+    if kpi_match:
+        kpi3_title = kpi_match.group(1).strip()
+        kpi3_val = kpi_match.group(2).strip()
+        kpi4_title = kpi_match.group(3).strip()
+        kpi4_val = kpi_match.group(4).strip()
+    else:
+        if any(k in content.lower() for k in ["endomarketing", "audiovisual", "filmmaker", "marketing"]):
+            kpi3_title = "DESIGN & VÍDEO"
+            kpi3_val = "100% Coberto"
+            kpi4_title = "DIFERENCIAL IA"
+            kpi4_val = "Automação / LLM"
+        else:
+            kpi3_title = "CORE BACKEND"
+            kpi3_val = "100% Coberto"
+            kpi4_title = "DIFERENCIAL IA"
+            kpi4_val = "Spring AI / MCP"
+
+    # 4. Parsing dinâmico de Parecer & Argumentos
+    parecer_custom = []
+    sec3_match = re.search(r'##\s*💼\s*3\.\s*Argumentos de Impacto[^\n]*\n([\s\S]+?)(?=\n##|\Z)', content)
+    if sec3_match:
+        raw_bullets = sec3_match.group(1).strip().splitlines()
+        for b in raw_bullets:
+            b = b.strip()
+            if b.startswith("1.") or b.startswith("2.") or b.startswith("3.") or b.startswith("-"):
+                # Limpa markdown e adiciona bullet
+                cleaned_b = clean_markdown_inline(b)
+                parecer_custom.append(f"&bull; {cleaned_b}")
+
+    if not parecer_custom:
+        parecer_custom = [
+            f"&bull; <b>Alinhamento do Domínio:</b> O portfólio e histórico profissional cobrem plenamente os requisitos exigidos pela {empresa}.",
+            f"&bull; <b>Vantagem Competitiva:</b> A união de formação em Design (UniFBV), maestria em produção audiovisual e domínio de ferramentas de IA posiciona o candidato no topo do processo seletivo.",
+            f"&bull; <b>Recomendação de Abordagem:</b> Enviar currículo oficial compilado no padrão Harvard Tech/ATS, cover letter timbrada e realizar abordagem ativa com recrutadores e lideranças no LinkedIn."
+        ]
+
+    is_marketing = any(k in content.lower() for k in ["endomarketing", "audiovisual", "filmmaker", "edição", "marketing", "conteúdo", "vídeo", "luck"])
+
+    # 1.1 Parsing dinâmico de Cases de Portfólio
+    portfolio_cases = None
+    port_json_match = re.search(r'<!--\s*PORTFOLIO_CASES:\s*(\{.+?\})\s*-->', content, re.DOTALL)
+    if port_json_match:
+        try:
+            portfolio_cases = json.loads(port_json_match.group(1))
+        except Exception:
+            portfolio_cases = None
+
+    if not portfolio_cases:
+        portfolio_cases = {
+            'Institucional & Obras (DER-PE)': 95,
+            'Viral, Retenção & Humor (Gildo Lanches)': 96,
+            'Collabs & Cultura Regional (Quintal dos Primos)': 92,
+            'Processos Gráficos & B2B (Gráfica do Parque)': 90,
+            'Motion Graphics & Comunidade (Unigames)': 88,
+            'Inovação & Voice AI (Infinit Tecnologia)': 94
+        }
 
     margin = 36  # ~12.7mm
     doc = SimpleDocTemplate(
@@ -399,40 +496,43 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
     )
 
     styles = getSampleStyleSheet()
-    title_style = ParagraphStyle('RepTitle', fontName='Helvetica-Bold', fontSize=16, leading=20, textColor=colors.HexColor('#1A2530'), alignment=1)
-    subtitle_style = ParagraphStyle('RepSub', fontName='Helvetica', fontSize=9.5, leading=13, textColor=colors.HexColor('#5D6D7E'), alignment=1)
-    sec_style = ParagraphStyle('RepSec', fontName='Helvetica-Bold', fontSize=11, leading=15, textColor=colors.HexColor('#1A2530'), spaceBefore=8, spaceAfter=4)
+    title_style = ParagraphStyle('RepTitle', fontName='Helvetica-Bold', fontSize=15, leading=19, textColor=colors.HexColor('#1A2530'), alignment=1)
+    subtitle_style = ParagraphStyle('RepSub', fontName='Helvetica', fontSize=9, leading=12, textColor=colors.HexColor('#5D6D7E'), alignment=1)
+    sec_style = ParagraphStyle('RepSec', fontName='Helvetica-Bold', fontSize=10.5, leading=14, textColor=colors.HexColor('#1A2530'), spaceBefore=6, spaceAfter=3)
     body_style = ParagraphStyle('RepBody', fontName='Helvetica', fontSize=8.5, leading=12, textColor=colors.HexColor('#2C3E50'))
 
     with tempfile.TemporaryDirectory() as tmpdir:
         chart_match_path = os.path.join(tmpdir, "match_chart.png")
         chart_sal_path = os.path.join(tmpdir, "salario_chart.png")
+        chart_port_path = os.path.join(tmpdir, "portfolio_chart.png")
 
         if chart_engine:
             chart_engine.gerar_grafico_match(skills_map, chart_match_path)
-            chart_engine.gerar_grafico_salario(6500, 8500, 9000, 12000, chart_sal_path, cargo=vaga_titulo)
+            chart_engine.gerar_grafico_salario(sal_min, sal_med, sal_pret, sal_teto, chart_sal_path, cargo=vaga_titulo)
+            if is_marketing and hasattr(chart_engine, 'gerar_grafico_portfolio_match'):
+                chart_engine.gerar_grafico_portfolio_match(portfolio_cases, chart_port_path)
 
         story = []
 
         # Cabeçalho
-        story.append(Paragraph(f"NOVA &bull; RELATÓRIO DE MATCH TÉCNICO & MERCADO", title_style))
+        story.append(Paragraph(f"NOVA &bull; RELATÓRIO DE MATCH TÉCNICO & PORTFÓLIO", title_style))
         story.append(Paragraph(f"Vaga: <b>{vaga_titulo}</b> | Empresa: <b>{empresa}</b> | Match: <b>{score_val}%</b>", subtitle_style))
-        story.append(Spacer(1, 6))
-        story.append(HRFlowable(width="100%", thickness=1.2, color=colors.HexColor("#1A2530"), spaceAfter=8))
+        story.append(Spacer(1, 4))
+        story.append(HRFlowable(width="100%", thickness=1.2, color=colors.HexColor("#1A2530"), spaceAfter=6))
 
         # KPI Banner
         kpi_data = [
             [
-                Paragraph("SCORE DE MATCH", ParagraphStyle('K1', fontName='Helvetica', fontSize=8, alignment=1, textColor=colors.HexColor('#5D6D7E'))),
-                Paragraph("CLASSIFICAÇÃO", ParagraphStyle('K2', fontName='Helvetica', fontSize=8, alignment=1, textColor=colors.HexColor('#5D6D7E'))),
-                Paragraph("CORE BACKEND", ParagraphStyle('K3', fontName='Helvetica', fontSize=8, alignment=1, textColor=colors.HexColor('#5D6D7E'))),
-                Paragraph("DIFERENCIAL IA", ParagraphStyle('K4', fontName='Helvetica', fontSize=8, alignment=1, textColor=colors.HexColor('#5D6D7E')))
+                Paragraph("SCORE DE MATCH", ParagraphStyle('K1', fontName='Helvetica', fontSize=7.5, alignment=1, textColor=colors.HexColor('#5D6D7E'))),
+                Paragraph("CLASSIFICAÇÃO", ParagraphStyle('K2', fontName='Helvetica', fontSize=7.5, alignment=1, textColor=colors.HexColor('#5D6D7E'))),
+                Paragraph(kpi3_title, ParagraphStyle('K3', fontName='Helvetica', fontSize=7.5, alignment=1, textColor=colors.HexColor('#5D6D7E'))),
+                Paragraph(kpi4_title, ParagraphStyle('K4', fontName='Helvetica', fontSize=7.5, alignment=1, textColor=colors.HexColor('#5D6D7E')))
             ],
             [
-                Paragraph(f"<font color='#27AE60'><b>{score_val}%</b></font>", ParagraphStyle('V1', fontName='Helvetica-Bold', fontSize=13, alignment=1)),
-                Paragraph("<b>Alta Aderência</b>", ParagraphStyle('V2', fontName='Helvetica-Bold', fontSize=11, alignment=1, textColor=colors.HexColor('#1A2530'))),
-                Paragraph("<b>100% Coberto</b>", ParagraphStyle('V3', fontName='Helvetica-Bold', fontSize=11, alignment=1, textColor=colors.HexColor('#2980B9'))),
-                Paragraph("<b>Spring AI / MCP</b>", ParagraphStyle('V4', fontName='Helvetica-Bold', fontSize=11, alignment=1, textColor=colors.HexColor('#E67E22')))
+                Paragraph(f"<font color='#27AE60'><b>{score_val}%</b></font>", ParagraphStyle('V1', fontName='Helvetica-Bold', fontSize=12, alignment=1)),
+                Paragraph("<b>Alta Aderência</b>", ParagraphStyle('V2', fontName='Helvetica-Bold', fontSize=10.5, alignment=1, textColor=colors.HexColor('#1A2530'))),
+                Paragraph(f"<b>{kpi3_val}</b>", ParagraphStyle('V3', fontName='Helvetica-Bold', fontSize=10.5, alignment=1, textColor=colors.HexColor('#2980B9'))),
+                Paragraph(f"<b>{kpi4_val}</b>", ParagraphStyle('V4', fontName='Helvetica-Bold', fontSize=10.5, alignment=1, textColor=colors.HexColor('#E67E22')))
             ]
         ]
         kpi_table = Table(kpi_data, colWidths=[130, 130, 130, 130])
@@ -440,36 +540,77 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
             ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#F8F9F9')),
             ('BOX', (0, 0), (-1, -1), 0.8, colors.HexColor('#BDC3C7')),
             ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#E5E8E8')),
-            ('TOPPADDING', (0, 0), (-1, -1), 5),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+            ('TOPPADDING', (0, 0), (-1, -1), 4),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ]))
         story.append(kpi_table)
-        story.append(Spacer(1, 10))
+        story.append(Spacer(1, 8))
 
-        # Gráfico de Match
+        # Seção 1: Gráfico de Competências
         if os.path.exists(chart_match_path):
             story.append(Paragraph("<b>1. Análise Visual de Aderência por Competência</b>", sec_style))
-            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=6))
-            story.append(Image(chart_match_path, width=520, height=220))
-            story.append(Spacer(1, 8))
+            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=5))
+            story.append(Image(chart_match_path, width=520, height=210))
+            story.append(Spacer(1, 6))
 
-        # Gráfico Salarial
+        # Seção 2: Gráfico Salarial
         if os.path.exists(chart_sal_path):
-            story.append(Paragraph("<b>2. Posicionamento de Pretensão Salarial</b>", sec_style))
-            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=6))
-            story.append(Image(chart_sal_path, width=520, height=140))
+            story.append(Paragraph("<b>2. Posicionamento de Pretensão Salarial & Regime</b>", sec_style))
+            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=5))
+            story.append(Image(chart_sal_path, width=520, height=130))
+            story.append(Spacer(1, 6))
+
+        if is_marketing:
+            # Quebra para a Página 2 (Auditoria de Portfólio + Parecer)
+            story.append(PageBreak())
+
+            # Seção 3: Auditoria de Portfólio
+            story.append(Paragraph("<b>3. Auditoria de Portfólio & Cases Recomendados</b>", sec_style))
+            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=5))
+
+            if os.path.exists(chart_port_path):
+                story.append(Image(chart_port_path, width=520, height=175))
+                story.append(Spacer(1, 6))
+
+            # Destaques dos Cases
+            case_box_data = [
+                [
+                    Paragraph("<b>Case Institucional Recomendado (DER-PE):</b> Cobertura de obras rodoviárias e comunicação pública com rigor institucional. Demonstra capacidade técnica para alinhar diretrizes com a diretoria do CSC e produzir comunicados executivos de prestação de contas.", body_style)
+                ],
+                [
+                    Paragraph("<b>Case de Engajamento Recomendado (Gildo Lanches):</b> Produção de vídeos dinâmicos de alta retenção (Reels/Shorts), ganchos visuais e Sound Design apurado. Demonstra habilidade para criar rituais de cultura vibrantes e engajar colaboradores das filiais.", body_style)
+                ],
+                [
+                    Paragraph("<b>Link Oficial do Portfólio:</b> <a href='https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view'><font color='#2980B9'><u>https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view</u></font></a> (Final Cut Pro, Logic Pro, DaVinci Resolve, Mac M1 e iPhone 14 Pro Max em 4K ProRes).", body_style)
+                ]
+            ]
+            case_table = Table(case_box_data, colWidths=[520])
+            case_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#F8F9F9')),
+                ('BOX', (0, 0), (-1, -1), 0.8, colors.HexColor('#BDC3C7')),
+                ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#E5E8E8')),
+                ('TOPPADDING', (0, 0), (-1, -1), 5),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+                ('LEFTPADDING', (0, 0), (-1, -1), 8),
+                ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+            ]))
+            story.append(case_table)
             story.append(Spacer(1, 8))
 
-        # Parecer & Argumentos
-        story.append(Paragraph("<b>3. Parecer Estratégico & Argumentos de Entrevista</b>", sec_style))
-        story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=6))
-        story.append(Paragraph(
-            f"&bull; <b>Alinhamento do Domínio:</b> O portfólio NOVA cobre plenamente os requisitos mandatórios de Java 21, Spring Boot 3, Clean Architecture e TDD exigidos pela {empresa}.<br/>"
-            f"&bull; <b>Vantagem Competitiva:</b> A combinação de microsserviços com integração Spring AI (MCP Server) e formação em Design/Ergonomia Cognitiva posiciona o candidato no topo do funil seletivo.<br/>"
-            f"&bull; <b>Recomendação de Abordagem:</b> Enviar currículo personalizado com PDF compilado no padrão Harvard Tech e abordar Tech Recruiters via mensagem no LinkedIn com o pitch estruturado.",
-            body_style
-        ))
+            # Seção 4: Parecer & Argumentos
+            story.append(Paragraph("<b>4. Parecer Estratégico & Argumentos de Entrevista</b>", sec_style))
+            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=5))
+            for p_item in parecer_custom[:4]:
+                story.append(Paragraph(p_item, body_style))
+                story.append(Spacer(1, 3))
+        else:
+            # Tech: Seção 3 Parecer
+            story.append(Paragraph("<b>3. Parecer Estratégico & Argumentos de Entrevista</b>", sec_style))
+            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=5))
+            for p_item in parecer_custom[:4]:
+                story.append(Paragraph(p_item, body_style))
+                story.append(Spacer(1, 3))
 
         doc.build(story)
         print(f"✅ Relatório Visual de Match gerado com sucesso em: {output_pdf_path}")

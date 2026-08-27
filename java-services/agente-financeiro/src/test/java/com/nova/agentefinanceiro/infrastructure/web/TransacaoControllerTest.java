@@ -48,6 +48,9 @@ class TransacaoControllerTest {
     @MockBean
     private CalcularResumoFinanceiroUseCase calcularResumoFinanceiroUseCase;
 
+    @MockBean
+    private com.nova.agentefinanceiro.application.usecase.ImportarExtratoOfxUseCase importarExtratoOfxUseCase;
+
     @Test
     @DisplayName("POST /api/transacoes - Deve retornar 201 Created quando payload for válido")
     void deveCadastrarTransacaoComSucesso() throws Exception {
@@ -136,5 +139,22 @@ class TransacaoControllerTest {
                 .andExpect(jsonPath("$.saldo").value(2400.00))
                 .andExpect(jsonPath("$.quantidadeTransacoes").value(2))
                 .andExpect(jsonPath("$.totalPorCategoria.ALIMENTACAO").value(600.00));
+    }
+
+    @Test
+    @DisplayName("POST /api/transacoes/importar-ofx - Deve retornar 200 OK com resumo da importação")
+    void deveImportarExtratoOfxComSucesso() throws Exception {
+        com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse response =
+                com.nova.agentefinanceiro.application.dto.ImportacaoExtratoResponse.sucesso(2, 2, 0, List.of());
+
+        when(importarExtratoOfxUseCase.executar(any())).thenReturn(response);
+
+        mockMvc.perform(post("/api/transacoes/importar-ofx")
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .content("conteudo fake ofx"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalLidos").value(2))
+                .andExpect(jsonPath("$.totalImportados").value(2))
+                .andExpect(jsonPath("$.totalDuplicados").value(0));
     }
 }

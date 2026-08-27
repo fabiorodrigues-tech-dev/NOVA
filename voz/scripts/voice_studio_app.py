@@ -793,6 +793,12 @@ class VoiceStudioHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(config).encode("utf-8"))
 
+        elif parsed.path == "/api/voices":
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(json.dumps(VOZES_CATALOGO, ensure_ascii=False).encode("utf-8"))
+
         else:
             self.send_response(404)
             self.end_headers()
@@ -852,14 +858,7 @@ def iniciar_servidor():
     print(f"🎙️ NOVA VOICE STUDIO INICIADO COM SUCESSO!")
     print(f"🌐 Acesse a interface visual em: {url}")
     print(f"Pressione Ctrl+C no terminal para encerrar o servidor.")
-    print("=" * 65)
-
-    # Abre o navegador padrão do usuário no Mac
-    try:
-        webbrowser.open(url)
-    except Exception:
-        pass
-
+    # Servidor opera em background servindo APIs/proxy para o Dashboard (Porta 3000)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

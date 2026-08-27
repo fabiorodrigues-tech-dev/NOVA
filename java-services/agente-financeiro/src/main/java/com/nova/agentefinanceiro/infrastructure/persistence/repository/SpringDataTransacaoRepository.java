@@ -16,4 +16,6 @@ public interface SpringDataTransacaoRepository extends JpaRepository<TransacaoJp
     List<TransacaoJpaEntity> findByDataBetweenOrderByDataDesc(LocalDate inicio, LocalDate fim);
 
     List<TransacaoJpaEntity> findAllByOrderByDataDesc();
+
+    boolean existsByDataAndValorAndDescricao(LocalDate data, java.math.BigDecimal valor, String descricao);
 }

@@ -22,7 +22,7 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 | **`/candidatura [link]`** | `!candidatura` | Executa a Esteira 360° completa para a vaga (Match, CV, Cover Letter PDF/DOCX e Pitch) | `/candidatura https://careers.deloitte.com/...` |
 | **`/vagas`** | `!vagas` | Abre a tabela geral de candidaturas e matches ativos | `/vagas` |
 | **`/pitch [empresa]`** | `!pitch` | Exibe mensagens prontas para Recruiter e Tech Lead no LinkedIn | `/pitch deloitte` ou `/pitch capgemini` |
-| **`/cv`** | `!cv` | Exibe os links dos currículos base oficiais (PT e EN) | `/cv` |
+| **`/cv`** | `!cv` | Exibe os links dos currículos base oficiais (Dev e Marketing/Audiovisual em PDF e MD) | `/cv` |
 
 ---
 
@@ -58,13 +58,13 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 
 ---
 
-## 🗂️ 6. Módulo de Organização, Rotina & Foco
+## 🗂️ 6. Módulo de Carreira, Operações & Foco
 
 | Atalho | Alternativa | Descrição | Exemplo de Uso |
 | :--- | :--- | :--- | :--- |
-| **`/dia`** | `!dia`, `/daily` | Cria a nota de planejamento diário (Daily Notes) | `/dia` |
-| **`/semana`** | `!semana` | Planejamento semanal e priorização de entregas | `/semana` |
-| **`/foco`** | `!foco` | Define a tarefa principal e aciona timer Pomodoro/foco | `/foco Finalizar Módulo 3 da DIO` |
+| **`/dia`** | `!dia`, `/daily` | Cria a nota de planejamento diário e registro operacional (Daily Notes) | `/dia` |
+| **`/semana`** | `!semana` | Planejamento semanal, follow-ups de vagas e priorização de entregas | `/semana` |
+| **`/foco`** | `!foco` | Define a tarefa principal e aciona bloco de hiperfoco | `/foco Finalizar Módulo 3 da DIO` |
 
 ---
 

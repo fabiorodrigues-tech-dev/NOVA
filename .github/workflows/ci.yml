@@ -1,0 +1,66 @@
+name: NOVA CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  backend-test:
+    name: ☕ Java 21 & Spring Boot Test Suite
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: java-services/agente-financeiro
+
+    steps:
+      - name: 📥 Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: ☕ Configurar Java 21 (Eclipse Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: 🔨 Compilar Microsserviço Agente Financeiro
+        run: mvn clean compile -B
+
+      - name: 🧪 Executar Testes Unitários & Integração (JUnit 5 + Mockito)
+        run: mvn test -B
+
+      - name: 📊 Publicar Relatório de Testes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: java-services/agente-financeiro/target/surefire-reports/
+          if-no-files-found: ignore
+
+  python-quality:
+    name: 🐍 Python Scripts & Voice AI Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Instalar Dependências de Voz
+        run: |
+          pip install --upgrade pip
+          pip install -r voz/requirements.txt
+          pip install flake8
+
+      - name: 🔍 Validar Sintaxe dos Scripts Python
+        run: |
+          flake8 scripts/ dashboard/server.py voz/scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics

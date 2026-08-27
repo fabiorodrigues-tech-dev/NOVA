@@ -193,6 +193,44 @@ def gerar_grafico_balanco(receitas: float, despesas: float, saldo: float, output
     plt.close()
     print(f"📊 Gráfico de Balanço gerado em: {output_path}")
 
+def gerar_grafico_portfolio_match(dados_portfolio: dict, output_path: str):
+    """
+    Gera gráfico visual de adequação criativa e alinhamento dos cases de portfólio audiovisual.
+    dados_portfolio: {'Institucional / Governo (DER-PE)': 95, 'Viral / Engajamento (Gildo Lanches)': 96, ...}
+    """
+    apply_global_styles()
+    os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
+
+    cases = list(dados_portfolio.keys())
+    scores = list(dados_portfolio.values())
+
+    y_pos = np.arange(len(cases))
+    bar_height = 0.45
+
+    fig, ax = plt.subplots(figsize=(8, max(3.8, len(cases) * 0.52)), dpi=300)
+
+    # Cores personalizadas elegantes
+    colors_bars = [COLOR_ACCENT_GREEN if s >= 92 else COLOR_ACCENT_BLUE for s in scores]
+
+    rects = ax.barh(y_pos, scores, bar_height, color=colors_bars, edgecolor=COLOR_PRIMARY, linewidth=0.6, alpha=0.9)
+
+    ax.set_xlabel('Aderência Criativa & Relevância Prática (%)', fontsize=9.5, fontweight='bold', labelpad=8)
+    ax.set_title('Auditoria de Portfólio: Adequação dos Cases vs Demandas da Vaga', fontsize=11.5, fontweight='bold', pad=12, color=COLOR_PRIMARY)
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(cases, fontsize=9, fontweight='medium')
+    ax.set_xlim(0, 115)
+    ax.invert_yaxis()
+    ax.grid(axis='x', linestyle='--', alpha=0.5)
+
+    for rect, score in zip(rects, scores):
+        width = rect.get_width()
+        ax.text(width + 2, rect.get_y() + rect.get_height()/2, f'{score}%', ha='left', va='center', fontsize=8.5, fontweight='bold', color=COLOR_PRIMARY)
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=300)
+    plt.close()
+    print(f"🎬 Gráfico de Portfólio Match gerado em: {output_path}")
+
 if __name__ == "__main__":
     print("Testing Chart Engine...")
     test_dir = "carreira/scripts/test_charts"

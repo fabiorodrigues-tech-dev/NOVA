@@ -1,6 +1,13 @@
 # 🌌 NOVA — Sistema Multi-Agente Pessoal & Profissional
 
-Bem-vindo ao ecossistema **NOVA**, seu ponto central de inteligência, produtividade e desenvolvimento profissional em arquitetura multi-agente, integrando o **Gemini via Google Antigravity**, microsserviços **Java 21 / Spring Boot 3** com Clean Architecture, **Model Context Protocol (MCP)**, **Voz Neural Humana** e o **NOVA Control Center** (Dashboard Visual Unificado inspirado no Design System da Apple).
+[![NOVA CI/CD](https://github.com/fabiorodrigues-tech-dev/NOVA/actions/workflows/ci.yml/badge.svg)](https://github.com/fabiorodrigues-tech-dev/NOVA/actions)
+![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=flat&logo=openjdk&logoColor=white)
+![Spring Boot 3](https://img.shields.io/badge/Spring%20Boot-3.3.3-6DB33F?style=flat&logo=springboot&logoColor=white)
+![Spring AI MCP](https://img.shields.io/badge/Spring%20AI-MCP%20Tools-007ACC?style=flat&logo=spring&logoColor=white)
+![JUnit 5](https://img.shields.io/badge/JUnit%205-21%20Tests%20Passed-25A162?style=flat&logo=junit5&logoColor=white)
+![Material 3 Expressive](https://img.shields.io/badge/Design%20System-Material%203%20Expressive-4285F4?style=flat&logo=google&logoColor=white)
+
+Bem-vindo ao ecossistema **NOVA**, seu ponto central de inteligência, produtividade e desenvolvimento profissional em arquitetura multi-agente, integrando o **Gemini via Google Antigravity**, microsserviços **Java 21 / Spring Boot 3** com Clean Architecture, **Model Context Protocol (MCP)**, **Voz Neural Humana** e o **NOVA Control Center** (Dashboard Visual Unificado com Material 3 Expressive e Living Shader).
 
 ---
 
@@ -17,57 +24,116 @@ Consulte o guia completo em [`COMANDOS.md`](file:///Users/fabioandre/Downloads/n
 - 📚 **Estudos (DIO):** `/estudos`, `/feynman [tópico]`, `/desafio [tema]`, `/manual`.
 - 💰 **Finanças:** `/saldo`, `/extrato`, `/gastos [categoria]`, `/financeiro [mês]`.
 - 💻 **Código:** `/testes`, `/review [arquivo]`, `/scaffold [Feature]`.
-- 🗂️ **Organização:** `/dia`, `/semana`, `/foco`.
+- 🗂️ **Operações & Foco:** `/dia`, `/semana`, `/foco`.
 - 🎙️ **Voz & Studio:** `/studio`, `/voz`, `/voz [nome]`.
 
 ---
 
-## 🏛️ Arquitetura do Sistema
+## 🏗️ Diagrama de Arquitetura Multi-Agente & Serviços
+
+```mermaid
+flowchart TD
+    subgraph UI_Layer ["🖥️ Interfaces & Interação"]
+        DASH["🧭 NOVA Control Center (Porta 3000)"]
+        VOICE_UI["🎙️ Voice Studio Web (Porta 5050)"]
+        CLI["⚡ Chat / CLI (Atalhos / e !)"]
+    end
+
+    subgraph Core_Agent ["🤖 MAIN Agent (NOVA Orchestrator)"]
+        ROUTER{"⚡ Roteador & Triagem"}
+    end
+
+    subgraph Specialized_Agents ["👥 4 Agentes Especialistas (.agents/skills/)"]
+        CODIGO["💻 Agente Código\n(Java 21 / Spring Boot / Scaffolding)"]
+        ESTUDOS["📚 Agente Estudos\n(Trilha Santander DIO / Metodologias)"]
+        CARREIRA["💼 Agente Carreira & Operações\n(Esteira 360° Tech/Mkt & Prazos)"]
+        FINANCEIRO["💰 Agente Financeiro\n(Orçamento & Gestão de Gastos)"]
+    end
+
+    subgraph Backend_Services ["☕ Microsserviços & Ferramentas"]
+        SPRING["☕ Spring Boot 3.3.3 API (Porta 8081)\n• Clean Architecture\n• Importador OFX / CSV (Nubank)\n• Deduplicação Automática"]
+        MCP["🔌 Spring AI MCP Tools\n• cadastrar_transacao\n• listar_transacoes\n• resumo_financeiro\n• importar_extrato_ofx"]
+        H2[("💾 Banco H2 Persistente\n(financiadb.mv.db)")]
+        CHART["📊 Motor Matplotlib\n(chart_engine.py)"]
+        TTS["🎙️ Bridge Neural Voice\n(edge-tts + afplay)"]
+    end
+
+    UI_Layer --> ROUTER
+    ROUTER --> CODIGO
+    ROUTER --> ESTUDOS
+    ROUTER --> CARREIRA
+    ROUTER --> FINANCEIRO
+
+    FINANCEIRO --> MCP
+    MCP --> SPRING
+    SPRING --> H2
+    CARREIRA --> CHART
+    VOICE_UI --> TTS
+    DASH --> SPRING
+```
+
+---
+
+## 🏛️ Árvore de Arquivos do Repositório
 
 ```text
 nova/
+├── .github/workflows/ci.yml         # 🔄 Pipeline CI/CD GitHub Actions (Java 21, Maven & Python)
 ├── AGENTS.md                        # Identidade e regras do MAIN Agent (Orquestrador central)
 ├── COMANDOS.md                      # Central de atalhos rápidos (/ e !)
+├── start-all.sh                     # 🚀 Script de inicialização unificada (Spring Boot, Dashboard, Voice Studio)
+├── stop-all.sh                      # 🛑 Script de parada limpa de todos os serviços
 ├── nova-blueprint.md                # Planejamento arquitetural original (referência histórica)
 ├── nova-status.md                   # Estado real, componentes, serviços e roadmap
 ├── sobre-mim.md                     # Memória pessoal (objetivos, projetos, finanças e carreira)
 ├── README.md                        # Guia geral do workspace
+├── logs/                            # Diretório de logs em background (financeiro.log, dashboard.log, voz.log)
 │
-├── dashboard/                       # 🧭 FASE 7: NOVA Control Center (Apple Design System)
+├── dashboard/                       # 🧭 FASE 7: NOVA Control Center (Material 3 Expressive)
 │   ├── index.html                   # Bento Grid semântico e responsivo
-│   ├── styles.css                   # Glassmorphism, Dark Mode profundo e animações Apple
-│   ├── app.js                       # Lógica reativa, Chart.js Donut e Voice Orb interativo
+│   ├── styles.css                   # Living Shader, Glassmorphism e Dark Mode profundo
+│   ├── app.js                       # Lógica reativa, Chart.js e Voice Orb interativo
 │   └── server.py                    # Servidor Web local na porta 3000
 │
 ├── voz/                             # 🎙️ FASE 6: Camada de Voz Neural Humana (Voice AI Layer)
 │   ├── config_voz.json              # Configuração ativa de voz (Antônio, Francisca, etc.)
 │   └── scripts/
-│       ├── voice_studio_app.py      # Voice Studio Web App (Porta 5050)
+│       ├── voice_studio_app.py      # Voice Studio Web App (Porta 5050 - Google Store Layout)
 │       ├── nova_voice_bridge.py     # Bridge de escuta e síntese neural edge-tts + afplay
 │       └── configurar_voz.py        # Menu interativo no terminal
 │
-├── carreira/                        # 💼 Módulo de Carreira & Candidaturas 360°
-│   ├── base/                        # Currículos oficiais base (PT e EN) e Matriz de Mercado
-│   ├── scripts/                     # Geradores PDF e DOCX (Harvard Tech / ATS)
-│   └── vagas_analisadas/            # Pastas dedicadas por empresa com pacotes completos
+├── carreira/                        # 💼 Módulo de Carreira & Candidaturas 360° (2 Trilhas Segregadas)
+│   ├── base/                        # Bases oficiais de Currículo e Portfólio
+│   │   ├── dev/                     # Trilha Tech: curriculo_base_dev.md e PDFs oficiais (PT/EN)
+│   │   └── marketing_audiovisual/   # Trilha Audiovisual: portfolio_filmmaker_dados.md, PDF Portfólio e CV Base
+│   ├── scripts/                     # Geradores PDF (Harvard Tech / ATS) e DOCX
+│   ├── templates/                   # Templates de análise de match e cover letter
+│   └── vagas_analisadas/            # Esteira segregada por trilha de atuação
+│       ├── tech_dev/                # Vagas TI/Dev (Capgemini, Accenture, Deloitte, FullStack)
+│       └── marketing_audiovisual/   # Vagas Audiovisual e Marketing (Gummy, Aposta Ganha, RIO AVE, Grupo Luck)
 │
 ├── estudos/                         # 📚 Trilha Santander 2026 DIO & Guias
 │   ├── trilha_tracker.md            # Rastreador oficial da Trilha Santander DIO
 │   └── guia_estudos_nova/           # Dossiê e Manual de Engenharia em PDF de 6 páginas
 │
+├── resumo/financeiro/               # 💰 Extratos, comprovantes e relatório financeiro mensal
+│   ├── relatorio_agosto_2026.pdf    # Relatório executivo visual em PDF
+│   └── *.jpeg                       # 16 comprovantes e extratos bancários de Agosto/2026
+│
 ├── scripts/                         # 📊 Motor Central de Gráficos e Relatórios
-│   ├── chart_engine.py              # Motor Matplotlib (Match, Salário, Despesas, Balanço)
+│   ├── chart_engine.py              # Motor Matplotlib (Match, Salário, Portfólio, Despesas, Balanço)
+│   ├── gerar_manual_estudos_pdf.py  # Compilador do Manual Técnico em PDF
 │   └── gerar_relatorio_financeiro_pdf.py # Gerador de relatório financeiro executivo
 │
 ├── .agents/
 │   └── skills/
-│       ├── agente-codigo/           # Especialista Java 21 / Spring Boot 3 / Clean Architecture
-│       ├── agente-estudos/          # Especialista Trilha Santander 2026 DIO / Metodologias ativas
-│       ├── agente-organizacao/      # Especialista em Produtividade / Prazos / Gestão
-│       └── agente-financeiro/       # Especialista em Gestão Orçamentária e Balanço Financeiro
+│       ├── agente-codigo/                 # Especialista Java 21 / Spring Boot 3 / Clean Architecture
+│       ├── agente-estudos/                # Especialista Trilha Santander 2026 DIO / Metodologias ativas
+│       ├── agente-carreira-e-operacoes/   # Especialista em Candidaturas 360°, Follow-ups e Rotinas
+│       └── agente-financeiro/             # Especialista em Gestão Orçamentária e Balanço Financeiro
 │
 └── java-services/
     └── agente-financeiro/           # Microsserviço Back-end Java 21 + Spring Boot 3 + Spring AI (MCP)
         ├── data/financiadb.mv.db    # Banco de dados H2 persistente em arquivo
-        └── run-tests.sh             # Suíte de testes automatizados JUnit 5 (15 testes - 100% sucesso)
+        └── run-tests.sh             # Suíte de testes automatizados JUnit 5 (21 testes - 100% sucesso)
 ```

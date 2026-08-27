@@ -2,6 +2,7 @@ package com.nova.agentefinanceiro.domain.repository;
 
 import com.nova.agentefinanceiro.domain.model.Transacao;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,6 @@ public interface TransacaoRepository {
     List<Transacao> listarPorPeriodo(LocalDate inicio, LocalDate fim);
 
     Optional<Transacao> buscarPorId(Long id);
+
+    boolean existe(LocalDate data, BigDecimal valor, String descricao);
 }
