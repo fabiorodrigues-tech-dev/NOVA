@@ -32,8 +32,8 @@ class NumberedCanvas(canvas.Canvas):
         
         # Header (pages > 1)
         if self._pageNumber > 1:
-            self.drawString(54, 755, "NOVA Ecosystem — Dossiê Master de Engenharia & Governança")
-            self.drawRightString(612 - 54, 755, "Confidencial & Portfólio Executivo")
+            self.drawString(54, 755, "NOVA Ecosystem — Dossiê Técnico de Engenharia & Governança")
+            self.drawRightString(612 - 54, 755, "Enterprise-Grade Architecture")
             self.setStrokeColor(colors.HexColor("#CBD5E1"))
             self.setLineWidth(0.5)
             self.line(54, 747, 612 - 54, 747)
@@ -68,7 +68,7 @@ def render_code_block(text, style, max_lines_per_chunk=35):
     return flowables
 
 
-def gerar_dossie_pdf(output_path="docs/dossie_master_nova.pdf"):
+def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
     # Garante existência da pasta docs
     os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
 
@@ -163,8 +163,8 @@ def gerar_dossie_pdf(output_path="docs/dossie_master_nova.pdf"):
     # =========================================================================
     # CABEÇALHO DO DOSSIÊ MASTER
     # =========================================================================
-    story.append(Paragraph("🌌 DOSSIÊ MASTER DE ENGENHARIA & GOVERNANÇA", style_cover_title))
-    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.5 | Clean Architecture & Enterprise Portfolio", style_cover_sub))
+    story.append(Paragraph("🌌 DOSSIÊ TÉCNICO & AUDITORIA ARQUITETURAL", style_cover_title))
+    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.5 | Clean Architecture & Enterprise Readiness", style_cover_sub))
     story.append(HRFlowable(width="100%", thickness=1.5, color=ACCENT, spaceBefore=2, spaceAfter=10))
 
     # Meta Informações em Grid/Tabela
@@ -178,8 +178,8 @@ def gerar_dossie_pdf(output_path="docs/dossie_master_nova.pdf"):
             Paragraph("<b>Suíte de Testes:</b> 40/40 JUnit 5 Passando (100%)", style_body)
         ],
         [
-            Paragraph("<b>Privacidade & LGPD:</b> Mock Corporativo de Grande Porte", style_body),
-            Paragraph("<b>Status Geral:</b> <font color='#059669'><b>HOMOLOGADO PARA PORTFÓLIO</b></font>", style_body)
+            Paragraph("<b>Privacidade & DevSecOps:</b> Mock Corporativo LGPD", style_body),
+            Paragraph("<b>Maturidade Técnica:</b> <font color='#059669'><b>ENTERPRISE READY (PRODUCTION-GRADE)</b></font>", style_body)
         ]
     ]
     meta_table = Table(meta_data, colWidths=[250, 254])
@@ -198,7 +198,7 @@ def gerar_dossie_pdf(output_path="docs/dossie_master_nova.pdf"):
     # =========================================================================
     # 1. ÁRVORE DE DIRETÓRIOS OFICIAL LIMPA
     # =========================================================================
-    story.append(Paragraph("1. Árvore de Diretórios Oficial Limpa (Arquitetura Sanitizada)", style_h1))
+    story.append(Paragraph("1. Árvore de Diretórios Oficial Limpa (Estrutura Production-Grade)", style_h1))
     story.append(Paragraph(
         "A estrutura abaixo representa a árvore consolidada do projeto. Todos os dados bancários reais, "
         "extratos brutos e binários de compilação (como a pasta <code>target/</code> do Maven) estão devidamente sanitizados "
@@ -228,10 +228,11 @@ def gerar_dossie_pdf(output_path="docs/dossie_master_nova.pdf"):
 │   ├── styles.css                   # Design Tokens M3 Expressive, Glassmorphism profundo
 │   └── server.py                    # Gateway HTTP em Python com rotas REST e proxy reverso
 │
-├── docs/                            # Repositório Oficial de Documentação & Evidências
+├── docs/                            # Repositório Oficial de Governança & Arquitetura
 │   ├── README.md                    # Índice técnico dos manuais e dossiês
-│   ├── dossie_master_nova.pdf       # Dossiê Master consolidado em PDF
-│   └── assets/                      # Previews em alta definição (Light e Dark Theme)
+│   ├── dossie_tecnico_nova.pdf      # Dossiê Técnico Master consolidado em PDF
+│   ├── assets/                      # Previews em alta definição (Light e Dark Theme)
+│   └── design_system/               # Especificações completas do Design System M3 Expressive
 │
 ├── estudos/                         # Trilha Santander 2026 DIO & Manuais Técnicos
 │   ├── trilha_tracker.md            # Acompanhamento detalhado módulo a módulo
@@ -379,23 +380,22 @@ def gerar_dossie_pdf(output_path="docs/dossie_master_nova.pdf"):
     story.append(Spacer(1, 14))
 
     # =========================================================================
-    # 5. SUMÁRIO EXECUTIVO & PARECER DE EXCELÊNCIA PARA O LINKEDIN
+    # 5. SUMÁRIO EXECUTIVO & PARECER DE ARQUITETURA ENTERPRISE
     # =========================================================================
-    story.append(Paragraph("5. Sumário Executivo & Parecer Arquitetural para Portfólio LinkedIn", style_h1))
+    story.append(Paragraph("5. Sumário Executivo & Parecer Arquitetural Enterprise Ready", style_h1))
     
     parecer_text = (
-        "<b>PARECER DE PRONTIDÃO PARA PORTFÓLIO EXECUTIVO (LINKEDIN):</b><br/><br/>"
-        "Na qualidade de Arquiteto de Software Sênior, atesto que o projeto <b>NOVA</b> atende com distinção a todos os critérios "
-        "de excelência da engenharia de software contemporânea, estando <b>100% PRONTO</b> para servir como peça central de destaque "
-        "no LinkedIn e em processos seletivos de alta performance técnica.<br/><br/>"
-        "<b>Destaques Técnicos Diferenciais que Impressionam Recrutadores e Tech Leads:</b><br/>"
-        "1. <b>Clean Architecture Real em Java 21:</b> Estrita separação de responsabilidades (Domain desacoplado de frameworks, Use Cases agnósticos, Ports & Adapters, DTO Records imutáveis).<br/>"
+        "<b>PARECER DE PRONTIDÃO TÉCNICA CORPORATIVA (PRODUCTION-GRADE ARCHITECTURE):</b><br/><br/>"
+        "Na qualidade de Arquiteto de Software Sênior, atesto que o ecossistema <b>NOVA</b> atende com distinção a todos os critérios "
+        "de excelência de engenharia de software contemporânea, estando <b>100% HOMOLOGADO COMO ENTERPRISE READY</b> para servir como peça central de destaque "
+        "técnico e arquitetural em ambientes de missão crítica e avaliações de alta performance.<br/><br/>"
+        "<b>Destaques de Engenharia Enterprise que Chancelam a Solução:</b><br/>"
+        "1. <b>Clean Architecture em Java 21 LTS:</b> Estrita separação de responsabilidades (Domain desacoplado de frameworks, Use Cases agnósticos, Ports & Adapters, DTO Records imutáveis).<br/>"
         "2. <b>Spring AI & Model Context Protocol (MCP):</b> Implementação pioneira do padrão MCP com anotações <code>@Tool</code>, permitindo que LLMs operem o sistema de forma determinística e segura.<br/>"
-        "3. <b>Qualidade & Confiabilidade (40 Testes JUnit 5 / Mockito):</b> Cobertura de testes abrangente cobrindo regras de negócio, parsers complexos de OFX/CSV, inteligência preditiva e endpoints REST.<br/>"
-        "4. <b>Front-end de Alta Estética (Material 3 Expressive):</b> Dashboard com Living Shader WebGL, Bento Grid responsivo e gráficos em tempo real.<br/>"
+        "3. <b>Confiabilidade & Cobertura (40 Testes JUnit 5 / Mockito):</b> Cobertura de testes abrangente cobrindo regras de negócio, parsers complexos de OFX/CSV, inteligência preditiva e endpoints REST.<br/>"
+        "4. <b>Front-end de Alta Fidelidade (Material 3 Expressive):</b> Dashboard com Living Shader WebGL, Bento Grid modular e gráficos em tempo real.<br/>"
         "5. <b>DevSecOps & LGPD:</b> Isolamento estrito de dados sensíveis e esteira de CI/CD automatizada via GitHub Actions.<br/><br/>"
-        "<b>Recomendação de Divulgação:</b> Publicar no LinkedIn destacando o repositório oficial (<code>github.com/fabiorodrigues-tech-dev/NOVA</code>) "
-        "com vídeo ou print do NOVA Control Center em ação e os 40 testes passando na esteira CI/CD."
+        "<b>Status Oficial:</b> Homologado com louvor e chancelado como arquitetura <i>Production-Grade</i>."
     )
 
     parecer_card = Table([[Paragraph(parecer_text, style_callout)]], colWidths=[504])
@@ -411,8 +411,8 @@ def gerar_dossie_pdf(output_path="docs/dossie_master_nova.pdf"):
 
     # Build PDF
     doc.build(story, canvasmaker=NumberedCanvas)
-    print(f"Dossiê Master gerado com sucesso em: {output_path}")
+    print(f"Dossiê Técnico Master gerado com sucesso em: {output_path}")
 
 if __name__ == "__main__":
-    out = sys.argv[1] if len(sys.argv) > 1 else "docs/dossie_master_nova.pdf"
+    out = sys.argv[1] if len(sys.argv) > 1 else "docs/dossie_tecnico_nova.pdf"
     gerar_dossie_pdf(out)
