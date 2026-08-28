@@ -15,6 +15,7 @@ O usuário pode enviar atalhos rápidos iniciando com `/` ou `!`. O MAIN Agent d
 
 - **Central & Dashboard:**
   - `/dashboard`, `!dashboard`, `/painel` ➔ Iniciar e abrir o **NOVA Control Center** (`http://nova.local:3000` ou `http://localhost:3000`) no navegador padrão.
+  - `/compartilhar`, `!compartilhar`, `/share` ➔ Iniciar túnel HTTPS seguro com filtro de privacidade Demo Mode para acesso público e mobile (`dashboard/compartilhar.py`).
   - `/atalhos`, `!atalhos`, `/comandos`, `/menu` ➔ Exibir imediatamente a tabela formatada e organizada de todos os atalhos disponíveis baseada em [`COMANDOS.md`](file:///Users/fabioandre/Downloads/nova:/COMANDOS.md).
   - `/ajuda`, `!ajuda` ➔ Apresentar guia rápido de suporte do ecossistema.
   - `/status`, `!status` ➔ Exibir o resumo do [`nova-status.md`](file:///Users/fabioandre/Downloads/nova:/nova-status.md).

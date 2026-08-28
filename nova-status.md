@@ -33,9 +33,10 @@
 | **NOVA Voice Studio** | Python / `edge-tts` / `afplay` | `5050` | Catálogo e teste de vozes neurais PT-BR e globais (Google Store layout) |
 | **Agente Financeiro API** | Java 21 / Spring Boot 3 / H2 / Spring AI | `8081` | REST + ferramentas MCP + Caixinhas Nubank + Webhook + Importador OFX/CSV + Projeção Preditiva + endpoint de voz |
 
-> **🚀 Scripts de Automação:**
+> **🚀 Scripts de Automação & Compartilhamento:**
 > - `start-all.sh`: Inicializa simultaneamente os 3 serviços em background com logs em `logs/`.
 > - `stop-all.sh`: Encerra e libera com segurança todas as portas (`8081`, `3000`, `5050`).
+> - `dashboard/compartilhar.py` (`/compartilhar`): Gera túnel HTTPS público com **Filtro de Privacidade Ativo (Demo Mode LGPD Safe)** para acesso mobile e compartilhamento seguro.
 
 ---
 

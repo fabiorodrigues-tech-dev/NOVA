@@ -4319,5 +4319,112 @@ svg.lucide {
   color: var(--nova-on-surface-variant);
 }
 
+/* ==========================================================================
+   PRIVACY MODE & DEMO PRESENTATION BANNER (M3 EXPRESSIVE)
+   ========================================================================== */
+.btn-privacy-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--nova-surface-container);
+  border: 1px solid var(--nova-outline-variant);
+  color: var(--nova-on-surface);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.btn-privacy-toggle:hover {
+  background: var(--nova-surface-container-high);
+  border-color: var(--nova-primary);
+  transform: translateY(-1px);
+}
+
+.btn-privacy-toggle.demo-active {
+  background: rgba(184, 134, 11, 0.15);
+  border-color: #E5A93C;
+  color: #E5A93C;
+  box-shadow: 0 0 12px rgba(229, 169, 60, 0.25);
+}
+
+.btn-privacy-toggle.demo-active .privacy-mode-icon {
+  color: #E5A93C;
+  animation: pulsePrivacyIcon 2s infinite ease-in-out;
+}
+
+@keyframes pulsePrivacyIcon {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.85; }
+}
+
+.demo-presentation-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(184, 134, 11, 0.15) 0%, rgba(91, 138, 114, 0.12) 100%);
+  border: 1px solid rgba(229, 169, 60, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: slideDownBanner 0.4s cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes slideDownBanner {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.demo-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.demo-banner-content .banner-icon {
+  color: #E5A93C;
+  font-size: 24px;
+}
+
+.demo-banner-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.demo-banner-texts strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #E5A93C;
+}
+
+.demo-banner-texts span {
+  font-size: 12px;
+  color: var(--nova-on-surface-variant);
+}
+
+.btn-banner-action {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: #E5A93C;
+  color: #1A1A22;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-banner-action:hover {
+  background: #F3C362;
+  transform: scale(1.03);
+}
+
 
 

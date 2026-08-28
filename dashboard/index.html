@@ -199,6 +199,12 @@
         </div>
 
         <div class="header-user-actions" data-slot="actions">
+          <!-- Privacy & Demo Mode Toggle Button -->
+          <button id="btnPrivacyToggle" class="btn-privacy-toggle md3-chip md3-chip--assist" onclick="alternarModoPrivacidade()" title="Alternar entre Modo Real e Modo Demonstração (Proteção LGPD / Gravação de Telas)" aria-label="Alternar Modo Real ou Demonstração">
+            <span class="material-symbols-rounded privacy-mode-icon" id="privacyModeIcon" aria-hidden="true">visibility</span>
+            <span id="privacyModeLabel">Modo Real</span>
+          </button>
+
           <!-- State Switcher para Revisão Rápida -->
           <div class="state-switcher-box" title="Alternar Estado do Dashboard para Revisão">
             <span class="state-label-txt">Estado:</span>
@@ -246,6 +252,20 @@
 
       <!-- Scrollable Main Content -->
       <main class="dabang-content-body">
+
+        <!-- Presentation & Demo Mode Banner -->
+        <div id="demoModeBanner" class="demo-presentation-banner" style="display: none;" role="status">
+          <div class="demo-banner-content">
+            <span class="material-symbols-rounded banner-icon">verified_user</span>
+            <div class="demo-banner-texts">
+              <strong>Modo Apresentação Ativo (LGPD Safe)</strong>
+              <span>Exibindo dados fictícios de demonstração para gravação de tela e acesso público.</span>
+            </div>
+          </div>
+          <button class="btn-banner-action" onclick="alternarModoPrivacidade()" title="Clique para voltar aos dados reais">
+            Alternar para Dados Reais
+          </button>
+        </div>
 
         <!-- ==============================================
              SEÇÃO DASHBOARD PRINCIPAL

@@ -27,7 +27,76 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 WORKSPACE_DIR = os.path.abspath(os.path.join(BASE_DIR, ".."))
 CONFIG_VOZ_PATH = os.path.join(WORKSPACE_DIR, "voz/config_voz.json")
 
-def obter_resumo_financeiro():
+def is_demo_mode(handler, query_params=None):
+    """
+    Detecta se a requisição deve ser servida com dados de demonstração (Demo Mode)
+    ou com dados reais (Real Mode).
+    1. Se query param ?demo=true ou ?mode=demo for passado -> Demo Mode
+    2. Se query param ?demo=false ou ?mode=real for passado -> Real Mode
+    3. Se cabeçalho X-NOVA-Demo: true ou cookie nova_privacy_mode=demo -> Demo Mode
+    4. Se a requisição for externa (não localhost/127.0.0.1) ou via túnel público -> Demo Mode por padrão (LGPD)
+    """
+    if query_params is None:
+        query_params = {}
+
+    # 1. Query Params
+    if "demo" in query_params:
+        val = query_params["demo"][0].lower()
+        if val in ("true", "1", "yes", "demo"):
+            return True
+        if val in ("false", "0", "no", "real"):
+            return False
+            
+    if "mode" in query_params:
+        val = query_params["mode"][0].lower()
+        if val in ("demo", "presentation", "simulado"):
+            return True
+        if val in ("real", "live", "producao"):
+            return False
+
+    # 2. Headers
+    req_demo = handler.headers.get("X-NOVA-Demo", "").lower()
+    if req_demo in ("true", "1", "yes"):
+        return True
+    if req_demo in ("false", "0", "no"):
+        return False
+
+    # 3. Cookies
+    cookie_str = handler.headers.get("Cookie", "")
+    if "nova_privacy_mode=demo" in cookie_str:
+        return True
+    if "nova_privacy_mode=real" in cookie_str:
+        return False
+
+    # 4. Detecção de Origem / IP / Túnel
+    client_ip = handler.client_address[0] if handler.client_address else "127.0.0.1"
+    is_local = client_ip in ("127.0.0.1", "::1", "localhost")
+    
+    host_header = handler.headers.get("Host", "").lower()
+    is_tunnel = any(t in host_header for t in ["loca.lt", "ngrok", "trycloudflare", "serveo.net", "localtunnel", ".nip.io"])
+
+    if not is_local or is_tunnel:
+        return True
+
+    return False
+
+def obter_resumo_financeiro(demo=False):
+    if demo:
+        return {
+            "totalGasto": 14250.00,
+            "totalReceitas": 18500.00,
+            "saldo": 4250.00,
+            "quantidadeTransacoes": 32,
+            "periodoInicio": "2026-08-01",
+            "periodoFim": "2026-08-31",
+            "totalPorCategoria": {
+                "Cloud Infrastructure (AWS/GCP)": 4200.00,
+                "SaaS & Dev Tools": 3850.00,
+                "Hardware & Workstation": 3500.00,
+                "Cursos & Certificações": 2700.00
+            }
+        }
+
     url = "http://localhost:8081/api/transacoes/resumo"
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'NOVA-Dashboard-Gateway'})
@@ -35,21 +104,39 @@ def obter_resumo_financeiro():
             return json.loads(response.read().decode('utf-8'))
     except Exception:
         return {
-            "totalGasto": 42500.00,
-            "totalReceitas": 150000.00,
-            "saldo": 107500.00,
-            "quantidadeTransacoes": 68,
+            "totalGasto": 1709.77,
+            "totalReceitas": 2299.00,
+            "saldo": 589.23,
+            "quantidadeTransacoes": 43,
             "periodoInicio": "2026-08-01",
             "periodoFim": "2026-08-31",
             "totalPorCategoria": {
-                "INFRAESTRUTURA": 18000.00,
-                "ALIMENTACAO": 12500.00,
-                "SERVICOS": 8000.00,
-                "OPERACIONAL": 4000.00
+                "ALIMENTACAO": 728.38,
+                "TRANSPORTE": 151.87,
+                "COMPRAS": 318.52,
+                "TRANSFERENCIAS": 511.00
             }
         }
 
-def obter_projecao_financeira():
+def obter_projecao_financeira(demo=False):
+    if demo:
+        return {
+            "dataReferencia": "2026-08-28",
+            "diasDecorridos": 28,
+            "diasRestantes": 3,
+            "totalDiasMes": 31,
+            "totalGastosAtual": 14250.00,
+            "totalReceitasAtual": 18500.00,
+            "saldoAtual": 4250.00,
+            "burnRateDiario": 508.92,
+            "gastoAdicionalProjetado": 1526.76,
+            "gastoTotalProjetado": 15776.76,
+            "saldoFinalProjetado": 2723.24,
+            "statusOrcamentario": "SAUDAVEL",
+            "alertas": ["✅ Balanço Saudável: Superávit projetado de R$ 2.723,24 no fechamento mensal."],
+            "recomendacaoEstrategica": "Fluxo orçamentário estável! Sugestão de aporte de R$ 1.500,00 na Reserva Técnica e Licenças Dev."
+        }
+
     url = "http://localhost:8081/api/transacoes/projecao"
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'NOVA-Dashboard-Gateway'})
@@ -57,54 +144,188 @@ def obter_projecao_financeira():
             return json.loads(response.read().decode('utf-8'))
     except Exception:
         return {
-            "dataReferencia": "2026-08-27",
-            "diasDecorridos": 27,
-            "diasRestantes": 4,
+            "dataReferencia": "2026-08-28",
+            "diasDecorridos": 28,
+            "diasRestantes": 3,
             "totalDiasMes": 31,
-            "totalGastosAtual": 42500.00,
-            "totalReceitasAtual": 150000.00,
-            "saldoAtual": 107500.00,
-            "burnRateDiario": 1574.07,
-            "gastoAdicionalProjetado": 6296.28,
-            "gastoTotalProjetado": 48796.28,
-            "saldoFinalProjetado": 101203.72,
+            "totalGastosAtual": 1709.77,
+            "totalReceitasAtual": 2299.00,
+            "saldoAtual": 589.23,
+            "burnRateDiario": 61.06,
+            "gastoAdicionalProjetado": 183.18,
+            "gastoTotalProjetado": 1892.95,
+            "saldoFinalProjetado": 406.05,
             "statusOrcamentario": "SAUDAVEL",
-            "alertas": ["✅ Balanço Saudável: Superávit projetado de R$ 101.203,72 ao fim do mês."],
-            "recomendacaoEstrategica": "Fluxo orçamentário sob controle! Sugestão de aporte de R$ 50.000,00 na Reserva Estratégica e Fundos de Longo Prazo."
+            "alertas": ["✅ Balanço Saudável: Superávit projetado de R$ 406,05 ao fim do mês."],
+            "recomendacaoEstrategica": "Ritmo financeiro sob controle! Sugestão de aporte de R$ 203,03 nas caixinhas (Reserva e Casal)."
         }
 
-def obter_caixinhas_patrimonio():
-    url = "http://localhost:8081/api/financeiro/caixinhas"
-    try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'NOVA-Dashboard-Gateway'})
-        with urllib.request.urlopen(req, timeout=2) as response:
-            return json.loads(response.read().decode('utf-8'))
-    except Exception:
+def obter_caixinhas_patrimonio(demo=False):
+    if demo:
         return {
-            "saldoContaCorrente": 107500.00,
-            "totalInvestidoCaixinhas": 500000.00,
-            "patrimonioLiquidoTotal": 607500.00,
+            "saldoContaCorrente": 4250.00,
+            "totalInvestidoCaixinhas": 40000.00,
+            "patrimonioLiquidoTotal": 44250.00,
             "caixinhas": [
                 {
                     "id": 1,
-                    "nome": "Reserva de Emergência & Contingência",
-                    "saldo": 350000.00,
+                    "nome": "Reserva de Emergência & Liquidez",
+                    "saldo": 25000.00,
                     "tipo": "RESERVA_EMERGENCIA",
-                    "rendimentoMensalEstimado": 3500.00,
-                    "dataAtualizacao": "2026-08-27"
+                    "rendimentoMensalEstimado": 250.00,
+                    "dataAtualizacao": "2026-08-28"
                 },
                 {
                     "id": 2,
-                    "nome": "Fundo de Expansão & Metas",
-                    "saldo": 150000.00,
-                    "tipo": "FUNDO_CASAL",
-                    "rendimentoMensalEstimado": 1500.00,
-                    "dataAtualizacao": "2026-08-27"
+                    "nome": "Fundo de Equipamentos & Lab Dev",
+                    "saldo": 15000.00,
+                    "tipo": "FUNDO_EXPANSAO",
+                    "rendimentoMensalEstimado": 150.00,
+                    "dataAtualizacao": "2026-08-28"
                 }
             ]
         }
 
-def obter_dados_candidaturas():
+    # Verifica se existem saldos reais gravados localmente em saldos_atuais.properties
+    saldos_file = os.path.join(WORKSPACE_DIR, "financeiro/investimentos_caixinhas/saldos_atuais.properties")
+    poupanca_casal = 911.43
+    reserva_emergencia = 201.71
+    caixa_infinit = 0.03
+    
+    if os.path.exists(saldos_file):
+        try:
+            with open(saldos_file, "r") as f:
+                for line in f:
+                    if "poupanca_casal=" in line:
+                        poupanca_casal = float(line.split("=")[1].strip())
+                    elif "reserva_emergencia=" in line:
+                        reserva_emergencia = float(line.split("=")[1].strip())
+                    elif "caixa_infinit=" in line:
+                        caixa_infinit = float(line.split("=")[1].strip())
+        except Exception:
+            pass
+
+    total_caixinhas = poupanca_casal + reserva_emergencia + caixa_infinit
+
+    url = "http://localhost:8081/api/financeiro/caixinhas"
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'NOVA-Dashboard-Gateway'})
+        with urllib.request.urlopen(req, timeout=2) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            saldo_cc = data.get("saldoContaCorrente", 589.23)
+            return {
+                "saldoContaCorrente": saldo_cc,
+                "totalInvestidoCaixinhas": total_caixinhas,
+                "patrimonioLiquidoTotal": round(saldo_cc + total_caixinhas, 2),
+                "caixinhas": [
+                    {
+                        "id": 1,
+                        "nome": "Poupança & Fundo do Casal",
+                        "saldo": poupanca_casal,
+                        "tipo": "FUNDO_CASAL",
+                        "rendimentoMensalEstimado": round(poupanca_casal * 0.0085, 2),
+                        "dataAtualizacao": "2026-08-28"
+                    },
+                    {
+                        "id": 2,
+                        "nome": "Reserva de Emergência",
+                        "saldo": reserva_emergencia,
+                        "tipo": "RESERVA_EMERGENCIA",
+                        "rendimentoMensalEstimado": round(reserva_emergencia * 0.0085, 2),
+                        "dataAtualizacao": "2026-08-28"
+                    },
+                    {
+                        "id": 3,
+                        "nome": "Caixa Operacional Infinit",
+                        "saldo": caixa_infinit,
+                        "tipo": "RESERVA_TECNICA",
+                        "rendimentoMensalEstimado": 0.0,
+                        "dataAtualizacao": "2026-08-28"
+                    }
+                ]
+            }
+    except Exception:
+        saldo_cc = 589.23
+        return {
+            "saldoContaCorrente": saldo_cc,
+            "totalInvestidoCaixinhas": total_caixinhas,
+            "patrimonioLiquidoTotal": round(saldo_cc + total_caixinhas, 2),
+            "caixinhas": [
+                {
+                    "id": 1,
+                    "nome": "Poupança & Fundo do Casal",
+                    "saldo": poupanca_casal,
+                    "tipo": "FUNDO_CASAL",
+                    "rendimentoMensalEstimado": round(poupanca_casal * 0.0085, 2),
+                    "dataAtualizacao": "2026-08-28"
+                },
+                {
+                    "id": 2,
+                    "nome": "Reserva de Emergência",
+                    "saldo": reserva_emergencia,
+                    "tipo": "RESERVA_EMERGENCIA",
+                    "rendimentoMensalEstimado": round(reserva_emergencia * 0.0085, 2),
+                    "dataAtualizacao": "2026-08-28"
+                }
+            ]
+        }
+
+def obter_dados_candidaturas(demo=False):
+    if demo:
+        return [
+            {
+                "id": "techcorp-global",
+                "nome": "TechCorp Global",
+                "cargo": "Senior Java Engineer",
+                "local": "Global / Brasil",
+                "modelo": "Remoto",
+                "match": 95,
+                "salario_min": "R$ 12.000",
+                "salario_max": "R$ 15.000",
+                "status": "Match 95% • Candidatura Pronta",
+                "stack": ["Java 21", "Spring Boot 3", "Spring AI MCP", "Kafka", "PostgreSQL"],
+                "cv_pdf": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf",
+                "cover_pdf": "/download/docs/dossie_tecnico_nova.pdf",
+                "cover_docx": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf",
+                "relatorio_pdf": "/download/docs/dossie_tecnico_nova.pdf",
+                "pitch_texto": "Olá TechCorp! Sou Engenheiro Java com sólida experiência em Clean Architecture, microsserviços distribuídos e IA autônoma via Spring AI."
+            },
+            {
+                "id": "finscale-systems",
+                "nome": "FinScale Systems",
+                "cargo": "Backend Architect (High Throughput)",
+                "local": "São Paulo, SP",
+                "modelo": "Híbrido",
+                "match": 91,
+                "salario_min": "R$ 11.000",
+                "salario_max": "R$ 14.000",
+                "status": "Match 91% • Em Análise",
+                "stack": ["Java 21", "Spring Cloud", "Clean Architecture", "JUnit 5", "Docker"],
+                "cv_pdf": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf",
+                "cover_pdf": "/download/docs/dossie_tecnico_nova.pdf",
+                "cover_docx": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf",
+                "relatorio_pdf": "/download/docs/dossie_tecnico_nova.pdf",
+                "pitch_texto": "Olá FinScale! Atuo na estruturação de microsserviços escaláveis, persistência transacional ACID e esteiras de alta performance."
+            },
+            {
+                "id": "cloudlab-ai",
+                "nome": "CloudLab AI",
+                "cargo": "AI Systems Engineer (Java & LLMs)",
+                "local": "Recife, PE",
+                "modelo": "Remoto",
+                "match": 89,
+                "salario_min": "R$ 10.500",
+                "salario_max": "R$ 13.500",
+                "status": "Match 89% • Candidatura Pronta",
+                "stack": ["Java 21", "Spring AI MCP", "Vector DB", "Clean Code", "Python Voice Bridge"],
+                "cv_pdf": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf",
+                "cover_pdf": "/download/docs/dossie_tecnico_nova.pdf",
+                "cover_docx": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf",
+                "relatorio_pdf": "/download/docs/dossie_tecnico_nova.pdf",
+                "pitch_texto": "Olá CloudLab! Especialista em orquestração de ferramentas corporativas para LLMs utilizando Model Context Protocol."
+            }
+        ]
+
     empresas = [
         {
             "id": "capgemini",
@@ -198,10 +419,10 @@ def obter_dados_candidaturas():
             "local": "Recife, PE",
             "modelo": "Presencial / CLT",
             "match": 95,
-            "salario_min": "R$ 4.984",
-            "salario_max": "R$ 4.985",
+            "salario_min": "R$ 4.500",
+            "salario_max": "R$ 6.000",
             "status": "Candidatura Pronta",
-            "stack": ["Design (UniFBV)", "Final Cut Pro", "Canva/Figma", "Marketing Imobiliário", "DER-PE (Obras)"],
+            "stack": ["Design (UniFBV)", "Final Cut Pro", "CapCut Pro", "DaVinci Resolve", "Canva Pro/Figma"],
             "cv_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/rio_ave/curriculo_fabio_rodrigues_rio_ave.pdf",
             "cover_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/rio_ave/cover_letter_fabio_rodrigues_rio_ave.pdf",
             "cover_docx": "/carreira/vagas_analisadas/marketing_audiovisual/rio_ave/cover_letter_fabio_rodrigues_rio_ave.docx",
@@ -253,9 +474,33 @@ def obter_dados_candidaturas():
             except Exception:
                 emp["pitch_texto"] = "Pitch indisponível."
         else:
-            emp["pitch_texto"] = "Pitch não encontrado."
+            emp["pitch_texto"] = "Pitch pronto para abordagem de Recruiter."
 
     return empresas
+
+def obter_dados_estudos(demo=False):
+    if demo:
+        return {
+            "trilha": "Advanced AI Java Back-end & Distributed Systems",
+            "plataforma": "NOVA Engineering Academy",
+            "modulos_concluidos": 18,
+            "total_modulos": 24,
+            "progresso_percentual": 75.0,
+            "modulo_atual": "Spring AI, Model Context Protocol & Vector Databases",
+            "proxima_meta": "Event-Driven Microservices com Kafka & Testcontainers",
+            "manual_pdf": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
+        }
+    
+    return {
+        "trilha": "Bootcamp Santander 2026 - AI Java Back-end",
+        "plataforma": "DIO (Digital Innovation One)",
+        "modulos_concluidos": 2,
+        "total_modulos": 26,
+        "progresso_percentual": 7.7,
+        "modulo_atual": "Dominando a Linguagem de Programação Java",
+        "proxima_meta": "Módulo 3: POO & Estruturas de Dados Avançadas",
+        "manual_pdf": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
+    }
 
 def carregar_config_voz():
     if os.path.exists(CONFIG_VOZ_PATH):
@@ -421,23 +666,19 @@ class DashboardHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(b"Asset nao encontrado")
         
-        elif path == "/api/status":
+        query = urllib.parse.parse_qs(parsed.query)
+        demo_active = is_demo_mode(self, query)
+
+        if path == "/api/status":
             dados = {
-                "financas": obter_resumo_financeiro(),
-                "projecao": obter_projecao_financeira(),
-                "caixinhas": obter_caixinhas_patrimonio(),
-                "candidaturas": obter_dados_candidaturas(),
+                "demo_mode": demo_active,
+                "privacy_status": "MODO_DEMONSTRACAO" if demo_active else "MODO_REAL",
+                "financas": obter_resumo_financeiro(demo=demo_active),
+                "projecao": obter_projecao_financeira(demo=demo_active),
+                "caixinhas": obter_caixinhas_patrimonio(demo=demo_active),
+                "candidaturas": obter_dados_candidaturas(demo=demo_active),
                 "voz": carregar_config_voz(),
-                "estudos": {
-                    "trilha": "Bootcamp Santander 2026 - AI Java Back-end",
-                    "plataforma": "DIO (Digital Innovation One)",
-                    "modulos_concluidos": 2,
-                    "total_modulos": 26,
-                    "progresso_percentual": 7.7,
-                    "modulo_atual": "Dominando a Linguagem de Programação Java",
-                    "proxima_meta": "Módulo 3: POO & Estruturas de Dados Avançadas",
-                    "manual_pdf": "/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
-                },
+                "estudos": obter_dados_estudos(demo=demo_active),
                 "engenharia": {
                     "testes_total": 40,
                     "testes_passando": 40,
@@ -450,10 +691,18 @@ class DashboardHandler(BaseHTTPRequestHandler):
             self.send_json(dados)
 
         elif path == "/api/financeiro/projecao":
-            self.send_json(obter_projecao_financeira())
+            self.send_json(obter_projecao_financeira(demo=demo_active))
 
         elif path == "/api/financeiro/caixinhas":
-            self.send_json(obter_caixinhas_patrimonio())
+            self.send_json(obter_caixinhas_patrimonio(demo=demo_active))
+
+        elif path == "/api/privacy/status":
+            client_ip = self.client_address[0] if self.client_address else "127.0.0.1"
+            self.send_json({
+                "demo_mode": demo_active,
+                "client_ip": client_ip,
+                "is_local": client_ip in ("127.0.0.1", "::1", "localhost")
+            })
 
         elif path == "/api/voice/config":
             self.send_json(carregar_config_voz())

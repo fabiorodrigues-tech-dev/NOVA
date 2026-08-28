@@ -9,6 +9,7 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 | Atalho | Alternativa | Descrição | Exemplo de Uso |
 | :--- | :--- | :--- | :--- |
 | **`/dashboard`** | `!dashboard`, `/painel` | Inicia e abre o **NOVA Control Center** (`http://nova.local:3000` ou `http://localhost:3000`) | `/dashboard` |
+| **`/compartilhar`** | `!compartilhar`, `/share` | Gera túnel público HTTPS seguro com Modo Demonstração (LGPD Safe) para mobile e web | `/compartilhar` |
 | **`/atalhos`** | `!atalhos`, `/menu`, `/comandos` | Exibe este painel completo de atalhos rápidos | `/atalhos` |
 | **`/ajuda`** | `!ajuda`, `/help` | Guia geral de suporte e recursos do ecossistema | `/ajuda` |
 | **`/status`** | `!status` | Exibe o estado real dos serviços, banco e roadmap | `/status` |

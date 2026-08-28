@@ -40,7 +40,7 @@ O **NOVA Control Center** é a interface executiva do ecossistema, projetada com
 ## ⚡ Central de Atalhos Rápidos (`/` e `!`)
 Consulte o guia completo em [`COMANDOS.md`](file:///Users/fabioandre/Downloads/nova:/COMANDOS.md). Você pode usar atalhos rápidos diretamente no chat:
 
-- 🧭 **Central:** `/dashboard` (ou `/painel`), `/atalhos` (ou `!atalhos`), `/menu`, `/ajuda`, `/status`.
+- 🧭 **Central:** `/dashboard` (ou `/painel`), `/compartilhar` (ou `/share`), `/atalhos` (ou `!atalhos`), `/menu`, `/ajuda`, `/status`.
 - 💼 **Carreira:** `/candidatura [link]`, `/vagas`, `/pitch [empresa]`, `/cv`.
 - 📚 **Estudos (DIO):** `/estudos`, `/feynman [tópico]`, `/desafio [tema]`, `/manual`.
 - 💰 **Finanças:** `/saldo`, `/extrato`, `/gastos [categoria]`, `/financeiro [mês]`.

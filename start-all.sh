@@ -33,11 +33,11 @@ if check_port 8081; then
 else
     echo "☕ [1/3] Iniciando Agente Financeiro (Spring Boot na porta 8081)..."
     cd "$ROOT_DIR/java-services/agente-financeiro"
-    if [ ! -f "target/agente-financeiro-0.0.1-SNAPSHOT.jar" ]; then
-        echo "   ↳ Compilando JAR executável inicial..."
-        mvn package -DskipTests -q
+    mvn compile -q
+    if [ ! -f "cp.txt" ]; then
+        mvn dependency:build-classpath -Dmdep.outputFile=cp.txt -q
     fi
-    nohup java -jar target/agente-financeiro-0.0.1-SNAPSHOT.jar > "$LOGS_DIR/financeiro.log" 2>&1 &
+    nohup java -cp "target/classes:$(cat cp.txt)" com.nova.agentefinanceiro.AgenteFinanceiroApplication > "$LOGS_DIR/financeiro.log" 2>&1 &
     FIN_PID=$!
     echo $FIN_PID > "$LOGS_DIR/financeiro.pid"
     echo "   ↳ PID: $FIN_PID | Log: logs/financeiro.log"

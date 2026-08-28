@@ -17,8 +17,11 @@ let currentAudioPlayer = null;
 let estadoAtualDashboard = 'normal';
 let novaLivingShaderEngine = null;
 
+let modoPrivacidade = localStorage.getItem('nova_privacy_mode') || 'real';
+
 document.addEventListener('DOMContentLoaded', () => {
   inicializarTemaM3();
+  inicializarModoPrivacidade();
   executarSplash3D();
 
   // Inicializa o Motor de Shader Vivo da NOVA IA Voice
@@ -45,6 +48,54 @@ document.addEventListener('DOMContentLoaded', () => {
     navegarParaSecao('voice-studio');
   }
 });
+
+/* ==========================================================================
+   PRIVACY & DEMO PRESENTATION MODE (LGPD & SCREEN RECORDING)
+   ========================================================================== */
+
+function inicializarModoPrivacidade() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('demo') === 'true' || urlParams.get('mode') === 'demo') {
+    modoPrivacidade = 'demo';
+  } else if (urlParams.get('demo') === 'false' || urlParams.get('mode') === 'real') {
+    modoPrivacidade = 'real';
+  }
+  atualizarBotoesPrivacidade();
+}
+
+function alternarModoPrivacidade() {
+  modoPrivacidade = modoPrivacidade === 'real' ? 'demo' : 'real';
+  localStorage.setItem('nova_privacy_mode', modoPrivacidade);
+  atualizarBotoesPrivacidade();
+  carregarDashboard();
+  showToast(modoPrivacidade === 'demo' ? '🛡️ Modo Apresentação Ativo (Dados de Demonstração)' : '👁️ Modo Real Ativo (Dados Locais H2)');
+}
+
+function atualizarBotoesPrivacidade() {
+  const btn = document.getElementById('btnPrivacyToggle');
+  const icon = document.getElementById('privacyModeIcon');
+  const label = document.getElementById('privacyModeLabel');
+  const banner = document.getElementById('demoModeBanner');
+
+  const isDemo = modoPrivacidade === 'demo';
+
+  if (btn) {
+    if (isDemo) {
+      btn.classList.add('demo-active');
+    } else {
+      btn.classList.remove('demo-active');
+    }
+  }
+  if (icon) {
+    icon.textContent = isDemo ? 'shield' : 'visibility';
+  }
+  if (label) {
+    label.textContent = isDemo ? 'Modo Demo (LGPD)' : 'Modo Real';
+  }
+  if (banner) {
+    banner.style.display = isDemo ? 'flex' : 'none';
+  }
+}
 
 /* ==========================================================================
    SPLASH SCREEN 3D (STORYBOARD ~2.2s COM SESSIONSTORAGE E A11Y)
@@ -142,10 +193,21 @@ function ocultarSplashScreen() {
 
 async function carregarDashboard() {
   try {
-    const res = await fetch('/api/status');
+    const isDemo = modoPrivacidade === 'demo';
+    const queryParam = isDemo ? '?demo=true' : '?demo=false';
+    const res = await fetch(`/api/status${queryParam}`, {
+      headers: {
+        'X-NOVA-Demo': isDemo ? 'true' : 'false'
+      }
+    });
     if (!res.ok) throw new Error("Falha ao carregar API /api/status");
     const data = await res.json();
     dadosGlobais = data;
+
+    if (data.demo_mode) {
+      modoPrivacidade = 'demo';
+    }
+    atualizarBotoesPrivacidade();
 
     renderizarDadosNormal(data);
     ocultarSplashScreen();
@@ -160,7 +222,7 @@ async function carregarDashboard() {
 }
 
 function recarregarDashboard() {
-  alternarEstadoDashboard('normal');
+  carregarDashboard();
   showToast("↻ Painel sincronizado com sucesso!");
 }
 
