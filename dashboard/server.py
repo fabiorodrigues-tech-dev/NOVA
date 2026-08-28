@@ -379,6 +379,23 @@ def obter_dados_candidaturas(demo=False):
             "pitch_file": "carreira/vagas_analisadas/tech_dev/deloitte/carta_apresentacao_recruiter.md"
         },
         {
+            "id": "romero_dornellas",
+            "nome": "Assessoria RD (Romero Dornellas)",
+            "cargo": "Social Media Presencial",
+            "local": "Recife, PE",
+            "modelo": "Presencial (Dedicado)",
+            "match": 97,
+            "salario_min": "R$ 3.500",
+            "salario_max": "R$ 3.500",
+            "status": "Candidatura Pronta",
+            "stack": ["Design (UniFBV)", "Food Appeal / Gastronomia", "Final Cut / CapCut Pro", "iPhone 14 Pro Max", "Gildo / Primos"],
+            "cv_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/romero_dornellas/curriculo_fabio_rodrigues_romero_dornellas.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/romero_dornellas/cover_letter_fabio_rodrigues_romero_dornellas.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/marketing_audiovisual/romero_dornellas/cover_letter_fabio_rodrigues_romero_dornellas.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/marketing_audiovisual/romero_dornellas/relatorio_match_romero_dornellas.pdf",
+            "pitch_file": "carreira/vagas_analisadas/marketing_audiovisual/romero_dornellas/carta_apresentacao_recruiter.md"
+        },
+        {
             "id": "gummy",
             "nome": "Gummy Original",
             "cargo": "Analista de Marketing de Influência",

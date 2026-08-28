@@ -16,7 +16,7 @@
 | **Fase 1** | Arquitetura Multi-Agente & Orquestração | ✅ **100% Concluído** | MAIN Agent + 4 Agentes Especialistas em `.agents/skills/` |
 | **Fase 2** | Back-end Java 21 & Clean Architecture | ✅ **100% Concluído** | Spring Boot 3.3.3, DDD, H2 persistente, Repository Pattern |
 | **Fase 3** | Spring AI & Model Context Protocol (MCP) | ✅ **100% Concluído** | Tools `@Tool` expostas para IA (Cadastro, Listagem, Resumo) |
-| **Fase 4** | Esteira de Carreira & Candidaturas 360° | ✅ **100% Concluído** | 8 Candidaturas (Tech & Marketing), Harvard Tech ATS PDF, DOCX |
+| **Fase 4** | Esteira de Carreira & Candidaturas 360° | ✅ **100% Concluído** | 9 Candidaturas (Tech & Marketing), Harvard Tech ATS PDF, DOCX |
 | **Fase 5** | Motor Gráfico & Relatórios Visuais PDF | ✅ **100% Concluído** | `chart_engine.py` (Matplotlib), Relatório Financeiro & Manual DIO |
 | **Fase 6** | Camada de Voz Neural Humana (Voice AI) | ✅ **100% Concluído** | `edge-tts` + `afplay` nativo, Voice Studio Web (Porta 5050) |
 | **Fase 7** | NOVA Control Center (Dashboard M3) | ✅ **100% Concluído** | Bento Grid, Living Shader WebGL, Material 3 Expressive (Porta 3000) |
