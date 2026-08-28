@@ -117,4 +117,4 @@ O ecossistema opera através de 4 agentes especializados orquestrados pelo MAIN 
 - **Repositório Oficial no GitHub:** [https://github.com/fabiorodrigues-tech-dev/NOVA](https://github.com/fabiorodrigues-tech-dev/NOVA)
 - **Perfil do Desenvolvedor no LinkedIn:** [https://linkedin.com/in/fabiorodrigues-dev](https://linkedin.com/in/fabiorodrigues-dev)
 - **Dossiê Técnico Master (PDF):** [`docs/dossie_tecnico_nova.pdf`](file:///Users/fabioandre/Downloads/nova:/docs/dossie_tecnico_nova.pdf)
-- **NOVA Control Center (Local):** `http://localhost:3000`
+- **NOVA Control Center (Local):** `https://nova-control-center-al5l.onrender.com`

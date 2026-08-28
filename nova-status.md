@@ -19,7 +19,7 @@
 | **Fase 4** | Esteira de Carreira & Candidaturas 360° | ✅ **100% Concluído** | 9 Candidaturas (Tech & Marketing), Harvard Tech ATS PDF, DOCX |
 | **Fase 5** | Motor Gráfico & Relatórios Visuais PDF | ✅ **100% Concluído** | `chart_engine.py` (Matplotlib), Relatório Financeiro & Manual DIO |
 | **Fase 6** | Camada de Voz Neural Humana (Voice AI) | ✅ **100% Concluído** | `edge-tts` + `afplay` nativo, Voice Studio Web (Porta 5050) |
-| **Fase 7** | NOVA Control Center (Dashboard M3) | ✅ **100% Concluído** | Bento Grid, Living Shader WebGL, Material 3 Expressive (Porta 3000) |
+| **Fase 7** | NOVA Control Center (Dashboard M3) | ✅ **100% Concluído** | Bento Grid, Living Shader WebGL, Material 3 Expressive (Produção Cloud (https://nova-control-center-al5l.onrender.com)) |
 | **Fase 8** | CI/CD GitHub Actions & Importador OFX | ✅ **100% Concluído** | `.github/workflows/ci.yml`, Parser OFX/CSV Nubank, Deduplicação H2 |
 | **Fase 9** | Inteligência Preditiva & Consultor Financeiro | ✅ **100% Concluído** | Burn Rate Diário, Projeção de Fechamento, Alertas de Risco, Tool MCP |
 

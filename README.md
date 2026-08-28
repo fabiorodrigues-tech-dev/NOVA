@@ -27,7 +27,7 @@ Consulte os documentos executivos em PDF com pareceres de engenharia, diagramas 
 
 O **NOVA Control Center** é o painel de comando unificado do ecossistema, combinando Bento Grid modular, WebGL Living Shader, telemetria em tempo real via Chart.js, Voice Orb interativo e **Sistema de Privacidade Inteligente (Demo Mode)** com suporte a túnel público HTTPS seguro.
 
-Acesse localmente em **[http://nova.local:3000](http://nova.local:3000)** (ou **[http://localhost:3000](http://localhost:3000)**) ou via comando `/dashboard`.
+Acesse localmente em **[http://nova.local:3000](http://nova.local:3000)** (ou **[https://nova-control-center-al5l.onrender.com](https://nova-control-center-al5l.onrender.com)**) ou via comando `/dashboard`.
 
 | ☀️ Modo Dia (Light Theme) | 🌙 Modo Noite (Dark Theme) |
 | :---: | :---: |
@@ -41,7 +41,7 @@ Acesse localmente em **[http://nova.local:3000](http://nova.local:3000)** (ou **
 ```mermaid
 flowchart TD
     subgraph UI_Layer ["🖥️ Interfaces & Acesso"]
-        DASH["🧭 NOVA Control Center (Porta 3000 / nova.local)"]
+        DASH["🧭 NOVA Control Center (Produção Cloud (https://nova-control-center-al5l.onrender.com) / nova.local)"]
         VOICE_UI["🎙️ Voice Studio Web (Porta 5050)"]
         CLI["⚡ Chat & CLI (Atalhos / e !)"]
         TUNNEL["🌐 Túnel Público Seguro (/compartilhar)"]
