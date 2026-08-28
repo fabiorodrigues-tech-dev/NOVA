@@ -12,6 +12,7 @@ echo "======================================================================"
 
 HTTP_PORT="${PORT:-10000}"
 export NOVA_PORT="$HTTP_PORT"
+export HOST="0.0.0.0"
 
 echo "☕ [1/2] Iniciando Agente Financeiro (Spring Boot 3.3 na porta 8081)..."
 java ${JAVA_OPTS:--Xms128m -Xmx384m} -jar /app/agente-financeiro.jar > /tmp/financeiro.log 2>&1 &
@@ -27,7 +28,7 @@ for i in $(seq 1 30); do
     sleep 1
 done
 
-echo "🧭 [2/2] Iniciando NOVA Control Center Dashboard na porta $HTTP_PORT..."
+echo "🧭 [2/2] Iniciando NOVA Control Center Dashboard em 0.0.0.0:$HTTP_PORT..."
 echo "======================================================================"
 echo "✨ ECOSSISTEMA PRONTO PARA TRÁFEGO WEB EM PRODUÇÃO!"
 echo "======================================================================"

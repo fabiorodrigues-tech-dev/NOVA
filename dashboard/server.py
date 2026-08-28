@@ -866,8 +866,11 @@ class DashboardHandler(BaseHTTPRequestHandler):
 
 def iniciar_dashboard(porta_desejada=None):
     global PORT
+    host = os.environ.get("HOST", "0.0.0.0")
+    env_port = os.environ.get("PORT") or os.environ.get("NOVA_PORT")
+
     if porta_desejada is not None:
-        porta = porta_desejada
+        porta = int(porta_desejada)
     elif len(sys.argv) > 1:
         for i, arg in enumerate(sys.argv[1:]):
             if arg in ("--port", "-p") and i + 2 <= len(sys.argv):
@@ -880,18 +883,20 @@ def iniciar_dashboard(porta_desejada=None):
                 porta = int(arg)
                 break
         else:
-            porta = DEFAULT_PORT
+            porta = int(env_port) if env_port and env_port.isdigit() else DEFAULT_PORT
+    elif env_port and env_port.isdigit():
+        porta = int(env_port)
     else:
         porta = DEFAULT_PORT
 
     server = None
     try:
-        server = HTTPServer(('127.0.0.1', porta), DashboardHandler)
+        server = HTTPServer((host, porta), DashboardHandler)
         PORT = porta
     except (PermissionError, OSError) as e:
         if porta != 3000:
             print(f"⚠️ Não foi possível iniciar na porta {porta} ({e}). Recorrendo para porta fallback 3000...")
-            server = HTTPServer(('127.0.0.1', 3000), DashboardHandler)
+            server = HTTPServer((host, 3000), DashboardHandler)
             PORT = 3000
         else:
             raise e
