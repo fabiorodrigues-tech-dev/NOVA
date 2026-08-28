@@ -38,7 +38,7 @@ WORKDIR /app
 # Install Python dependencies (Root + Voice requirements)
 COPY requirements.txt ./requirements.txt
 COPY voz/requirements.txt ./voz-requirements.txt
-RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy Spring Boot Executable JAR from builder stage
 COPY --from=backend-builder /build/target/*.jar ./agente-financeiro.jar
