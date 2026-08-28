@@ -18,7 +18,7 @@ Este diretório centraliza os manuais, artefatos visuais e relatórios executivo
 | **[`assets/nova-light-preview.png`](file:///Users/fabioandre/Downloads/nova:/docs/assets/nova-light-preview.png)** | `PNG` | **UI Showcase Light Theme:** Interface do NOVA Control Center em modo claro com Material 3 Expressive e Bento Grid. |
 | **[`assets/nova-dark-preview.png`](file:///Users/fabioandre/Downloads/nova:/docs/assets/nova-dark-preview.png)** | `PNG` | **UI Showcase Dark Theme:** Interface do NOVA Control Center em modo escuro com Living Shader WebGL e Glassmorphism. |
 | **[`design_system/`](file:///Users/fabioandre/Downloads/nova:/docs/design_system/)** | `Diretório` | Especificações e documentações de engenharia de front-end (Material 3 Expressive, tokens CSS, anatomia visual e Living Shader). |
-| **[`Manual de Engenharia NOVA`](file:///Users/fabioandre/Downloads/nova:/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf)** | `PDF` | Manual aprofundado com boas práticas Java 21, Clean Architecture, SOLID, padrões de projeto e Spring AI MCP. |
+| **[`Manual de Engenharia NOVA`](file:///Users/fabioandre/Downloads/nova:/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf)** | `PDF` | Manual aprofundado com boas práticas Java 21, Clean Architecture, SOLID, padrões de projeto e Spring AI MCP. |
 
 ---
 

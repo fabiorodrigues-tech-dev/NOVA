@@ -2,9 +2,10 @@
 
 > Documento oficial de estado consolidado do ecossistema NOVA. Reflete a conclusão integral de **todas as 9 Fases do Roadmap**, com Inteligência Preditiva & Consultoria Financeira, CI/CD GitHub Actions, Importador OFX/CSV, Voice AI Neural, Dashboard Material 3 Expressive e Clean Architecture.
 
-**Última atualização:** 27/08/2026  
+**Última atualização:** 28/08/2026  
 **Ecossistema:** Java 21, Spring Boot 3.3.3, Spring AI (MCP), Python, Antigravity, Apple Silicon M1  
-**Maturidade Geral:** 100% Operacional & Homologado (40 Testes JUnit 5 Passando)
+**Maturidade Geral:** 100% Operacional & Homologado (40 Testes JUnit 5 Passando)  
+**Manual Oficial:** [`docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf`](file:///Users/fabioandre/Downloads/nova:/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf)
 
 ---
 

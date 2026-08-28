@@ -55,3 +55,6 @@ financeiro/relatorios_pdf/*.pdf
 
 # NOVA Backups & Checkpoints
 .backups/
+resumo/
+logs/*.pid
+logs/*.log

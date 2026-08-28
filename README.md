@@ -1,25 +1,39 @@
 # 🌌 NOVA — Sistema Multi-Agente Pessoal & Profissional
 
 [![NOVA CI/CD](https://github.com/fabiorodrigues-tech-dev/NOVA/actions/workflows/ci.yml/badge.svg)](https://github.com/fabiorodrigues-tech-dev/NOVA/actions)
-![Java 21](https://img.shields.io/badge/Java-21%20LTS-ED8B00?style=flat&logo=openjdk&logoColor=white)
+![Java 21](https://img.shields.io/badge/Java-21-ED8B00?style=flat&logo=openjdk&logoColor=white)
 ![Spring Boot 3](https://img.shields.io/badge/Spring%20Boot-3.3.3-6DB33F?style=flat&logo=springboot&logoColor=white)
 ![Spring AI MCP](https://img.shields.io/badge/Spring%20AI-MCP%20Tools-007ACC?style=flat&logo=spring&logoColor=white)
-![JUnit 5](https://img.shields.io/badge/JUnit%205-40%20Tests%20Passed%20(100%25)-25A162?style=flat&logo=junit5&logoColor=white)
-![Architecture](https://img.shields.io/badge/Architecture-Production--Grade%20Enterprise-blueviolet?style=flat&logo=buffer&logoColor=white)
-![Design System](https://img.shields.io/badge/Design%20System-Material%203%20Expressive-4285F4?style=flat&logo=google&logoColor=white)
+![JUnit 5](https://img.shields.io/badge/JUnit%205-40%20Tests%20Passed-25A162?style=flat&logo=junit5&logoColor=white)
+![Material 3 Expressive](https://img.shields.io/badge/Design%20System-Material%203%20Expressive-4285F4?style=flat&logo=google&logoColor=white)
 
-Bem-vindo ao ecossistema **NOVA**, seu ponto central de inteligência, produtividade e desenvolvimento profissional em arquitetura multi-agente de padrão corporativo (**Production-Grade Enterprise Architecture**), integrando o **Gemini via Google Antigravity**, microsserviços **Java 21 / Spring Boot 3** com Clean Architecture, **Model Context Protocol (MCP)**, **Voz Neural Humana** e o **NOVA Control Center** (Dashboard Visual Unificado com Material 3 Expressive e Living Shader).
+Bem-vindo ao ecossistema **NOVA**, seu ponto central de inteligência, produtividade e desenvolvimento profissional em arquitetura multi-agente, integrando o **Gemini via Google Antigravity**, microsserviços **Java 21 / Spring Boot 3** com Clean Architecture, **Model Context Protocol (MCP)**, **Voz Neural Humana** e o **NOVA Control Center** (Dashboard Visual Unificado com Material 3 Expressive e Living Shader).
 
 ---
 
-## 🧭 NOVA Control Center (UI Showcase & Production Preview)
+## 📄 Manual de Engenharia & Arquitetura de Software
+Consulte a documentação técnica consolidada em PDF com diagramas, princípios SOLID, especificações MCP e suíte de testes:
+- 📑 **[Manual de Engenharia & Arquitetura (PDF Completo)](docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf)**
+- 🏆 **[Dossiê Técnico Master (PDF)](docs/dossie_tecnico_nova.pdf)**
+
+---
+
+## 🧭 NOVA Control Center (UI Preview)
 
 O **NOVA Control Center** é a interface executiva do ecossistema, projetada com base no Design System **Material 3 Expressive**, Bento Grid modular, WebGL Living Shader dinâmico, telemetria em tempo real via Chart.js e Voice Orb interativo com síntese neural. Acesse em **[http://localhost:3000](http://localhost:3000)** ou via comando `/dashboard`.
 
 | ☀️ Modo Dia (Light Theme) | 🌙 Modo Noite (Dark Theme) |
 | :---: | :---: |
 | <img src="docs/assets/nova-light-preview.png" width="100%" alt="NOVA Control Center - Light Theme"> | <img src="docs/assets/nova-dark-preview.png" width="100%" alt="NOVA Control Center - Dark Theme"> |
-| **Light Theme (M3 Expressive):** Superfície tonal limpa, contraste estrito WCAG AAA, Bento Grid adaptativo e visual de alta fidelidade para foco diurno. | **Dark Theme (WebGL Living Shader):** Glassmorphism profundo, shader reativo em tempo real, chips de telemetria preditiva e conforto visual. |
+| **Light Theme:** Máxima legibilidade com superfície tonal M3, contraste WCAG AAA e visual limpo para foco diurno. | **Dark Theme:** Glassmorphism profundo, Living Shader WebGL reativo, chips vibrantes e conforto visual. |
+
+---
+
+## 👥 Agentes Especialistas Integrados (`.agents/skills/`)
+1. 💼 **`agente-carreira-e-operacoes`**: Gestão 360° de candidaturas (Tech/Dev e Marketing/Audiovisual), follow-ups e rotinas diárias.
+2. 💻 **`agente-codigo`**: Engenharia Back-end em Java 21, Spring Boot 3, Clean Architecture, scaffolding e suíte JUnit 5.
+3. 📚 **`agente-estudos`**: Trilha Santander 2026 DIO, aceleração de aprendizado com Técnica Feynman e flashcards técnicos.
+4. 💰 **`agente-financeiro`**: Gestão orçamentária, inteligência preditiva (Burn Rate), parser OFX/CSV e Caixinhas Nubank.
 
 ---
 
