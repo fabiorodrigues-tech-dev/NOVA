@@ -6,6 +6,8 @@
 ![Spring AI MCP](https://img.shields.io/badge/Spring%20AI-MCP%20Tools-007ACC?style=flat&logo=spring&logoColor=white)
 ![JUnit 5](https://img.shields.io/badge/JUnit%205-40%20Tests%20Passed-25A162?style=flat&logo=junit5&logoColor=white)
 ![Material 3](https://img.shields.io/badge/Design%20System-Material%203%20Expressive-4285F4?style=flat&logo=google&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=flat&logo=docker&logoColor=white)
+![Render](https://img.shields.io/badge/Render-24%2F7%20Cloud-46E3B7?style=flat&logo=render&logoColor=black)
 
 > **Enterprise-Grade Multi-Agent Copilot & Autonomous Engineering Ecosystem**  
 > Desenvolvido por **Fábio Rodrigues** (Recife/PE) | [LinkedIn](https://linkedin.com/in/fabiorodrigues-dev) • [GitHub](https://github.com/fabiorodrigues-tech-dev/NOVA)
@@ -155,6 +157,31 @@ python3 dashboard/compartilhar.py
 
 ---
 
+## ☁️ Deploy em Nuvem 24/7 (Docker & Render)
+
+O ecossistema NOVA está totalmente conteinerizado e pronto para execução em nuvem 24/7 através de imagem multi-stage (`Dockerfile`) e blueprint do Render (`render.yaml`).
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/fabiorodrigues-tech-dev/NOVA)
+
+### 🐳 Execução Local com Docker
+```bash
+# 1. Construir a imagem Docker
+docker build -t nova-control-center .
+
+# 2. Executar o container em background (Porta 10000)
+docker run -d -p 10000:10000 --name nova-app nova-control-center
+
+# 3. Acessar o Dashboard
+open http://localhost:10000
+```
+
+### 🌐 Deploy Automático no Render
+1. Conecte sua conta do [Render](https://render.com) ao repositório GitHub `fabiorodrigues-tech-dev/NOVA`.
+2. O Render detectará automaticamente o arquivo [`render.yaml`](file:///Users/fabioandre/Downloads/nova:/render.yaml).
+3. O serviço web será construído e inicializado na nuvem com healthcheck ativo em `/api/status?demo=true`.
+
+---
+
 ## 🧪 Relatório Oficial da Suíte de Testes Automatizados (100% Green)
 
 ```text
@@ -180,4 +207,4 @@ Total de Testes Encontrados: 40
 
 - **Anonimização & Mocks Corporativos:** Todos os assets de preview, relatórios públicos e acessos via túnel utilizam datasets fictícios corporativos (`[DADOS SANITIZADOS / MOCK LGPD]`).
 - **Isolamento no `.gitignore`:** Extratos bancários reais (`.ofx`, `.csv`), comprovantes (`.HEIC`), relatórios confidenciais (`.pdf`) e bancos de dados H2 locais (`*.mv.db`) estão blindados de qualquer sincronização com o repositório público.
-- **Pipeline de Integração Contínua (`.github/workflows/ci.yml`):** Validação automatizada em containers Linux a cada push na branch `main`.
+- **Pipeline de Integração Contínua (`.github/workflows/ci.yml`):** Validação automatizada em containers Linux (Java 21, Python 3.11 e Docker Multi-Stage Build) a cada push na branch `main`.
