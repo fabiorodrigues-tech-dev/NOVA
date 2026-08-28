@@ -84,7 +84,7 @@ flowchart TD
 1. 💰 **Agente Financeiro (`agente-financeiro`):**
    - Microsserviço Java 21 / Spring Boot 3 na porta `8081` com persistência H2 ACID (`financiadb.mv.db`).
    - Parser nativo de extratos `.ofx` e `.csv` do Nubank com deduplicação semântica.
-   - Gestão de Caixinhas Nubank (Reserva e Casal) com recálculo automático de Patrimônio Líquido Total.
+   - Gestão de Caixinhas Nubank com recálculo automático de Patrimônio Líquido Total.
    - Inteligência Preditiva (Fase 9): Cálculo em tempo real de **Burn Rate Diário**, saldo projetado de fechamento e alertas orçamentários.
    - Ferramentas `@Tool` expostas via **Spring AI Model Context Protocol (MCP)**.
 
