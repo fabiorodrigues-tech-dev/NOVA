@@ -328,6 +328,23 @@ def obter_dados_candidaturas(demo=False):
 
     empresas = [
         {
+            "id": "avanade",
+            "nome": "Avanade Brasil",
+            "cargo": "Desenvolvedor(a) Back-End Spring Boot",
+            "local": "Recife, PE",
+            "modelo": "Híbrido / Remoto",
+            "match": 93,
+            "salario_min": "R$ 7.500",
+            "salario_max": "R$ 9.000",
+            "status": "Candidatura Pronta",
+            "stack": ["Java 21", "Spring Boot 3", "Clean Architecture", "JUnit 5", "Spring AI MCP", "PostgreSQL"],
+            "cv_pdf": "/carreira/vagas_analisadas/tech_dev/avanade/curriculo_fabio_rodrigues_avanade.pdf",
+            "cover_pdf": "/carreira/vagas_analisadas/tech_dev/avanade/cover_letter_fabio_rodrigues_avanade.pdf",
+            "cover_docx": "/carreira/vagas_analisadas/tech_dev/avanade/cover_letter_fabio_rodrigues_avanade.docx",
+            "relatorio_pdf": "/carreira/vagas_analisadas/tech_dev/avanade/relatorio_match_avanade.pdf",
+            "pitch_file": "carreira/vagas_analisadas/tech_dev/avanade/carta_apresentacao_recruiter.md"
+        },
+        {
             "id": "capgemini",
             "nome": "Capgemini",
             "cargo": "Desenvolvedor(a) Java",
