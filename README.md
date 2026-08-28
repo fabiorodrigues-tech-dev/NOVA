@@ -20,7 +20,7 @@ Consulte a documentação técnica consolidada em PDF com diagramas, princípios
 
 ## 🧭 NOVA Control Center (UI Preview)
 
-O **NOVA Control Center** é a interface executiva do ecossistema, projetada com base no Design System **Material 3 Expressive**, Bento Grid modular, WebGL Living Shader dinâmico, telemetria em tempo real via Chart.js e Voice Orb interativo com síntese neural. Acesse em **[http://localhost:3000](http://localhost:3000)** ou via comando `/dashboard`.
+O **NOVA Control Center** é a interface executiva do ecossistema, projetada com base no Design System **Material 3 Expressive**, Bento Grid modular, WebGL Living Shader dinâmico, telemetria em tempo real via Chart.js e Voice Orb interativo com síntese neural. Acesse em **[http://nova.local:3000](http://nova.local:3000)** (ou **[http://localhost:3000](http://localhost:3000)**) ou via comando `/dashboard`.
 
 | ☀️ Modo Dia (Light Theme) | 🌙 Modo Noite (Dark Theme) |
 | :---: | :---: |

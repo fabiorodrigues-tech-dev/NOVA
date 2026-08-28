@@ -29,7 +29,7 @@
 
 | Serviço | Tecnologia | Porta | O que faz |
 |---|---|---|---|
-| **NOVA Control Center** | Python / HTML5 / Material 3 Expressive / Chart.js | `3000` | Dashboard visual unificado (Bento Grid, Living Shader, Projeção Preditiva, Voice Orb, downloads 1-clique) |
+| **NOVA Control Center** | Python / HTML5 / Material 3 Expressive / Chart.js | `3000` (`nova.local:3000`) | Dashboard visual unificado (Bento Grid, Living Shader, Projeção Preditiva, Voice Orb, downloads 1-clique) |
 | **NOVA Voice Studio** | Python / `edge-tts` / `afplay` | `5050` | Catálogo e teste de vozes neurais PT-BR e globais (Google Store layout) |
 | **Agente Financeiro API** | Java 21 / Spring Boot 3 / H2 / Spring AI | `8081` | REST + ferramentas MCP + Caixinhas Nubank + Webhook + Importador OFX/CSV + Projeção Preditiva + endpoint de voz |
 

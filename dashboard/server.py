@@ -21,7 +21,8 @@ try:
 except ImportError:
     edge_tts = None
 
-PORT = 3000
+DEFAULT_PORT = int(os.environ.get("NOVA_PORT", os.environ.get("PORT", 3000)))
+PORT = DEFAULT_PORT
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 WORKSPACE_DIR = os.path.abspath(os.path.join(BASE_DIR, ".."))
 CONFIG_VOZ_PATH = os.path.join(WORKSPACE_DIR, "voz/config_voz.json")
@@ -614,16 +615,49 @@ class DashboardHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         pass
 
-def iniciar_dashboard():
-    server = HTTPServer(('127.0.0.1', PORT), DashboardHandler)
-    url = f"http://localhost:{PORT}"
+def iniciar_dashboard(porta_desejada=None):
+    global PORT
+    if porta_desejada is not None:
+        porta = porta_desejada
+    elif len(sys.argv) > 1:
+        for i, arg in enumerate(sys.argv[1:]):
+            if arg in ("--port", "-p") and i + 2 <= len(sys.argv):
+                try:
+                    porta = int(sys.argv[i + 2])
+                    break
+                except ValueError:
+                    pass
+            elif arg.isdigit():
+                porta = int(arg)
+                break
+        else:
+            porta = DEFAULT_PORT
+    else:
+        porta = DEFAULT_PORT
+
+    server = None
+    try:
+        server = HTTPServer(('127.0.0.1', porta), DashboardHandler)
+        PORT = porta
+    except (PermissionError, OSError) as e:
+        if porta != 3000:
+            print(f"⚠️ Não foi possível iniciar na porta {porta} ({e}). Recorrendo para porta fallback 3000...")
+            server = HTTPServer(('127.0.0.1', 3000), DashboardHandler)
+            PORT = 3000
+        else:
+            raise e
+
+    url_local = f"http://nova.local" if PORT == 80 else f"http://nova.local:{PORT}"
+    url_padrao = f"http://localhost" if PORT == 80 else f"http://localhost:{PORT}"
+    
     print("=" * 70)
     print(f"🌌 NOVA CONTROL CENTER — SERVER ATIVO NA PORTA {PORT}")
-    print(f"🌐 Acesse: {url}")
+    print(f"🌐 Domínio Limpo: {url_local}")
+    print(f"🌐 Acesso Direto: {url_padrao}")
     print("=" * 70)
 
     try:
-        webbrowser.open(url)
+        webbrowser.open(url_local if PORT == 80 else url_padrao)
     except Exception:
         pass
 

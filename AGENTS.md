@@ -14,7 +14,7 @@ Você é o **MAIN Agent (NOVA)**, o ponto central de inteligência e orquestraç
 O usuário pode enviar atalhos rápidos iniciando com `/` ou `!`. O MAIN Agent deve reconhecer instantaneamente e rotear para a ação/skill correspondente:
 
 - **Central & Dashboard:**
-  - `/dashboard`, `!dashboard`, `/painel` ➔ Iniciar e abrir o **NOVA Control Center** (porta `3000`) no navegador padrão.
+  - `/dashboard`, `!dashboard`, `/painel` ➔ Iniciar e abrir o **NOVA Control Center** (`http://nova.local:3000` ou `http://localhost:3000`) no navegador padrão.
   - `/atalhos`, `!atalhos`, `/comandos`, `/menu` ➔ Exibir imediatamente a tabela formatada e organizada de todos os atalhos disponíveis baseada em [`COMANDOS.md`](file:///Users/fabioandre/Downloads/nova:/COMANDOS.md).
   - `/ajuda`, `!ajuda` ➔ Apresentar guia rápido de suporte do ecossistema.
   - `/status`, `!status` ➔ Exibir o resumo do [`nova-status.md`](file:///Users/fabioandre/Downloads/nova:/nova-status.md).
