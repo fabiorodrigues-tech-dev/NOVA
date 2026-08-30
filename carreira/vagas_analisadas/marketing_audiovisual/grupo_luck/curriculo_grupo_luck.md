@@ -31,6 +31,7 @@ Designer graduado pela **Faculdade Boa Viagem (UniFBV)** com ênfase em **Comuni
 
 ### 🔹 **Infinit Tecnologia** | *Especialista em Comunicação Visual & Criação Multimídia*
 *Abril de 2026 – Atual | Recife, PE*
+- Cobertura audiovisual oficial e produção de conteúdos na **FuturePrint 2026 (Maior feira de comunicação visual e impressão digital da América Latina)**, realizando demonstrações técnicas de maquinário e captação de leads B2B em tempo real.
 - Criação de materiais gráficos institucionais, apresentações comerciais e coberturas audiovisuais de produtos e soluções para o setor de comunicação visual.
 - Produção de vídeos explicativos e demonstrações técnicas para suporte às operações, facilitando o entendimento de processos operacionais e relacionamento corporativo.
 - Aplicação prática de ferramentas de IA Generativa (síntese neural de voz e automação de roteiros) para acelerar a produção de conteúdos multimídia.

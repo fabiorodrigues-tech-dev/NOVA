@@ -32,6 +32,7 @@ Filmmaker, Editor de Vídeo e Diretor Criativo com sólida formação em **Desig
 
 ### 🔹 **Infinit Tecnologia** | *Especialista em Comunicação Visual & Criação Multimídia*
 *Abril de 2026 – Atual | Recife, PE*
+- Cobertura audiovisual oficial e produção de conteúdos dinâmicos na **FuturePrint 2026 (Maior feira de serigrafia, sign e comunicação visual da América Latina)**, realizando demonstrações técnicas de maquinário industrial e captação de leads B2B em tempo real.
 - Criação e pós-produção de materiais audiovisuais e criativos de marketing para o setor de comunicação visual, estamparia e plotters industriais de grande formato.
 - Gravação e edição de demonstrações técnicas de maquinário, coberturas institucionais e vídeos explicativos voltados para relacionamento B2B e captação de clientes corporativos.
 - Planejamento de estratégias de conteúdo multimídia e experimentação com IA Generativa (Voice AI) na automação de roteiros e vídeos demonstrativos.

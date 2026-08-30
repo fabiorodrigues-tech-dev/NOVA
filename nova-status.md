@@ -2,7 +2,7 @@
 
 > Documento oficial de estado consolidado do ecossistema NOVA. Reflete a conclusão integral de **todas as 9 Fases do Roadmap**, com Inteligência Preditiva & Consultoria Financeira, CI/CD GitHub Actions, Importador OFX/CSV, Voice AI Neural, Dashboard Material 3 Expressive e Clean Architecture.
 
-**Última atualização:** 28/08/2026  
+**Última atualização:** 30/08/2026  
 **Ecossistema:** Java 21, Spring Boot 3.3.3, Spring AI (MCP), Python, Antigravity, Apple Silicon M1  
 **Maturidade Geral:** 100% Operacional & Homologado (40 Testes JUnit 5 Passando)  
 **Manual Oficial:** [`docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf`](file:///Users/fabioandre/Downloads/nova:/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf)
@@ -16,7 +16,7 @@
 | **Fase 1** | Arquitetura Multi-Agente & Orquestração | ✅ **100% Concluído** | MAIN Agent + 4 Agentes Especialistas em `.agents/skills/` |
 | **Fase 2** | Back-end Java 21 & Clean Architecture | ✅ **100% Concluído** | Spring Boot 3.3.3, DDD, H2 persistente, Repository Pattern |
 | **Fase 3** | Spring AI & Model Context Protocol (MCP) | ✅ **100% Concluído** | Tools `@Tool` expostas para IA (Cadastro, Listagem, Resumo) |
-| **Fase 4** | Esteira de Carreira & Candidaturas 360° | ✅ **100% Concluído** | 10 Candidaturas (5 Tech & 5 Marketing), Harvard Tech ATS PDF, DOCX |
+| **Fase 4** | Esteira de Carreira & Candidaturas 360° | ✅ **100% Concluído** | 17 Candidaturas (6 Tech & 11 Marketing), Harvard Tech ATS PDF, DOCX |
 | **Fase 5** | Motor Gráfico & Relatórios Visuais PDF | ✅ **100% Concluído** | `chart_engine.py` (Matplotlib), Relatório Financeiro & Manual DIO |
 | **Fase 6** | Camada de Voz Neural Humana (Voice AI) | ✅ **100% Concluído** | `edge-tts` + `afplay` nativo, Voice Studio Web (Porta 5050) |
 | **Fase 7** | NOVA Control Center (Dashboard M3) | ✅ **100% Concluído** | Bento Grid, Living Shader WebGL, Material 3 Expressive (Produção Cloud (https://nova-control-center-al5l.onrender.com)) |

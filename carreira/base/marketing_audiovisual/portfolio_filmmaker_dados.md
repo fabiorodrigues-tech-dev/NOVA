@@ -17,7 +17,7 @@ Este documento consolida a auditoria técnica, os cases de sucesso e o stack de 
 | **Gráfica do Parque** | Indústria Gráfica / B2B | Apresentação de processos gráficos industriais, detalhes de acabamento, valorização de maquinário e atendimento corporativo. | Comunicação B2B, endomarketing industrial e treinamento operacional. |
 | **Unigames** | Games & Entretenimento Digital | Motion graphics, teasers promocionais, recortes dinâmicos de transmissões e sound effects imersivos. | Criação para públicos jovens, eventos de tecnologia e retenção de comunidade. |
 | **Olimac** | Maquinário Pesado & Engenharia | Demonstração técnica de equipamentos, robustez visual, enquadramentos de segurança e captação de campo. | Vídeos técnicos para equipes operacionais e clientes industriais. |
-| **Infinit Tecnologia** | Tecnologia & Comunicação Visual | Demonstrações de plotters de grande formato, vídeos institucionais B2B e integração inovadora com Voice AI. | Inovação com Inteligência Artificial e automação de comunicação. |
+| **Infinit Tecnologia (FuturePrint 2026)** | Tecnologia & Comunicação Visual | Cobertura audiovisual oficial na **FuturePrint 2026** (maior feira do setor na América Latina), demonstrações técnicas de plotters industriais e vídeos B2B com Voice AI. | Inovação, feiras de grande porte da América Latina, autoridade B2B e IA generativa. |
 
 ---
 
