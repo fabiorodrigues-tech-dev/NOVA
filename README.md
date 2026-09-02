@@ -10,7 +10,7 @@
 ![Render](https://img.shields.io/badge/Render-24%2F7%20Cloud-46E3B7?style=flat&logo=render&logoColor=black)
 
 > **Enterprise-Grade Multi-Agent Copilot & Autonomous Engineering Ecosystem**  
-> Desenvolvido por **Fábio Rodrigues** (Recife/PE) | [LinkedIn](https://linkedin.com/in/fabiorodrigues-dev) • [GitHub](https://github.com/fabiorodrigues-tech-dev/NOVA)
+> Desenvolvido por **Fábio Rodrigues** (Recife/PE) | [LinkedIn](https://linkedin.com/in/fabiorodrigues-dev)
 
 O **NOVA** é um ecossistema multi-agente pessoal e profissional orientado a microsserviços, inteligência artificial autônoma e engenharia de software de alta performance. Desenvolvido sob rigorosos princípios de **Clean Architecture (Ports & Adapters)**, **SOLID** e **DevSecOps**, o sistema integra o **Gemini via Google Antigravity**, microsserviço **Java 21 / Spring Boot 3.3.3**, protocolo **Spring AI Model Context Protocol (MCP)**, camada de **Voz Neural Humana** de baixa latência e o **NOVA Control Center** (Dashboard Executivo com Material 3 Expressive, Living Shader WebGL e Sistema de Privacidade LGPD).
 
