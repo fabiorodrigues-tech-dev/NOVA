@@ -284,6 +284,58 @@ def compilar_manual_pdf(markdown_path: str, output_pdf_path: str):
             i += 1
             continue
 
+        # Tabela Markdown (| col1 | col2 | ...)
+        if raw_line.startswith("|") and "|" in raw_line[1:]:
+            table_lines = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                table_lines.append(lines[i].strip())
+                i += 1
+            
+            rows_data = []
+            for t_line in table_lines:
+                cells = [c.strip() for c in t_line.split("|")[1:-1]]
+                if all(re.match(r'^:?-+:?$', c) for c in cells if c):
+                    continue  # Separator row
+                rows_data.append(cells)
+            
+            if rows_data:
+                num_cols = max(len(r) for r in rows_data)
+                col_width = 510.0 / num_cols if num_cols > 0 else 510.0
+                
+                table_flowables = []
+                for row_idx, row in enumerate(rows_data):
+                    flowable_row = []
+                    is_header = (row_idx == 0)
+                    for cell in row:
+                        cell_cleaned = clean_inline(cell)
+                        if is_header:
+                            p = Paragraph(f"<b>{cell_cleaned}</b>", ParagraphStyle('TH', fontName='Helvetica-Bold', fontSize=8, leading=10, textColor=colors.white))
+                        else:
+                            p = Paragraph(cell_cleaned, ParagraphStyle('TD', fontName='Helvetica', fontSize=7.5, leading=10, textColor=colors.HexColor('#2C3E50')))
+                        flowable_row.append(p)
+                    while len(flowable_row) < num_cols:
+                        flowable_row.append(Paragraph("", body_style))
+                    table_flowables.append(flowable_row)
+                
+                t = Table(table_flowables, colWidths=[col_width] * num_cols)
+                t_style = [
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1A2530')),
+                    ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor('#BDC3C7')),
+                    ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#E5E8E8')),
+                    ('TOPPADDING', (0, 0), (-1, -1), 4),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 5),
+                    ('RIGHTPADDING', (0, 0), (-1, -1), 5),
+                ]
+                for r_idx in range(1, len(table_flowables)):
+                    if r_idx % 2 == 1:
+                        t_style.append(('BACKGROUND', (0, r_idx), (-1, r_idx), colors.HexColor('#F8FAFC')))
+                t.setStyle(TableStyle(t_style))
+                story.append(Spacer(1, 4))
+                story.append(t)
+                story.append(Spacer(1, 6))
+            continue
+
         # Bullets (- ... ou • ... ou * ...)
         if raw_line.startswith("- ") or raw_line.startswith("• ") or (raw_line.startswith("* ") and not raw_line.endswith("*")):
             bullet_text = clean_inline(raw_line[2:])
@@ -303,7 +355,14 @@ def compilar_manual_pdf(markdown_path: str, output_pdf_path: str):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compilador do Manual Técnico e Arquitetural NOVA em PDF")
     parser.add_argument("--input", default="estudos/guia_estudos_nova/dossie_tecnico_completo.md", help="Arquivo Markdown de entrada")
-    parser.add_argument("--output", default="estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf", help="Arquivo PDF de saída")
+    parser.add_argument("--output", default="docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf", help="Arquivo PDF de saída")
 
     args = parser.parse_args()
     compilar_manual_pdf(args.input, args.output)
+    # Sincroniza também com estudos/guia_estudos_nova se a saída padrão foi usada
+    if args.output == "docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf":
+        alt_path = "estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
+        os.makedirs(os.path.dirname(alt_path), exist_ok=True)
+        import shutil
+        shutil.copyfile(args.output, alt_path)
+        print(f"✅ Cópia sincronizada em: {alt_path}")

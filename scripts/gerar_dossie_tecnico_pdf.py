@@ -164,7 +164,7 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
     # CABEÇALHO DO DOSSIÊ MASTER
     # =========================================================================
     story.append(Paragraph("🌌 DOSSIÊ TÉCNICO & AUDITORIA ARQUITETURAL", style_cover_title))
-    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.5 | Clean Architecture & Enterprise Readiness", style_cover_sub))
+    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.6 | Clean Architecture, Spring AI MCP & DevSecOps", style_cover_sub))
     story.append(HRFlowable(width="100%", thickness=1.5, color=ACCENT, spaceBefore=2, spaceAfter=10))
 
     # Meta Informações em Grid/Tabela
@@ -175,10 +175,10 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         ],
         [
             Paragraph("<b>Repositório Oficial:</b> github.com/fabiorodrigues-tech-dev/NOVA", style_body),
-            Paragraph("<b>Suíte de Testes:</b> 40/40 JUnit 5 Passando (100%)", style_body)
+            Paragraph("<b>Suíte de Testes:</b> 40/40 JUnit 5 Passando (100% Green)", style_body)
         ],
         [
-            Paragraph("<b>Privacidade & DevSecOps:</b> Mock Corporativo LGPD", style_body),
+            Paragraph("<b>Produção Nuvem (Live):</b> nova-control-center-alsl.onrender.com", style_body),
             Paragraph("<b>Maturidade Técnica:</b> <font color='#059669'><b>ENTERPRISE READY (PRODUCTION-GRADE)</b></font>", style_body)
         ]
     ]
@@ -391,11 +391,13 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         "técnico e arquitetural em ambientes de missão crítica e avaliações de alta performance.<br/><br/>"
         "<b>Destaques de Engenharia Enterprise que Chancelam a Solução:</b><br/>"
         "1. <b>Clean Architecture em Java 21 LTS:</b> Estrita separação de responsabilidades (Domain desacoplado de frameworks, Use Cases agnósticos, Ports & Adapters, DTO Records imutáveis).<br/>"
-        "2. <b>Spring AI & Model Context Protocol (MCP):</b> Implementação pioneira do padrão MCP com anotações <code>@Tool</code>, permitindo que LLMs operem o sistema de forma determinística e segura.<br/>"
-        "3. <b>Confiabilidade & Cobertura (40 Testes JUnit 5 / Mockito):</b> Cobertura de testes abrangente cobrindo regras de negócio, parsers complexos de OFX/CSV, inteligência preditiva e endpoints REST.<br/>"
-        "4. <b>Front-end de Alta Fidelidade (Material 3 Expressive):</b> Dashboard com Living Shader WebGL, Bento Grid modular e gráficos em tempo real.<br/>"
-        "5. <b>DevSecOps & LGPD:</b> Isolamento estrito de dados sensíveis e esteira de CI/CD automatizada via GitHub Actions.<br/><br/>"
-        "<b>Status Oficial:</b> Homologado com louvor e chancelado como arquitetura <i>Production-Grade</i>."
+        "2. <b>Casos de Uso Avançados & IA Preditiva (Fase 9):</b> Ingestão bancária automatizada (<code>ImportarExtratoOfxUseCase</code> com deduplicação no H2), cálculo de Burn Rate Diário e projeção de fechamento (<code>CalcularProjecaoFinanceiraUseCase</code>), além de gestão de Caixinhas Nubank e Patrimônio Líquido Total.<br/>"
+        "3. <b>Spring AI & Model Context Protocol (MCP):</b> Implementação do padrão MCP com anotações <code>@Tool</code> determinísticas, permitindo que LLMs operem o sistema de forma segura.<br/>"
+        "4. <b>Confiabilidade & Cobertura Rigorosa (40/40 Testes JUnit 5 / Mockito):</b> Cobertura de testes unitários isolados, integração WebMvc e ferramentas MCP com 100% de aprovação (Green).<br/>"
+        "5. <b>DevOps & Nuvem 24/7 (Docker & Render):</b> Container multi-stage build (Java 21 + Python 3.11), pipeline CI/CD GitHub Actions e deploy contínuo em produção no Render (<code>https://nova-control-center-alsl.onrender.com</code>).<br/>"
+        "6. <b>Front-end Executivo (Material 3 Expressive):</b> SPA com 7 abas dedicadas, WebGL Living Shader, Bento Grid modular, WCAG AAA e proteção de privacidade DevSecOps (Modo Demo LGPD Safe protegido por PIN administrativo).<br/>"
+        "7. <b>Esteira de Carreiras 360°:</b> Segmentação estrita em 3 trilhas profissionais (Tech/Dev, Audiovisual/Filmmaker e Suporte SaaS) com geração de dossiês executivos e currículos Harvard Tech ATS.<br/><br/>"
+        "<b>Status Oficial:</b> Homologado com louvor e chancelado como arquitetura <i>Production-Grade Enterprise</i>."
     )
 
     parecer_card = Table([[Paragraph(parecer_text, style_callout)]], colWidths=[504])

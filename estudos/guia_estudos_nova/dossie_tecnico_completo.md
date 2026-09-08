@@ -343,7 +343,92 @@ O pipeline de voz de baixa latência conecta múltiplos serviços assíncronos:
 - **ReportLab:** Constrói árvores de elementos visuais (**Flowables**) calculando quebras de página automáticas, margens de precisão milimétrica e estilos tipográficos imutáveis para garantir PDFs 100% legíveis por ATS.
 - **python-docx:** Manipula a estrutura XML padrão OpenXML da Microsoft (`w:pBdr`, `w:r`, `w:p`), injetando cabeçalhos timbrados e tabelas formais para exportação profissional.
 
+# 💳 8. Casos de Uso Avançados, Parser OFX & Inteligência Preditiva (Fase 9)
+
+### 8.1. Ingestão Bancária: `ImportarExtratoOfxUseCase`
+O caso de uso de importação bancária processa extratos nos formatos `.ofx` e `.csv` do Nubank salvos em `financeiro/extratos_ofx/`:
+- **Parser SGML/XML Nativo:** Extração precisa das tags financeiras padrão Open Financial Exchange (`<STMTTRN>`, `<TRNAMT>`, `<MEMO>`, `<DTPOSTED>`, `<FITID>`).
+- **Classificação Categórica Semântica:** Mapeamento inteligente de descrições em categorias de despesas e receitas (`ALIMENTACAO`, `MORADIA`, `TRANSPORTE`, `SAUDE`, `LAZER`, `INVESTIMENTO`, `OUTROS`).
+- **Deduplicação Transacional no H2:** Validação por identificador único e data/valor para garantir que nenhuma transação seja inserida em duplicidade.
+
+### 8.2. CFO Algorítmico & Fórmulas Preditivas: `CalcularProjecaoFinanceiraUseCase`
+O módulo preditivo realiza projeção matemática de fluxo de caixa em tempo real:
+- **Burn Rate Diário:**
+  $$\text{Burn Rate} = \frac{\text{Total de Despesas Acumuladas}}{\text{Dias Decorridos no Ciclo}}$$
+- **Despesa Total Projetada:**
+  $$\text{Despesa Projetada} = \text{Despesas Atuais} + (\text{Burn Rate} \times \text{Dias Restantes})$$
+- **Saldo Final Projetado:**
+  $$\text{Saldo Final} = \text{Receitas Atuais} - \text{Despesa Projetada}$$
+- **Classificação de Risco:** `SAUDÁVEL` (margem > 20%), `ALERTA` (margem < 10%) e `CRÍTICO` (saldo projetado negativo).
+
+### 8.3. Caixinhas Nubank & Patrimônio Líquido Total
+- Módulo de alocação de ativos em reservas estratégicas (Reserva de Emergência e Reserva Casal).
+- Endpoint REST `/api/caixinhas` integrado ao cálculo automático de **Patrimônio Líquido Total** somando saldo em conta H2 e aportes das caixinhas.
+
+---
+
+# 🧪 9. Qualidade de Software, Cobertura & CI/CD (40 Testes JUnit 5)
+
+### 9.1. Suíte de 40 Testes Automatizados (100% Green)
+A integridade de todas as camadas é validada por **40 testes automatizados** executados via `./run-tests.sh`:
+- **Casos de Uso Unitários (Isolados com Mockito):**
+  - `ImportarExtratoOfxUseCaseTest`: Validação de parsing de tags OFX e regras de deduplicação.
+  - `CalcularProjecaoFinanceiraUseCaseTest`: Verificação dos cálculos de Burn Rate e cenários de risco.
+  - `CalcularResumoFinanceiroUseCaseTest`: Validação de saldo, total de receitas e despesas.
+  - `SalvarCaixinhaUseCaseTest` e `ListarCaixinhasUseCaseTest`: Gestão de depósitos e saldo das caixinhas.
+  - `ProcessarNotificacaoNubankUseCaseTest`: Simulação de webhooks de compra e conciliação.
+  - `ProcessarComandoVozUseCaseTest`: Validação do roteamento de comandos de voz para a API.
+- **Testes de Integração WebMvc:**
+  - `TransacaoControllerTest`: MockMvc testando contratos REST, paginação e RFC 7807 ProblemDetail.
+  - `CaixinhaControllerTest`: MockMvc testando endpoints de caixinhas e atualização de valores.
+- **Testes Spring AI MCP Tools:**
+  - `FinanceiroMcpToolsTest`: Chamadas determinísticas das anotações `@Tool`.
+
+### 9.2. Esteira de Integração Contínua (`.github/workflows/ci.yml`)
+- **Job Java 21:** Compilação Maven, execução de todos os 40 testes e publicação de relatórios Surefire a cada push na branch `main`.
+- **Job Python:** Verificação estática de sintaxe e dependências via Flake8.
+
+---
+
+# ☁️ 10. Infraestrutura DevOps, Docker & Deploy em Nuvem (Render)
+
+### 10.1. Docker Multi-Stage Build (`Dockerfile`)
+- **Stage 1 (Builder):** `maven:3.9-eclipse-temurin-21` compilando e empacotando o JAR Spring Boot.
+- **Stage 2 (Runner):** Imagem enxuta baseada em Debian com OpenJDK 21 JRE e Python 3.11, permitindo execução paralela e segura dos microsserviços.
+- **Healthcheck Ativo:** Monitoramento no endpoint `/api/status?demo=true`.
+
+### 10.2. Blueprint do Render (`render.yaml`) & Nuvem 24/7
+- Deploy contínuo na nuvem conectado ao repositório GitHub.
+- URL Oficial de Produção: **`https://nova-control-center-alsl.onrender.com`**.
+
+---
+
+# 🧭 11. Frontend SPA com 7 Abas em Material 3 Expressive & DevSecOps
+
+### 11.1. Matriz de 7 Abas Dedicadas (SPA View Switcher)
+1. **Cockpit Dashboard:** Visão geral, Voice Assistant interativo, KPIs corporativos e Living Shader WebGL.
+2. **Finanças & Preditivo H2:** Balanço, auditoria de despesas, burn rate diário, projeção de fechamento e caixinhas.
+3. **Candidaturas 360°:** Rastreamento de vagas ativas, índices de aderência técnica (Match %) e exportação de dossiês.
+4. **Estudos & Certificações:** Monitoramento de trilhas ativas (Santander DIO 26/26 com Certificado e Full Stack 5/5).
+5. **Voice Studio Pro:** Laboratório de síntese vocal neural, catálogo de vozes PT-BR/globais e testes executivos.
+6. **Engenharia & Testes:** Telemetria dos serviços, Clean Architecture 4 Camadas, persistência H2 ACID e 40 testes 100% OK.
+7. **Spring Boot API Explorer:** Documentação interativa de contratos REST, 5 endpoints mapeados e esquemas JSON.
+
+### 11.2. DevSecOps: Controle de Acesso por PIN & Modo Demonstração (LGPD Safe)
+- O painel inicializa por padrão servindo apenas dados simulados, sem risco de vazamento de dados bancários ou confidenciais.
+- A alternância para dados reais exige autenticação via modal validada por chave segura (`ADMIN_PIN`).
+- Motor de voz (`/api/voice/interact`) sincronizado com o PIN: transita dinamicamente entre dados reais e fictícios.
+
+---
+
+# 💼 12. Esteira de Carreira 360° em 3 Trilhas Especializadas
+
+- 💻 **Trilha Tech & Dev:** Currículos Harvard Tech ATS (`Curriculo_Fabio_Rodrigues_Java_Backend.pdf`), cartas timbradas em PDF/DOCX, LinkedIn oficial e GitHub do projeto.
+- 🎬 **Trilha Marketing & Audiovisual:** Dossiê de portfólio visual com 6 cases reais (DER-PE, Gildo Lanches, Quintal dos Primos), Google Drive exclusivo e setup Apple Silicon M1 (**Sem LinkedIn**).
+- 📋 **Trilha Suporte, Operações & Administrativo:** Suporte a sistemas SaaS/ERP, validação documental ICP-Brasil, Customer Experience (CX), CRM e currículos dedicados (`Curriculo_Fabio_Rodrigues_Suporte_TI.pdf`).
+
 ---
 
 ## 🎯 Conclusão & Próximos Passos
-Este compêndio serve como base de engenharia de software para a consolidação profissional do desenvolvedor. A integração prática desses conceitos no ecossistema **NOVA** demonstra prontidão técnica e capacidade de liderança no desenvolvimento de microsserviços modernos e IA aplicada.
+Este compêndio consolida a excelência de engenharia de software do ecossistema **NOVA**. A integração harmônica entre Java 21, Spring Boot 3, Clean Architecture, Spring AI MCP, infraestrutura Docker/Render, segurança DevSecOps (LGPD Safe) e testes automatizados demonstra prontidão técnica sênior para entrega de software em nível corporativo de alta performance.
+
