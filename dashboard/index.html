@@ -199,10 +199,10 @@
         </div>
 
         <div class="header-user-actions" data-slot="actions">
-          <!-- Privacy & Demo Mode Toggle Button -->
-          <button id="btnPrivacyToggle" class="btn-privacy-toggle md3-chip md3-chip--assist" onclick="alternarModoPrivacidade()" title="Alternar entre Modo Real e Modo Demonstração (Proteção LGPD / Gravação de Telas)" aria-label="Alternar Modo Real ou Demonstração">
-            <span class="material-symbols-rounded privacy-mode-icon" id="privacyModeIcon" aria-hidden="true">visibility</span>
-            <span id="privacyModeLabel">Modo Real</span>
+          <!-- Privacy & Demo Mode Toggle Button (Default: LGPD Demo Safe) -->
+          <button id="btnPrivacyToggle" class="btn-privacy-toggle md3-chip md3-chip--assist demo-active" onclick="alternarModoPrivacidade()" title="Alternar entre Modo Real e Modo Demonstração (Proteção LGPD / Gravação de Telas)" aria-label="Alternar Modo Real ou Demonstração">
+            <span class="material-symbols-rounded privacy-mode-icon" id="privacyModeIcon" aria-hidden="true">shield</span>
+            <span id="privacyModeLabel">Modo Demo (LGPD)</span>
           </button>
 
           <!-- State Switcher para Revisão Rápida -->
@@ -253,8 +253,8 @@
       <!-- Scrollable Main Content -->
       <main class="dabang-content-body">
 
-        <!-- Presentation & Demo Mode Banner -->
-        <div id="demoModeBanner" class="demo-presentation-banner" style="display: none;" role="status">
+        <!-- Presentation & Demo Mode Banner (Default: Visible / LGPD Safe) -->
+        <div id="demoModeBanner" class="demo-presentation-banner" style="display: flex;" role="status">
           <div class="demo-banner-content">
             <span class="material-symbols-rounded banner-icon">verified_user</span>
             <div class="demo-banner-texts">

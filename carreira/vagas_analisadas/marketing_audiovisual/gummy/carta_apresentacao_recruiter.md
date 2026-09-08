@@ -19,7 +19,7 @@ Possuo experiência prática na prospecção de creators no Instagram e TikTok, 
 
 Gostaria muito de conversar sobre como conectar a Gummy aos melhores creators do Brasil para acelerar ainda mais o alcance e as vendas da marca!
 
-Meu portfólio de cases e produções está disponível em: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Meu portfólio de cases e produções está disponível em: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -39,7 +39,7 @@ Como Designer (UniFBV) e Diretor Criativo/Filmmaker, uno visão analítica de m�
 
 Estou à disposição para uma conversa sobre como escalar as parcerias de criadores e o faturamento da Gummy em Recife!
 
-Portfólio de Cases: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio de Cases: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

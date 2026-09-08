@@ -59,10 +59,14 @@ Engenheiro de Software com sólida formação em **Design (UniFBV)** e especiali
 
 ---
 
-## 🎓 Formação Acadêmica & Certificações
+## 🎓 Formação Acadêmica & Especializações
 
-- **Bacharelado em Design** — *Faculdade Boa Viagem (UniFBV Wyden)* | *2019 – 2023 | Recife, PE*
+- **Faculdade Boa Viagem (UniFBV)** | *Bacharelado em Design (UX/UI & Ergonomia Cognitiva)* (Graduação de 4 Anos)
   - Ênfase em Ergonomia Cognitiva, Arquitetura de Informação e Comunicação Visual.
-- **Bootcamp Santander 2026 - AI Java Back-end** — *Digital Innovation One (DIO)* | *2026 | Em Formação Ativa*
-  - Java 21 LTS, Spring Boot 3, Spring AI, Microsserviços Distribuídos, Design Patterns e Cloud.
-- **Idiomas:** Português (Nativo) | Inglês (Compreensão técnica avançada e conversação intermediária).
+- **Bootcamp Santander 2026 — AI Java Back-end** | *Digital Innovation One (DIO)*
+  - Especialização prática em Java 21 LTS, Spring Boot 3, Microsserviços, Clean Architecture, Bancos de Dados e Spring AI.
+- **Bootcamp Itaú — Java com Inteligência Artificial** | *Digital Innovation One (DIO / Itaú)*
+  - Desenvolvimento backend avançado em Java, microsserviços, inteligência artificial integrada e automações.
+- **Decola Tech 2025 — Full Stack Developer** | *Digital Innovation One (DIO / Avanade)*
+  - Formação full stack abrangendo arquitetura de sistemas, desenvolvimento web moderno, backend e APIs RESTful.
+- **Idiomas:** Inglês Avançado (Leitura técnica, escrita e conversação profissional) | Português (Nativo).

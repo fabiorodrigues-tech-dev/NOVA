@@ -64,8 +64,12 @@ Desenvolvedor de Software Back-End especializado no ecossistema **Java 21 LTS** 
 
 ---
 
-## 🎓 Formação Acadêmica & Qualificações
+## 🎓 Formação Acadêmica & Especializações
 
-- **Faculdade Boa Viagem (UniFBV)** | *Bacharelado em Design (UX/UI, Ergonomia Cognitiva & Arquitetura de Informação)*
-- **Bootcamp Santander 2026 — AI Java Back-end** | *Digital Innovation One (DIO)* (Em andamento)
-  - Especialização em Java 21 LTS, Spring Boot 3, Microsserviços, Clean Architecture, Bancos de Dados Relacionais e Spring AI.
+- **Faculdade Boa Viagem (UniFBV)** | *Bacharelado em Design (UX/UI, Ergonomia Cognitiva & Arquitetura de Informação)* (Graduação de 4 Anos)
+- **Bootcamp Santander 2026 — AI Java Back-end** | *Digital Innovation One (DIO)*
+  - Especialização prática em Java 21 LTS, Spring Boot 3, Microsserviços, Clean Architecture, Bancos de Dados Relacionais e Spring AI.
+- **Bootcamp Itaú — Java com Inteligência Artificial** | *Digital Innovation One (DIO / Itaú)*
+  - Desenvolvimento backend avançado em Java, microsserviços, inteligência artificial integrada e automações.
+- **Decola Tech 2025 — Full Stack Developer** | *Digital Innovation One (DIO / Avanade)*
+  - Formação full stack abrangendo arquitetura de sistemas, desenvolvimento web moderno, backend e APIs RESTful.

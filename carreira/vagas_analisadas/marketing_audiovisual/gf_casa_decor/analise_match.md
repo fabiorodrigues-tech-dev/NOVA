@@ -91,7 +91,7 @@ Adoro o ambiente de loja física: gravar no showroom, criar conteúdos de antes 
 
 Estou sediado em Recife, com disponibilidade presencial imediata e muita vontade de colocar a mão na massa para fazer o marketing da GF Casa Decor brilhar ainda mais!
 
-🔗 Portfólio de Cases & Vídeos: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio de Cases & Vídeos: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  

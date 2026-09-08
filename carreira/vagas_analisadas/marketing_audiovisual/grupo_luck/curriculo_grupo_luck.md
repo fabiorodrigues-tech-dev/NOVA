@@ -1,6 +1,6 @@
 # Fábio Rodrigues
 **Designer, Criador de Conteúdo & Especialista em Endomarketing | Direção Visual, Edição de Vídeo & Employer Branding**  
-📍 Recife, PE — Brasil | 📧 fabioandre777@gmail.com | 📱 (81) 98992-0040 | 🔗 [Portfólio](https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view)
+📍 Recife, PE — Brasil | 📧 fabioandre777@gmail.com | 📱 (81) 98992-0040 | 🔗 [Portfólio](https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link)
 
 ---
 

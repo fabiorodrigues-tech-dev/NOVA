@@ -17,7 +17,15 @@ let currentAudioPlayer = null;
 let estadoAtualDashboard = 'normal';
 let novaLivingShaderEngine = null;
 
-let modoPrivacidade = localStorage.getItem('nova_privacy_mode') || 'real';
+// LGPD Safe: Por padrão, todo novo visitante público inicia SEMPRE em Modo Demonstração (LGPD Safe)
+const salvoModoPrivacidade = localStorage.getItem('nova_privacy_mode');
+let modoPrivacidade = salvoModoPrivacidade === 'real' ? 'real' : 'demo';
+
+// Helper global para estado de demonstração (isDemoMode)
+function isDemoMode() {
+  return modoPrivacidade === 'demo';
+}
+window.isDemoMode = isDemoMode;
 
 document.addEventListener('DOMContentLoaded', () => {
   inicializarTemaM3();
@@ -59,6 +67,10 @@ function inicializarModoPrivacidade() {
     modoPrivacidade = 'demo';
   } else if (urlParams.get('demo') === 'false' || urlParams.get('mode') === 'real') {
     modoPrivacidade = 'real';
+  } else {
+    // Garantia LGPD: Se o valor for nulo (novo visitante público), o padrão é SEMPRE 'demo'
+    const salvo = localStorage.getItem('nova_privacy_mode');
+    modoPrivacidade = salvo === 'real' ? 'real' : 'demo';
   }
   atualizarBotoesPrivacidade();
 }
@@ -66,6 +78,7 @@ function inicializarModoPrivacidade() {
 function alternarModoPrivacidade() {
   modoPrivacidade = modoPrivacidade === 'real' ? 'demo' : 'real';
   localStorage.setItem('nova_privacy_mode', modoPrivacidade);
+  document.cookie = `nova_privacy_mode=${modoPrivacidade}; path=/; max-age=31536000; SameSite=Lax`;
   atualizarBotoesPrivacidade();
   carregarDashboard();
   showToast(modoPrivacidade === 'demo' ? '🛡️ Modo Apresentação Ativo (Dados de Demonstração)' : '👁️ Modo Real Ativo (Dados Locais H2)');

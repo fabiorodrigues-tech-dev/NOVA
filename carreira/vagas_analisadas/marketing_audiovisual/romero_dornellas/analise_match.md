@@ -98,7 +98,7 @@ Tenho total disponibilidade para atuação 100% presencial, facilidade para tran
 
 Estou à disposição para apresentar meu portfólio e conversar sobre como posso agregar valor à conta!
 
-📁 Portfólio Oficial: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+📁 Portfólio Oficial: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  

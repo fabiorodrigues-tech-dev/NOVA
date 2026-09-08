@@ -24,7 +24,16 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 | **`/candidatura [link]`** | `!candidatura` | Executa a Esteira 360° completa para a vaga (Match, CV, Cover Letter PDF/DOCX e Pitch) | `/candidatura https://careers.deloitte.com/...` |
 | **`/vagas`** | `!vagas` | Abre a tabela geral de candidaturas e matches ativos | `/vagas` |
 | **`/pitch [empresa]`** | `!pitch` | Exibe mensagens prontas para Recruiter e Tech Lead no LinkedIn | `/pitch deloitte` ou `/pitch capgemini` |
-| **`/cv`** | `!cv` | Exibe os links dos currículos base oficiais (Dev e Marketing/Audiovisual em PDF e MD) | `/cv` |
+| **`/cv`** | `!cv` | Exibe os links dos currículos base oficiais (Dev, Filmmaker, Marketing e Suporte em PDF/MD) | `/cv` |
+
+### 🌐 Matriz Permanente de Links por Especialidade de Vaga:
+
+| Especialidade / Trilha | Links Obrigatórios no Cabeçalho | Regra de LinkedIn |
+| :--- | :--- | :--- |
+| **Filmmaker & Audiovisual** (Edição de Vídeo, Motion, Direção Criativa) | **Portfólio Google Drive:** `https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing` | ❌ **Excluir LinkedIn** |
+| **Marketing & Campanhas** (Growth, CRM, E-mail Mkt, Endomarketing, Branding) | **Portfólio Google Drive:** `https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing` | ❌ **Excluir LinkedIn** |
+| **Tech & Dev** (Java, Spring Boot, Back-End, Full Stack) | **LinkedIn:** `https://linkedin.com/in/fabiorodrigues-dev`<br>**GitHub:** `https://github.com/fabiorodrigues-tech-dev/NOVA` | ✅ LinkedIn + GitHub |
+| **Suporte & Operações** (SaaS/ERP, Help Desk, Administrativo, CX) | **LinkedIn:** `https://linkedin.com/in/fabiorodrigues-dev` | ✅ Apenas LinkedIn |
 
 ---
 

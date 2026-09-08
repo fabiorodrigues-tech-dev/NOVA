@@ -1,6 +1,6 @@
 # Fábio Rodrigues
 **Video Editor & Creative Designer | Luxury Brand Aesthetics, Color Grading & Sound Design | High-Converting Performance Ads**  
-📍 Recife, PE — Brazil (Available for 100% Remote Global Roles) | 📧 fabioandre777@gmail.com | 📱 +55 (81) 98992-0040 | 🔗 [Portfólio](https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view)
+📍 Recife, PE — Brazil (Available for 100% Remote Global Roles) | 📧 fabioandre777@gmail.com | 📱 +55 (81) 98992-0040 | 🔗 [Portfólio](https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link)
 
 ---
 

@@ -91,7 +91,7 @@ Possuo vivência prática com o setor gastronômico e de alimentação no case G
 
 Estou sediado em Recife/PE, com total disponibilidade para atuação presencial na empresa e grande motivação para acelerar o posicionamento das marcas e as vendas da distribuidora!
 
-Portfólio de Cases & Produções: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio de Cases & Produções: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  

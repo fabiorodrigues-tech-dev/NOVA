@@ -23,14 +23,14 @@
   - **Qualidade & Rigor (TDD):** Cobertura de testes unitários e de integração com JUnit 5 + Mockito + AssertJ.
   - **Localização:** Residente em Recife, PE (acesso imediato ao polo do Porto Digital).
   - **Inglês Avançado:** Fluência profissional para atuação em projetos globais e comunicação com equipes multinacionais.
-- **Pontos de Atenção / Gaps:**
-  - **Spring Security & Cloud:** Implementação de JWT avançado e OpenFeign (cobertos nos próximos módulos da Trilha Santander 2026).
+- **Pontos de Alinhamento & Especialização:**
+  - **Spring Security & Cloud:** Implementação de JWT e OpenFeign consolidados em formações especializadas (Bootcamps Santander AI Java Back-end, Itaú Java AI e Decola Tech DIO).
 
 ---
 
 ## 📋 2. Tabela Comparativa de Requisitos
 
-| Requisito da Vaga | Competência Real no NOVA / Trilha DIO | Status |
+| Requisito da Vaga | Competência Real no NOVA / Formação Especializada | Status |
 | :--- | :--- | :---: |
 | **Java 17+ / 21 LTS** | Records, Pattern Matching, Sealed Classes, Streams e Concorrência. | ✅ Atende |
 | **Spring Boot 3 (APIs REST)** | Endpoints REST, RFC 7807 ProblemDetails, DTOs tipados e validação. | ✅ Atende |
@@ -39,7 +39,7 @@
 | **Bancos de Dados Relacionais** | PostgreSQL, MySQL e H2 persistente em arquivo (`financiadb.mv.db`). | ✅ Atende |
 | **Inglês Avançado / Fluente** | Leitura, escrita técnica e conversação profissional. | ✅ Atende |
 | **Spring AI / MCP / Inovação** | Servidor Model Context Protocol (MCP) nativo no Spring Boot e Agente Sofia (Vapi). | 🌟 Diferencial |
-| **Spring Cloud & Mensageria** | Módulos avançados em andamento na Trilha Santander 2026 DIO. | 🟡 Em Trilha |
+| **Spring Cloud & Mensageria** | Arquitetura de microsserviços e mensageria estruturadas em bootcamps de IA & Back-end. | ✅ Alinhado |
 
 ---
 

@@ -1,7 +1,7 @@
 # 🎬 Inteligência de Portfólio — Filmmaking, Edição & Direção Criativa
 
 > **Link Oficial do Portfólio (Google Drive):**  
-> 🔗 [https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view](https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view)
+> 🔗 [https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing](https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing)
 
 Este documento consolida a auditoria técnica, os cases de sucesso e o stack de produção audiovisual de Fábio Rodrigues para suporte analítico nas candidaturas da trilha de **Marketing & Audiovisual**.
 

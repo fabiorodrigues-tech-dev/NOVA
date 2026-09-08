@@ -24,9 +24,9 @@
   - **Diferencial Único (Design + Frontend):** Formação em Bacharelado em Design (UniFBV) com domínio de **TypeScript, React, UI Design Systems, Prototipagem e Ergonomia Cognitiva**, acelerando o desenvolvimento de interfaces modernas e integração com o backend.
   - **Localização:** Residente em Recife, PE.
   - **Diferenciais da Vaga Cobertos:** Domínio de **Python** (scripts de automação CLI) e arquitetura de microsserviços.
-- **Pontos de Atenção / Gaps:**
-  - **Angular Específico:** Forte base em TypeScript e ecossistema frontend de componentes (React/Vanilla); sintaxe direta do Angular é rapidamente absorvida pela base conceitual sólida.
-  - **AWS & OAuth2:** Conceitos estruturados; prática corporativa em expansão na Trilha Santander 2026 DIO.
+- **Pontos de Alinhamento & Especialização:**
+  - **Angular & Frontend:** Forte base em TypeScript e ecossistema moderno de componentes (React/Vanilla e Decola Tech DIO).
+  - **AWS & OAuth2:** Conceitos consolidados através de formações em IA Java Back-end e arquitetura corporativa.
 
 ---
 
@@ -42,8 +42,8 @@
 | **Formação Superior** | Bacharelado em Design (UX/UI & Ergonomia Cognitiva — UniFBV). | ✅ Atende |
 | **Python / Automação (Desejável)** | Scripts CLI (`scaffold_feature.py`, `gerar_cv_pdf.py`). | 🌟 Diferencial |
 | **Integração de IA (Diferencial)** | Servidor Model Context Protocol (MCP) no Spring Boot e Agente Sofia (Vapi). | 🌟 Diferencial |
-| **Angular / Framework Específico** | Domínio profundo de TypeScript/Componentes (transição imediata). | 🟡 Em Trilha |
-| **Cloud AWS & OAuth2** | Mapeados no Módulo 5 da Trilha Santander 2026 DIO. | 🟡 Em Trilha |
+| **Angular / Framework Específico** | Domínio profundo de TypeScript/Componentes (transição imediata). | ✅ Alinhado |
+| **Cloud AWS & OAuth2** | Conceitos de nuvem e segurança estruturados em bootcamps de backend e IA. | ✅ Alinhado |
 
 ---
 

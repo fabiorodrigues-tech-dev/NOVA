@@ -17,7 +17,7 @@ Recentemente, liderei a cobertura oficial de grandes eventos industriais como a 
 
 Possuo total disponibilidade para atuação [Presencial / Híbrida / Remota] e grande entusiasmo para contribuir com a consolidação da marca e o crescimento de resultados da [Nome da Empresa]!
 
-🔗 Portfólio de Cases & Produções: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio de Cases & Produções: https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing
 
 Um abraço,  
 Fábio Rodrigues  
@@ -39,7 +39,7 @@ Trago vivência em campanhas B2B e B2C, relacionamento com fornecedores gráfico
 
 Estou à inteira disposição para uma breve conversa sobre como posso agregar velocidade e qualidade criativa aos objetivos de crescimento da [Nome da Empresa]!
 
-🔗 Portfólio Completo: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio Completo: https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com
@@ -65,7 +65,7 @@ Entre as principais contribuições que posso levar à equipe, destaco:
 
 Estou à disposição para uma entrevista onde poderei detalhar meus cases de sucesso e apresentar meu portfólio.
 
-Portfólio: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio: https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing
 
 Atenciosamente,
 Fábio Rodrigues
@@ -77,5 +77,5 @@ Recife, PE | fabioandre777@gmail.com | (81) 98992-0040
 ### 🔹 Opção 4: Elevator Pitch Rápido para WhatsApp / Indicação / Networking
 
 ```text
-Olá, tudo bem? Me chamo Fábio Rodrigues, sou Analista de Marketing e Designer graduado pela UniFBV. Trabalho no planejamento de campanhas on e off-line, criação de materiais comerciais para times de vendas, branding e produção de vídeos de alta performance (Final Cut Pro / DaVinci Resolve), com experiência recente na cobertura de grandes eventos como a FuturePrint 2026. Se houver alguma oportunidade alinhada na [Nome da Empresa], segue meu portfólio completo com cases reais: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view . Um abraço!
+Olá, tudo bem? Me chamo Fábio Rodrigues, sou Analista de Marketing e Designer graduado pela UniFBV. Trabalho no planejamento de campanhas on e off-line, criação de materiais comerciais para times de vendas, branding e produção de vídeos de alta performance (Final Cut Pro / DaVinci Resolve), com experiência recente na cobertura de grandes eventos como a FuturePrint 2026. Se houver alguma oportunidade alinhada na [Nome da Empresa], segue meu portfólio completo com cases reais: https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing . Um abraço!
 ```

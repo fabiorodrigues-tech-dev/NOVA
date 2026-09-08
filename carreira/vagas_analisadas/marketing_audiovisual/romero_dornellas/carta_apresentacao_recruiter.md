@@ -22,7 +22,7 @@ Tenho total disponibilidade para atuação 100% presencial, facilidade para tran
 
 Estou à disposição para apresentar meu portfólio e conversar sobre como posso agregar valor à conta!
 
-📁 Portfólio Oficial: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+📁 Portfólio Oficial: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -42,7 +42,7 @@ Uno formação superior em Design (UniFBV), setup próprio de gravação 4K ProR
 
 Estou 100% disponível para atuação presencial dedicada e pronto para iniciar imediatamente!
 
-📁 Meu Portfólio: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+📁 Meu Portfólio: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com
@@ -53,5 +53,5 @@ Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com
 ### Opção 3: Nota Rápida de Conexão no LinkedIn (Máx. 300 Caracteres)
 
 ```text
-Olá, Romero! Sou Designer e Criador de Conteúdo em Recife, especialista em captação presencial e edição de Reels para gastronomia (iPhone 14 Pro Max / Final Cut Pro / M1). Acompanho seu trabalho e me candidatei à vaga de Social Media! Portfólio: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Olá, Romero! Sou Designer e Criador de Conteúdo em Recife, especialista em captação presencial e edição de Reels para gastronomia (iPhone 14 Pro Max / Final Cut Pro / M1). Acompanho seu trabalho e me candidatei à vaga de Social Media! Portfólio: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 ```

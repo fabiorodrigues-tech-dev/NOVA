@@ -19,7 +19,7 @@ Possuo vivência prática com o setor gastronômico e de alimentação no case G
 
 Estou sediado em Recife/PE, com total disponibilidade para atuação presencial na empresa e grande motivação para acelerar os resultados e o posicionamento das marcas da distribuidora!
 
-Portfólio de Cases & Produções: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio de Cases & Produções: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -39,7 +39,7 @@ Como Designer (UniFBV) e Analista de Marketing/Criador Audiovisual, uno visão d
 
 Estou sediado em Recife/PE e à disposição para uma conversa sobre como posso apoiar o crescimento das vendas e a gestão de marcas da distribuidora!
 
-Portfólio Completo: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio Completo: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

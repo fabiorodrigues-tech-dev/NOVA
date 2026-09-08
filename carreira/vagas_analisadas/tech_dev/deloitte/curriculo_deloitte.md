@@ -69,5 +69,9 @@ Desenvolvedor com sólida formação em **Design & Ergonomia Cognitiva (UniFBV)*
 ## 🎓 Formação Acadêmica & Especializações
 
 - **Faculdade Boa Viagem (UniFBV)** | *Bacharelado em Design (UX/UI & Ergonomia Cognitiva)* (Graduação de 4 Anos)
-- **Bootcamp Santander 2026 — AI Java Back-end** | *Digital Innovation One (DIO)* (Em andamento)
-  - Especialização em Java 21 LTS, Spring Boot 3, Microsserviços, Spring Data JPA e Spring AI.
+- **Bootcamp Santander 2026 — AI Java Back-end** | *Digital Innovation One (DIO)*
+  - Especialização prática em Java 21 LTS, Spring Boot 3, Microsserviços, Clean Architecture, Bancos de Dados e Spring AI.
+- **Bootcamp Itaú — Java com Inteligência Artificial** | *Digital Innovation One (DIO / Itaú)*
+  - Desenvolvimento backend avançado em Java, microsserviços, inteligência artificial integrada e automações.
+- **Decola Tech 2025 — Full Stack Developer** | *Digital Innovation One (DIO / Avanade)*
+  - Formação full stack abrangendo arquitetura de sistemas, desenvolvimento web moderno, backend e APIs RESTful.

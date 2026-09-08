@@ -92,7 +92,7 @@ Possuo vivência prática com o setor automotivo e maquinário no case Olimac, a
 
 Estou sediado na Região Metropolitana do Recife, com disponibilidade imediata para atuar presencialmente na unidade de Prazeres e acelerar as campanhas e vendas do Grupo Auto Nunes!
 
-Portfólio de Cases & Produções: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio de Cases & Produções: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  

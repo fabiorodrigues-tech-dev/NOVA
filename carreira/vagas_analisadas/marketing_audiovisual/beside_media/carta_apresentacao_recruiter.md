@@ -41,7 +41,7 @@ Tenho experiência prática com Meta Ads, TikTok Ads e Google Ads, parametrizaç
 
 Estou 100% preparado para atuar no formato remoto com autonomia e muita dedicação para acelerar os resultados da Beside!
 
-🔗 Portfólio de Cases & Criativos: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio de Cases & Criativos: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -61,7 +61,7 @@ Como Designer (UniFBV) e Analista de Mídia Paga, uno o domínio diário de mét
 
 Estou à disposição para uma conversa sobre como posso agregar autonomia analítica e velocidade de otimização às campanhas da Beside Media!
 
-🔗 Portfólio Completo: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio Completo: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

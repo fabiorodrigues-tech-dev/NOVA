@@ -2,7 +2,7 @@
 
 **Candidato / Applicant:** Fábio Rodrigues  
 **Localização / Location:** Recife, PE — Brazil (Available for 100% Remote Global Roles)  
-**Contato / Contact:** fabioandre777@gmail.com | +55 (81) 98992-0040 | [Portfólio Google Drive](https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view)  
+**Contato / Contact:** fabioandre777@gmail.com | +55 (81) 98992-0040 | [Portfólio Google Drive](https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link)  
 **Data / Date:** 2026-08-30  
 
 ---
@@ -36,4 +36,4 @@ Atenciosamente,
 Video Editor & Creative Designer  
 Recife, PE — Brasil  
 fabioandre777@gmail.com | +55 (81) 98992-0040  
-[Portfólio: Google Drive](https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view)
+[Portfólio: Google Drive](https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link)

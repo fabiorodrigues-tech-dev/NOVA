@@ -19,7 +19,7 @@ Uno um olhar estético sofisticado de marca e semiótica à agilidade de quem op
 
 Estou sediado em Recife/PE, com total disponibilidade para atuação presencial na sede da empresa e muita energia para liderar o time e elevar o engajamento das marcas do grupo a um novo patamar!
 
-🔗 Portfólio de Cases & Produções: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio de Cases & Produções: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -39,7 +39,7 @@ Como Designer (UniFBV) e Supervisor Criativo, uno a visão técnica de gestão d
 
 Estou sediado em Recife/PE e à inteira disposição para uma conversa sobre como posso liderar o time criativo para acelerar ainda mais o alcance e a relevância das marcas do grupo!
 
-🔗 Portfólio Completo: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio Completo: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

@@ -93,7 +93,7 @@ At Wolf Agency, I directed and edited over 100 dynamic videos and commercial ads
 
 I would love to connect and discuss how my aesthetic precision and performance-driven editing can elevate the visual identity and conversions of your luxury skincare partner brand.
 
-Portfolio: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfolio: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Best regards,  
 Fábio Rodrigues  

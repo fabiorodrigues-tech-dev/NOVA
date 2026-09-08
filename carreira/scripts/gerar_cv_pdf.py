@@ -3,15 +3,22 @@
 Gerador de Currículo, Cover Letter e Relatório de Match em PDF — Padrão Harvard Tech / Clean Modern (ReportLab)
 Ecossistema NOVA - Módulo de Carreira & Motor Central de Gráficos
 
-Suporta:
-1. --type cv: Geração de Currículo ATS-friendly executivo.
-2. --type cover_letter: Geração de Carta de Apresentação formal timbrada.
-3. --type match_report: Geração de Relatório Visual de Match com gráficos integrados (chart_engine).
+Convenção de Nomenclatura Padrão Ouro:
+1. Currículo ATS / Harvard: Curriculo_Fabio_Rodrigues_[Area_ou_Cargo].pdf
+   Exemplos:
+   - Curriculo_Fabio_Rodrigues_Java_Backend.pdf
+   - Curriculo_Fabio_Rodrigues_Suporte_TI.pdf
+   - Curriculo_Fabio_Rodrigues_Filmmaker.pdf
+   - Curriculo_Fabio_Rodrigues_Marketing_Design.pdf
+2. Cover Letter Formal: Cover_Letter_Fabio_Rodrigues.docx e Cover_Letter_Fabio_Rodrigues.pdf
+3. Relatório de Match Executivo: relatorio_match_[empresa].pdf
+4. Organização por Empresa: carreira/vagas_analisadas/[trilha]/[empresa]/
 """
 
 import os
 import sys
 import re
+import json
 import argparse
 import tempfile
 from reportlab.lib.pagesizes import A4
@@ -31,6 +38,109 @@ except ImportError:
         import scripts.chart_engine as chart_engine
     except ImportError:
         chart_engine = None
+
+# ==============================================================================
+# MATRIZ OFICIAL E PERMANENTE DE LINKS POR ESPECIALIDADE (NOVA)
+# ==============================================================================
+LINK_PORTFOLIO_AUDIOVISUAL = "https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing"
+LINK_PORTFOLIO_MARKETING = "https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing"
+LINK_LINKEDIN = "https://linkedin.com/in/fabiorodrigues-dev"
+LINK_GITHUB = "https://github.com/fabiorodrigues-tech-dev/NOVA"
+
+def classify_job_specialty(text_or_path: str, explicit_category: str = None) -> str:
+    """
+    Classifica a especialidade da vaga em uma das 4 categorias oficiais:
+    1. 'filmmaker_audiovisual': Filmmaker, Edição de Vídeo, Audiovisual, Direção Criativa, Criação Audiovisual.
+    2. 'marketing_campanhas': Marketing, Campanhas, Growth, CRM, E-mail Marketing, Endomarketing, Branding.
+    3. 'suporte_operacoes': Suporte SaaS/ERP, Help Desk, Operações, Administrativo, CX.
+    4. 'tech_dev': Java, Spring, Backend, Dev, Engenharia de Software, Full Stack.
+    """
+    if explicit_category:
+        cat_lower = explicit_category.lower().strip()
+        if any(k in cat_lower for k in ["film", "audio", "video", "vídeo", "edicao", "edição", "cinema"]):
+            return "filmmaker_audiovisual"
+        if any(k in cat_lower for k in ["mkt", "market", "campanh", "growth", "crm", "brand", "endo", "email", "e-mail", "social"]):
+            return "marketing_campanhas"
+        if any(k in cat_lower for k in ["suport", "operac", "operaç", "admin", "cx", "help"]):
+            return "suporte_operacoes"
+        if any(k in cat_lower for k in ["tech", "dev", "back", "java", "spring", "soft"]):
+            return "tech_dev"
+
+    content_lower = text_or_path.lower()
+
+    if "suporte_operacoes" in content_lower or "administrativo_suporte" in content_lower:
+        return "suporte_operacoes"
+    if "tech_dev" in content_lower or "dev/" in content_lower:
+        return "tech_dev"
+
+    is_filmmaker_keywords = any(k in content_lower for k in [
+        "filmmaker", "audiovisual", "edição de vídeo", "edicao de video", "videomaker",
+        "diretor criativo", "motion", "color grading", "final cut", "capcut", "davinci resolve",
+        "logic pro", "prores", "captação", "camera", "câmera"
+    ])
+
+    is_marketing_keywords = any(k in content_lower for k in [
+        "marketing", "campanha", "growth", "crm", "e-mail marketing", "email marketing",
+        "endomarketing", "branding", "ga4", "google analytics", "direct mail", "mala direta",
+        "comunicação interna", "social media", "tráfego", "performance", "publicidade",
+        "marketing_campanhas", "marketing_digital", "marketing_design"
+    ])
+
+    is_suporte_keywords = any(k in content_lower for k in [
+        "suporte", "atendimento", "help desk", "service desk", "nps", "csat", "erp", "qyon", "icp-brasil"
+    ])
+
+    is_tech_keywords = any(k in content_lower for k in [
+        "java", "spring", "backend", "back-end", "rest", "junit", "postgresql", "docker", "clean architecture"
+    ])
+
+    if "filmmaker" in content_lower or "audiovisual" in content_lower:
+        return "filmmaker_audiovisual"
+    if is_marketing_keywords and not is_filmmaker_keywords:
+        return "marketing_campanhas"
+    if is_filmmaker_keywords:
+        return "filmmaker_audiovisual"
+    if is_marketing_keywords:
+        return "marketing_campanhas"
+    if is_suporte_keywords:
+        return "suporte_operacoes"
+    if is_tech_keywords:
+        return "tech_dev"
+
+    return "tech_dev"
+
+def normalize_contact_line(raw_contact: str, specialty: str) -> str:
+    """
+    Normaliza a linha de contato do cabeçalho de acordo com a especialidade:
+    - filmmaker_audiovisual: Portfólio Google Drive Audiovisual (Sem LinkedIn)
+    - marketing_campanhas: Portfólio Google Drive Marketing (Sem LinkedIn)
+    - tech_dev: LinkedIn + GitHub
+    - suporte_operacoes: LinkedIn
+    """
+    loc_part = "📍 Recife, PE — Brasil"
+    mail_part = "📧 fabioandre777@gmail.com"
+    phone_part = "📱 (81) 98992-0040"
+
+    if raw_contact:
+        parts = [p.strip() for p in raw_contact.split("|")]
+        for p in parts:
+            if "recife" in p.lower() or "brasil" in p.lower() or "remoto" in p.lower():
+                loc_part = p
+            elif "@" in p:
+                mail_part = p
+            elif re.search(r'\(\d{2}\)', p) or "98992" in p:
+                phone_part = p
+
+    base_contacts = f"{loc_part} | {mail_part} | {phone_part}"
+
+    if specialty == "filmmaker_audiovisual":
+        return f"{base_contacts} | 🔗 [Portfólio no Google Drive]({LINK_PORTFOLIO_AUDIOVISUAL})"
+    elif specialty == "marketing_campanhas":
+        return f"{base_contacts} | 🔗 [Portfólio no Google Drive]({LINK_PORTFOLIO_MARKETING})"
+    elif specialty == "suporte_operacoes":
+        return f"{base_contacts} | 💼 [LinkedIn]({LINK_LINKEDIN})"
+    else:  # tech_dev
+        return f"{base_contacts} | 💼 [LinkedIn]({LINK_LINKEDIN}) | 💻 [GitHub]({LINK_GITHUB})"
 
 def strip_emojis_and_symbols(text: str) -> str:
     """Remove emojis, blocos geométricos e símbolos não-ASCII que quebram fontes padrão."""
@@ -86,9 +196,10 @@ def clean_markdown_inline(text: str) -> str:
     text = re.sub(r'`([^`]+)`', r'<font face="Courier" color="#1a1a1a">\1</font>', text)
     return text.strip()
 
-def parse_markdown_to_pdf(markdown_path: str, output_pdf_path: str):
+def parse_markdown_to_pdf(markdown_path: str, output_pdf_path: str, category: str = None):
     """
     Lê o arquivo Markdown de currículo e compila um PDF no padrão Harvard Tech.
+    Injeta automaticamente o cabeçalho e links oficiais com base na especialidade da vaga.
     """
     if not os.path.exists(markdown_path):
         raise FileNotFoundError(f"Arquivo não encontrado: {markdown_path}")
@@ -97,6 +208,8 @@ def parse_markdown_to_pdf(markdown_path: str, output_pdf_path: str):
         content = f.read()
 
     os.makedirs(os.path.dirname(os.path.abspath(output_pdf_path)), exist_ok=True)
+
+    specialty = classify_job_specialty(markdown_path + " " + content, category)
 
     margin = 42.5  # 15mm
     doc = SimpleDocTemplate(
@@ -222,7 +335,9 @@ def parse_markdown_to_pdf(markdown_path: str, output_pdf_path: str):
                 i += 1
 
             if i < len(lines) and ("@" in lines[i] or "|" in lines[i]):
-                contact_text = clean_markdown_inline(lines[i].strip())
+                # Normaliza a linha de contatos com base na especialidade
+                normalized_contact = normalize_contact_line(lines[i].strip(), specialty)
+                contact_text = clean_markdown_inline(normalized_contact)
                 story.append(Paragraph(contact_text, contact_style))
                 i += 1
 
@@ -268,11 +383,12 @@ def parse_markdown_to_pdf(markdown_path: str, output_pdf_path: str):
         i += 1
 
     doc.build(story)
-    print(f"✅ PDF de Currículo gerado com sucesso em: {output_pdf_path}")
+    print(f"✅ PDF de Currículo gerado com sucesso em: {output_pdf_path} (Especialidade: {specialty})")
 
-def parse_cover_letter_to_pdf(markdown_path: str, output_pdf_path: str):
+def parse_cover_letter_to_pdf(markdown_path: str, output_pdf_path: str, category: str = None):
     """
     Converte o Markdown da Cover Letter em um documento PDF formal e timbrado.
+    Injeta o cabeçalho e contatos corretos com base na especialidade da vaga.
     """
     if not os.path.exists(markdown_path):
         raise FileNotFoundError(f"Arquivo não encontrado: {markdown_path}")
@@ -281,6 +397,8 @@ def parse_cover_letter_to_pdf(markdown_path: str, output_pdf_path: str):
         content = f.read()
 
     os.makedirs(os.path.dirname(os.path.abspath(output_pdf_path)), exist_ok=True)
+
+    specialty = classify_job_specialty(markdown_path + " " + content, category)
 
     margin = 42.5  # 15mm
     doc = SimpleDocTemplate(
@@ -319,7 +437,19 @@ def parse_cover_letter_to_pdf(markdown_path: str, output_pdf_path: str):
 
             i += 1
             while i < len(lines) and lines[i].strip().startswith("**"):
-                c_text = clean_markdown_inline(lines[i].strip())
+                c_line = lines[i].strip()
+                if "@" in c_line or "contato" in c_line.lower() or "98992" in c_line:
+                    # Injeta contato estruturado da especialidade
+                    if specialty == "filmmaker_audiovisual":
+                        c_line = f"**Contato:** fabioandre777@gmail.com | (81) 98992-0040 | [Portfólio no Google Drive]({LINK_PORTFOLIO_AUDIOVISUAL})"
+                    elif specialty == "marketing_campanhas":
+                        c_line = f"**Contato:** fabioandre777@gmail.com | (81) 98992-0040 | [Portfólio no Google Drive]({LINK_PORTFOLIO_MARKETING})"
+                    elif specialty == "suporte_operacoes":
+                        c_line = f"**Contato:** fabioandre777@gmail.com | (81) 98992-0040 | [LinkedIn]({LINK_LINKEDIN})"
+                    else:
+                        c_line = f"**Contato:** fabioandre777@gmail.com | (81) 98992-0040 | [LinkedIn]({LINK_LINKEDIN}) | [GitHub]({LINK_GITHUB})"
+
+                c_text = clean_markdown_inline(c_line)
                 story.append(Paragraph(c_text, contact_style))
                 i += 1
 
@@ -346,17 +476,24 @@ def parse_cover_letter_to_pdf(markdown_path: str, output_pdf_path: str):
             i += 1
             continue
 
+        # Normaliza referências a portfólio no rodapé da carta
+        if "portfólio" in raw_line.lower() or "drive.google.com" in raw_line or "linkedin.com" in raw_line:
+            if specialty == "filmmaker_audiovisual":
+                raw_line = re.sub(r'https?://drive\.google\.com[^\s\)]+', LINK_PORTFOLIO_AUDIOVISUAL, raw_line)
+            elif specialty == "marketing_campanhas":
+                raw_line = re.sub(r'https?://drive\.google\.com[^\s\)]+', LINK_PORTFOLIO_MARKETING, raw_line)
+
         p_text = clean_markdown_inline(raw_line)
         story.append(Paragraph(p_text, body_style))
         i += 1
 
     doc.build(story)
-    print(f"✅ PDF da Cover Letter gerado em: {output_pdf_path}")
+    print(f"✅ PDF da Cover Letter gerado em: {output_pdf_path} (Especialidade: {specialty})")
 
-def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
+def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str, category: str = None):
     """
     Gera um Relatório de Match Técnico Executivo em PDF com gráficos do chart_engine embutidos.
-    Suporta dinamicamente vagas de Tecnologia (Dev/TI) e de Marketing/Audiovisual/Criação.
+    Injeta o portfólio e escopo específico da especialidade (Filmmaker, Marketing, Suporte ou Tech).
     """
     if not os.path.exists(markdown_path):
         raise FileNotFoundError(f"Arquivo não encontrado: {markdown_path}")
@@ -365,6 +502,8 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
         content = f.read()
 
     os.makedirs(os.path.dirname(os.path.abspath(output_pdf_path)), exist_ok=True)
+
+    specialty = classify_job_specialty(markdown_path + " " + content, category)
 
     # Extrai informações principais
     empresa_match = re.search(r'>\s*\*\*Empresa:\*\*\s*(.+)', content)
@@ -379,7 +518,6 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
     score_val = score_match.group(1) if score_match else "92"
 
     # 1. Parsing dinâmico de Competências / Skills
-    import json
     skills_map = None
     skills_json_match = re.search(r'<!--\s*SKILLS_JSON:\s*(\{.+?\})\s*-->', content, re.DOTALL)
     if skills_json_match:
@@ -389,8 +527,7 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
             skills_map = None
 
     if not skills_map:
-        # Detecta se é perfil Marketing/Audiovisual ou Tech
-        if any(k in content.lower() for k in ["endomarketing", "audiovisual", "filmmaker", "edição", "marketing", "conteúdo", "vídeo"]):
+        if specialty in ["filmmaker_audiovisual", "marketing_campanhas"]:
             skills_map = {
                 'Design & Identidade Visual': (100, 95),
                 'Pós-Produção & Edição de Vídeo': (100, 90),
@@ -400,6 +537,17 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
                 'Automação & IA Criativa': (100, 75),
                 'Photoshop / Illustrator / Premiere': (100, 95),
                 'Captação & Áudio / Foto': (90, 85)
+            }
+        elif specialty == "suporte_operacoes":
+            skills_map = {
+                'Suporte SaaS / ERP (Qyon)': (100, 95),
+                'Validação Documental & ICP-Brasil': (100, 95),
+                'Métricas CX (CSAT / NPS / FCR)': (95, 90),
+                'Triagem de Bugs & Dev Bridge': (95, 90),
+                'Gestão de Processos & ITIL': (90, 85),
+                'Google Workspace & Excel Avançado': (95, 90),
+                'Resolução de Conflitos & SLA': (100, 95),
+                'Comunicação Escrita & Oral': (100, 95)
             }
         else:
             skills_map = {
@@ -421,8 +569,10 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
         sal_pret = float(sal_match.group(3))
         sal_teto = float(sal_match.group(4))
     else:
-        if any(k in content.lower() for k in ["endomarketing", "audiovisual", "filmmaker", "marketing"]):
+        if specialty in ["filmmaker_audiovisual", "marketing_campanhas"]:
             sal_min, sal_med, sal_pret, sal_teto = 3500.0, 4200.0, 4800.0, 6000.0
+        elif specialty == "suporte_operacoes":
+            sal_min, sal_med, sal_pret, sal_teto = 3000.0, 3800.0, 4200.0, 5500.0
         else:
             sal_min, sal_med, sal_pret, sal_teto = 6500.0, 8500.0, 9000.0, 12000.0
 
@@ -434,11 +584,16 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
         kpi4_title = kpi_match.group(3).strip()
         kpi4_val = kpi_match.group(4).strip()
     else:
-        if any(k in content.lower() for k in ["endomarketing", "audiovisual", "filmmaker", "marketing"]):
+        if specialty in ["filmmaker_audiovisual", "marketing_campanhas"]:
             kpi3_title = "DESIGN & VÍDEO"
             kpi3_val = "100% Coberto"
             kpi4_title = "DIFERENCIAL IA"
             kpi4_val = "Automação / LLM"
+        elif specialty == "suporte_operacoes":
+            kpi3_title = "SUPORTE & ERP"
+            kpi3_val = "100% Coberto"
+            kpi4_title = "CERTIFICAÇÕES"
+            kpi4_val = "11 Processos"
         else:
             kpi3_title = "CORE BACKEND"
             kpi3_val = "100% Coberto"
@@ -453,18 +608,17 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
         for b in raw_bullets:
             b = b.strip()
             if b.startswith("1.") or b.startswith("2.") or b.startswith("3.") or b.startswith("-"):
-                # Limpa markdown e adiciona bullet
                 cleaned_b = clean_markdown_inline(b)
                 parecer_custom.append(f"&bull; {cleaned_b}")
 
     if not parecer_custom:
         parecer_custom = [
             f"&bull; <b>Alinhamento do Domínio:</b> O portfólio e histórico profissional cobrem plenamente os requisitos exigidos pela {empresa}.",
-            f"&bull; <b>Vantagem Competitiva:</b> A união de formação em Design (UniFBV), maestria em produção audiovisual e domínio de ferramentas de IA posiciona o candidato no topo do processo seletivo.",
-            f"&bull; <b>Recomendação de Abordagem:</b> Enviar currículo oficial compilado no padrão Harvard Tech/ATS, cover letter timbrada e realizar abordagem ativa com recrutadores e lideranças no LinkedIn."
+            f"&bull; <b>Vantagem Competitiva:</b> A união de formação de base, rigor técnico e domínio prático de ferramentas de aceleração por IA posiciona o candidato no topo do processo seletivo.",
+            f"&bull; <b>Recomendação de Abordagem:</b> Enviar currículo oficial compilado no padrão Harvard Tech/ATS, cover letter timbrada e realizar abordagem ativa com recrutadores e lideranças."
         ]
 
-    is_marketing = any(k in content.lower() for k in ["endomarketing", "audiovisual", "filmmaker", "edição", "marketing", "conteúdo", "vídeo", "luck"])
+    is_creative = specialty in ["filmmaker_audiovisual", "marketing_campanhas"]
 
     # 1.1 Parsing dinâmico de Cases de Portfólio
     portfolio_cases = None
@@ -509,7 +663,7 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
         if chart_engine:
             chart_engine.gerar_grafico_match(skills_map, chart_match_path)
             chart_engine.gerar_grafico_salario(sal_min, sal_med, sal_pret, sal_teto, chart_sal_path, cargo=vaga_titulo)
-            if is_marketing and hasattr(chart_engine, 'gerar_grafico_portfolio_match'):
+            if is_creative and hasattr(chart_engine, 'gerar_grafico_portfolio_match'):
                 chart_engine.gerar_grafico_portfolio_match(portfolio_cases, chart_port_path)
 
         story = []
@@ -561,7 +715,7 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
             story.append(Image(chart_sal_path, width=520, height=130))
             story.append(Spacer(1, 6))
 
-        if is_marketing:
+        if is_creative:
             # Quebra para a Página 2 (Auditoria de Portfólio + Parecer)
             story.append(PageBreak())
 
@@ -573,6 +727,10 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
                 story.append(Image(chart_port_path, width=520, height=175))
                 story.append(Spacer(1, 6))
 
+            # Determina o link correto de acordo com a sub-especialidade
+            active_portfolio_link = LINK_PORTFOLIO_MARKETING if specialty == "marketing_campanhas" else LINK_PORTFOLIO_AUDIOVISUAL
+            portfolio_stack_desc = "E-mail Marketing HTML/CSS, Mala Direta, Branding, Design Systems e Marketing Analytics" if specialty == "marketing_campanhas" else "Final Cut Pro, Logic Pro, DaVinci Resolve, Mac M1 e iPhone 14 Pro Max em 4K ProRes"
+
             # Destaques dos Cases
             case_box_data = [
                 [
@@ -582,7 +740,7 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
                     Paragraph("<b>Case de Engajamento Recomendado (Gildo Lanches):</b> Produção de vídeos dinâmicos de alta retenção (Reels/Shorts), ganchos visuais e Sound Design apurado. Demonstra habilidade para criar rituais de cultura vibrantes e engajar colaboradores das filiais.", body_style)
                 ],
                 [
-                    Paragraph("<b>Link Oficial do Portfólio:</b> <a href='https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view'><font color='#2980B9'><u>https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view</u></font></a> (Final Cut Pro, Logic Pro, DaVinci Resolve, Mac M1 e iPhone 14 Pro Max em 4K ProRes).", body_style)
+                    Paragraph(f"<b>Link Oficial do Portfólio:</b> <a href='{active_portfolio_link}'><font color='#2980B9'><u>{active_portfolio_link}</u></font></a> ({portfolio_stack_desc}).", body_style)
                 ]
             ]
             case_table = Table(case_box_data, colWidths=[520])
@@ -605,7 +763,7 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
                 story.append(Paragraph(p_item, body_style))
                 story.append(Spacer(1, 3))
         else:
-            # Tech: Seção 3 Parecer
+            # Tech / Suporte: Seção 3 Parecer
             story.append(Paragraph("<b>3. Parecer Estratégico & Argumentos de Entrevista</b>", sec_style))
             story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#BDC3C7"), spaceAfter=5))
             for p_item in parecer_custom[:4]:
@@ -613,18 +771,19 @@ def parse_match_report_to_pdf(markdown_path: str, output_pdf_path: str):
                 story.append(Spacer(1, 3))
 
         doc.build(story)
-        print(f"✅ Relatório Visual de Match gerado com sucesso em: {output_pdf_path}")
+        print(f"✅ Relatório Visual de Match gerado com sucesso em: {output_pdf_path} (Especialidade: {specialty})")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Conversor de Currículo e Relatórios de Carreira em PDF (NOVA)")
     parser.add_argument("--type", choices=["cv", "match_report", "cover_letter"], default="cv", help="Tipo de documento a gerar (cv, match_report ou cover_letter)")
     parser.add_argument("--input", default="carreira/base/curriculo_base.md", help="Caminho do arquivo markdown de entrada")
     parser.add_argument("--output", default="carreira/base/pdf/curriculo_fabio_rodrigues_pt.pdf", help="Caminho do arquivo PDF de saída")
+    parser.add_argument("--category", default=None, help="Especialidade da vaga (filmmaker, marketing, suporte, dev/tech)")
 
     args = parser.parse_args()
     if args.type == "match_report":
-        parse_match_report_to_pdf(args.input, args.output)
+        parse_match_report_to_pdf(args.input, args.output, category=args.category)
     elif args.type == "cover_letter":
-        parse_cover_letter_to_pdf(args.input, args.output)
+        parse_cover_letter_to_pdf(args.input, args.output, category=args.category)
     else:
-        parse_markdown_to_pdf(args.input, args.output)
+        parse_markdown_to_pdf(args.input, args.output, category=args.category)

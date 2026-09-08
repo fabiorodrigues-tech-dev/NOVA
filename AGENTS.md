@@ -88,19 +88,28 @@ Ao receber qualquer pergunta, requisição ou comando do usuário, o **MAIN Agen
    - **Módulo [`scripts/chart_engine.py`](file:///Users/fabioandre/Downloads/nova:/scripts/chart_engine.py):** Gera gráficos executivos em Matplotlib para relatórios de Carreira (Match de Competências, Régua Salarial e Auditoria de Portfólio Match) e Finanças (Despesas por Categoria e Balanço Mensal).
    - **Relatório Financeiro Visual (`NOVA, relatório financeiro visual: [MÊS/ANO]` ou `/financeiro [mês]`):** Executa [`scripts/gerar_relatorio_financeiro_pdf.py`](file:///Users/fabioandre/Downloads/nova:/scripts/gerar_relatorio_financeiro_pdf.py).
 7. **Gestão do "CV Vivo" & Esteira "Candidatura Completa 360°":**
-   - **Bases Oficiais por Trilha & Regra de Cabeçalho:**
-     - 💻 **Tech & Dev (`carreira/base/dev/`):** [`curriculo_base_dev.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/dev/curriculo_base_dev.md) e [`curriculo_fabio_rodrigues_dev.pdf`](file:///Users/fabioandre/Downloads/nova:/carreira/base/dev/curriculo_fabio_rodrigues_dev.pdf). Utiliza obrigatoriamente o link do **LinkedIn** (`https://linkedin.com/in/fabiorodrigues-dev`) no cabeçalho e contatos.
-     - 🎬 **Marketing & Audiovisual (`carreira/base/marketing_audiovisual/`):** [`curriculo_base_marketing_filmmaker.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/marketing_audiovisual/curriculo_base_marketing_filmmaker.md) e [`curriculo_fabio_rodrigues_marketing_filmmaker.pdf`](file:///Users/fabioandre/Downloads/nova:/carreira/base/marketing_audiovisual/curriculo_fabio_rodrigues_marketing_filmmaker.pdf). Base de inteligência em [`carreira/base/portfolio_filmmaker_dados.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/portfolio_filmmaker_dados.md) com cases (DER-PE, Gildo Lanches, Quintal dos Primos, Gráfica do Parque, Unigames, Infinit) e setup Apple (M1, iPhone 14 Pro Max, Final Cut Pro, Logic Pro). Utiliza obrigatoriamente o link do **Portfólio no Google Drive** (`https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view`) no cabeçalho e contatos.
+   - **Bases Oficiais por Trilha & Matriz Permanente de Links por Especialidade:**
+     - 💻 **Tech & Dev (`carreira/base/dev/`):** [`curriculo_base_dev.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/dev/curriculo_base_dev.md) e [`curriculo_fabio_rodrigues_dev.pdf`](file:///Users/fabioandre/Downloads/nova:/carreira/base/dev/curriculo_fabio_rodrigues_dev.pdf).
+       - *Links Obrigatórios no Cabeçalho:* **LinkedIn** (`https://linkedin.com/in/fabiorodrigues-dev`) e **GitHub** (`https://github.com/fabiorodrigues-tech-dev/NOVA`).
+     - 📋 **Suporte, Operações & Administrativo (`carreira/base/administrativo_suporte/`):** [`curriculo_base_administrativo_suporte.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/administrativo_suporte/curriculo_base_administrativo_suporte.md) e [`curriculo_fabio_rodrigues_suporte_operacoes.pdf`](file:///Users/fabioandre/Downloads/nova:/carreira/base/administrativo_suporte/pdf/curriculo_fabio_rodrigues_suporte_operacoes.pdf).
+       - *Link Obrigatório no Cabeçalho:* **LinkedIn** (`https://linkedin.com/in/fabiorodrigues-dev`).
+     - 🎬 **Filmmaker, Edição de Vídeo, Audiovisual ou Criação (`carreira/base/marketing_audiovisual/`):** [`curriculo_base_marketing_filmmaker.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/marketing_audiovisual/curriculo_base_marketing_filmmaker.md) e [`curriculo_fabio_rodrigues_marketing_filmmaker.pdf`](file:///Users/fabioandre/Downloads/nova:/carreira/base/marketing_audiovisual/curriculo_fabio_rodrigues_marketing_filmmaker.pdf). Base em [`portfolio_filmmaker_dados.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/portfolio_filmmaker_dados.md).
+       - *Portfólio Obrigatório no Cabeçalho:* Google Drive Audiovisual (`https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing`).
+       - *Regra Estrita:* **Excluir qualquer menção ao LinkedIn** nos cabeçalhos e contatos.
+     - 📈 **Marketing, Campanhas, Growth, CRM, E-mail Marketing, Endomarketing ou Branding (`carreira/base/marketing_audiovisual/`):** [`curriculo_base_marketing_design.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/marketing_audiovisual/curriculo_base_marketing_design.md), [`curriculo_base_marketing_digital.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/marketing_audiovisual/curriculo_base_marketing_digital.md) e [`portfolio_marketing_campanhas_dados.md`](file:///Users/fabioandre/Downloads/nova:/carreira/base/marketing_audiovisual/portfolio_marketing_campanhas_dados.md) com dossiê visual oficial em [`Portfolio_Fabio_Rodrigues_Marketing_Campanhas.pdf`](file:///Users/fabioandre/Downloads/nova:/carreira/base/marketing_audiovisual/pdf/Portfolio_Fabio_Rodrigues_Marketing_Campanhas.pdf).
+       - *Portfólio Obrigatório no Cabeçalho:* Google Drive Marketing (`https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing`).
+       - *Regra Estrita:* **Excluir qualquer menção ao LinkedIn** nos cabeçalhos e contatos.
    - **Roteamento Inteligente & Fluxo Integrado 360° (`NOVA, candidatura completa: [LINK ou TEXTO]` ou `/candidatura [link]`):**
-     1. **Extração & Classificação:** Identificar requisitos, cultura da empresa e classificar a trilha correspondente.
+     1. **Extração & Classificação:** Identificar requisitos, cultura da empresa e classificar a trilha e especialidade correspondente.
      2. **Subpasta Dedicada:**
         - Se TI / Engenharia de Software ➔ `carreira/vagas_analisadas/tech_dev/[empresa]/`.
         - Se Marketing / Vídeo / Audiovisual / Criação ➔ `carreira/vagas_analisadas/marketing_audiovisual/[empresa]/`.
-     3. **Pacote Completo de 4 Componentes Obrigatórios:**
-        - `curriculo_fabio_rodrigues_[empresa].pdf` (Harvard Tech / ATS compilado com o cabeçalho correto da trilha).
-        - `cover_letter_fabio_rodrigues_[empresa].docx` e `.pdf` (Carta de apresentação formal timbrada nos dois formatos).
-        - `carta_apresentacao_recruiter.md` (Pitch limpo e persuasivo para abordagem direta de Recruiters no LinkedIn com link de contato correto).
-        - `relatorio_match_[empresa].pdf` (Relatório visual executivo com gráficos de aderência técnica, régua salarial e, para marketing, seção dedicada de Auditoria de Portfólio e Cases Recomendados).
+        - Se Suporte / Operações / Administrativo / CX ➔ `carreira/vagas_analisadas/suporte_operacoes/[empresa]/`.
+     3. **Pacote Completo de Componentes Obrigatórios (Padrão Ouro de Nomenclatura):**
+        - `Curriculo_Fabio_Rodrigues_[Area_ou_Cargo].pdf` (Harvard Tech / ATS compilado com o cabeçalho e contatos corretos da trilha/especialidade. Exemplos: `Curriculo_Fabio_Rodrigues_Java_Backend.pdf`, `Curriculo_Fabio_Rodrigues_Suporte_TI.pdf`, `Curriculo_Fabio_Rodrigues_Filmmaker.pdf`, `Curriculo_Fabio_Rodrigues_Marketing_Design.pdf`).
+        - `Cover_Letter_Fabio_Rodrigues.docx` e `Cover_Letter_Fabio_Rodrigues.pdf` (Carta de apresentação formal timbrada nos formatos Word e PDF).
+        - `carta_apresentacao_recruiter.md` (Pitch limpo e persuasivo para abordagem de Recruiters e Líderes com link de contato correto).
+        - `relatorio_match_[empresa].pdf` (Relatório visual executivo com gráficos de aderência técnica, régua salarial e, para marketing/audiovisual, seção dedicada de Auditoria de Portfólio e Cases Recomendados).
      4. **Sincronização de Painéis:** Atualizar `carreira/vagas_analisadas/README.md`, `README.md` e `nova-status.md`.
 8. **Revisão de Qualidade:** Validar e refinar o conteúdo entregue pelo especialista antes de responder.
 9. **Resposta Única e Consolidada:** Entregar **UMA** resposta final, clara, objetiva e elegante.
@@ -108,9 +117,15 @@ Ao receber qualquer pergunta, requisição ou comando do usuário, o **MAIN Agen
 ---
 
 ## 🛡️ Regras de Ouro
-- **Fidelidade Rigorosa às Bases Oficiais (Sem Alucinações):** Nenhuma candidatura ou documento pode inventar, presumir ou atribuir ao candidato ferramentas ou competências fora das bases oficiais (`curriculo_base_dev.md` para Tech e `curriculo_base_marketing_filmmaker.md` + `portfolio_filmmaker_dados.md` para Marketing/Audiovisual).
+- **Fidelidade Rigorosa às Bases Oficiais (Sem Alucinações):** Nenhuma candidatura ou documento pode inventar, presumir ou atribuir ao candidato ferramentas ou competências fora das bases oficiais (`curriculo_base_dev.md` para Tech, `curriculo_base_marketing_filmmaker.md` para Audiovisual/Marketing e `curriculo_base_administrativo_suporte.md` para Suporte & Operações).
+  - *Stack Suporte/Operações:* **Suporte SaaS/ERP (Chat/E-mail/Tickets)**, **Validação Documental & Compliance (ICP-Brasil)**, **CRM & ERP (Qyon)**, **Triagem de Bugs & Ponte com Desenvolvimento**, **Métricas de CX (CSAT/NPS/FCR)**, **11 Certificações em Gestão e Processos**, **Google Workspace & Excel**.
   - *Stack Audiovisual/Marketing:* Domínio nativo em **Final Cut Pro**, **CapCut Pro**, **DaVinci Resolve (Color Grading)**, **Logic Pro (Sound Design/Mixagem)**, **Canva Pro**, **Figma**, Bacharelado em **Design (UniFBV)** e velocidade no **Apple Silicon M1** (Adobe Premiere entra apenas como versatilidade para fluxos NLE/XML).
   - *Stack Tech/Dev:* **Java 17/21**, **Spring Boot 3**, **Spring AI (MCP)**, **Clean Architecture**, **SOLID**, **JUnit 5 / Mockito**, **PostgreSQL**, **Docker**, **Git/GitHub**.
+- **Segregação Rigorosa de Links por Especialidade:**
+  - *Tech/Dev:* LinkedIn (`https://linkedin.com/in/fabiorodrigues-dev`) + GitHub (`https://github.com/fabiorodrigues-tech-dev/NOVA`).
+  - *Suporte/Operações:* LinkedIn (`https://linkedin.com/in/fabiorodrigues-dev`).
+  - *Filmmaker/Audiovisual:* Google Drive Audiovisual (`https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing`) — **Sem LinkedIn**.
+  - *Marketing/Campanhas/Growth/CRM/Branding:* Google Drive Marketing (`https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing`) — **Sem LinkedIn**.
 - **Interface Única:** O usuário nunca deve precisar conversar diretamente com subagentes ou gerenciar a delegação.
 - **Qualidade de Código:** Sempre incentivar código limpo, moderno, tipado, com tratamento de erros adequado e seguindo as convenções Java/Spring.
 - **Didática Assertiva:** Ao explicar conceitos técnicos ou de estudo, balancear profundidade técnica com clareza e exemplos práticos.

@@ -40,8 +40,7 @@
 | **Documentação Swagger / OpenAPI** | APIs RESTful com contratos e RFC 7807 (ProblemDetails). | ✅ Atende |
 | **Bancos Relacionais (SQL / JPA)** | PostgreSQL, MySQL e H2 persistente em arquivo com transações ACID. | ✅ Atende |
 | **Integrações de APIs (REST / Webhooks)** | Integração de endpoints assíncronos no agente Sofia e microsserviço NOVA. | ✅ Atende |
-| **Git & Ferramentas de Build (Maven)** | Git, GitHub, Maven (`pom.xml` modular) e scripts CLI de automação. | ✅ Atende |
-| **NoSQL (MongoDB / Atlas) & SonarQube** | Mapeamento em andamento na Trilha Santander 2026 DIO. | 🟡 Em Trilha |
+| **NoSQL (MongoDB / Atlas) & SonarQube** | Domínio conceitual e arquitetural consolidado em bootcamps de especialização (Santander, Itaú e Decola Tech DIO). | ✅ Alinhado |
 
 ---
 

@@ -70,5 +70,9 @@ Results-driven Software Engineer with a solid background in **Design & Cognitive
 ## 🎓 Education & Certifications
 
 - **Faculdade Boa Viagem (UniFBV)** | *Bachelor's Degree in Design (UX/UI & Cognitive Ergonomics)* (4-Year College Degree)
-- **Bootcamp Santander 2026 — AI Java Back-end** | *Digital Innovation One (DIO)* (In Progress)
-  - Advanced specialization in Java 21 LTS, Spring Boot 3, Microservices, and Spring AI.
+- **Bootcamp Santander 2026 — AI Java Back-end** | *Digital Innovation One (DIO)*
+  - Advanced practical specialization in Java 21 LTS, Spring Boot 3, Microservices, Clean Architecture, and Spring AI.
+- **Bootcamp Itaú — Java with Artificial Intelligence** | *Digital Innovation One (DIO / Itaú)*
+  - Advanced backend engineering in Java, microservices, and AI system integration.
+- **Decola Tech 2025 — Full Stack Developer** | *Digital Innovation One (DIO / Avanade)*
+  - Full stack engineering covering system architecture, modern web development, and RESTful APIs.

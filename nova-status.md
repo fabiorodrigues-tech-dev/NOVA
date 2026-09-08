@@ -2,7 +2,7 @@
 
 > Documento oficial de estado consolidado do ecossistema NOVA. Reflete a conclusão integral de **todas as 9 Fases do Roadmap**, com Inteligência Preditiva & Consultoria Financeira, CI/CD GitHub Actions, Importador OFX/CSV, Voice AI Neural, Dashboard Material 3 Expressive e Clean Architecture.
 
-**Última atualização:** 30/08/2026  
+**Última atualização:** 01/09/2026  
 **Ecossistema:** Java 21, Spring Boot 3.3.3, Spring AI (MCP), Python, Antigravity, Apple Silicon M1  
 **Maturidade Geral:** 100% Operacional & Homologado (40 Testes JUnit 5 Passando)  
 **Manual Oficial:** [`docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf`](file:///Users/fabioandre/Downloads/nova:/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf)
@@ -16,8 +16,8 @@
 | **Fase 1** | Arquitetura Multi-Agente & Orquestração | ✅ **100% Concluído** | MAIN Agent + 4 Agentes Especialistas em `.agents/skills/` |
 | **Fase 2** | Back-end Java 21 & Clean Architecture | ✅ **100% Concluído** | Spring Boot 3.3.3, DDD, H2 persistente, Repository Pattern |
 | **Fase 3** | Spring AI & Model Context Protocol (MCP) | ✅ **100% Concluído** | Tools `@Tool` expostas para IA (Cadastro, Listagem, Resumo) |
-| **Fase 4** | Esteira de Carreira & Candidaturas 360° | ✅ **100% Concluído** | 17 Candidaturas (6 Tech & 11 Marketing), Harvard Tech ATS PDF, DOCX |
-| **Fase 5** | Motor Gráfico & Relatórios Visuais PDF | ✅ **100% Concluído** | `chart_engine.py` (Matplotlib), Relatório Financeiro & Manual DIO |
+| **Fase 4** | Esteira de Carreira & Candidaturas 360° | ✅ **100% Concluído** | 23 Candidaturas (7 Tech, 14 Marketing & 2 Suporte/Operações), Harvard Tech ATS PDF, DOCX |
+| **Fase 5** | Motor Gráfico & Relatórios Visuais PDF | ✅ **100% Concluído** | `chart_engine.py` (Matplotlib), Relatório Financeiro, Manual DIO & Portfólio Executivo 6 Cases (`Portfolio_Fabio_Rodrigues_Marketing_Campanhas.pdf` 3 págs otimizadas) |
 | **Fase 6** | Camada de Voz Neural Humana (Voice AI) | ✅ **100% Concluído** | `edge-tts` + `afplay` nativo, Voice Studio Web (Porta 5050) |
 | **Fase 7** | NOVA Control Center (Dashboard M3) | ✅ **100% Concluído** | Bento Grid, Living Shader WebGL, Material 3 Expressive (Produção Cloud (https://nova-control-center-al5l.onrender.com)) |
 | **Fase 8** | CI/CD GitHub Actions & Importador OFX | ✅ **100% Concluído** | `.github/workflows/ci.yml`, Parser OFX/CSV Nubank, Deduplicação H2 |
@@ -77,6 +77,11 @@
 1. **Modificadores de Autonomia & Gatilhos `full access` (`full access`, `(full access)`, `full acess`, `(full acess)`, `/fullaccess`, `!fullaccess`):** Execução ponta a ponta sem interrupções com salvamento prévio em `.backups/ultimo_checkpoint/` e validação final via `./run-tests.sh`.
 2. **Sistema de Checkpoint & Reversão (`reverter`, `(reverter)`, `/reverter`, `!reverter`, `reverse`, `(reverse)`, `/reverse`, `!reverse`):** Restauração instantânea para o último checkpoint seguro.
 3. **Fidelidade Rigorosa às Bases Oficiais:** Nenhuma candidatura inventa ferramentas ou tecnologias fora das bases oficiais.
-4. **Segregação de Cabeçalhos por Trilha:** Tech usa LinkedIn; Marketing/Audiovisual usa Google Drive.
+4. **Segregação Rigorosa de Links por Especialidade:**
+   - *Tech/Dev:* LinkedIn (`https://linkedin.com/in/fabiorodrigues-dev`) + GitHub (`https://github.com/fabiorodrigues-tech-dev/NOVA`).
+   - *Suporte/Operações:* LinkedIn (`https://linkedin.com/in/fabiorodrigues-dev`).
+   - *Filmmaker/Audiovisual:* Google Drive Audiovisual (`https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing`) — **Sem LinkedIn**.
+   - *Marketing/Campanhas/Growth/CRM/Branding:* Google Drive Marketing (`https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing`) — **Sem LinkedIn**.
 5. **Postura Financeira Conservadora:** Organiza, prevê e dá clareza; nunca toma decisões arbitrárias pelo usuário.
 6. **Workspace Limpo:** Zero arquivos PNG residuais.
+7. **Padrão Ouro de Nomenclatura de Candidaturas:** `Curriculo_Fabio_Rodrigues_[Area_ou_Cargo].pdf` e `Cover_Letter_Fabio_Rodrigues.docx` / `.pdf` organizados em subpastas por empresa (`carreira/vagas_analisadas/[trilha]/[empresa]/`).

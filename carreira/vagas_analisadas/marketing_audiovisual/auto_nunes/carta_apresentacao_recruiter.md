@@ -19,7 +19,7 @@ Possuo vivência prática com o setor automotivo e maquinário no case Olimac, a
 
 Estou sediado na Região Metropolitana do Recife, com disponibilidade imediata para atuação presencial na unidade de Prazeres e grande entusiasmo para impulsionar a comunicação e os resultados do Grupo Auto Nunes!
 
-Portfólio de Cases & Produções: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio de Cases & Produções: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -39,7 +39,7 @@ Como Designer (UniFBV) e Diretor Criativo/Filmmaker, uno visão de métricas (Me
 
 Estou sediado na RMR e à inteira disposição para uma conversa sobre como acelerar o alcance da marca e a geração de leads para o Grupo Auto Nunes!
 
-Portfólio Completo: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio Completo: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

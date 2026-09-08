@@ -103,7 +103,7 @@ Tenho experiência prática na operação de Meta Ads, TikTok Ads e Google Ads, 
 
 Estou 100% preparado para atuar no formato remoto com autonomia, responsabilidade e foco obsessivo em ROI para as campanhas da Beside!
 
-🔗 Portfólio de Cases & Criativos: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio de Cases & Criativos: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  

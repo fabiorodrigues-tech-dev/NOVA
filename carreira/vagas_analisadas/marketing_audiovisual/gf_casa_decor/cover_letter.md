@@ -2,7 +2,7 @@
 
 **Candidato:** Fábio Rodrigues  
 **Localização:** Recife, PE — Brasil  
-**Contato:** fabioandre777@gmail.com | (81) 98992-0040 | [Portfólio Google Drive](https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view)  
+**Contato:** fabioandre777@gmail.com | (81) 98992-0040 | [Portfólio Google Drive](https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link)  
 **Data:** 2026-08-30  
 
 ---
@@ -36,4 +36,4 @@ Atenciosamente,
 Criativo de Marketing & Designer  
 Recife, PE — Brasil  
 fabioandre777@gmail.com | (81) 98992-0040  
-[Portfólio: Google Drive](https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view)
+[Portfólio: Google Drive](https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link)

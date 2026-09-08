@@ -19,7 +19,7 @@ Tenho facilidade para transformar as diretrizes corporativas em peças visuais v
 
 Estou baseado em Recife, PE, e à inteira disposição para apresentar meu portfólio e conversar sobre como posso somar ao time de Gente & Gestão!
 
-📁 Portfólio Oficial: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+📁 Portfólio Oficial: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -41,7 +41,7 @@ Uno formação em Design (UniFBV) com domínio prático de pós-produção audio
 
 Gostaria de me conectar para trocar experiências sobre Employer Branding e me colocar à disposição para os desafios do Grupo Luck!
 
-📁 Meu Portfólio: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+📁 Meu Portfólio: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -53,5 +53,5 @@ Recife, PE | fabioandre777@gmail.com | (81) 98992-0040
 ## ⚡ 3. Nota de Conexão Rápida (Máx. 300 Caracteres)
 
 ```markdown
-Olá, [Nome]! Sou Designer e Criador de Conteúdo em Recife, especialista em Endomarketing, Design (Canva/Figma) e Edição de Vídeo (Final Cut/CapCut/DaVinci). Portfólio: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Olá, [Nome]! Sou Designer e Criador de Conteúdo em Recife, especialista em Endomarketing, Design (Canva/Figma) e Edição de Vídeo (Final Cut/CapCut/DaVinci). Portfólio: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 ```

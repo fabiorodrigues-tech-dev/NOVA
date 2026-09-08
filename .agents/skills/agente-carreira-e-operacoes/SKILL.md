@@ -15,22 +15,31 @@ Este agente é responsável por orquestrar a esteira de desenvolvimento profissi
 
 ## 🎯 Escopo de Atuação & Metodologias
 
-### 💼 1. Gestão de Carreira & Candidaturas 360° (2 Trilhas Segregadas)
-- **Trilha Tech & Dev (`carreira/vagas_analisadas/tech_dev/`):**
+### 💼 1. Gestão de Carreira & Candidaturas 360° (Matriz de Links por Especialidade)
+- **1. Trilha Tech & Dev (`carreira/vagas_analisadas/tech_dev/`):**
   - Foco em vagas Back-end (Java 17/21, Spring Boot 3, Clean Architecture, SOLID, JUnit 5, PostgreSQL, Docker).
-  - Cabeçalho obrigatório com link do **LinkedIn** (`https://linkedin.com/in/fabiorodrigues-dev`).
-- **Trilha Marketing & Audiovisual (`carreira/vagas_analisadas/marketing_audiovisual/`):**
-  - Foco em vagas de Direção Criativa, Filmmaking, Edição de Vídeo, Endomarketing, Copywriting e Influencer Marketing.
-  - Base de inteligência em `carreira/base/portfolio_filmmaker_dados.md` (7 cases reais e setup Apple Silicon M1).
-  - Cabeçalho obrigatório com link do **Portfólio no Google Drive** (`https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view`).
+  - Cabeçalho obrigatório com **LinkedIn** (`https://linkedin.com/in/fabiorodrigues-dev`) e **GitHub** (`https://github.com/fabiorodrigues-tech-dev/NOVA`).
+- **2. Trilha Suporte, Operações & Administrativo (`carreira/vagas_analisadas/suporte_operacoes/`):**
+  - Foco em vagas de Suporte SaaS/ERP, Suporte Técnico N1/N2, Operações e Administrativo.
+  - Cabeçalho obrigatório com **LinkedIn** (`https://linkedin.com/in/fabiorodrigues-dev`).
+- **3. Trilha Filmmaker & Audiovisual (`carreira/vagas_analisadas/marketing_audiovisual/`):**
+  - Foco em vagas de Filmmaker, Edição de Vídeo, Audiovisual ou Criação de Conteúdo Multimídia.
+  - Base de inteligência em `carreira/base/portfolio_filmmaker_dados.md` (cases reais e setup Apple Silicon M1).
+  - Cabeçalho obrigatório com **Portfólio no Google Drive Audiovisual** (`https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing`).
+  - **Regra Estrita:** Excluir qualquer menção ao LinkedIn.
+- **4. Trilha Marketing & Campanhas (`carreira/vagas_analisadas/marketing_audiovisual/`):**
+  - Foco em vagas de Marketing, Campanhas, Growth, CRM, E-mail Marketing, Endomarketing ou Branding.
+  - Base de inteligência em `carreira/base/marketing_audiovisual/portfolio_marketing_campanhas_dados.md` e dossiê visual oficial `Portfolio_Fabio_Rodrigues_Marketing_Campanhas.pdf`.
+  - Cabeçalho obrigatório com **Portfólio no Google Drive Marketing** (`https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing`).
+  - **Regra Estrita:** Excluir qualquer menção ao LinkedIn.
 - **Pacote Padrão de 8 Arquivos Oficiais (Zero PNGs soltos):**
   1. `analise_match.md` (Diagnóstico de % Match, tabela comparativa e argumentos de entrevista).
   2. `curriculo_[empresa].md` (CV em Markdown customizado).
-  3. `curriculo_fabio_rodrigues_[empresa].pdf` (Harvard Tech / ATS compilado via ReportLab).
+  3. `curriculo_fabio_rodrigues_[empresa].pdf` (Harvard Tech / ATS compilado via ReportLab com cabeçalho correto da especialidade).
   4. `cover_letter.md` (Carta de apresentação formal em Markdown).
   5. `cover_letter_fabio_rodrigues_[empresa].pdf` (Cover Letter timbrada em PDF).
   6. `cover_letter_fabio_rodrigues_[empresa].docx` (Cover Letter timbrada em DOCX).
-  7. `carta_apresentacao_recruiter.md` (Pitches de InMail e abordagem direta no LinkedIn).
+  7. `carta_apresentacao_recruiter.md` (Pitches de abordagem direta com link correto).
   8. `relatorio_match_[empresa].pdf` (Relatório visual executivo de 2 páginas com gráficos integrados).
 
 ### 🤝 2. Follow-ups & Abordagem Estratégica no LinkedIn
@@ -59,6 +68,10 @@ Este agente é responsável por orquestrar a esteira de desenvolvimento profissi
 ## 🛡️ Regras de Ouro de Operação
 
 1. **Fidelidade Rigorosa às Bases Oficiais:** Zero alucinações de ferramentas fora das bases reais.
-2. **Segregação de Cabeçalhos:** LinkedIn para Tech / Google Drive para Marketing.
+2. **Segregação Estrita de Links:**
+   - *Tech/Dev:* LinkedIn + GitHub.
+   - *Suporte/Operações:* LinkedIn.
+   - *Filmmaker/Audiovisual:* Google Drive Audiovisual (`https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=sharing`) — **Sem LinkedIn**.
+   - *Marketing/Campanhas/Growth/CRM/Branding:* Google Drive Marketing (`https://drive.google.com/drive/folders/1Mz7BoxVzmUnZd24H7n9zrvByGN_bzFxm?usp=sharing`) — **Sem LinkedIn**.
 3. **Workspace Limpo:** Nenhum PNG residual solto no repositório.
 4. **Regra dos 3 Objetivos Diários (MITs):** Sempre orientar o foco operacional diário para no máximo 3 entregas prioritárias.

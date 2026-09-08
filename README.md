@@ -89,10 +89,11 @@ flowchart TD
    - Ferramentas `@Tool` expostas via **Spring AI Model Context Protocol (MCP)**.
 
 2. 💼 **Agente de Carreira & Operações (`agente-carreira-e-operacoes`):**
-   - Gestão da esteira **"Candidatura Completa 360°"** com separação estrita de 2 trilhas profissionais:
-     - 💻 **Trilha Tech & Dev:** Currículos Harvard Tech ATS, cartas timbradas em PDF/DOCX e link do LinkedIn oficial.
-     - 🎬 **Trilha Marketing & Audiovisual:** Portfólio Google Drive, cases reais (DER-PE, Gildo Lanches, Quintal dos Primos) e setup Apple Silicon M1.
-   - Mapeamento de vagas ativas com índices de aderência técnica (Match %) e relatórios gráficos executivos.
+   - Gestão da esteira **"Candidatura Completa 360°"** com separação estrita de 3 trilhas profissionais e **Padrão Ouro de Nomenclatura** (`Curriculo_Fabio_Rodrigues_[Area_ou_Cargo].pdf` e `Cover_Letter_Fabio_Rodrigues.docx` / `.pdf`):
+     - 💻 **Trilha Tech & Dev:** Currículos Harvard Tech ATS (`Curriculo_Fabio_Rodrigues_Java_Backend.pdf`), cartas timbradas em PDF/DOCX e link do LinkedIn oficial.
+     - 🎬 **Trilha Marketing & Audiovisual:** Portfólio Google Drive, cases reais (DER-PE, Gildo Lanches, Quintal dos Primos), currículos executivos (`Curriculo_Fabio_Rodrigues_Marketing_Design.pdf`) e setup Apple Silicon M1.
+     - 📋 **Trilha Suporte, Operações & Administrativo:** Suporte a sistemas SaaS/ERP, validação documental (ICP-Brasil), gestão de CRM, Customer Experience (CX), currículos dedicados (`Curriculo_Fabio_Rodrigues_Suporte_TI.pdf`) e ponte com engenharia de produto.
+   - Mapeamento de 23 vagas ativas com índices de aderência técnica (Match %) e relatórios gráficos executivos.
 
 3. 💻 **Agente de Código (`agente-codigo`):**
    - Engenharia Back-end em Java 21 LTS e ecossistema Spring Boot 3.3.3.

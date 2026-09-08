@@ -19,7 +19,7 @@ Adoro o ambiente de loja física: gravar no showroom, criar conteúdos de antes 
 
 Estou sediado em Recife, com disponibilidade presencial imediata e muita vontade de colocar a mão na massa para fazer o marketing da GF Casa Decor brilhar ainda mais!
 
-🔗 Portfólio de Cases & Vídeos: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio de Cases & Vídeos: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -39,7 +39,7 @@ Como Designer (UniFBV) e Criador de Conteúdo, trago perfil 100% mão na massa: 
 
 Estou sediado em Recife, com total prontidão para atuar presencialmente e acelerar o alcance do Instagram e o fluxo de vendas da GF Casa Decor!
 
-🔗 Portfólio Completo: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio Completo: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

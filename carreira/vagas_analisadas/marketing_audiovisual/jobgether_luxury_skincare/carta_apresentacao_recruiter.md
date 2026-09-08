@@ -19,7 +19,7 @@ At Wolf Agency, I directed and edited over 100 commercial and social video asset
 
 I would love to connect and share how my creative and technical skills can support your luxury skincare partner.
 
-Portfolio: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfolio: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Best regards,  
 Fábio Rodrigues  
@@ -39,7 +39,7 @@ As a Designer (UniFBV) and Video Editor, I bridge the gap between high-end brand
 
 I am fully set up for 100% remote collaboration and would be thrilled to discuss how I can help produce standout creative assets for your upcoming product launches and ad campaigns.
 
-Full Portfolio: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Full Portfolio: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Looking forward to connecting!
 
@@ -59,7 +59,7 @@ Sou Designer (UniFBV) e Editor de Vídeo com sólida experiência em estética d
 
 Possuo disponibilidade imediata para atuar 100% remoto com foco em excelência estética e entrega consistente.
 
-Meu portfólio completo está disponível em: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Meu portfólio completo está disponível em: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

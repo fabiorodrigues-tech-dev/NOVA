@@ -19,7 +19,7 @@ Possuo experiência prática na criação de copys persuasivas para CRM (Push No
 
 Gostaria muito de apresentar como meu perfil multidisciplinar em Copy, Design e Audiovisual pode somar à energia e aos resultados do Grupo Aposta Ganha!
 
-Meu portfólio de cases e produções está disponível em: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Meu portfólio de cases e produções está disponível em: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -39,7 +39,7 @@ Como Designer (UniFBV), Copywriter e Diretor Criativo/Filmmaker, uno redação p
 
 Estou à disposição para uma conversa sobre como acelerar a criação de copys de alto impacto para o Grupo Aposta Ganha em Recife!
 
-Portfólio de Cases: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio de Cases: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

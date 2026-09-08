@@ -20,7 +20,7 @@ Possuo facilidade em analisar métricas de funil, construir diagnósticos comerc
 
 Gostaria muito de apresentar como meu perfil em Design, Audiovisual e inovação com IA pode fortalecer as estratégias de marketing e vendas da Rio Ave!
 
-Meu portfólio de cases e produções está disponível em: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Meu portfólio de cases e produções está disponível em: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
@@ -40,7 +40,7 @@ Como Designer (UniFBV) e Diretor Criativo/Filmmaker, uno visão estratégica de 
 
 Estou à disposição para uma conversa sobre como impulsionar as campanhas de lançamentos e aceleração de estoque da Rio Ave!
 
-Portfólio de Cases: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+Portfólio de Cases: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Atenciosamente,  
 Fábio Rodrigues | (81) 98992-0040 | fabioandre777@gmail.com

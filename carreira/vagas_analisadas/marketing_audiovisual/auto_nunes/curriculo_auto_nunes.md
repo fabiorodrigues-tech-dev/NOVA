@@ -1,6 +1,6 @@
 # Fábio Rodrigues
 **Analista de Marketing | Produção Audiovisual, Gestão de Redes Sociais & Campanhas On/Off-line**  
-📍 Recife / Jaboatão dos Guararapes, PE — Brasil | 📧 fabioandre777@gmail.com | 📱 (81) 98992-0040 | 🔗 [Portfólio](https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view)
+📍 Recife / Jaboatão dos Guararapes, PE — Brasil | 📧 fabioandre777@gmail.com | 📱 (81) 98992-0040 | 🔗 [Portfólio](https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link)
 
 ---
 

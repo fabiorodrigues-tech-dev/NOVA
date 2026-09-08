@@ -91,7 +91,7 @@ Uno um olhar estético sofisticado de marca e semiótica à agilidade de quem op
 
 Estou sediado em Recife/PE, com total disponibilidade para atuação presencial na sede da empresa e muita energia para liderar o time e elevar o engajamento das marcas do grupo a um novo patamar!
 
-🔗 Portfólio de Cases & Produções: https://drive.google.com/file/d/1zPwDU9HHxqn5CoDZGHbq7KSjOfZfnOox/view
+🔗 Portfólio de Cases & Produções: https://drive.google.com/drive/folders/1fhmqNSZG9h7Tv4pFzqysuuBcIY4Sw-ri?usp=share_link
 
 Um abraço,  
 Fábio Rodrigues  
