@@ -1228,8 +1228,8 @@ class DashboardHandler(BaseHTTPRequestHandler):
                 pin = req_data.get('pin') or self.headers.get('X-NOVA-PIN', '') or extrair_pin_requisicao(self)
                 is_demo_req = req_data.get('is_demo')
                 
-                # Define o modo real se o PIN for 7770
-                demo_ativo = False if str(pin).strip() == '7770' else (True if is_demo_req is True else is_demo_mode(self))
+                # Define o modo real se o PIN for válido (ADMIN_PIN)
+                demo_ativo = False if (pin and str(pin).strip() == ADMIN_PIN) else (True if is_demo_req is True else is_demo_mode(self))
                 
                 # 1. Processa semântica em Carreira, Estudos, Finanças ou Apresentação
                 resposta_texto = processar_intencao_voz(comando, demo=demo_ativo)

@@ -7,7 +7,7 @@
 ![JUnit 5](https://img.shields.io/badge/JUnit%205-40%20Tests%20Passed-25A162?style=flat&logo=junit5&logoColor=white)
 ![Material 3](https://img.shields.io/badge/Design%20System-Material%203%20Expressive-4285F4?style=flat&logo=google&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=flat&logo=docker&logoColor=white)
-![Render](https://img.shields.io/badge/Render-24%2F7%20Cloud-46E3B7?style=flat&logo=render&logoColor=black)
+[![Render](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?style=flat&logo=render&logoColor=black)](https://nova-control-center-alsl.onrender.com)
 
 > **Enterprise-Grade Multi-Agent Copilot & Autonomous Engineering Ecosystem**  
 > Desenvolvido por **Fábio Rodrigues** (Recife/PE) | [LinkedIn](https://linkedin.com/in/fabiorodrigues-dev)
@@ -25,15 +25,15 @@ Consulte os documentos executivos em PDF com pareceres de engenharia, diagramas 
 
 ## 🧭 NOVA Control Center (UI Showcase & Production Preview)
 
-O **NOVA Control Center** é o painel de comando unificado do ecossistema, combinando Bento Grid modular, WebGL Living Shader, telemetria em tempo real via Chart.js, Voice Orb interativo, **Proteção de Dados Reais por PIN (ADMIN_PIN: 7770)** e **Sistema de Privacidade Inteligente (Demo Mode LGPD Safe)** com suporte a túnel público HTTPS seguro.
+O **NOVA Control Center** é o painel de comando unificado do ecossistema, combinando Bento Grid modular, WebGL Living Shader, telemetria em tempo real via Chart.js, Voice Orb interativo, **Proteção de Dados Reais por PIN** e **Sistema de Privacidade Inteligente (Demo Mode LGPD Safe)** com suporte a túnel público HTTPS seguro.
 
 - 🏛️ **Arquitetura de 7 Abas Dedicadas (SPA View Switcher):** Navegação ultrarrápida sem recarregamento de página ou saltos visuais, estruturada em 7 módulos independentes: **Cockpit Dashboard** (Voice Orb & Destaques), **Finanças & Preditivo H2** (Evolução, categorias, projeção e caixinhas), **Candidaturas 360°** (Aderência técnica, filtros por trilha e downloads de dossiês), **Estudos 100% Concluído** (Trilha 1 Santander DIO 26/26 com Certificado Emitido e Trilha 2 Full Stack & Cloud DevOps 5/5), **Voice Studio Pro** (Laboratório vocal neural), **Engenharia & Testes** (Telemetria, Clean Architecture 4 Camadas, Persistência H2 Banco ACID e 40 testes JUnit 5 100% PASS sem sobreposição) e **Spring Boot API Explorer** (Painel interno de contratos REST, 5 endpoints mapeados, visualizador interativo de payloads JSON e especificações de segurança).
 - 🟢 **Badge Executivo de Telemetria:** Substituição do seletor estático por indicador visual pulsante em verde esmeralda no topo (`🟢 Sistemas Operacionais | Spring Boot 8081 • H2 ACID • Cloud Render`) com tooltip detalhado dos serviços.
 - ✨ **Apple Standard Focus & Pílulas Salariais Non-Wrap:** Eliminação de contornos azuis nativos via `outline: none;` e transição translúcida elegante (`:focus-visible`), além de blindagem de quebras de linha em tags salariais em BRL e USD (`white-space: nowrap !important`).
-- 🛡️ **Proteção por Chave/PIN & LGPD Safe:** Por padrão, o painel inicializa 100% protegido em **Modo Demonstração**, servindo apenas métricas fictícias sem expor dados confidenciais. A alternância para dados reais exige o PIN de administrador (`ADMIN_PIN`, padrão `7770`) via modal Material 3 Expressive. Uma vez desbloqueado, o badge *"Dados Reais Conectados"* é exibido juntamente com o botão rápido *"Bloquear / Demo"* para trancamento imediato.
+- 🛡️ **Controle de Acesso por PIN:** Por padrão, o painel inicializa 100% protegido em Modo Demonstração (LGPD Safe), servindo apenas métricas fictícias sem expor dados confidenciais. A alternância para dados reais exige autenticação administrativa via modal, validada por chave de acesso segura (configurável via variável de ambiente ADMIN_PIN). Uma vez desbloqueado, o badge *"Dados Reais Conectados"* é exibido juntamente com o botão rápido *"Bloquear / Demo"* para trancamento imediato.
 - 🎙️ **Boas-Vindas Neurais para Tech Recruiters:** Tanto no Voice Assistant do painel principal quanto no Voice Studio, o sistema conta com mensagem executiva de apresentação integrada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP).
 
-Acesse localmente em **[http://nova.local:3000](http://nova.local:3000)** (ou **[https://nova-control-center-al5l.onrender.com](https://nova-control-center-al5l.onrender.com)**) ou via comando `/dashboard`.
+Acesse localmente em **[http://nova.local:3000](http://nova.local:3000)** (ou **[https://nova-control-center-alsl.onrender.com](https://nova-control-center-alsl.onrender.com)**) ou via comando `/dashboard`.
 
 | ☀️ Modo Dia (Light Theme) | 🌙 Modo Noite (Dark Theme) |
 | :---: | :---: |
@@ -47,7 +47,7 @@ Acesse localmente em **[http://nova.local:3000](http://nova.local:3000)** (ou **
 ```mermaid
 flowchart TD
     subgraph UI_Layer ["🖥️ Interfaces & Acesso"]
-        DASH["🧭 NOVA Control Center (Produção Cloud (https://nova-control-center-al5l.onrender.com) / nova.local)"]
+        DASH["🧭 NOVA Control Center (Produção Cloud (https://nova-control-center-alsl.onrender.com) / nova.local)"]
         VOICE_UI["🎙️ Voice Studio Web (Porta 5050)"]
         CLI["⚡ Chat & CLI (Atalhos / e !)"]
         TUNNEL["🌐 Túnel Público Seguro (/compartilhar)"]
@@ -139,11 +139,11 @@ Execute o script orquestrador na raiz do projeto:
 ./start-all.sh
 ```
 
-| Serviço | Módulo / Tecnologia | Porta | Endpoint / Acesso |
-| :--- | :--- | :---: | :--- |
-| **NOVA Control Center** | Material 3 Expressive / Bento Grid / Chart.js | `3000` | **[http://nova.local:3000](http://nova.local:3000)** |
-| **Agente Financeiro API** | Java 21 / Spring Boot 3.3.3 / Spring AI MCP | `8081` | **[http://localhost:8081/api/transacoes/resumo](http://localhost:8081/api/transacoes/resumo)** |
-| **NOVA Voice Studio** | Python / `edge-tts` / `afplay` | `5050` | **[http://localhost:5050](http://localhost:5050)** |
+| Serviço | Módulo / Tecnologia | Porta | Acesso Local | Produção Nuvem (Live) |
+| :--- | :--- | :---: | :--- | :--- |
+| **NOVA Control Center** | Material 3 Expressive / Bento Grid / SPA | 3000 | `http://localhost:3000` | 🌐 [Acessar no Render](https://nova-control-center-alsl.onrender.com) |
+| **Agente Financeiro API** | Java 21 / Spring Boot 3.3.3 / Spring AI MCP | `8081` | **[http://localhost:8081/api/transacoes/resumo](http://localhost:8081/api/transacoes/resumo)** | *Microsserviço Integrado* |
+| **NOVA Voice Studio** | Python / `edge-tts` / `afplay` | `5050` | **[http://localhost:5050](http://localhost:5050)** | *Módulo de Voz Neural* |
 
 ### 3. Compartilhamento Seguro (Demo Mode Público & Proteção por PIN)
 Para gerar uma URL HTTPS pública para smartphone ou recrutadores com dados fictícios (LGPD Safe):
@@ -151,7 +151,7 @@ Para gerar uma URL HTTPS pública para smartphone ou recrutadores com dados fict
 python3 dashboard/compartilhar.py
 # Ou digite /compartilhar no chat
 ```
-> 🔒 **Controle de Acesso por PIN (`ADMIN_PIN`):** O servidor inicia por padrão servindo apenas o Modo Demonstração. O acesso aos dados reais exige autenticação no modal com o PIN de administrador (padrão: `7770` ou configurado via variável de ambiente `ADMIN_PIN`), com autorização enviada via cabeçalho `X-Admin-PIN` / `Authorization: Bearer <PIN>`.
+> 🔒 **Controle de Acesso por PIN:** Por padrão, o painel inicializa 100% protegido em Modo Demonstração (LGPD Safe), servindo apenas métricas fictícias sem expor dados confidenciais. A alternância para dados reais exige autenticação administrativa via modal, validada por chave de acesso segura (configurável via variável de ambiente `ADMIN_PIN`).
 
 ### 4. Execução da Suíte de Testes JUnit 5
 ```bash

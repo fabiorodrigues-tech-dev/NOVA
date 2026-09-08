@@ -197,7 +197,7 @@ async function submeterPinAutenticacao() {
     const data = await res.json().catch(() => ({ authenticated: false }));
 
     if (res.ok && data.authenticated) {
-      sessionStorage.setItem('nova_auth_pin', '7770');
+      sessionStorage.setItem('nova_auth_pin', pin);
       sessionStorage.setItem('nova_admin_pin', pin);
       modoPrivacidade = 'real';
       localStorage.setItem('nova_privacy_mode', 'real');
