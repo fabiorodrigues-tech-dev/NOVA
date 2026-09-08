@@ -25,20 +25,42 @@ Consulte os documentos executivos em PDF com pareceres de engenharia, diagramas 
 
 ## 🧭 NOVA Control Center (UI Showcase & Production Preview)
 
-O **NOVA Control Center** é o painel de comando unificado do ecossistema, combinando Bento Grid modular, WebGL Living Shader, telemetria em tempo real via Chart.js, Voice Orb interativo, **Proteção de Dados Reais por PIN** e **Sistema de Privacidade Inteligente (Demo Mode LGPD Safe)** com suporte a túnel público HTTPS seguro.
+O **NOVA Control Center** é a interface executiva e centro de comando unificado do ecossistema NOVA. Construído como uma Single Page Application (SPA) de alta performance, integra visualização preditiva de métricas, telemetria em tempo real, inteligência artificial multimodal por voz e controle granular de governança de dados.
 
-- 🏛️ **Arquitetura de 7 Abas Dedicadas (SPA View Switcher):** Navegação ultrarrápida sem recarregamento de página ou saltos visuais, estruturada em 7 módulos independentes: **Cockpit Dashboard** (Voice Orb & Destaques), **Finanças & Preditivo H2** (Evolução, categorias, projeção e caixinhas), **Candidaturas 360°** (Aderência técnica, filtros por trilha e downloads de dossiês), **Estudos 100% Concluído** (Trilha 1 Santander DIO 26/26 com Certificado Emitido e Trilha 2 Full Stack & Cloud DevOps 5/5), **Voice Studio Pro** (Laboratório vocal neural), **Engenharia & Testes** (Telemetria, Clean Architecture 4 Camadas, Persistência H2 Banco ACID e 40 testes JUnit 5 100% PASS sem sobreposição) e **Spring Boot API Explorer** (Painel interno de contratos REST, 5 endpoints mapeados, visualizador interativo de payloads JSON e especificações de segurança).
-- 🟢 **Badge Executivo de Telemetria:** Substituição do seletor estático por indicador visual pulsante em verde esmeralda no topo (`🟢 Sistemas Operacionais | Spring Boot 8081 • H2 ACID • Cloud Render`) com tooltip detalhado dos serviços.
-- ✨ **Apple Standard Focus & Pílulas Salariais Non-Wrap:** Eliminação de contornos azuis nativos via `outline: none;` e transição translúcida elegante (`:focus-visible`), além de blindagem de quebras de linha em tags salariais em BRL e USD (`white-space: nowrap !important`).
-- 🛡️ **Controle de Acesso por PIN:** Por padrão, o painel inicializa 100% protegido em Modo Demonstração (LGPD Safe), servindo apenas métricas fictícias sem expor dados confidenciais. A alternância para dados reais exige autenticação administrativa via modal, validada por chave de acesso segura (configurável via variável de ambiente ADMIN_PIN). Uma vez desbloqueado, o badge *"Dados Reais Conectados"* é exibido juntamente com o botão rápido *"Bloquear / Demo"* para trancamento imediato.
-- 🎙️ **Boas-Vindas Neurais para Tech Recruiters:** Tanto no Voice Assistant do painel principal quanto no Voice Studio, o sistema conta com mensagem executiva de apresentação integrada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP).
+### 🌐 Ambientes de Acesso & Demonstração
 
-Acesse localmente em **[http://nova.local:3000](http://nova.local:3000)** (ou **[https://nova-control-center-alsl.onrender.com](https://nova-control-center-alsl.onrender.com)**) ou via comando `/dashboard`.
+- 🚀 **Produção Cloud Live:** [https://nova-control-center-alsl.onrender.com](https://nova-control-center-alsl.onrender.com)
+- 💻 **Execução Local:** [http://localhost:3000](http://localhost:3000) (ou `http://nova.local:3000` via `./start-all.sh`)
+- ⚡ **Atalho no Chat:** Digite `/dashboard` ou `/painel`
+
+---
+
+### 🏛️ Matriz de Módulos & Abas Dedicadas (SPA View Switcher)
+
+| Módulo / Aba | Escopo Técnico & Funcionalidades | Integrações & Tecnologias |
+| :--- | :--- | :--- |
+| **Cockpit Central** | Visão executiva consolidada, Voice Assistant interativo, KPIs corporativos e living shader reativo. | WebGL, Web Speech API, Chart.js, Bento Grid |
+| **Finanças (H2)** | Balanço patrimonial, auditoria de despesas, burn rate diário, projeção de fechamento e gestão de Caixinhas. | Java 21, Spring Boot 3, Banco H2 ACID, OFX/CSV Nubank |
+| **Candidaturas 360°** | Rastreamento de vagas ativas, índices de aderência técnica (Match %), filtros por trilha e exportação de dossiês. | Harvard Tech ATS, Dossiês PDF/DOCX, Matplotlib Engine |
+| **Estudos & Certificações** | Monitoramento de trilhas ativas (Santander 2026 DIO 26/26 e Full Stack Cloud DevOps 5/5), emissão de certificados e resumos. | Metodologias Ativas, Feynman Engine, Markdown Renderer |
+| **Voice Studio Pro** | Laboratório de síntese vocal neural, catálogo de vozes PT-BR/globais, análise de latência e testes executivos. | Python 3, Microsoft edge-tts, Audio Buffer Stream |
+| **Spring Boot API Explorer** | Painel interativo de contratos REST, documentação de endpoints, inspeção de esquemas JSON e status dos serviços. | Springdoc OpenAPI, RFC 7807 ProblemDetail, Spring AI MCP |
+
+---
+
+### ⚙️ Pilares de Engenharia & Arquitetura de Software
+
+- 🎨 **Design System Material 3 Expressive & Bento Grid:** Arquitetura visual modular construída com hierarquia tonal semântica, grid flexível responsivo e WebGL Living Shader interativo que reflete o estado do ecossistema em tempo real.
+- 👁️ **Acessibilidade WCAG AAA & Telemetria em Tempo Real:** Paleta cromática validada com taxas de contraste rigorosas (WCAG AAA), navegação universal assistida por teclado, tooltips de contexto e telemetria pulsante no cabeçalho monitorando a saúde dos microsserviços integrados.
+- 🛡️ **DevSecOps & Zero-Trust Data Protection:** Isolamento de segredos, proteção CSRF/CORS estrita, cabeçalhos de segurança padronizados e esteira de CI/CD automatizada com GitHub Actions para validação contínua de integridade.
+- 🔒 **Modo Demonstração (LGPD Safe) & Autenticação de Administrador:** Inicialização protegida por padrão com datasets sintetizados que preservam integralmente a privacidade de dados bancários e profissionais. O acesso a dados reais em persistência H2 exige autenticação administrativa via modal com validação por chave de acesso segura (configurável via variável de ambiente `ADMIN_PIN`).
+
+---
 
 | ☀️ Modo Dia (Light Theme) | 🌙 Modo Noite (Dark Theme) |
 | :---: | :---: |
-| <img src="docs/assets/nova-light-preview.png" width="100%" alt="NOVA Control Center - Light Theme"> | <img src="docs/assets/nova-dark-preview.png" width="100%" alt="NOVA Control Center - Dark Theme"> |
-| **Light Theme:** Máxima legibilidade com superfície tonal M3 Expressive, contraste WCAG AAA e visual limpo para foco diurno. | **Dark Theme:** Glassmorphism profundo, Living Shader WebGL reativo, chips vibrantes e conforto visual para imersão noturna. |
+| <img src="docs/assets/dashboard-light.png" width="100%" alt="NOVA Control Center - Light Theme"> | <img src="docs/assets/dashboard-dark.png" width="100%" alt="NOVA Control Center - Dark Theme"> |
+| **Light Theme:** Superfície tonal Material 3 Expressive, contraste balanceado WCAG AAA e tipografia otimizada para foco diurno. | **Dark Theme:** Glassmorphism com Living Shader WebGL, chips vibrantes de alta saturação e conforto visual em baixa luminosidade. |
 
 ---
 
