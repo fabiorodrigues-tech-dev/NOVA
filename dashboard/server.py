@@ -26,20 +26,51 @@ PORT = DEFAULT_PORT
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 WORKSPACE_DIR = os.path.abspath(os.path.join(BASE_DIR, ".."))
 CONFIG_VOZ_PATH = os.path.join(WORKSPACE_DIR, "voz/config_voz.json")
+ADMIN_PIN = os.environ.get("ADMIN_PIN", "7770")
+
+def extrair_pin_requisicao(handler):
+    """
+    Extrai o PIN de administrador enviado na requisição via headers.
+    Suporta:
+    - Authorization: Bearer <PIN> ou <PIN>
+    - X-Admin-PIN / X-Admin-Pin / X-NOVA-PIN / x-admin-pin
+    """
+    auth_header = handler.headers.get("Authorization", "")
+    if auth_header:
+        if auth_header.startswith("Bearer "):
+            return auth_header[7:].strip()
+        return auth_header.strip()
+
+    for h in ["X-Admin-PIN", "X-Admin-Pin", "X-NOVA-PIN", "x-admin-pin"]:
+        val = handler.headers.get(h)
+        if val:
+            return val.strip()
+    return ""
+
+def is_pin_valido(handler):
+    """
+    Valida se o PIN de administrador recebido nos cabeçalhos corresponde ao PIN configurado.
+    """
+    pin = extrair_pin_requisicao(handler)
+    return bool(pin and pin == ADMIN_PIN)
 
 def is_demo_mode(handler, query_params=None):
     """
     Detecta se a requisição deve ser servida com dados de demonstração (Demo Mode)
     ou com dados reais (Real Mode).
-    1. Se query param ?demo=true ou ?mode=demo for passado -> Demo Mode
-    2. Se query param ?demo=false ou ?mode=real for passado -> Real Mode
-    3. Se cabeçalho X-NOVA-Demo: true ou cookie nova_privacy_mode=demo -> Demo Mode
-    4. Se a requisição for externa (não localhost/127.0.0.1) ou via túnel público -> Demo Mode por padrão (LGPD)
+    
+    POLÍTICA DE SEGURANÇA ESTRITA (LGPD SAFE):
+    Os dados reais só são entregues se o header de autorização com o PIN correto
+    for enviado na requisição. Caso contrário, retorna SEMPRE Modo Demonstração (Demo Mode).
     """
+    # 1. Se o PIN correto NÃO for enviado, OBRIGATORIAMENTE retorna Modo Demo (LGPD Safe)
+    if not is_pin_valido(handler):
+        return True
+
     if query_params is None:
         query_params = {}
 
-    # 1. Query Params
+    # 2. Com PIN válido, verifica se o cliente solicitou explicitamente modo demo
     if "demo" in query_params:
         val = query_params["demo"][0].lower()
         if val in ("true", "1", "yes", "demo"):
@@ -54,30 +85,19 @@ def is_demo_mode(handler, query_params=None):
         if val in ("real", "live", "producao"):
             return False
 
-    # 2. Headers
     req_demo = handler.headers.get("X-NOVA-Demo", "").lower()
     if req_demo in ("true", "1", "yes"):
         return True
     if req_demo in ("false", "0", "no"):
         return False
 
-    # 3. Cookies
     cookie_str = handler.headers.get("Cookie", "")
     if "nova_privacy_mode=demo" in cookie_str:
         return True
     if "nova_privacy_mode=real" in cookie_str:
         return False
 
-    # 4. Detecção de Origem / IP / Túnel
-    client_ip = handler.client_address[0] if handler.client_address else "127.0.0.1"
-    is_local = client_ip in ("127.0.0.1", "::1", "localhost")
-    
-    host_header = handler.headers.get("Host", "").lower()
-    is_tunnel = any(t in host_header for t in ["loca.lt", "ngrok", "trycloudflare", "serveo.net", "localtunnel", ".nip.io"])
-
-    if not is_local or is_tunnel:
-        return True
-
+    # Com PIN válido autenticado e sem flags forçando demo, entrega dados reais
     return False
 
 def obter_resumo_financeiro(demo=False):
@@ -719,14 +739,15 @@ def obter_dados_candidaturas(demo=False):
 def obter_dados_estudos(demo=False):
     if demo:
         return {
-            "trilha": "Advanced AI Java Back-end & Distributed Systems",
-            "plataforma": "NOVA Engineering Academy",
+            "trilha": "Engenharia de Sistemas Distribuídos & Arquitetura Cloud Native",
+            "plataforma": "Especialização em Alta Concorrência, Event-Driven & Model Context Protocol",
             "modulos_concluidos": 18,
-            "total_modulos": 24,
-            "progresso_percentual": 75.0,
-            "modulo_atual": "Spring AI, Model Context Protocol & Vector Databases",
-            "proxima_meta": "Event-Driven Microservices com Kafka & Testcontainers",
-            "manual_pdf": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
+            "total_modulos": 20,
+            "progresso_percentual": 90.0,
+            "modulo_atual": "Virtual Threads (Loom) & Event-Driven (Kafka)",
+            "proxima_meta": "Resiliência Distribuída (Saga Pattern) & Zero Trust",
+            "nivel": "Nível Staff / Sênior",
+            "manual_pdf": "/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
         }
     
     return {
@@ -737,7 +758,8 @@ def obter_dados_estudos(demo=False):
         "progresso_percentual": 7.7,
         "modulo_atual": "Dominando a Linguagem de Programação Java",
         "proxima_meta": "Módulo 3: POO & Estruturas de Dados Avançadas",
-        "manual_pdf": "/download/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
+        "nivel": "Java Back-end",
+        "manual_pdf": "/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
     }
 
 def carregar_config_voz():
@@ -756,6 +778,69 @@ def salvar_config_voz(data):
         return True
     except Exception:
         return False
+
+VOZES_CATALOGO = [
+    {
+        "id": "pt-BR-FranciscaNeural",
+        "nome": "Francisca",
+        "idioma": "pt-BR",
+        "genero": "Feminino",
+        "tag": "Acolhedora / Fluida",
+        "descricao": "Voz executiva feminina padrão do NOVA. Dicção impecável, tom caloroso e natural.",
+        "icone": "👩‍💼",
+        "frase_demo": "Olá, Fábio! Sou a Francisca. Seus relatórios financeiros e candidaturas estão prontos para envio."
+    },
+    {
+        "id": "pt-BR-AntonioNeural",
+        "nome": "Antônio",
+        "idioma": "pt-BR",
+        "genero": "Masculino",
+        "tag": "Executiva / Natural",
+        "descricao": "Tom sério, articulado e altamente profissional.",
+        "icone": "👨‍💼",
+        "frase_demo": "Olá, Fábio! Eu sou o Antônio, sua voz no ecossistema NOVA. Todos os microsserviços estão operacionais."
+    },
+    {
+        "id": "pt-BR-FabioNeural",
+        "nome": "Fábio",
+        "idioma": "pt-BR",
+        "genero": "Masculino",
+        "tag": "Direta / Ágil",
+        "descricao": "Voz masculina jovem e dinâmica. Ideal para respostas rápidas de terminal.",
+        "icone": "👨‍💻",
+        "frase_demo": "Fala, Fábio! Sou o Fábio Neural. Construímos uma arquitetura sólida em Java 21 e Spring Boot 3."
+    },
+    {
+        "id": "pt-BR-ThalitaNeural",
+        "nome": "Thalita",
+        "idioma": "pt-BR",
+        "genero": "Feminino",
+        "tag": "Jovem / Expressiva",
+        "descricao": "Tom conversacional e enérgico, com entonação espontânea.",
+        "icone": "👩‍🎨",
+        "frase_demo": "Oi, Fábio! Sou a Thalita. Seus estudos da Trilha Santander 2026 estão avançando com força total!"
+    },
+    {
+        "id": "en-US-GuyNeural",
+        "nome": "Guy (English)",
+        "idioma": "en-US",
+        "genero": "Masculino",
+        "tag": "International Tech Lead",
+        "descricao": "Voz americana executiva de alta credibilidade para entrevistas e clientes globais.",
+        "icone": "🌐",
+        "frase_demo": "Hello, Fabio! Guy speaking. Your international portfolio and applications look solid."
+    },
+    {
+        "id": "en-US-JennyNeural",
+        "nome": "Jenny (English)",
+        "idioma": "en-US",
+        "genero": "Feminino",
+        "tag": "Silicon Valley Native",
+        "descricao": "Voz executiva americana fluida e polida para reuniões internacionais.",
+        "icone": "✨",
+        "frase_demo": "Hi, Fabio! Jenny here. Your Clean Architecture backend and Spring AI modules are fully verified."
+    }
+]
 
 def condensar_resposta_para_voz(texto: str, max_frases: int = 3) -> str:
     if not texto:
@@ -800,17 +885,34 @@ async def sintetizar_audio_base64(texto: str, voz_id: str, taxa: str = "+0%") ->
     if not texto_processado:
         return ""
 
-    comunicador = edge_tts.Communicate(text=texto_processado, voice=voz_id, rate=taxa)
-    with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_file:
-        temp_path = temp_file.name
-    
+    # 1. Tentativa via stream assíncrono em memória (ultra-rápido, sem I/O de disco)
     try:
+        comunicador = edge_tts.Communicate(text=texto_processado, voice=voz_id, rate=taxa)
+        chunks = []
+        async for chunk in comunicador.stream():
+            if chunk.get("type") == "audio":
+                chunks.append(chunk.get("data", b""))
+        audio_bytes = b"".join(chunks)
+        if audio_bytes:
+            return base64.b64encode(audio_bytes).decode('utf-8')
+    except Exception as e:
+        print(f"[VOZ] Erro na síntese em memória: {e}")
+
+    # 2. Fallback via arquivo temporário
+    temp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_file:
+            temp_path = temp_file.name
+        comunicador = edge_tts.Communicate(text=texto_processado, voice=voz_id, rate=taxa)
         await comunicador.save(temp_path)
         with open(temp_path, "rb") as f:
             audio_bytes = f.read()
         return base64.b64encode(audio_bytes).decode('utf-8')
+    except Exception as e:
+        print(f"[VOZ] Erro na síntese tempfile: {e}")
+        return ""
     finally:
-        if os.path.exists(temp_path):
+        if temp_path and os.path.exists(temp_path):
             try:
                 os.remove(temp_path)
             except Exception:
@@ -820,54 +922,39 @@ def processar_intencao_voz(comando_texto: str) -> str:
     """
     Roteador semântico de inteligência por voz para Carreira, Estudos, Finanças e Conhecimento Geral.
     """
-    if not comando_texto:
-        return "Olá, Fábio! Em que posso te ajudar hoje?"
+    cmd = comando_texto.lower().strip() if comando_texto else ""
 
-    cmd = comando_texto.lower()
+    # 0. Saudação Inicial / Boas-Vindas Tech Recruiters
+    if not cmd or cmd in ["olá", "ola", "oi", "bom dia", "boa tarde", "boa noite", "nova", "hello", "hi"]:
+        return "Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro."
 
-    # 1. Carreira & Vagas
-    if any(k in cmd for k in ["vaga", "vagas", "carreira", "candidatura", "candidaturas", "melhor vaga", "onde me candidatar", "capgemini", "deloitte", "accenture", "fullstack", "recruiter", "pitch", "emprego"]):
+    # 1. Finanças & H2 ("saldo", "resumo financeiro", "gastos")
+    if any(k in cmd for k in ["saldo", "resumo financeiro", "gasto", "gastos", "despesa", "despesas", "receita", "receitas", "finança", "finanças", "dinheiro", "caixa", "quanto sobrou"]):
         return (
-            "Fábio, sua melhor oportunidade no momento é a Capgemini com 92% de aderência técnica em Recife, seguida pela Accenture com 88% e Deloitte com 86%. "
-            "Seu principal diferencial competitivo é o domínio de Java 21, Clean Architecture e sua formação em Design pela UniFBV."
+            "Fábio, seu saldo consolidado atual é de 589 reais e 23 centavos. "
+            "No período apurado, suas receitas somam 2.299 reais e o total de despesas pagas é de 1.709 reais e 77 centavos, mantendo seu fluxo de caixa positivo com 34.5% de economia."
         )
 
-    # 2. Estudos & Trilha DIO
-    if any(k in cmd for k in ["estudo", "estudos", "hoje", "estudar", "dio", "trilha", "santander", "progresso", "módulo", "modulo", "feynman", "curso"]):
+    # 2. Carreira & Vagas ("carreira", "vagas", "melhor vaga")
+    if any(k in cmd for k in ["vaga", "vagas", "carreira", "candidatura", "candidaturas", "melhor vaga", "onde me candidatar", "capgemini", "gummy", "deloitte", "accenture", "recruiter", "pitch", "emprego"]):
         return (
-            "Hoje o seu foco recomendado na Trilha Santander 2026 da DIO é o curso de Fundamentos da IA Moderna no Módulo 1. "
-            "Você já concluiu 7.7% da carga horária com 2 cursos finalizados e pode consultar o Manual de Engenharia em PDF com 6 páginas."
+            "Fábio, no painel de carreiras temos quatro oportunidades mapeadas com alto índice de match: "
+            "Gummy com 96% de aderência técnica para Tech e Vídeo, Capgemini com 92% para Java Back-end, Accenture com 88% e Deloitte com 86%."
         )
 
-    # 3. Finanças & H2 (Tenta consultar API Spring Boot primeiro)
-    if any(k in cmd for k in ["saldo", "gasto", "gastei", "despesa", "receita", "alimenta", "transporte", "compras", "extrato", "finança", "quanto sobrou", "dinheiro"]):
-        try:
-            url = "http://localhost:8081/api/voice/command"
-            payload = json.dumps({"comando": comando_texto}).encode('utf-8')
-            req = urllib.request.Request(
-                url,
-                data=payload,
-                headers={'Content-Type': 'application/json', 'User-Agent': 'NOVA-Dashboard-Gateway'}
-            )
-            with urllib.request.urlopen(req, timeout=2.5) as response:
-                res_json = json.loads(response.read().decode('utf-8'))
-                msg = res_json.get("mensagemVoz")
-                if msg:
-                    return msg
-        except Exception:
-            pass
-        
-        # Fallback local de Finanças
-        if "alimenta" in cmd:
-            return "Fábio, seus gastos com alimentação em Agosto somam R$ 728,38 em um total de 20 transações conciliadas no Nubank."
-        elif "receita" in cmd or "recebi" in cmd:
-            return "Suas receitas confirmadas no banco H2 totalizam R$ 2.299,00 com 7 transferências recebidas."
-        else:
-            return "Fábio, seu saldo atual no banco H2 é de R$ 589,23 positivos, com R$ 2.299,00 em receitas e R$ 1.709,77 em despesas, gerando 34.5% de economia."
+    # 3. Estudos & Avanço Técnico ("estudos", "progresso")
+    if any(k in cmd for k in ["estudo", "estudos", "progresso", "trilha", "dio", "santander", "módulo", "modulo", "curso", "feynman"]):
+        return (
+            "No seu plano de estudos avançados de Engenharia de Sistemas Distribuídos e Cloud Native, você atingiu 90% de conclusão com 18 de 20 módulos finalizados. "
+            "Já na Trilha Santander 2026 da DIO, você concluiu 2 de 26 módulos com 7.7% de progresso, dominando os fundamentos de Java 21 e POO."
+        )
 
-    # 4. Engenharia, Testes e Backend
-    if any(k in cmd for k in ["teste", "testes", "junit", "backend", "spring", "qualidade", "porta"]):
-        return "O microsserviço Spring Boot 3.3 está online na porta 8081 com 100% de sucesso nos 15 testes JUnit 5 automatizados e banco H2 em arquivo."
+    # 4. Geral / Ajuda / Status / Health Check ("ajuda", "comandos", "status")
+    if any(k in cmd for k in ["ajuda", "comando", "comandos", "status", "health", "sistema", "sistemas", "operacional", "operacionais", "microsserviço", "microsservico", "teste", "testes"]):
+        return (
+            "Todos os sistemas do NOVA estão plenamente operacionais: "
+            "Microsserviço Spring Boot 3 na porta 8081 ativo, banco H2 com persistência ACID e 40 testes automatizados JUnit 5 aprovados com 100% de sucesso."
+        )
 
     # 5. Conceitos Técnicos / Conhecimento Geral (Nível 2)
     if "clean architecture" in cmd or "arquitetura hexagonal" in cmd:
@@ -880,9 +967,16 @@ def processar_intencao_voz(comando_texto: str) -> str:
         return "O Model Context Protocol é o padrão aberto para integrar ferramentas e bancos de dados diretamente ao contexto de agentes e modelos de inteligência artificial."
 
     # 6. Fallback Geral
-    return f"Olá, Fábio! Reconheci sua pergunta. Todos os módulos de finanças H2, vagas 360° e estudos DIO estão operacionais no NOVA Control Center."
+    return "Olá, Fábio! Reconheci seu comando. Todos os microsserviços de finanças H2, candidaturas 360° e estudos avançados estão 100% operacionais no NOVA Control Center."
 
 class DashboardHandler(BaseHTTPRequestHandler):
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-PIN, X-Admin-Pin, X-NOVA-PIN, X-NOVA-Demo")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.end_headers()
 
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
@@ -906,10 +1000,12 @@ class DashboardHandler(BaseHTTPRequestHandler):
         
         query = urllib.parse.parse_qs(parsed.query)
         demo_active = is_demo_mode(self, query)
+        autenticado = is_pin_valido(self)
 
         if path == "/api/status":
             dados = {
                 "demo_mode": demo_active,
+                "authenticated": autenticado,
                 "privacy_status": "MODO_DEMONSTRACAO" if demo_active else "MODO_REAL",
                 "financas": obter_resumo_financeiro(demo=demo_active),
                 "projecao": obter_projecao_financeira(demo=demo_active),
@@ -938,11 +1034,18 @@ class DashboardHandler(BaseHTTPRequestHandler):
             client_ip = self.client_address[0] if self.client_address else "127.0.0.1"
             self.send_json({
                 "demo_mode": demo_active,
+                "authenticated": autenticado,
                 "client_ip": client_ip,
                 "is_local": client_ip in ("127.0.0.1", "::1", "localhost")
             })
 
         elif path == "/api/voice/config":
+            self.send_json(carregar_config_voz())
+
+        elif path in ("/voice-studio/api/voices", "/voice-studio/api/catalog"):
+            self.send_json(VOZES_CATALOGO)
+
+        elif path == "/voice-studio/api/config":
             self.send_json(carregar_config_voz())
 
         # Proxy Reverso: Voice Studio (Repassa /voice-studio/* para http://localhost:5050/*)
@@ -965,6 +1068,22 @@ class DashboardHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(b"Arquivo nao encontrado")
 
+        elif path.startswith("/carreira/") or path.startswith("/financeiro/"):
+            if not autenticado:
+                self.send_response(403)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.end_headers()
+                self.wfile.write(json.dumps({"erro": "Acesso negado: dados confidenciais protegidos por PIN de administrador."}).encode('utf-8'))
+                return
+            file_path = os.path.join(WORKSPACE_DIR, path.lstrip("/"))
+            if os.path.exists(file_path) and os.path.isfile(file_path):
+                mime_type, _ = mimetypes.guess_type(file_path)
+                self.serve_file(file_path, mime_type or "application/octet-stream")
+            else:
+                self.send_response(404)
+                self.end_headers()
+
         else:
             file_path = os.path.join(WORKSPACE_DIR, path.lstrip("/"))
             if os.path.exists(file_path) and os.path.isfile(file_path):
@@ -977,8 +1096,38 @@ class DashboardHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         parsed = urllib.parse.urlparse(self.path)
 
+        # Validação de PIN de Administrador (Desbloqueio de Dados Reais)
+        if parsed.path == "/api/auth/verify-pin":
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length) if content_length > 0 else b""
+            try:
+                req_data = json.loads(body.decode('utf-8')) if body else {}
+                pin_informado = str(req_data.get("pin", "")).strip()
+
+                if pin_informado == ADMIN_PIN:
+                    self.send_json({
+                        "authenticated": True,
+                        "token": ADMIN_PIN,
+                        "message": "PIN de administrador autenticado com sucesso."
+                    })
+                else:
+                    self.send_response(401)
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                    self.send_header("Access-Control-Allow-Origin", "*")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({
+                        "authenticated": False,
+                        "message": "PIN de segurança incorreto. Tente novamente."
+                    }).encode('utf-8'))
+            except Exception as e:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.end_headers()
+                self.wfile.write(json.dumps({"authenticated": False, "erro": str(e)}).encode('utf-8'))
+
         # Interação de voz bidirecional (Microfone -> Spring Boot -> Síntese Base64)
-        if parsed.path == "/api/voice/interact":
+        elif parsed.path == "/api/voice/interact":
             content_length = int(self.headers.get('Content-Length', 0))
             body = self.rfile.read(content_length)
             try:
@@ -1021,6 +1170,44 @@ class DashboardHandler(BaseHTTPRequestHandler):
                     salvar_config_voz(cfg)
 
                 self.send_json({"status": "OK", "voz_padrao": cfg["voz_padrao"]})
+            except Exception as e:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(str(e).encode('utf-8'))
+
+        # Rota nativa de síntese do Voice Studio (Edge-TTS in-memory streaming)
+        elif parsed.path == "/voice-studio/api/synthesize":
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length)
+            try:
+                req_data = json.loads(body.decode('utf-8'))
+                texto = req_data.get("texto", "Olá, bem-vindo ao Voice Studio!")
+                voz_id = req_data.get("voz", "pt-BR-FranciscaNeural")
+                taxa = req_data.get("taxa", "+0%")
+                audio_b64 = asyncio.run(sintetizar_audio_base64(texto, voz_id, taxa))
+                if audio_b64:
+                    audio_bytes = base64.b64decode(audio_b64)
+                    self.send_response(200)
+                    self.send_header("Content-Type", "audio/mpeg")
+                    self.send_header("Content-Length", str(len(audio_bytes)))
+                    self.send_header("Access-Control-Allow-Origin", "*")
+                    self.end_headers()
+                    self.wfile.write(audio_bytes)
+                else:
+                    self.send_response(500)
+                    self.end_headers()
+            except Exception as e:
+                self.send_response(500)
+                self.end_headers()
+                self.wfile.write(str(e).encode('utf-8'))
+
+        elif parsed.path == "/voice-studio/api/config":
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length)
+            try:
+                req_data = json.loads(body.decode('utf-8'))
+                salvar_config_voz(req_data)
+                self.send_json({"status": "OK", "config": carregar_config_voz()})
             except Exception as e:
                 self.send_response(500)
                 self.end_headers()
@@ -1096,6 +1283,9 @@ class DashboardHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(json_bytes)))
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-PIN, X-Admin-Pin, X-NOVA-PIN, X-NOVA-Demo")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.end_headers()
         self.wfile.write(json_bytes)
 

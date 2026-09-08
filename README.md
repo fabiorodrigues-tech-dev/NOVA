@@ -25,7 +25,13 @@ Consulte os documentos executivos em PDF com pareceres de engenharia, diagramas 
 
 ## 🧭 NOVA Control Center (UI Showcase & Production Preview)
 
-O **NOVA Control Center** é o painel de comando unificado do ecossistema, combinando Bento Grid modular, WebGL Living Shader, telemetria em tempo real via Chart.js, Voice Orb interativo e **Sistema de Privacidade Inteligente (Demo Mode)** com suporte a túnel público HTTPS seguro.
+O **NOVA Control Center** é o painel de comando unificado do ecossistema, combinando Bento Grid modular, WebGL Living Shader, telemetria em tempo real via Chart.js, Voice Orb interativo, **Proteção de Dados Reais por PIN (ADMIN_PIN: 7770)** e **Sistema de Privacidade Inteligente (Demo Mode LGPD Safe)** com suporte a túnel público HTTPS seguro.
+
+- 🏛️ **Arquitetura de Abas Dedicadas (SPA View Switcher):** Navegação ultrarrápida sem recarregamento de página ou saltos visuais, estruturada em 6 módulos independentes: **Cockpit Dashboard** (Voice Orb & Destaques), **Finanças & Preditivo H2** (Evolução, categorias, projeção e caixinhas), **Candidaturas 360°** (Aderência técnica, filtros por trilha e downloads de dossiês), **Estudos & Trilha DIO** (Progresso Java 21, 6 módulos estruturados e metodologias ativas Feynman/TDD), **Voice Studio Pro** (Laboratório vocal neural) e **Engenharia & Testes** (Telemetria, Clean Architecture e 40 testes JUnit 5).
+- 🟢 **Badge Executivo de Telemetria:** Substituição do seletor estático por indicador visual pulsante em verde esmeralda no topo (`🟢 Sistemas Operacionais | Spring Boot 8081 • H2 ACID • Cloud Render`) com tooltip detalhado dos serviços.
+- ✨ **Apple Standard Focus & Pílulas Salariais Non-Wrap:** Eliminação de contornos azuis nativos via `outline: none;` e transição translúcida elegante (`:focus-visible`), além de blindagem de quebras de linha em tags salariais em BRL e USD (`white-space: nowrap !important`).
+- 🛡️ **Proteção por Chave/PIN & LGPD Safe:** Por padrão, o painel inicializa 100% protegido em **Modo Demonstração**, servindo apenas métricas fictícias sem expor dados confidenciais. A alternância para dados reais exige o PIN de administrador (`ADMIN_PIN`, padrão `7770`) via modal Material 3 Expressive. Uma vez desbloqueado, o badge *"Dados Reais Conectados"* é exibido juntamente com o botão rápido *"Bloquear / Demo"* para trancamento imediato.
+- 🎙️ **Boas-Vindas Neurais para Tech Recruiters:** Tanto no Voice Assistant do painel principal quanto no Voice Studio, o sistema conta com mensagem executiva de apresentação integrada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP).
 
 Acesse localmente em **[http://nova.local:3000](http://nova.local:3000)** (ou **[https://nova-control-center-al5l.onrender.com](https://nova-control-center-al5l.onrender.com)**) ou via comando `/dashboard`.
 
@@ -139,12 +145,13 @@ Execute o script orquestrador na raiz do projeto:
 | **Agente Financeiro API** | Java 21 / Spring Boot 3.3.3 / Spring AI MCP | `8081` | **[http://localhost:8081/api/transacoes/resumo](http://localhost:8081/api/transacoes/resumo)** |
 | **NOVA Voice Studio** | Python / `edge-tts` / `afplay` | `5050` | **[http://localhost:5050](http://localhost:5050)** |
 
-### 3. Compartilhamento Seguro (Demo Mode Público)
+### 3. Compartilhamento Seguro (Demo Mode Público & Proteção por PIN)
 Para gerar uma URL HTTPS pública para smartphone ou recrutadores com dados fictícios (LGPD Safe):
 ```bash
 python3 dashboard/compartilhar.py
 # Ou digite /compartilhar no chat
 ```
+> 🔒 **Controle de Acesso por PIN (`ADMIN_PIN`):** O servidor inicia por padrão servindo apenas o Modo Demonstração. O acesso aos dados reais exige autenticação no modal com o PIN de administrador (padrão: `7770` ou configurado via variável de ambiente `ADMIN_PIN`), com autorização enviada via cabeçalho `X-Admin-PIN` / `Authorization: Bearer <PIN>`.
 
 ### 4. Execução da Suíte de Testes JUnit 5
 ```bash

@@ -2,7 +2,7 @@
 
 > Documento oficial de estado consolidado do ecossistema NOVA. Reflete a conclusão integral de **todas as 9 Fases do Roadmap**, com Inteligência Preditiva & Consultoria Financeira, CI/CD GitHub Actions, Importador OFX/CSV, Voice AI Neural, Dashboard Material 3 Expressive e Clean Architecture.
 
-**Última atualização:** 01/09/2026  
+**Última atualização:** 08/09/2026  
 **Ecossistema:** Java 21, Spring Boot 3.3.3, Spring AI (MCP), Python, Antigravity, Apple Silicon M1  
 **Maturidade Geral:** 100% Operacional & Homologado (40 Testes JUnit 5 Passando)  
 **Manual Oficial:** [`docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf`](file:///Users/fabioandre/Downloads/nova:/docs/Manual_Engenharia_e_Arquitetura_NOVA.pdf)
@@ -19,7 +19,7 @@
 | **Fase 4** | Esteira de Carreira & Candidaturas 360° | ✅ **100% Concluído** | 23 Candidaturas (7 Tech, 14 Marketing & 2 Suporte/Operações), Harvard Tech ATS PDF, DOCX |
 | **Fase 5** | Motor Gráfico & Relatórios Visuais PDF | ✅ **100% Concluído** | `chart_engine.py` (Matplotlib), Relatório Financeiro, Manual DIO & Portfólio Executivo 6 Cases (`Portfolio_Fabio_Rodrigues_Marketing_Campanhas.pdf` 3 págs otimizadas) |
 | **Fase 6** | Camada de Voz Neural Humana (Voice AI) | ✅ **100% Concluído** | `edge-tts` + `afplay` nativo, Voice Studio Web (Porta 5050) |
-| **Fase 7** | NOVA Control Center (Dashboard M3) | ✅ **100% Concluído** | Bento Grid, Living Shader WebGL, Material 3 Expressive (Produção Cloud (https://nova-control-center-al5l.onrender.com)) |
+| **Fase 7** | NOVA Control Center (Dashboard M3 & Bento Grid) | ✅ **100% Concluído** | Refatoração visual e funcional definitiva: Header horizontal em linha única fluida de 64px (`.top-header`, search bar de 300px com badge ⌘K, grupo flex alinhado com Telemetria 🟢 Sistemas Operacionais, chip de voz Francisca, alternância de Modo Demo e cápsula de perfil FR Fábio Rodrigues), eliminação total de contornos azuis na sidebar com destaque suave translúcido em verde (`#86D7A9`), badges de engenharia (`100% PASS`, `ARQUIVO EMBEDDED`, `4 CAMADAS`, `MODEL CONTEXT PROTOCOL`) com `white-space: nowrap !important` e padding adequado, aba Estudos com currículo avançado Staff/Sênior de Sistemas Distribuídos (18/20 módulos, 90%) no Modo Demo e Trilha Santander DIO real sob autenticação com PIN `7770`, modal de PIN blindado sem dica pública de senha, e motor de voz neural Edge-TTS 100% restaurado com streaming em memória e respostas contextuais instantâneas |
 | **Fase 8** | CI/CD GitHub Actions & Importador OFX | ✅ **100% Concluído** | `.github/workflows/ci.yml`, Parser OFX/CSV Nubank, Deduplicação H2 |
 | **Fase 9** | Inteligência Preditiva & Consultor Financeiro | ✅ **100% Concluído** | Burn Rate Diário, Projeção de Fechamento, Alertas de Risco, Tool MCP |
 
@@ -29,8 +29,8 @@
 
 | Serviço | Tecnologia | Porta | O que faz |
 |---|---|---|---|
-| **NOVA Control Center** | Python / HTML5 / Material 3 Expressive / Chart.js | `3000` (`nova.local:3000`) | Dashboard visual unificado (Bento Grid, Living Shader, Projeção Preditiva, Voice Orb, downloads 1-clique) |
-| **NOVA Voice Studio** | Python / `edge-tts` / `afplay` | `5050` | Catálogo e teste de vozes neurais PT-BR e globais (Google Store layout) |
+| **NOVA Control Center** | Python / HTML5 / Material 3 Expressive / Chart.js | `3000` (`nova.local:3000`) | SPA com 6 abas isoladas (Cockpit, Finanças H2, Candidaturas 360°, Estudos DIO, Voice Studio e Engenharia), Telemetria pulsante, Proteção PIN `7770`, Living Shader WebGL e downloads 1-clique |
+| **NOVA Voice Studio** | Python / `edge-tts` / `afplay` | `5050` | Catálogo e teste de vozes neurais PT-BR e globais com frase teste executiva |
 | **Agente Financeiro API** | Java 21 / Spring Boot 3 / H2 / Spring AI | `8081` | REST + ferramentas MCP + Caixinhas Nubank + Webhook + Importador OFX/CSV + Projeção Preditiva + endpoint de voz |
 
 > **🚀 Scripts de Automação, Nuvem & Compartilhamento:**
@@ -85,3 +85,4 @@
 5. **Postura Financeira Conservadora:** Organiza, prevê e dá clareza; nunca toma decisões arbitrárias pelo usuário.
 6. **Workspace Limpo:** Zero arquivos PNG residuais.
 7. **Padrão Ouro de Nomenclatura de Candidaturas:** `Curriculo_Fabio_Rodrigues_[Area_ou_Cargo].pdf` e `Cover_Letter_Fabio_Rodrigues.docx` / `.pdf` organizados em subpastas por empresa (`carreira/vagas_analisadas/[trilha]/[empresa]/`).
+8. **Proteção Rigorosa de Dados Reais por PIN (LGPD Safe):** O servidor web e dashboard operam 100% em Modo Demonstração por padrão. O desbloqueio de dados locais H2, saldos reais e candidaturas confidenciais exige autenticação via PIN de administrador (`ADMIN_PIN: 7770`) com token armazenado exclusivamente em sessão local (`sessionStorage`), autorização enviada via headers HTTP (`X-Admin-PIN` / `Authorization`) e botão rápido no header para bloqueio instantâneo a qualquer momento.

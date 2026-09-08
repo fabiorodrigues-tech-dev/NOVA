@@ -17,20 +17,43 @@ let currentAudioPlayer = null;
 let estadoAtualDashboard = 'normal';
 let novaLivingShaderEngine = null;
 
-// LGPD Safe: Por padrão, todo novo visitante público inicia SEMPRE em Modo Demonstração (LGPD Safe)
+const MENSAGEM_BOAS_VINDAS_RECRUITERS = "Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro.";
+
+// LGPD Safe: Por padrão, todo visitante público inicia SEMPRE em Modo Demonstração (LGPD Safe)
+function obterPinAutenticado() {
+  return sessionStorage.getItem('nova_admin_pin') || '';
+}
+
+function obterAuthHeaders() {
+  const pin = obterPinAutenticado();
+  const headers = {};
+  if (pin) {
+    headers['Authorization'] = `Bearer ${pin}`;
+    headers['X-Admin-PIN'] = pin;
+  }
+  return headers;
+}
+
 const salvoModoPrivacidade = localStorage.getItem('nova_privacy_mode');
-let modoPrivacidade = salvoModoPrivacidade === 'real' ? 'real' : 'demo';
+let modoPrivacidade = (salvoModoPrivacidade === 'real' && Boolean(obterPinAutenticado())) ? 'real' : 'demo';
 
 // Helper global para estado de demonstração (isDemoMode)
 function isDemoMode() {
   return modoPrivacidade === 'demo';
 }
 window.isDemoMode = isDemoMode;
+window.obterPinAutenticado = obterPinAutenticado;
 
 document.addEventListener('DOMContentLoaded', () => {
   inicializarTemaM3();
   inicializarModoPrivacidade();
   executarSplash3D();
+
+  // Garante a mensagem inicial oficial para Tech Recruiters
+  const welcomeMsg = document.getElementById('assistantWelcomeMsg');
+  if (welcomeMsg) {
+    welcomeMsg.textContent = MENSAGEM_BOAS_VINDAS_RECRUITERS;
+  }
 
   // Inicializa o Motor de Shader Vivo da NOVA IA Voice
   try {
@@ -52,63 +75,201 @@ document.addEventListener('DOMContentLoaded', () => {
   inicializarSpeechRecognition();
   carregarConfiguracaoVoz();
 
-  if (window.location.hash.includes('voice-studio') || new URLSearchParams(window.location.search).get('view') === 'voice-studio') {
-    navegarParaSecao('voice-studio');
+  const hash = (window.location.hash || '').toLowerCase();
+  const viewParam = new URLSearchParams(window.location.search).get('view');
+
+  if (hash.includes('voice-studio') || viewParam === 'voice-studio') {
+    alternarAbaDedicada('view-voice-studio', document.getElementById('menu-voice-studio'));
+  } else if (hash.includes('financas') || viewParam === 'financas') {
+    alternarAbaDedicada('view-financas', document.getElementById('menu-financas'));
+  } else if (hash.includes('candidaturas') || viewParam === 'candidaturas') {
+    alternarAbaDedicada('view-candidaturas', document.getElementById('menu-candidaturas'));
+  } else if (hash.includes('estudos') || viewParam === 'estudos') {
+    alternarAbaDedicada('view-estudos', document.getElementById('menu-estudos'));
+  } else if (hash.includes('engenharia') || viewParam === 'engenharia') {
+    alternarAbaDedicada('view-engenharia', document.getElementById('menu-engenharia'));
   }
 });
 
 /* ==========================================================================
-   PRIVACY & DEMO PRESENTATION MODE (LGPD & SCREEN RECORDING)
+   PRIVACY & DEMO PRESENTATION MODE (LGPD, PIN SECURITY & SCREEN RECORDING)
    ========================================================================== */
 
 function inicializarModoPrivacidade() {
   const urlParams = new URLSearchParams(window.location.search);
+  const pinAutenticado = Boolean(obterPinAutenticado());
+
   if (urlParams.get('demo') === 'true' || urlParams.get('mode') === 'demo') {
     modoPrivacidade = 'demo';
   } else if (urlParams.get('demo') === 'false' || urlParams.get('mode') === 'real') {
-    modoPrivacidade = 'real';
+    // Só entra em modo real se houver PIN autenticado na sessão
+    modoPrivacidade = pinAutenticado ? 'real' : 'demo';
   } else {
-    // Garantia LGPD: Se o valor for nulo (novo visitante público), o padrão é SEMPRE 'demo'
+    // Garantia LGPD: Se não houver PIN na sessão atual, o padrão é SEMPRE 'demo'
     const salvo = localStorage.getItem('nova_privacy_mode');
-    modoPrivacidade = salvo === 'real' ? 'real' : 'demo';
+    modoPrivacidade = (salvo === 'real' && pinAutenticado) ? 'real' : 'demo';
   }
   atualizarBotoesPrivacidade();
 }
 
-function alternarModoPrivacidade() {
-  modoPrivacidade = modoPrivacidade === 'real' ? 'demo' : 'real';
-  localStorage.setItem('nova_privacy_mode', modoPrivacidade);
-  document.cookie = `nova_privacy_mode=${modoPrivacidade}; path=/; max-age=31536000; SameSite=Lax`;
+function solicitarAlternanciaPrivacidade() {
+  if (modoPrivacidade === 'real') {
+    bloquearVoltarModoDemo();
+  } else {
+    const pin = obterPinAutenticado();
+    if (pin) {
+      modoPrivacidade = 'real';
+      localStorage.setItem('nova_privacy_mode', 'real');
+      document.cookie = `nova_privacy_mode=real; path=/; max-age=31536000; SameSite=Lax`;
+      atualizarBotoesPrivacidade();
+      carregarDashboard();
+      showToast("👁️ Modo Real Ativo: Dados Locais H2 Conectados");
+    } else {
+      abrirModalPin();
+    }
+  }
+}
+window.solicitarAlternanciaPrivacidade = solicitarAlternanciaPrivacidade;
+window.alternarModoPrivacidade = solicitarAlternanciaPrivacidade;
+
+function abrirModalPin() {
+  const modal = document.getElementById('pinSecurityModal') || document.getElementById('pin-modal');
+  const input = document.getElementById('adminPinInput');
+  const errBox = document.getElementById('pinErrorMessage');
+  
+  if (errBox) errBox.style.display = 'none';
+  if (input) {
+    input.value = '';
+    input.classList.remove('input-error');
+  }
+  if (modal) {
+    modal.classList.add('show');
+    setTimeout(() => { if (input) input.focus(); }, 120);
+  }
+}
+window.abrirModalPin = abrirModalPin;
+
+function fecharModalPin() {
+  const modal = document.getElementById('pinSecurityModal') || document.getElementById('pin-modal');
+  if (modal) modal.classList.remove('show');
+}
+window.fecharModalPin = fecharModalPin;
+
+function alternarVisibilidadePin() {
+  const input = document.getElementById('adminPinInput');
+  const icon = document.getElementById('pinVisibilityIcon');
+  if (input) {
+    const isPass = input.type === 'password';
+    input.type = isPass ? 'text' : 'password';
+    if (icon) icon.textContent = isPass ? 'visibility_off' : 'visibility';
+  }
+}
+window.alternarVisibilidadePin = alternarVisibilidadePin;
+
+async function submeterPinAutenticacao() {
+  const input = document.getElementById('adminPinInput');
+  const errBox = document.getElementById('pinErrorMessage');
+  const errText = document.getElementById('pinErrorText');
+  const btn = document.getElementById('btnConfirmPin');
+  const pin = input ? input.value.trim() : '';
+
+  if (!pin) {
+    if (errBox && errText) {
+      errText.textContent = "Por favor, digite o PIN de administrador.";
+      errBox.style.display = 'flex';
+    }
+    if (input) input.classList.add('input-error');
+    return;
+  }
+
+  if (btn) btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/auth/verify-pin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin })
+    });
+
+    const data = await res.json().catch(() => ({ authenticated: false }));
+
+    if (res.ok && data.authenticated) {
+      sessionStorage.setItem('nova_admin_pin', pin);
+      modoPrivacidade = 'real';
+      localStorage.setItem('nova_privacy_mode', 'real');
+      document.cookie = `nova_privacy_mode=real; path=/; max-age=31536000; SameSite=Lax`;
+
+      fecharModalPin();
+      atualizarBotoesPrivacidade();
+      await carregarDashboard();
+      showToast("🔓 Acesso Concedido: Dados Reais Conectados!");
+    } else {
+      if (input) {
+        input.classList.add('input-error');
+        input.select();
+      }
+      if (errBox && errText) {
+        errText.textContent = data.message || "PIN incorreto. Tente novamente.";
+        errBox.style.display = 'flex';
+      }
+      modoPrivacidade = 'demo';
+      atualizarBotoesPrivacidade();
+    }
+  } catch (err) {
+    console.error("Erro na validação do PIN:", err);
+    if (errBox && errText) {
+      errText.textContent = "Falha de conexão com o servidor ao validar PIN.";
+      errBox.style.display = 'flex';
+    }
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+window.submeterPinAutenticacao = submeterPinAutenticacao;
+
+function bloquearVoltarModoDemo() {
+  sessionStorage.removeItem('nova_admin_pin');
+  modoPrivacidade = 'demo';
+  localStorage.setItem('nova_privacy_mode', 'demo');
+  document.cookie = `nova_privacy_mode=demo; path=/; max-age=31536000; SameSite=Lax`;
   atualizarBotoesPrivacidade();
   carregarDashboard();
-  showToast(modoPrivacidade === 'demo' ? '🛡️ Modo Apresentação Ativo (Dados de Demonstração)' : '👁️ Modo Real Ativo (Dados Locais H2)');
+  showToast("🔒 Dados Reais Trancados: Modo Demonstração (LGPD Safe) ativo.");
 }
+window.bloquearVoltarModoDemo = bloquearVoltarModoDemo;
 
 function atualizarBotoesPrivacidade() {
   const btn = document.getElementById('btnPrivacyToggle');
   const icon = document.getElementById('privacyModeIcon');
   const label = document.getElementById('privacyModeLabel');
   const banner = document.getElementById('demoModeBanner');
+  const btnLock = document.getElementById('btnLockRealData');
 
-  const isDemo = modoPrivacidade === 'demo';
+  const isReal = modoPrivacidade === 'real' && Boolean(obterPinAutenticado());
 
   if (btn) {
-    if (isDemo) {
-      btn.classList.add('demo-active');
-    } else {
+    if (isReal) {
       btn.classList.remove('demo-active');
+      btn.classList.add('real-active');
+    } else {
+      btn.classList.add('demo-active');
+      btn.classList.remove('real-active');
     }
   }
   if (icon) {
-    icon.textContent = isDemo ? 'shield' : 'visibility';
+    icon.textContent = isReal ? 'lock_open' : 'shield';
   }
   if (label) {
-    label.textContent = isDemo ? 'Modo Demo (LGPD)' : 'Modo Real';
+    label.textContent = isReal ? 'Dados Reais Conectados' : 'Modo Demo (LGPD)';
   }
   if (banner) {
-    banner.style.display = isDemo ? 'flex' : 'none';
+    banner.style.display = isReal ? 'none' : 'flex';
+  }
+  if (btnLock) {
+    btnLock.style.display = isReal ? 'inline-flex' : 'none';
   }
 }
+window.atualizarBotoesPrivacidade = atualizarBotoesPrivacidade;
 
 /* ==========================================================================
    SPLASH SCREEN 3D (STORYBOARD ~2.2s COM SESSIONSTORAGE E A11Y)
@@ -206,19 +367,24 @@ function ocultarSplashScreen() {
 
 async function carregarDashboard() {
   try {
-    const isDemo = modoPrivacidade === 'demo';
-    const queryParam = isDemo ? '?demo=true' : '?demo=false';
-    const res = await fetch(`/api/status${queryParam}`, {
-      headers: {
-        'X-NOVA-Demo': isDemo ? 'true' : 'false'
-      }
-    });
+    const pin = obterPinAutenticado();
+    const isReal = modoPrivacidade === 'real' && Boolean(pin);
+    const queryParam = isReal ? '?demo=false' : '?demo=true';
+    
+    const headers = {
+      'X-NOVA-Demo': isReal ? 'false' : 'true',
+      ...obterAuthHeaders()
+    };
+
+    const res = await fetch(`/api/status${queryParam}`, { headers });
     if (!res.ok) throw new Error("Falha ao carregar API /api/status");
     const data = await res.json();
     dadosGlobais = data;
 
     if (data.demo_mode) {
       modoPrivacidade = 'demo';
+    } else if (data.authenticated) {
+      modoPrivacidade = 'real';
     }
     atualizarBotoesPrivacidade();
 
@@ -275,8 +441,278 @@ function renderizarDadosNormal(data) {
   renderizarGraficoTargetReality(data.financas);
   renderizarGraficoMatchCarreira(data.candidaturas);
   renderizarTabelaCandidaturas(data.candidaturas);
+  renderizarExtratoFinanceiro(isDemoMode());
+  renderizarAbaEstudos(isDemoMode(), data.estudos);
   if (window.lucide) lucide.createIcons();
 }
+
+function renderizarExtratoFinanceiro(isDemo) {
+  const tbody = document.getElementById('extratoTableBody');
+  if (!tbody) return;
+
+  const transacoesDemo = [
+    { data: '28/08/2026', desc: 'Tech Enterprise S/A - Honorários Consultoria', cat: 'Receita Dev', tipo: 'CRÉDITO', valor: 18500.00, isReceita: true },
+    { data: '25/08/2026', desc: 'AWS Cloud Services - Cloud Architecture', cat: 'Infra / DevOps', tipo: 'DÉBITO', valor: -3250.00, isReceita: false },
+    { data: '22/08/2026', desc: 'Apple Developer Program - Licença Anual', cat: 'Licenças Dev', tipo: 'DÉBITO', valor: -699.00, isReceita: false },
+    { data: '20/08/2026', desc: 'Aporte Automático - Caixinha Reserva CDI', cat: 'Investimentos', tipo: 'APLICAÇÃO', valor: -5000.00, isReceita: false },
+    { data: '18/08/2026', desc: 'Coworking Hub Recife - Espaço Executivo', cat: 'Operações', tipo: 'DÉBITO', valor: -1800.00, isReceita: false },
+    { data: '15/08/2026', desc: 'Certificação Spring Professional & AI Lab', cat: 'Educação / DIO', tipo: 'DÉBITO', valor: -1200.00, isReceita: false },
+    { data: '12/08/2026', desc: 'Transferência Pix Recebida - Mentoria Java', cat: 'Consultoria', tipo: 'CRÉDITO', valor: 2500.00, isReceita: true },
+    { data: '08/08/2026', desc: 'Supermercado Gourmet - Suprimentos Home Office', cat: 'Alimentação', tipo: 'DÉBITO', valor: -850.40, isReceita: false }
+  ];
+
+  const transacoesReais = [
+    { data: '28/08/2026', desc: 'Transferência Pix Recebida - Ramon', cat: 'Receita', tipo: 'CRÉDITO', valor: 1500.00, isReceita: true },
+    { data: '26/08/2026', desc: 'Supermercado Extra - Compras do Mês', cat: 'Alimentação', tipo: 'DÉBITO', valor: -245.60, isReceita: false },
+    { data: '24/08/2026', desc: 'Posto Shell - Combustível', cat: 'Transporte', tipo: 'DÉBITO', valor: -151.87, isReceita: false },
+    { data: '22/08/2026', desc: 'Transferência Pix Recebida - Gildeth', cat: 'Receita', tipo: 'CRÉDITO', valor: 500.00, isReceita: true },
+    { data: '20/08/2026', desc: 'Amazon Marketplace - Equipamento e Livros', cat: 'Compras', tipo: 'DÉBITO', valor: -318.52, isReceita: false },
+    { data: '18/08/2026', desc: 'Transferência Pix Recebida - Sheila', cat: 'Receita', tipo: 'CRÉDITO', valor: 299.00, isReceita: true },
+    { data: '15/08/2026', desc: 'Alimentação e Refeições Diversas', cat: 'Alimentação', tipo: 'DÉBITO', valor: -482.78, isReceita: false },
+    { data: '10/08/2026', desc: 'Transferência entre Contas', cat: 'Transferências', tipo: 'DÉBITO', valor: -511.00, isReceita: false }
+  ];
+
+  const lista = isDemo ? transacoesDemo : transacoesReais;
+  tbody.innerHTML = lista.map(t => `
+    <tr>
+      <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--nova-outline);">${t.data}</td>
+      <td style="font-weight: 600; color: var(--nova-on-surface);">${t.desc}</td>
+      <td><span class="md3-badge" style="font-size: 11px;">${t.cat}</span></td>
+      <td><span class="md3-badge ${t.isReceita ? 'md3-badge--success' : ''}" style="font-size: 11px;">${t.tipo}</span></td>
+      <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; padding-right: 24px; color: ${t.isReceita ? 'var(--nova-secondary)' : 'var(--nova-on-surface)'};">
+        ${t.isReceita ? '+ ' : '- '}R$ ${Math.abs(t.valor).toFixed(2).replace('.', ',')}
+      </td>
+    </tr>
+  `).join('');
+
+  const pill = document.getElementById('extratoCounterPill');
+  if (pill) {
+    pill.textContent = `${lista.length} Lançamentos Conciliados`;
+  }
+}
+window.renderizarExtratoFinanceiro = renderizarExtratoFinanceiro;
+
+/* ==========================================================================
+   RENDERIZAÇÃO DA ABA ESTUDOS (MODO DEMO AVANÇADO SÊNIOR vs MODO REAL DIO)
+   ========================================================================== */
+function renderizarAbaEstudos(isDemo, dadosEstudos) {
+  const headerTitle = document.getElementById('estudosHeaderTitle');
+  const headerSub = document.getElementById('estudosHeaderSub');
+  const widgetTitle = document.getElementById('estudosWidgetTitle');
+  const widgetSub = document.getElementById('estudosWidgetSub');
+  const barLabel = document.getElementById('estudosBarLabel');
+  const progressNum = document.getElementById('estudosProgressNum');
+  const progressBar = document.getElementById('estudosProgressBar');
+  const modAtual = document.getElementById('estudosModAtual');
+  const testesVal = document.getElementById('estudosTestesVal');
+  const persistVal = document.getElementById('estudosPersistVal');
+  const mcpVal = document.getElementById('estudosMcpVal');
+  const modulesGrid = document.getElementById('estudosModulesGrid');
+
+  if (isDemo) {
+    if (headerTitle) headerTitle.textContent = "Engenharia de Sistemas Distribuídos & Arquitetura Cloud Native";
+    if (headerSub) headerSub.textContent = "Especialização em Alta Concorrência, Event-Driven & Model Context Protocol";
+    if (widgetTitle) widgetTitle.textContent = "Engenharia de Sistemas Distribuídos & Arquitetura Cloud Native";
+    if (widgetSub) widgetSub.textContent = "Especialização em Alta Concorrência, Event-Driven & Model Context Protocol";
+    if (barLabel) barLabel.textContent = "Progresso da Especialização";
+    if (progressNum) progressNum.textContent = "18 de 20 Módulos (90% Concluído) • Nível Staff / Sênior";
+    if (progressBar) progressBar.style.width = "90%";
+    if (modAtual) modAtual.textContent = "Virtual Threads (Loom) & Kafka";
+    if (testesVal) testesVal.textContent = "40/40 Passando (100%)";
+    if (persistVal) persistVal.textContent = "H2 ACID / Kafka Event Store";
+    if (mcpVal) mcpVal.textContent = "Spring AI Model Context Protocol";
+
+    if (modulesGrid) {
+      modulesGrid.innerHTML = `
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 01</span>
+            <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+          </div>
+          <h4 class="module-card-title">Microsserviços Reativos (Kafka)</h4>
+          <p class="module-card-desc">Arquitetura event-driven resiliente, brokers distribuídos, idempotência e particionamento de mensagens.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Producer/Consumer com Spring Kafka & Idempotência</li>
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Schema Registry Avro & Governança de Eventos</li>
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Resiliência com Dead Letter Queues (DLQ)</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 02</span>
+            <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+          </div>
+          <h4 class="module-card-title">Virtual Threads (Project Loom)</h4>
+          <p class="module-card-desc">Concorrência massiva sobre Java 21 gerenciando milhões de tarefas leves com baixa pegada de memória e IO não-bloqueante.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Structured Concurrency & Scoped Values no Java 21</li>
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Carrier Threads vs OS Threads sem Pinning de Socket</li>
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Migração de Thread Pools tradicionais para Virtual Executors</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 03</span>
+            <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+          </div>
+          <h4 class="module-card-title">Clean Architecture & DDD</h4>
+          <p class="module-card-desc">Segregação estrita em camadas de Domínio, Aplicação e Infraestrutura, com casos de uso desacoplados de frameworks.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Entidades Ricas, Value Objects e Agregados</li>
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Portas de Entrada e Saída (Arquitetura Hexagonal)</li>
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Inversão de Dependências (DIP) & SOLID Estrito</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card" style="border-color: var(--nova-primary);">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 04</span>
+            <span class="md3-badge md3-badge--warning card-badge metric-pill">EM ANDAMENTO</span>
+          </div>
+          <h4 class="module-card-title">Resiliência Distribuída (Saga Pattern)</h4>
+          <p class="module-card-desc">Transações distribuídas consistentes, coreografia vs orquestração de Sagas e compensação automática de falhas.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Saga Orchestrator com Spring Boot & Kafka</li>
+            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Transações Compensatórias e Idempotentes</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Outbox Pattern & CDC com Debezium</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 05</span>
+            <span class="md3-badge md3-badge--warning card-badge metric-pill">EM ANDAMENTO</span>
+          </div>
+          <h4 class="module-card-title">Segurança Zero Trust & Protocolo MCP</h4>
+          <p class="module-card-desc">Defesa em profundidade, autenticação contínua e governança de contexto com Spring AI e Model Context Protocol.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Mutual TLS (mTLS) e Tokens JWT Criptografados</li>
+            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Servidor de Ferramentas Spring AI MCP (@Tool)</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Políticas de Contexto Seguro e Sandboxing para LLMs</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 06</span>
+            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
+          </div>
+          <h4 class="module-card-title">Observabilidade & Métricas em Escala</h4>
+          <p class="module-card-desc">Tracing distribuído com OpenTelemetry, dashboards Grafana e telemetria preditiva de anomalias em produção.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> OpenTelemetry Tracing & Micrometer</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Prometheus & Grafana Health Dashboards</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Detecção Preditiva de Degradação de Latência</li>
+          </ul>
+        </div>
+      `;
+    }
+  } else {
+    // Modo Real (PIN 7770): Trilha Santander DIO
+    if (headerTitle) headerTitle.textContent = "Trilha Santander 2026 & Mentoria Técnica Back-end";
+    if (headerSub) headerSub.textContent = "Bootcamp Santander 2026 - AI Java Back-end (DIO) • Clean Architecture • Metodologias Ativas";
+    if (widgetTitle) widgetTitle.textContent = "Trilha Santander 2026 & Engenharia Back-end";
+    if (widgetSub) widgetSub.textContent = "DIO AI Java Back-end • Clean Architecture • Spring AI MCP";
+    if (barLabel) barLabel.textContent = "Progresso da Trilha Santander";
+    if (progressNum) progressNum.textContent = "2 de 26 Módulos (7.7%)";
+    if (progressBar) progressBar.style.width = "7.7%";
+    if (modAtual) modAtual.textContent = "Dominando Java 21";
+    if (testesVal) testesVal.textContent = "40/40 Passando (100%)";
+    if (persistVal) persistVal.textContent = "H2 ACID em Arquivo";
+    if (mcpVal) mcpVal.textContent = "Spring AI Model Context";
+
+    if (modulesGrid) {
+      modulesGrid.innerHTML = `
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 01</span>
+            <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+          </div>
+          <h4 class="module-card-title">Fundamentos de Java 21 & POO</h4>
+          <p class="module-card-desc">Sintaxe moderna, orientação a objetos profunda, tipos primitivos, wrappers e boas práticas.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Classes, Objetos e Encapsulamento</li>
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Herança, Polimorfismo e Interfaces</li>
+            <li><span class="material-symbols-rounded text-green">check_circle</span> Tratamento de Exceções & Collections API</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card" style="border-color: var(--nova-primary);">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 02</span>
+            <span class="md3-badge md3-badge--warning card-badge metric-pill">EM ANDAMENTO</span>
+          </div>
+          <h4 class="module-card-title">Dominando Java 21 & Features Modernas</h4>
+          <p class="module-card-desc">Records imutáveis, Pattern Matching avançado, Sealed Classes, Sequenced Collections e Virtual Threads.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Records & Imutabilidade de Domínio</li>
+            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Pattern Matching for switch</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Virtual Threads (Project Loom)</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 03</span>
+            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
+          </div>
+          <h4 class="module-card-title">Ecossistema Spring Boot 3.3</h4>
+          <p class="module-card-desc">Construção de APIs RESTful robustas, Spring Data JPA, H2 Database e validação Bean Validation.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring Web & Controladores REST</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring Data JPA & Transações ACID</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Tratamento Centralizado de Erros</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 04</span>
+            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
+          </div>
+          <h4 class="module-card-title">Clean Architecture & SOLID</h4>
+          <p class="module-card-desc">Segregação estrita em camadas de Domínio, Aplicação, Infraestrutura e Apresentação sem acoplamento.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Princípios SOLID na Prática</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Use Cases Independentes de Framework</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Inversão de Dependências (DIP)</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 05</span>
+            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
+          </div>
+          <h4 class="module-card-title">Spring AI & Model Context Protocol</h4>
+          <p class="module-card-desc">Integração do ecossistema Java com LLMs (Gemini), servidor de ferramentas MCP e engenharia de contexto.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring AI MCP Server</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Tool Calling & Function Execution</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Pipelines Autônomos de IA</li>
+          </ul>
+        </div>
+
+        <div class="estudo-module-card">
+          <div class="module-card-top">
+            <span class="module-number-badge">MÓDULO 06</span>
+            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
+          </div>
+          <h4 class="module-card-title">Testes Automatizados com JUnit 5</h4>
+          <p class="module-card-desc">Estratégias completas de TDD, mocks com Mockito, testes de integração de Use Cases e validação de regressão.</p>
+          <ul class="module-topics-list">
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Testes Unitários de Regras de Negócio</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Mocking de Portas e Repositórios</li>
+            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Cobertura de Código & AssertJ</li>
+          </ul>
+        </div>
+      `;
+    }
+  }
+}
+window.renderizarAbaEstudos = renderizarAbaEstudos;
 
 function renderizarCaixinhas(caixinhasData) {
   if (!caixinhasData) return;
@@ -1054,9 +1490,11 @@ function renderizarTopKPIs(fin, estudos) {
   }
 
   if (estudos) {
-    animarContagem('kpiDio', estudos.progresso_percentual, '', '% Concluído', 850, 1);
+    const isDemo = isDemoMode();
+    const percentual = isDemo ? 90.0 : (estudos.progresso_percentual || 7.7);
+    animarContagem('kpiDio', percentual, '', '% Concluído', 850, 1);
     const bar = document.getElementById('kpiDioBar');
-    if (bar) bar.style.width = `${estudos.progresso_percentual}%`;
+    if (bar) bar.style.width = `${percentual}%`;
   }
 }
 
@@ -1302,6 +1740,15 @@ function renderizarTabelaCandidaturas(jobs) {
 
   tbody.innerHTML = '';
 
+  const counterPill = document.getElementById('tableCounterPill');
+  if (counterPill) {
+    counterPill.textContent = `${jobs.length} ${jobs.length === 1 ? 'Empresa Ativa' : 'Empresas Ativas'}`;
+  }
+  const sideCounter = document.getElementById('sidebarJobCounter');
+  if (sideCounter && (!window.filtroTrilhaAtual || window.filtroTrilhaAtual === 'todas')) {
+    sideCounter.textContent = jobs.length;
+  }
+
   jobs.forEach((job, idx) => {
     const tr = document.createElement('tr');
 
@@ -1329,7 +1776,7 @@ function renderizarTabelaCandidaturas(jobs) {
           <span class="match-pct-badge ${badgeClass}">${job.match}%</span>
         </div>
       </td>
-      <td>
+      <td class="col-faixa-salarial">
         <span class="table-salary-tag">${job.salario_min} - ${job.salario_max}</span>
       </td>
       <td>
@@ -1402,18 +1849,132 @@ function showToast(msg) {
   setTimeout(() => toast.classList.remove('show'), 3500);
 }
 
+let filtroTrilhaAtual = 'todas';
+window.filtroTrilhaAtual = filtroTrilhaAtual;
+
+function filtrarTrilhaCandidaturas(trilha, btnElem) {
+  filtroTrilhaAtual = trilha;
+  window.filtroTrilhaAtual = trilha;
+
+  // Atualiza botões
+  document.querySelectorAll('.btn-filter-trilha').forEach(btn => btn.classList.remove('active'));
+  if (btnElem) {
+    btnElem.classList.add('active');
+  }
+
+  const todasVagas = (dadosGlobais && dadosGlobais.candidaturas) ? dadosGlobais.candidaturas : [];
+  if (trilha === 'todas') {
+    renderizarTabelaCandidaturas(todasVagas);
+    return;
+  }
+
+  const filtradas = todasVagas.filter(job => {
+    const texto = `${job.nome} ${job.cargo} ${(job.stack || []).join(' ')} ${job.cv_pdf || ''} ${job.local || ''}`.toLowerCase();
+    if (trilha === 'tech') {
+      return texto.includes('java') || texto.includes('backend') || texto.includes('dev') || texto.includes('architect') || texto.includes('tech') || texto.includes('engineer');
+    }
+    if (trilha === 'mkt') {
+      return texto.includes('marketing') || texto.includes('mkt') || texto.includes('audiovisual') || texto.includes('filmmaker') || texto.includes('design') || texto.includes('campaign') || texto.includes('growth');
+    }
+    if (trilha === 'suporte') {
+      return texto.includes('suporte') || texto.includes('support') || texto.includes('operaç') || texto.includes('operac') || texto.includes('onboarding') || texto.includes('cx');
+    }
+    return true;
+  });
+
+  renderizarTabelaCandidaturas(filtradas);
+  showToast(`Filtro aplicado: ${trilha.toUpperCase()} (${filtradas.length} vagas)`);
+}
+window.filtrarTrilhaCandidaturas = filtrarTrilhaCandidaturas;
+
+function alternarAbaDedicada(abaId, linkElem) {
+  // 1. Esconde todos os painéis com a classe .view-panel ou .view-section
+  document.querySelectorAll('.view-panel, .view-section').forEach(p => {
+    p.classList.remove('active', 'active-view');
+    p.style.display = 'none';
+  });
+
+  // 2. Localiza e exibe o painel alvo
+  let targetView = document.getElementById(abaId);
+  if (!targetView && abaId === 'view-voice-studio') {
+    targetView = document.getElementById('voice-studio-view');
+  }
+  if (!targetView && abaId === 'view-dashboard') {
+    targetView = document.getElementById('dashboard-view');
+  }
+
+  if (targetView) {
+    targetView.style.display = 'flex';
+    targetView.classList.add('active', 'active-view');
+  }
+
+  // 3. Atualiza destaque ativo na sidebar sem saltos
+  const mapaMenus = {
+    'view-dashboard': 'menu-overview',
+    'view-financas': 'menu-financas',
+    'view-candidaturas': 'menu-candidaturas',
+    'view-estudos': 'menu-estudos',
+    'view-voice-studio': 'menu-voice-studio',
+    'view-engenharia': 'menu-engenharia'
+  };
+
+  document.querySelectorAll('.dabang-sidebar .menu-link').forEach(l => l.classList.remove('active'));
+  if (linkElem) {
+    linkElem.classList.add('active');
+  } else {
+    const menuId = mapaMenus[abaId];
+    if (menuId) {
+      const el = document.getElementById(menuId);
+      if (el) el.classList.add('active');
+    }
+  }
+
+  // 4. Sem saltos de tela e sem recarregar a página
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // 5. Redimensiona gráficos quando as abas se tornam visíveis
+  if (abaId === 'view-financas') {
+    requestAnimationFrame(() => {
+      if (chartEvolucao) chartEvolucao.resize();
+      if (chartCategorias) chartCategorias.resize();
+      if (chartTargetReality) chartTargetReality.resize();
+    });
+  } else if (abaId === 'view-candidaturas') {
+    requestAnimationFrame(() => {
+      if (chartMatch) chartMatch.resize();
+    });
+  } else if (abaId === 'view-voice-studio') {
+    carregarVoiceStudio();
+  }
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+}
+window.alternarAbaDedicada = alternarAbaDedicada;
+
 function configurarBuscaGlobal() {
   const searchInput = document.getElementById('globalSearchInput');
+  if (!searchInput) return;
+
   searchInput.addEventListener('keyup', (e) => {
     const termo = e.target.value.toLowerCase().trim();
     if (!termo) {
-      renderizarTabelaCandidaturas(dadosGlobais.candidaturas);
+      renderizarTabelaCandidaturas(dadosGlobais ? dadosGlobais.candidaturas : []);
       return;
     }
-    const filtrados = (dadosGlobais.candidaturas || []).filter(j => 
+
+    // Se o usuário está em outra aba, alterna suavemente para a aba de candidaturas
+    const candView = document.getElementById('view-candidaturas');
+    if (candView && candView.style.display === 'none') {
+      alternarAbaDedicada('view-candidaturas', document.getElementById('menu-candidaturas'));
+    }
+
+    const filtrados = (dadosGlobais && dadosGlobais.candidaturas ? dadosGlobais.candidaturas : []).filter(j => 
       j.nome.toLowerCase().includes(termo) || 
       j.cargo.toLowerCase().includes(termo) ||
-      j.local.toLowerCase().includes(termo)
+      j.local.toLowerCase().includes(termo) ||
+      (j.stack || []).some(s => s.toLowerCase().includes(termo))
     );
     renderizarTabelaCandidaturas(filtrados);
   });
@@ -1433,37 +1994,27 @@ let configVozStudioCache = null;
 let vsAudioPlayerInstance = null;
 
 function navegarParaSecao(secaoId, scrollTargetId) {
-  const dashboardView = document.getElementById('dashboard-view');
-  const voiceStudioView = document.getElementById('voice-studio-view');
-
   if (secaoId === 'voice-studio') {
-    if (dashboardView) dashboardView.style.display = 'none';
-    if (voiceStudioView) voiceStudioView.style.display = 'flex';
-    carregarVoiceStudio();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else {
-    if (voiceStudioView) voiceStudioView.style.display = 'none';
-    if (dashboardView) dashboardView.style.display = 'flex';
-
-    if (secaoId === 'assistant') {
-      const vaElem = document.getElementById('voice-assistant-section');
-      if (vaElem) {
-        vaElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    } else if (scrollTargetId) {
-      const targetElem = document.getElementById(scrollTargetId);
-      if (targetElem) {
-        targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    alternarAbaDedicada('view-voice-studio', document.getElementById('menu-voice-studio'));
+  } else if (secaoId === 'assistant') {
+    alternarAbaDedicada('view-dashboard', document.getElementById('menu-overview'));
+    const vaElem = document.getElementById('voice-assistant-section');
+    if (vaElem) {
+      vaElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }
-
-  if (window.lucide) {
-    lucide.createIcons();
+  } else if (scrollTargetId === 'financas' || secaoId === 'financas') {
+    alternarAbaDedicada('view-financas', document.getElementById('menu-financas'));
+  } else if (scrollTargetId === 'candidaturas' || secaoId === 'candidaturas') {
+    alternarAbaDedicada('view-candidaturas', document.getElementById('menu-candidaturas'));
+  } else if (scrollTargetId === 'estudos' || secaoId === 'estudos') {
+    alternarAbaDedicada('view-estudos', document.getElementById('menu-estudos'));
+  } else if (scrollTargetId === 'engenharia' || secaoId === 'engenharia') {
+    alternarAbaDedicada('view-engenharia', document.getElementById('menu-engenharia'));
+  } else {
+    alternarAbaDedicada('view-dashboard', document.getElementById('menu-overview'));
   }
 }
+window.navegarParaSecao = navegarParaSecao;
 
 async function carregarVoiceStudio() {
   try {
@@ -1678,7 +2229,7 @@ async function testarVozAtivaStudio() {
 async function ouvirVozStudio(vozId, isTestingActive = false) {
   const customText = document.getElementById('vsTextInput') ? document.getElementById('vsTextInput').value.trim() : '';
   const vozObj = (catalogoVozesCache || []).find(v => v.id === vozId);
-  const texto = customText || (vozObj ? vozObj.frase_demo : "Teste de voz do NOVA.");
+  const texto = customText || (vozObj ? vozObj.frase_demo : MENSAGEM_BOAS_VINDAS_RECRUITERS);
   const taxa = (configVozStudioCache && configVozStudioCache.velocidade) ? configVozStudioCache.velocidade : "+0%";
 
   const playBtn = isTestingActive ? document.getElementById('btnVsTestActive') : document.getElementById(`btn-vs-play-${vozId}`);
@@ -1693,23 +2244,45 @@ async function ouvirVozStudio(vozId, isTestingActive = false) {
       body: JSON.stringify({ texto, voz: vozId, taxa })
     });
 
-    if (!res.ok) throw new Error("Erro na síntese via proxy /voice-studio/api/synthesize");
+    if (res.ok) {
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      
+      if (!vsAudioPlayerInstance) {
+        vsAudioPlayerInstance = document.getElementById('vsAudioPlayer') || new Audio();
+      }
+      vsAudioPlayerInstance.src = url;
+      conectarOrbAoAudio(vsAudioPlayerInstance);
+      await vsAudioPlayerInstance.play();
 
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    
-    if (!vsAudioPlayerInstance) {
-      vsAudioPlayerInstance = document.getElementById('vsAudioPlayer') || new Audio();
+      vsAudioPlayerInstance.onended = () => {
+        if (playBtn) playBtn.classList.remove(isTestingActive ? 'loading' : 'playing');
+      };
+      return;
     }
-    vsAudioPlayerInstance.src = url;
-    conectarOrbAoAudio(vsAudioPlayerInstance);
-    await vsAudioPlayerInstance.play();
 
-    vsAudioPlayerInstance.onended = () => {
-      if (playBtn) playBtn.classList.remove(isTestingActive ? 'loading' : 'playing');
-    };
+    // Fallback para /api/voice/interact se a rota retornar erro
+    const fallbackRes = await fetch('/api/voice/interact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ comando: texto, voz: vozId })
+    });
+    const fallbackData = await fallbackRes.json();
+    if (fallbackData && fallbackData.audio_base64) {
+      if (!vsAudioPlayerInstance) {
+        vsAudioPlayerInstance = document.getElementById('vsAudioPlayer') || new Audio();
+      }
+      vsAudioPlayerInstance.src = "data:audio/mp3;base64," + fallbackData.audio_base64;
+      conectarOrbAoAudio(vsAudioPlayerInstance);
+      await vsAudioPlayerInstance.play();
+      vsAudioPlayerInstance.onended = () => {
+        if (playBtn) playBtn.classList.remove(isTestingActive ? 'loading' : 'playing');
+      };
+    } else {
+      throw new Error("Áudio não retornado");
+    }
   } catch (err) {
-    console.error(err);
+    console.error("Erro ao sintetizar áudio:", err);
     if (playBtn) playBtn.classList.remove(isTestingActive ? 'loading' : 'playing');
     showToast("⚠️ Falha ao sintetizar áudio no Voice Studio.");
   }

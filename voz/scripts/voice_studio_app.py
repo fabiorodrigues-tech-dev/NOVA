@@ -593,7 +593,7 @@ HTML_PAGE = """<!DOCTYPE html>
       <div class="controls-grid">
         <div class="input-group">
           <label for="customTextInput">💬 Frase Customizada para Teste</label>
-          <input type="text" id="customTextInput" class="custom-input" placeholder="Digite qualquer texto para o NOVA falar em tempo real..." value="Olá, Fábio! Todos os módulos do ecossistema NOVA estão operando com 100% de estabilidade.">
+          <input type="text" id="customTextInput" class="custom-input" placeholder="Digite qualquer texto para o NOVA falar em tempo real..." value="Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro.">
         </div>
 
         <div class="speed-control">

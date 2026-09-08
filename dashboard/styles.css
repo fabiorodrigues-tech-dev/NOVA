@@ -299,6 +299,67 @@ body[data-theme="light"] {
   transition: background-color 250ms var(--ease-standard), color 250ms var(--ease-standard), border-color 250ms var(--ease-standard), box-shadow 250ms var(--ease-standard);
 }
 
+/* ==========================================================================
+   ELIMINAÇÃO DE BORDAS AZUIS DE FOCO & APPLE STANDARD FOCUS-VISIBLE
+   ========================================================================== */
+button,
+a,
+input,
+select,
+textarea,
+.md3-button,
+.md3-chip,
+.menu-link,
+.md3-nav-item,
+.btn-tbl-action,
+.btn-privacy-toggle,
+.btn-lock-data,
+[tabindex] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+button:active,
+a:focus,
+a:active,
+input:focus,
+input:active,
+select:focus,
+select:active,
+textarea:focus,
+textarea:active,
+.md3-button:focus,
+.md3-button:active,
+.md3-chip:focus,
+.md3-chip:active,
+.menu-link:focus,
+.menu-link:active,
+.md3-nav-item:focus,
+.md3-nav-item:active,
+.btn-tbl-action:focus,
+.btn-tbl-action:active,
+.btn-privacy-toggle:focus,
+.btn-privacy-toggle:active,
+.btn-lock-data:focus,
+.btn-lock-data:active {
+  outline: none !important;
+}
+
+/* Apple Standard focus-visible: Brilho translúcido suave (Apenas botões e inputs) */
+button:focus-visible,
+a.btn-tbl-action:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.md3-button:focus-visible,
+.md3-chip:focus-visible,
+.btn-privacy-toggle:focus-visible,
+.btn-lock-data:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(169, 199, 255, 0.25) !important;
+  transition: box-shadow 0.2s cubic-bezier(0.2, 0.0, 0, 1.0);
+}
+
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-app);
@@ -675,7 +736,10 @@ svg.lucide {
    1. SIDEBAR
    -------------------------------------------------------------------------- */
 .dabang-sidebar {
-  width: 250px;
+  width: 260px;
+  min-width: 260px;
+  max-width: 260px;
+  box-sizing: border-box;
   background: var(--bg-sidebar);
   border-right: 1px solid var(--border-subtle);
   display: flex;
@@ -764,10 +828,37 @@ svg.lucide {
   transform: translateX(2px);
 }
 
-.menu-link.active {
-  background: var(--nova-primary-container);
-  color: var(--nova-on-primary-container);
-  border: 1px solid var(--nova-primary);
+.nav-item,
+.nav-item.active,
+.nav-item:focus,
+.nav-item:active,
+.nav-item:focus-visible,
+.menu-link,
+.menu-link.active,
+.menu-link:focus,
+.menu-link:active,
+.menu-link:focus-visible,
+.md3-nav-item,
+.md3-nav-item.active,
+.md3-nav-item:focus,
+.md3-nav-item:active,
+.md3-nav-item:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.sidebar-menu .menu-link.active,
+.sidebar-menu .nav-item.active,
+.sidebar-menu .md3-nav-item.active,
+.nav-item.active,
+.menu-link.active,
+.md3-nav-item.active {
+  background: rgba(134, 215, 169, 0.12) !important;
+  color: #86D7A9 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .menu-icon {
@@ -873,38 +964,58 @@ svg.lucide {
 /* --------------------------------------------------------------------------
    2. MAIN CONTAINER & TOP HEADER
    -------------------------------------------------------------------------- */
-.dabang-main {
-  margin-left: 250px;
-  flex: 1;
+.dabang-main,
+.main-content {
   display: flex;
   flex-direction: column;
+  width: calc(100% - 260px);
+  margin-left: 260px;
+  padding: 24px;
+  gap: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
   min-height: 100vh;
 }
 
+.top-header,
 .dabang-top-header {
-  height: 74px;
-  background: var(--bg-header);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 0 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 90;
+  width: 100% !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  max-height: 64px !important;
+  background: var(--bg-header) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 0 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  flex-wrap: nowrap !important;
+  box-sizing: border-box !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 90 !important;
+  overflow: hidden !important;
 }
 
+.search-bar,
 .header-search-wrap {
-  background: var(--nova-surface-variant);
-  border: 1px solid var(--nova-outline-variant);
-  border-radius: var(--radius-md);
-  padding: 9px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 340px;
+  background: var(--nova-surface-variant) !important;
+  border: 1px solid var(--nova-outline-variant) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 0 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  height: 40px !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
 }
 
 .search-lens {
@@ -935,9 +1046,32 @@ svg.lucide {
 }
 
 .header-user-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: nowrap !important;
+  flex-shrink: 0 !important;
+  height: 100% !important;
+}
+
+.header-telemetry-badge,
+.header-voice-chip,
+.btn-privacy-toggle,
+.btn-lock-data,
+.btn-theme-toggle,
+.btn-icon-refresh,
+.user-profile-badge {
+  height: 38px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.header-telemetry-badge .telemetry-details-txt,
+.header-telemetry-badge .telemetry-sep {
+  display: none !important;
 }
 
 .header-voice-chip {
@@ -1053,44 +1187,78 @@ svg.lucide {
    3. CONTENT BODY & HERO VOICE ASSISTANT CARD (ANATOMIA M3)
    -------------------------------------------------------------------------- */
 .dabang-content-body {
-  padding: var(--nova-space-4) var(--nova-space-5) var(--nova-space-6);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--nova-space-5); /* 48px entre seções principais */
+  gap: 20px;
+  box-sizing: border-box;
+  padding: 0;
 }
 
-.view-panel {
+/* Container de abas estrutural */
+.views-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--nova-space-5); /* 48px entre blocos da view */
+  gap: 20px;
+  box-sizing: border-box;
 }
-/* NOVA Voice Assistant Hero Card (Forma Orgânica M3 Expressive) */
+
+/* Cada aba dedicada */
+.view-section,
+.view-panel {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+/* Quando ativa: display flex !important e width 100% */
+.view-section.active,
+.view-section.active-view,
+.view-panel.active,
+.view-panel.active-view {
+  display: flex !important;
+  width: 100%;
+}
+
+/* Card do Voice Assistant (.voice-card / .voice-assistant-hero-card) */
+.voice-card,
 .voice-assistant-hero-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  box-sizing: border-box;
   background: var(--nova-surface);
   border: 1px solid var(--nova-outline-variant);
   border-radius: var(--radius-hero); /* 32px 32px 32px 14px */
-  padding: var(--nova-space-4); /* 32px */
+  padding: 24px;
   box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-  gap: var(--nova-space-3);
   position: relative;
   overflow: hidden;
   transition: var(--transition-spring), border-color 0.25s var(--ease-standard);
 }
 
+.voice-card:hover,
 .voice-assistant-hero-card:hover {
   transform: translateY(-4px) scale(1.012);
   box-shadow: var(--shadow-hover);
   border-color: var(--nova-primary);
 }
 
+.voice-card > .va-header-row,
+.voice-assistant-hero-card > .va-header-row,
 .va-header-row {
+  grid-column: 1 / -1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--nova-outline-variant);
   padding-bottom: var(--nova-space-2);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .va-brand-title {
@@ -1197,14 +1365,21 @@ svg.lucide {
   color: var(--nova-on-surface);
 }
 
+.voice-card > .va-main-grid,
+.voice-assistant-hero-card > .va-main-grid,
 .va-main-grid {
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 28px;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 950px) {
+  .voice-card,
+  .voice-assistant-hero-card,
   .va-main-grid {
     grid-template-columns: 1fr;
   }
@@ -1604,19 +1779,29 @@ svg.lucide {
 /* --------------------------------------------------------------------------
    4. TOP 4 SUMMARY CARDS (M3 EXPRESSIVE: FUNDO NEUTRO + CHIP ASSIMÉTRICO + TIPOGRAFIA DRAMÁTICA)
    -------------------------------------------------------------------------- */
+.kpi-grid,
+.stats-grid,
 .summary-cards-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--nova-space-3); /* 24px */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
+  .kpi-grid,
+  .stats-grid,
   .summary-cards-row {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.summary-card {
+.kpi-grid .summary-card,
+.kpi-grid .kpi-card,
+.stats-grid .summary-card,
+.stats-grid .kpi-card,
+.summary-cards-row .summary-card {
   background: var(--nova-surface); /* Fundo sempre neutro M3 */
   border: 1px solid var(--nova-outline-variant);
   border-radius: var(--radius-lg); /* 24px */
@@ -1627,7 +1812,8 @@ svg.lucide {
   box-shadow: var(--shadow-card);
   transition: var(--transition-spring), border-color 0.25s var(--ease-standard);
   position: relative;
-  min-width: 0;
+  min-width: 200px;
+  box-sizing: border-box;
 }
 
 .summary-card:hover {
@@ -1733,14 +1919,17 @@ svg.lucide {
 }
 
 /* Tipografia de Alto Impacto Dramático M3 Expressive (Fluida com clamp) */
-.card-big-num {
-  font-size: clamp(22px, 2.3vw, 34px);
-  font-weight: 700;
+.card-big-num,
+.kpi-val {
+  font-size: clamp(20px, 2.1vw, 32px);
+  font-weight: 800;
   line-height: 1.15;
   color: var(--nova-on-surface);
   letter-spacing: -0.5px;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  white-space: nowrap;
+  white-space: nowrap !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 1360px) {
@@ -1987,15 +2176,31 @@ svg.lucide {
 .match-pct-badge.mid { color: var(--nova-primary); }
 .match-pct-badge.eval { color: var(--nova-tertiary); }
 
-.table-salary-tag {
+.table-salary-tag,
+.badge-salario,
+.salary-pill {
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: max-content !important;
+  padding: 5px 12px !important;
+  border-radius: var(--radius-full);
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
+  font-size: 11.5px;
   color: var(--nova-on-secondary-container);
   background: var(--nova-secondary-container);
   border: 1px solid var(--nova-secondary);
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+.dabang-table th.col-faixa-salarial,
+.dabang-table td.col-faixa-salarial,
+.dabang-table th:nth-child(5),
+.dabang-table td:nth-child(5) {
+  min-width: 180px !important;
+  white-space: nowrap !important;
 }
 
 .action-buttons-flex {
@@ -2352,6 +2557,7 @@ svg.lucide {
    NOVA VOICE STUDIO PRO — GOOGLE STORE & MATERIAL 3 DESIGN KIT
    ========================================================================== */
 
+#view-voice-studio,
 #voice-studio-view {
   display: flex;
   flex-direction: column;
@@ -4360,13 +4566,16 @@ svg.lucide {
   50% { transform: scale(1.15); opacity: 0.85; }
 }
 
+.lgpd-banner,
 .demo-presentation-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
   gap: 16px;
-  padding: 12px 20px;
-  margin-bottom: 24px;
+  padding: 14px 24px;
+  margin-bottom: 0 !important;
   border-radius: var(--radius-lg);
   background: linear-gradient(135deg, rgba(184, 134, 11, 0.15) 0%, rgba(91, 138, 114, 0.12) 100%);
   border: 1px solid rgba(229, 169, 60, 0.4);
@@ -4425,6 +4634,671 @@ svg.lucide {
   background: #F3C362;
   transform: scale(1.03);
 }
+
+/* ==========================================================================
+   PIN SECURITY MODAL (MATERIAL 3) & REAL DATA LOCK CONTROLS
+   ========================================================================== */
+
+.btn-privacy-toggle.real-active {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: #22c55e !important;
+  color: #4ade80 !important;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.25) !important;
+}
+
+.btn-privacy-toggle.real-active .privacy-mode-icon {
+  color: #4ade80 !important;
+}
+
+.btn-lock-data {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #f87171;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.btn-lock-data:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.35);
+}
+
+.pin-modal-window {
+  max-width: 450px;
+  width: 90%;
+  background: var(--nova-surface);
+  border: 1px solid var(--nova-outline-variant);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+  animation: m3ModalPop 0.25s cubic-bezier(0.05, 0.7, 0.1, 1);
+  padding: 24px;
+}
+
+@keyframes m3ModalPop {
+  0% { transform: scale(0.92) translateY(12px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.pin-modal-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pin-modal-badge-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pin-modal-badge-icon .material-symbols-rounded {
+  font-size: 26px;
+}
+
+.pin-modal-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--nova-on-surface-variant);
+  margin-bottom: 20px;
+}
+
+.pin-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.pin-field-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--nova-on-surface-variant);
+}
+
+.pin-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pin-field-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--nova-on-surface-variant);
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.pin-input-field {
+  width: 100%;
+  padding: 12px 46px 12px 44px;
+  background: var(--nova-surface-variant);
+  border: 1.5px solid var(--nova-outline-variant);
+  border-radius: var(--radius-md);
+  color: var(--nova-on-surface);
+  font-size: 17px;
+  letter-spacing: 3px;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pin-input-field:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+}
+
+.pin-input-field.input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+  animation: pinShake 0.35s ease-in-out;
+}
+
+@keyframes pinShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.btn-toggle-pin-visibility {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: var(--nova-on-surface-variant);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.2s;
+}
+
+.btn-toggle-pin-visibility:hover {
+  color: var(--nova-on-surface);
+}
+
+.pin-error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f87171;
+  font-size: 12.5px;
+  margin-bottom: 16px;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border-left: 3px solid #ef4444;
+}
+
+.pin-err-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.pin-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.btn-pin-cancel {
+  color: var(--nova-on-surface-variant);
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-pin-cancel:hover {
+  background: var(--nova-surface-variant);
+  color: var(--nova-on-surface);
+}
+
+.btn-confirm-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-confirm-pin:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+}
+
+/* ==========================================================================
+   EXECUTIVE TELEMETRY BADGE (HEADER)
+   ========================================================================== */
+.header-telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 14px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-standard);
+  position: relative;
+}
+
+.header-telemetry-badge:hover {
+  background: rgba(34, 197, 94, 0.16);
+  border-color: #22c55e;
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.25);
+}
+
+.telemetry-pulse-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.telemetry-pulse-dot .pulse-ring {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.4);
+  animation: telemetryPulse 2s infinite cubic-bezier(0.2, 0, 0, 1);
+}
+
+.telemetry-pulse-dot .pulse-core {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+@keyframes telemetryPulse {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  70% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.telemetry-status-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--nova-on-surface);
+  white-space: nowrap;
+}
+
+.telemetry-label-live {
+  color: #4ade80;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.telemetry-sep {
+  color: var(--nova-outline);
+  opacity: 0.5;
+}
+
+.telemetry-details-txt {
+  color: var(--nova-on-surface-variant);
+  font-weight: 500;
+  font-size: 11px;
+}
+
+/* ==========================================================================
+   DEDICATED TAB VIEWS (SPA SWITCHER) & COMPONENTS
+   ========================================================================== */
+.view-panel {
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.view-panel.active-view {
+  display: flex !important;
+  animation: fadeInPanel 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.tab-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--nova-surface);
+  border: 1px solid var(--nova-outline-variant);
+  border-radius: var(--radius-lg);
+  margin-bottom: 8px;
+}
+
+.tab-view-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--nova-on-surface);
+  margin-bottom: 4px;
+}
+
+.tab-view-header p {
+  font-size: 12.5px;
+  color: var(--nova-on-surface-variant);
+}
+
+.tab-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Career Track Filter Chips */
+.career-track-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.btn-filter-trilha {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--nova-surface-variant);
+  border: 1px solid var(--nova-outline-variant);
+  color: var(--nova-on-surface-variant);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-standard);
+}
+
+.btn-filter-trilha:hover {
+  background: var(--nova-surface-container-high);
+  border-color: var(--nova-primary);
+  color: var(--nova-on-surface);
+  transform: translateY(-1px);
+}
+
+.btn-filter-trilha.active {
+  background: var(--nova-primary-container) !important;
+  border-color: var(--nova-primary) !important;
+  color: var(--nova-on-primary-container) !important;
+  box-shadow: 0 0 12px rgba(169, 199, 255, 0.25) !important;
+}
+
+/* Cockpit Quick Destaques Grid */
+.cockpit-destaques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.destaque-card {
+  background: var(--nova-surface);
+  border: 1px solid var(--nova-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  transition: var(--transition-spring), border-color 0.25s;
+}
+
+.destaque-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--nova-primary);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+.destaque-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.destaque-icon-squircle {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.destaque-icon-squircle.fin { background: rgba(184, 134, 11, 0.15); color: #E5A93C; }
+.destaque-icon-squircle.vagas { background: rgba(142, 111, 165, 0.15); color: #C4A7E7; }
+.destaque-icon-squircle.dio { background: rgba(91, 138, 114, 0.15); color: #86D7A9; }
+.destaque-icon-squircle.eng { background: rgba(74, 111, 165, 0.15); color: #A9C7FF; }
+
+.destaque-card-title h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--nova-on-surface);
+  margin-bottom: 4px;
+}
+
+.destaque-card-title p {
+  font-size: 12px;
+  color: var(--nova-on-surface-variant);
+  line-height: 1.45;
+}
+
+.destaque-card-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--nova-outline-variant);
+}
+
+.btn-destaque-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--nova-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-destaque-jump:hover {
+  transform: translateX(4px);
+  color: var(--nova-on-primary-container);
+}
+
+/* Engineering Tab Styles */
+.eng-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.eng-card {
+  background: var(--nova-surface);
+  border: 1px solid var(--nova-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-badge,
+.tech-tag,
+.metric-pill,
+.eng-card .md3-badge {
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: max-content !important;
+  padding: 4px 10px !important;
+  font-size: 11px !important;
+  border-radius: 20px !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+}
+
+.eng-card-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  flex-wrap: nowrap !important;
+}
+
+.eng-card-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+}
+
+.eng-card-title h4 {
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  color: var(--nova-on-surface) !important;
+  white-space: nowrap !important;
+}
+
+.eng-tech-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--nova-on-surface-variant);
+}
+
+.eng-tech-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--nova-outline-variant);
+}
+
+.eng-tech-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* ==========================================================================
+   ESTUDOS & METODOLOGIAS ATIVAS TAB STYLES
+   ========================================================================== */
+.estudos-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.estudo-module-card {
+  background: var(--nova-surface);
+  border: 1px solid var(--nova-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.2s var(--ease-spring), border-color 0.2s;
+}
+
+.estudo-module-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--nova-primary);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.module-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.module-number-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--nova-primary);
+  background: var(--nova-primary-container);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.module-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--nova-on-surface);
+}
+
+.module-card-desc {
+  font-size: 12px;
+  color: var(--nova-on-surface-variant);
+  line-height: 1.45;
+}
+
+.module-topics-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--nova-on-surface-variant);
+}
+
+.module-topics-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.module-topics-list li .material-symbols-rounded {
+  font-size: 16px;
+  color: var(--nova-secondary);
+}
+
+.metodologias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.metodologia-card {
+  background: var(--nova-surface-variant);
+  border: 1px solid var(--nova-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.metodologia-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.metodologia-card-head h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--nova-on-surface);
+}
+
+.metodologia-card p {
+  font-size: 12px;
+  color: var(--nova-on-surface-variant);
+  line-height: 1.45;
+}
+
+
+
 
 
 

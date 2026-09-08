@@ -97,7 +97,7 @@
       <nav class="sidebar-menu md3-nav-drawer__destinations-slot" data-slot="drawer-destinations" aria-label="Menu Principal">
         <div class="menu-category">MENU PRINCIPAL</div>
         
-        <a href="#overview" class="menu-link active md3-nav-item" id="menu-overview" onclick="selecionarMenu(this); navegarParaSecao('dashboard'); return false;" aria-label="Ir para a visão geral do Dashboard">
+        <a href="#dashboard" class="menu-link nav-item active md3-nav-item" id="menu-overview" onclick="alternarAbaDedicada('view-dashboard', this); return false;" aria-label="Ir para o Cockpit Principal">
           <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
           <div class="md3-nav-item__content">
             <span class="menu-icon"><span class="material-symbols-rounded">dashboard</span></span>
@@ -106,16 +106,32 @@
           </div>
         </a>
 
-        <a href="#voice-assistant-section" class="menu-link md3-nav-item" id="menu-voice-assistant" onclick="selecionarMenu(this); navegarParaSecao('assistant'); return false;" aria-label="Ir para o Assistente de Voz Neural">
+        <a href="#financas" class="menu-link nav-item md3-nav-item" id="menu-financas" onclick="alternarAbaDedicada('view-financas', this); return false;" aria-label="Ir para o painel financeiro H2">
           <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
           <div class="md3-nav-item__content">
-            <span class="menu-icon"><span class="material-symbols-rounded">mic</span></span>
-            <span class="menu-text md3-nav-item__label">Assistente de Voz</span>
-            <span class="menu-pill voice-pill-active md3-badge md3-badge--success" id="sidebarVoicePill">Ativo</span>
+            <span class="menu-icon"><span class="material-symbols-rounded">account_balance_wallet</span></span>
+            <span class="menu-text md3-nav-item__label">Finanças (H2)</span>
           </div>
         </a>
 
-        <a href="#voice-studio-section" class="menu-link md3-nav-item" id="menu-voice-studio" onclick="selecionarMenu(this); navegarParaSecao('voice-studio'); return false;" aria-label="Abrir catálogo e laboratório do Voice Studio">
+        <a href="#candidaturas" class="menu-link nav-item md3-nav-item" id="menu-candidaturas" onclick="alternarAbaDedicada('view-candidaturas', this); return false;" aria-label="Ir para candidaturas 360 graus">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">work</span></span>
+            <span class="menu-text md3-nav-item__label">Candidaturas 360°</span>
+            <span class="menu-counter md3-badge" id="sidebarJobCounter">4</span>
+          </div>
+        </a>
+
+        <a href="#estudos" class="menu-link nav-item md3-nav-item" id="menu-estudos" onclick="alternarAbaDedicada('view-estudos', this); return false;" aria-label="Ir para o progresso da trilha Santander DIO">
+          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
+          <div class="md3-nav-item__content">
+            <span class="menu-icon"><span class="material-symbols-rounded">school</span></span>
+            <span class="menu-text md3-nav-item__label">Estudos (DIO)</span>
+          </div>
+        </a>
+
+        <a href="#voice-studio" class="menu-link nav-item md3-nav-item" id="menu-voice-studio" onclick="alternarAbaDedicada('view-voice-studio', this); return false;" aria-label="Abrir catálogo e laboratório do Voice Studio">
           <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
           <div class="md3-nav-item__content">
             <span class="menu-icon"><span class="material-symbols-rounded">graphic_eq</span></span>
@@ -124,48 +140,23 @@
           </div>
         </a>
 
-        <a href="#financas" class="menu-link md3-nav-item" id="menu-financas" onclick="selecionarMenu(this); navegarParaSecao('dashboard', 'financas'); return false;" aria-label="Ir para o painel financeiro H2">
+        <a href="#engenharia" class="menu-link nav-item md3-nav-item" id="menu-engenharia" onclick="alternarAbaDedicada('view-engenharia', this); return false;" aria-label="Status da Engenharia, Testes e Telemetria">
           <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
           <div class="md3-nav-item__content">
-            <span class="menu-icon"><span class="material-symbols-rounded">account_balance_wallet</span></span>
-            <span class="menu-text md3-nav-item__label">Finanças (H2)</span>
-          </div>
-        </a>
-
-        <a href="#candidaturas" class="menu-link md3-nav-item" id="menu-candidaturas" onclick="selecionarMenu(this); navegarParaSecao('dashboard', 'candidaturas'); return false;" aria-label="Ir para candidaturas 360 graus">
-          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
-          <div class="md3-nav-item__content">
-            <span class="menu-icon"><span class="material-symbols-rounded">work</span></span>
-            <span class="menu-text md3-nav-item__label">Candidaturas 360°</span>
-            <span class="menu-counter md3-badge" id="sidebarJobCounter">5</span>
-          </div>
-        </a>
-
-        <a href="#estudos" class="menu-link md3-nav-item" id="menu-estudos" onclick="selecionarMenu(this); navegarParaSecao('dashboard', 'estudos'); return false;" aria-label="Ir para o progresso da trilha Santander DIO">
-          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
-          <div class="md3-nav-item__content">
-            <span class="menu-icon"><span class="material-symbols-rounded">school</span></span>
-            <span class="menu-text md3-nav-item__label">Estudos (DIO)</span>
+            <span class="menu-icon"><span class="material-symbols-rounded">terminal</span></span>
+            <span class="menu-text md3-nav-item__label">Engenharia & Testes</span>
+            <span class="menu-pill md3-badge md3-badge--success">100% OK</span>
           </div>
         </a>
 
         <div class="menu-category">SISTEMA & ENGENHARIA</div>
 
-        <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" class="menu-link md3-nav-item" aria-label="Abrir documentação Swagger da API Spring Boot">
+        <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" class="menu-link nav-item md3-nav-item" aria-label="Abrir documentação Swagger da API Spring Boot">
           <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
           <div class="md3-nav-item__content">
             <span class="menu-icon"><span class="material-symbols-rounded">bolt</span></span>
             <span class="menu-text md3-nav-item__label">Spring Boot API</span>
             <span class="menu-tag md3-badge">8081</span>
-          </div>
-        </a>
-
-        <a href="#voice-studio-section" class="menu-link md3-nav-item" onclick="document.getElementById('menu-voice-studio').click(); return false;" aria-label="Acessar Laboratório Integrado de Voz">
-          <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
-          <div class="md3-nav-item__content">
-            <span class="menu-icon"><span class="material-symbols-rounded">equalizer</span></span>
-            <span class="menu-text md3-nav-item__label">Laboratório de Voz</span>
-            <span class="menu-tag md3-badge">Integrado</span>
           </div>
         </a>
       </nav>
@@ -188,35 +179,29 @@
     <!-- ==============================================
          2. MAIN WRAPPER (TOP APP BAR + CONTENT)
          ============================================== -->
-    <div class="dabang-main">
+    <div class="dabang-main main-content">
 
       <!-- Top App Bar (M3 Search Bar & Actions Slot) -->
-      <header class="dabang-top-header md3-top-app-bar" role="banner">
-        <div class="header-search-wrap md3-search-bar" data-slot="search">
+      <header class="top-header dabang-top-header md3-top-app-bar" role="banner">
+        <div class="header-search-wrap search-bar md3-search-bar" data-slot="search">
           <span class="material-symbols-rounded search-lens" aria-hidden="true">search</span>
           <input type="text" id="globalSearchInput" placeholder="Digite um comando ou /atalhos..." class="header-search-input" aria-label="Buscar vagas ou executar comandos rápidos">
           <span class="search-kbd" aria-hidden="true">⌘K</span>
         </div>
 
         <div class="header-user-actions" data-slot="actions">
-          <!-- Privacy & Demo Mode Toggle Button (Default: LGPD Demo Safe) -->
-          <button id="btnPrivacyToggle" class="btn-privacy-toggle md3-chip md3-chip--assist demo-active" onclick="alternarModoPrivacidade()" title="Alternar entre Modo Real e Modo Demonstração (Proteção LGPD / Gravação de Telas)" aria-label="Alternar Modo Real ou Demonstração">
-            <span class="material-symbols-rounded privacy-mode-icon" id="privacyModeIcon" aria-hidden="true">shield</span>
-            <span id="privacyModeLabel">Modo Demo (LGPD)</span>
-          </button>
-
-          <!-- State Switcher para Revisão Rápida -->
-          <div class="state-switcher-box" title="Alternar Estado do Dashboard para Revisão">
-            <span class="state-label-txt">Estado:</span>
-            <select id="stateSelect" class="state-select-dropdown" onchange="alternarEstadoUI(this.value)" aria-label="Seletor de Estado da Interface">
-              <option value="normal" selected>🟢 Normal (Ao Vivo)</option>
-              <option value="loading">🟡 Loading (Skeleton)</option>
-              <option value="empty">⚪ Empty State (Vazio)</option>
-              <option value="error">🔴 Error State (Voz)</option>
-            </select>
+          <!-- 1. Pill de Telemetria (🟢 Sistemas Operacionais) -->
+          <div class="header-telemetry-badge" id="telemetryStatusBadge" onclick="alternarAbaDedicada('view-engenharia', document.getElementById('menu-engenharia'))" title="Sistemas Operacionais: Spring Boot 8081 Ativo • H2 Database ACID • Cloud Render Online • Latência < 15ms" aria-label="Status dos Sistemas Operacionais">
+            <div class="telemetry-pulse-dot" aria-hidden="true">
+              <span class="pulse-ring"></span>
+              <span class="pulse-core"></span>
+            </div>
+            <div class="telemetry-status-text">
+              <span class="telemetry-label-live">🟢 Sistemas Operacionais</span>
+            </div>
           </div>
 
-          <!-- Active Voice Indicator Chip (Living Waveform) -->
+          <!-- 2. Seletor de Voz (Voz: Francisca) -->
           <button class="header-voice-chip md3-chip md3-chip--assist" onclick="document.getElementById('menu-voice-studio').click()" title="Clique para abrir Voice Studio" aria-label="Voz Neural Ativa: Francisca. Clique para abrir o Voice Studio.">
             <span class="living-ai-voice-mark" aria-hidden="true">
               <span class="voice-wave-bar b1"></span>
@@ -228,23 +213,34 @@
             <span id="headerVoiceName">Voz: Francisca</span>
           </button>
 
-          <!-- Theme Toggle M3 (Sun/Moon) -->
+          <!-- 3. Botão discreto de Modo Demo / Desbloqueio com PIN -->
+          <button id="btnPrivacyToggle" class="btn-privacy-toggle md3-chip md3-chip--assist demo-active" onclick="solicitarAlternanciaPrivacidade()" title="Alternar entre Modo Real e Modo Demonstração (Proteção LGPD / Gravação de Telas)" aria-label="Alternar Modo Real ou Demonstração">
+            <span class="material-symbols-rounded privacy-mode-icon" id="privacyModeIcon" aria-hidden="true">shield</span>
+            <span id="privacyModeLabel">Modo Demo</span>
+          </button>
+
+          <!-- Botão de Trava de Dados Reais (Modo Real apenas) -->
+          <button id="btnLockRealData" class="btn-lock-data md3-chip" onclick="bloquearVoltarModoDemo()" title="Trancar dados e voltar imediatamente ao Modo Demonstração (LGPD Safe)" style="display: none;" aria-label="Trancar dados e voltar ao Modo Demo">
+            <span class="material-symbols-rounded" aria-hidden="true">lock</span>
+            <span>Bloquear</span>
+          </button>
+
+          <!-- Suporte Discreto (Tema e Refresh) -->
           <button id="btnThemeToggle" class="btn-theme-toggle" onclick="alternarTemaM3()" title="Alternar Modo Claro / Escuro (Material Design 3)" aria-label="Alternar Tema Claro / Escuro">
             <span class="material-symbols-rounded theme-icon" id="themeIconSun" aria-hidden="true">light_mode</span>
             <span class="material-symbols-rounded theme-icon" id="themeIconMoon" aria-hidden="true">dark_mode</span>
           </button>
 
-          <!-- Refresh Button -->
           <button class="btn-icon-refresh" onclick="recarregarDashboard()" title="Sincronizar Dados" aria-label="Sincronizar dados do dashboard agora">
             <span class="material-symbols-rounded" aria-hidden="true">refresh</span>
           </button>
 
-          <!-- User Profile -->
+          <!-- 4. Cápsula de perfil do usuário (FR Fábio Rodrigues) -->
           <div class="user-profile-badge" aria-label="Perfil do Desenvolvedor: Fábio Rodrigues">
             <div class="user-avatar-circle" aria-hidden="true">FR</div>
             <div class="user-profile-details">
               <span class="user-name-txt">Fábio Rodrigues</span>
-              <span class="user-role-txt">Java Back-end • Recife, PE</span>
+              <span class="user-role-txt">Java Back-end</span>
             </div>
           </div>
         </div>
@@ -254,7 +250,7 @@
       <main class="dabang-content-body">
 
         <!-- Presentation & Demo Mode Banner (Default: Visible / LGPD Safe) -->
-        <div id="demoModeBanner" class="demo-presentation-banner" style="display: flex;" role="status">
+        <div id="demoModeBanner" class="lgpd-banner demo-presentation-banner" style="display: flex;" role="status">
           <div class="demo-banner-content">
             <span class="material-symbols-rounded banner-icon">verified_user</span>
             <div class="demo-banner-texts">
@@ -262,463 +258,909 @@
               <span>Exibindo dados fictícios de demonstração para gravação de tela e acesso público.</span>
             </div>
           </div>
-          <button class="btn-banner-action" onclick="alternarModoPrivacidade()" title="Clique para voltar aos dados reais">
+          <button class="btn-banner-action" onclick="solicitarAlternanciaPrivacidade()" title="Clique para desbloquear dados reais com PIN">
             Alternar para Dados Reais
           </button>
         </div>
 
         <!-- ==============================================
-             SEÇÃO DASHBOARD PRINCIPAL
+             CONTAINER ESTRUTURAL DE ABAS (VIEWS CONTAINER)
              ============================================== -->
-        <div id="dashboard-view" class="view-panel">
+        <div class="views-container">
 
-        <!-- ==============================================
-             CARD HERO: NOVA VOICE ASSISTANT (LIVING SHADER ORB)
-             ============================================== -->
-        <section class="voice-assistant-hero-card md3-card md3-card--elevated" id="voice-assistant-section">
-          
-          <!-- Header Slot -->
-          <div class="va-header-row md3-card__header-slot" data-slot="header">
-            <div class="va-brand-title">
-              <div class="va-icon-squircle living-shader-icon" id="vaHeroIconSquircle" title="NOVA Living Neural Voice Core">
-                <canvas id="novaMiniShaderCanvas" class="nova-mini-shader-canvas" width="88" height="88"></canvas>
-                <span class="material-symbols-rounded va-squircle-symbol">auto_awesome</span>
-              </div>
-              <div>
-                <h2>NOVA Voice Assistant</h2>
-                <span class="va-subtitle">Interação Bidirecional por Voz • Reconhecimento em Tempo Real & Síntese Neural Base64</span>
-              </div>
-            </div>
+          <!-- ==============================================
+               1. ABA DEDICADA: DASHBOARD COCKPIT (ORB & HIGHLIGHTS)
+               ============================================== -->
+          <div id="view-dashboard" class="view-section view-panel active active-view" style="display: flex;">
 
-            <!-- Voice Selector Dropdown -->
-            <div class="va-voice-select-box">
-              <label for="selectVoiceModel"><span class="material-symbols-rounded">volume_up</span> Voz Ativa:</label>
-              <select id="selectVoiceModel" class="va-select-dropdown" onchange="trocarVozAtiva(this.value)">
-                <option value="pt-BR-FranciscaNeural" selected>Francisca (Feminina - Fluida / Acolhedora)</option>
-                <option value="pt-BR-AntonioNeural">Antônio (Masculino - Executivo / Natural)</option>
-                <option value="pt-BR-FabioNeural">Fábio (Masculino - Tom Direto / Ágil)</option>
-                <option value="pt-BR-ThalitaNeural">Thalita (Feminina - Expressiva / Dinâmica)</option>
-                <option value="en-US-GuyNeural">Guy (Inglês - International Tech Lead)</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Content Slot: Living Shader Voice Orb + Live Chat -->
-          <div class="va-main-grid md3-card__content-slot" data-slot="content">
+            <!-- CARD HERO: NOVA VOICE ASSISTANT (LIVING SHADER ORB) -->
+            <section class="voice-card voice-assistant-hero-card md3-card md3-card--elevated" id="voice-assistant-section">
             
-            <!-- Coluna 1: Living Shader Voice Orb & Microfone -->
-            <div class="va-orb-interactive-panel">
-              <div class="orb-visual-wrapper" id="orbVisualWrapper" title="Clique no Orb ou no Microfone para falar">
-                <div class="orb-outer-glow" id="orbOuterGlow"></div>
-                <div class="orb-ambient-rings" id="orbAmbientRings">
-                  <span class="ambient-ring r1"></span>
-                  <span class="ambient-ring r2"></span>
-                  <span class="ambient-ring r3"></span>
+            <!-- Header Slot -->
+            <div class="va-header-row md3-card__header-slot" data-slot="header">
+              <div class="va-brand-title">
+                <div class="va-icon-squircle living-shader-icon" id="vaHeroIconSquircle" title="NOVA Living Neural Voice Core">
+                  <canvas id="novaMiniShaderCanvas" class="nova-mini-shader-canvas" width="88" height="88"></canvas>
+                  <span class="material-symbols-rounded va-squircle-symbol">auto_awesome</span>
                 </div>
-                <!-- Living GPU Shader Canvas -->
-                <canvas id="novaShaderOrbCanvas" class="nova-shader-orb-canvas" width="280" height="280" onclick="toggleGravacaoVoz()"></canvas>
-                <!-- Glass Overlay Shield -->
-                <div class="orb-glass-shield" id="orbGlassShield" onclick="toggleGravacaoVoz()">
-                  <div class="orb-specular-highlight"></div>
-                  <div class="orb-center-icon-wrap" id="orbCenterIconWrap">
-                    <span class="material-symbols-rounded" id="orbCenterIcon">mic</span>
-                  </div>
+                <div>
+                  <h2>NOVA Voice Assistant</h2>
+                  <span class="va-subtitle">Interação Bidirecional por Voz • Reconhecimento em Tempo Real & Síntese Neural Base64</span>
                 </div>
               </div>
 
-              <div class="va-state-feedback">
-                <span class="state-dot" id="vaStateDot"></span>
-                <strong id="vaStateText">Pronto para ouvir</strong>
+              <!-- Voice Selector Dropdown -->
+              <div class="va-voice-select-box">
+                <label for="selectVoiceModel"><span class="material-symbols-rounded">volume_up</span> Voz Ativa:</label>
+                <select id="selectVoiceModel" class="va-select-dropdown" onchange="trocarVozAtiva(this.value)">
+                  <option value="pt-BR-FranciscaNeural" selected>Francisca (Feminina - Fluida / Acolhedora)</option>
+                  <option value="pt-BR-AntonioNeural">Antônio (Masculino - Executivo / Natural)</option>
+                  <option value="pt-BR-FabioNeural">Fábio (Masculino - Tom Direto / Ágil)</option>
+                  <option value="pt-BR-ThalitaNeural">Thalita (Feminina - Expressiva / Dinâmica)</option>
+                  <option value="en-US-GuyNeural">Guy (Inglês - International Tech Lead)</option>
+                </select>
               </div>
-
-              <button class="btn-mic-toggle md3-button md3-button--filled" id="btnMicToggle" onclick="toggleGravacaoVoz()">
-                <span class="material-symbols-rounded" id="btnMicIcon">mic</span>
-                <span id="btnMicLabel">Pressione para Falar</span>
-              </button>
             </div>
 
-            <!-- Coluna 2: Live Conversation & Input -->
-            <div class="va-chat-transcription-panel">
+            <!-- Content Slot: Living Shader Voice Orb + Live Chat -->
+            <div class="va-main-grid md3-card__content-slot" data-slot="content">
               
-              <div class="va-dialog-box" id="vaDialogBox">
-                <div class="va-message assistant">
-                  <div class="msg-avatar">🌌</div>
-                  <div class="msg-content">
-                    <span class="msg-author">NOVA</span>
-                    <p id="assistantWelcomeMsg">Olá, Fábio! Estou pronta para te ajudar. Você pode falar pelo microfone ou digitar qualquer comando sobre finanças, vagas ou estudos.</p>
+              <!-- Coluna 1: Living Shader Voice Orb & Microfone -->
+              <div class="va-orb-interactive-panel">
+                <div class="orb-visual-wrapper" id="orbVisualWrapper" title="Clique no Orb ou no Microfone para falar">
+                  <div class="orb-outer-glow" id="orbOuterGlow"></div>
+                  <div class="orb-ambient-rings" id="orbAmbientRings">
+                    <span class="ambient-ring r1"></span>
+                    <span class="ambient-ring r2"></span>
+                    <span class="ambient-ring r3"></span>
+                  </div>
+                  <!-- Living GPU Shader Canvas -->
+                  <canvas id="novaShaderOrbCanvas" class="nova-shader-orb-canvas" width="280" height="280" onclick="toggleGravacaoVoz()"></canvas>
+                  <!-- Glass Overlay Shield -->
+                  <div class="orb-glass-shield" id="orbGlassShield" onclick="toggleGravacaoVoz()">
+                    <div class="orb-specular-highlight"></div>
+                    <div class="orb-center-icon-wrap" id="orbCenterIconWrap">
+                      <span class="material-symbols-rounded" id="orbCenterIcon">mic</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Input Bar & Presets -->
-              <div class="va-input-group">
-                <input type="text" id="vaTextInput" class="va-text-input" placeholder="Digite uma pergunta para o NOVA falar..." value="NOVA, qual é o meu saldo atual?">
-                <button class="btn-va-send md3-button md3-button--filled" onclick="enviarTextoDigitado()">
-                  <span class="material-symbols-rounded">send</span>
-                  <span>Enviar</span>
+                <div class="va-state-feedback">
+                  <span class="state-dot" id="vaStateDot"></span>
+                  <strong id="vaStateText">Pronto para ouvir</strong>
+                </div>
+
+                <button class="btn-mic-toggle md3-button md3-button--filled" id="btnMicToggle" onclick="toggleGravacaoVoz()">
+                  <span class="material-symbols-rounded" id="btnMicIcon">mic</span>
+                  <span id="btnMicLabel">Pressione para Falar</span>
                 </button>
               </div>
 
-              <!-- Actions Slot: Suggestion Chips -->
-              <div class="va-quick-prompts md3-card__actions-slot" data-slot="actions">
-                <span class="qp-label">Atalhos de Voz:</span>
-                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('NOVA, qual a previsão do meu saldo para o final do mês?')">📈 Previsão de Saldo</button>
-                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('NOVA, qual é o meu saldo atual?')">💰 Saldo</button>
-                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('quanto gastei em alimentação?')">🍔 Gastos Alimentação</button>
-                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('status dos testes do backend')">🧪 Testes JUnit 5</button>
-                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('quais são as minhas candidaturas ativas?')">💼 Vagas Ativas</button>
-                <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('qual o meu progresso na trilha DIO?')">🎓 Trilha DIO</button>
+              <!-- Coluna 2: Live Conversation & Input -->
+              <div class="va-chat-transcription-panel">
+                
+                <div class="va-dialog-box" id="vaDialogBox">
+                  <div class="va-message assistant">
+                    <div class="msg-avatar">🌌</div>
+                    <div class="msg-content">
+                      <span class="msg-author">NOVA</span>
+                      <p id="assistantWelcomeMsg">Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Input Bar & Presets -->
+                <div class="va-input-group">
+                  <input type="text" id="vaTextInput" class="va-text-input" placeholder="Digite uma pergunta para o NOVA falar..." value="NOVA, qual é o meu saldo atual?">
+                  <button class="btn-va-send md3-button md3-button--filled" onclick="enviarTextoDigitado()">
+                    <span class="material-symbols-rounded">send</span>
+                    <span>Enviar</span>
+                  </button>
+                </div>
+
+                <!-- Actions Slot: Suggestion Chips -->
+                <div class="va-quick-prompts md3-card__actions-slot" data-slot="actions">
+                  <span class="qp-label">Atalhos de Voz:</span>
+                  <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('NOVA, qual a previsão do meu saldo para o final do mês?')">📈 Previsão de Saldo</button>
+                  <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('NOVA, qual é o meu saldo atual?')">💰 Saldo</button>
+                  <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('quanto gastei em alimentação?')">🍔 Gastos Alimentação</button>
+                  <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('status dos testes do backend')">🧪 Testes JUnit 5</button>
+                  <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('quais são as minhas candidaturas ativas?')">💼 Vagas Ativas</button>
+                  <button class="btn-qp md3-chip md3-chip--suggestion" onclick="executarPromptRapido('qual o meu progresso na trilha DIO?')">🎓 Trilha DIO</button>
+                </div>
+
               </div>
 
             </div>
 
-          </div>
+          </section>
 
-        </section>
+          <!-- TOP 4 SUMMARY CARDS (M3 ELEVATED + SLOTS) -->
+          <section class="kpi-grid stats-grid summary-cards-row" id="overview">
+            
+            <!-- Card 1: Saldo Líquido -->
+            <div class="summary-card kpi-card md3-card md3-card--elevated card-coral" data-card-type="kpi">
+              <div class="card-top-row md3-card__header-slot" data-slot="header">
+                <div class="summary-icon-box coral">
+                  <span class="material-symbols-rounded">account_balance_wallet</span>
+                </div>
+                <span class="card-tag positive md3-badge md3-badge--success">+34.5%</span>
+              </div>
+              <div class="card-value-group md3-card__content-slot" data-slot="content">
+                <span class="card-label">Saldo Líquido (Agosto)</span>
+                <h2 class="card-big-num" id="kpiSaldo">+ R$ 589,23</h2>
+              </div>
+              <div class="card-footer-info" data-slot="supporting-text">
+                <span>H2 Persistente • 100% Conciliado</span>
+              </div>
+            </div>
+
+            <!-- Card 2: Total Recebido -->
+            <div class="summary-card kpi-card md3-card md3-card--elevated card-yellow" data-card-type="kpi">
+              <div class="card-top-row md3-card__header-slot" data-slot="header">
+                <div class="summary-icon-box yellow">
+                  <span class="material-symbols-rounded">south_west</span>
+                </div>
+                <span class="card-tag neutral md3-badge md3-badge--warning">7 Entradas</span>
+              </div>
+              <div class="card-value-group md3-card__content-slot" data-slot="content">
+                <span class="card-label">Total Recebido</span>
+                <h2 class="card-big-num" id="kpiReceitas">R$ 2.299,00</h2>
+              </div>
+              <div class="card-footer-info" data-slot="supporting-text">
+                <span>Ramon, Gildeth e Sheila</span>
+              </div>
+            </div>
+
+            <!-- Card 3: Total Gasto -->
+            <div class="summary-card kpi-card md3-card md3-card--elevated card-green" data-card-type="kpi">
+              <div class="card-top-row md3-card__header-slot" data-slot="header">
+                <div class="summary-icon-box green">
+                  <span class="material-symbols-rounded">north_east</span>
+                </div>
+                <span class="card-tag negative md3-badge">36 Saídas</span>
+              </div>
+              <div class="card-value-group md3-card__content-slot" data-slot="content">
+                <span class="card-label">Total Gasto</span>
+                <h2 class="card-big-num" id="kpiDespesas">R$ 1.709,77</h2>
+              </div>
+              <div class="card-footer-info" data-slot="supporting-text">
+                <span>Alimentação, Transporte e Compras</span>
+              </div>
+            </div>
+
+            <!-- Card 4: Trilha Santander DIO -->
+            <div class="summary-card kpi-card md3-card md3-card--elevated card-purple" data-card-type="kpi">
+              <div class="card-top-row md3-card__header-slot" data-slot="header">
+                <div class="summary-icon-box purple">
+                  <span class="material-symbols-rounded">school</span>
+                </div>
+                <span class="card-tag purple-tag md3-badge">Módulo 1</span>
+              </div>
+              <div class="card-value-group md3-card__content-slot" data-slot="content">
+                <span class="card-label">Trilha Santander 2026</span>
+                <h2 class="card-big-num" id="kpiDio">7.7% Concluído</h2>
+              </div>
+              <div class="card-mini-progress md3-linear-progress" data-slot="progress">
+                <div class="mini-progress-fill md3-linear-progress__indicator" id="kpiDioBar" style="width: 7.7%;"></div>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- COCKPIT QUICK DESTAQUES GRID (ATALHOS INTELIGENTES) -->
+          <section class="cockpit-destaques-grid">
+            
+            <!-- Destaque 1: Finanças H2 -->
+            <div class="destaque-card">
+              <div class="destaque-card-top">
+                <div class="destaque-icon-squircle fin">
+                  <span class="material-symbols-rounded">account_balance_wallet</span>
+                </div>
+                <div class="destaque-card-title">
+                  <h3>Finanças & Preditivo H2</h3>
+                  <p>Histórico em banco H2 ACID com projeção de fechamento, burn rate e caixinhas de investimento.</p>
+                </div>
+              </div>
+              <div class="destaque-card-action">
+                <span class="md3-badge md3-badge--success">100% Conciliado</span>
+                <button class="btn-destaque-jump" onclick="alternarAbaDedicada('view-financas', document.getElementById('menu-financas'))">
+                  <span>Acessar Finanças</span>
+                  <span class="material-symbols-rounded">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Destaque 2: Candidaturas 360° -->
+            <div class="destaque-card">
+              <div class="destaque-card-top">
+                <div class="destaque-icon-squircle vagas">
+                  <span class="material-symbols-rounded">work</span>
+                </div>
+                <div class="destaque-card-title">
+                  <h3>Candidaturas 360°</h3>
+                  <p>4 Vagas ativas mapeadas em Tech/Dev, Suporte SaaS e Marketing com CVs compilados e cover letters.</p>
+                </div>
+              </div>
+              <div class="destaque-card-action">
+                <span class="md3-badge">Match até 98%</span>
+                <button class="btn-destaque-jump" onclick="alternarAbaDedicada('view-candidaturas', document.getElementById('menu-candidaturas'))">
+                  <span>Ver Candidaturas</span>
+                  <span class="material-symbols-rounded">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Destaque 3: Trilha Santander DIO -->
+            <div class="destaque-card">
+              <div class="destaque-card-top">
+                <div class="destaque-icon-squircle dio">
+                  <span class="material-symbols-rounded">school</span>
+                </div>
+                <div class="destaque-card-title">
+                  <h3>Trilha Santander DIO</h3>
+                  <p>Bootcamp Java AI Back-end com trilha modular, Active Recall, Técnica Feynman e desafios práticos.</p>
+                </div>
+              </div>
+              <div class="destaque-card-action">
+                <span class="md3-badge">Módulo 2 em Andamento</span>
+                <button class="btn-destaque-jump" onclick="alternarAbaDedicada('view-estudos', document.getElementById('menu-estudos'))">
+                  <span>Ver Estudos</span>
+                  <span class="material-symbols-rounded">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Destaque 4: Engenharia & Telemetria -->
+            <div class="destaque-card">
+              <div class="destaque-card-top">
+                <div class="destaque-icon-squircle eng">
+                  <span class="material-symbols-rounded">terminal</span>
+                </div>
+                <div class="destaque-card-title">
+                  <h3>Engenharia & JUnit 5</h3>
+                  <p>Arquitetura Clean Architecture em 4 camadas, 40 testes passando e microsserviço Spring Boot 3.3.</p>
+                </div>
+              </div>
+              <div class="destaque-card-action">
+                <span class="md3-badge md3-badge--success">100% Passing</span>
+                <button class="btn-destaque-jump" onclick="alternarAbaDedicada('view-engenharia', document.getElementById('menu-engenharia'))">
+                  <span>Ver Telemetria</span>
+                  <span class="material-symbols-rounded">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+
+          </section>
+
+        </div> <!-- /#view-dashboard -->
 
         <!-- ==============================================
-             3. TOP 4 SUMMARY CARDS (M3 ELEVATED + SLOTS)
+             2. ABA DEDICADA: FINANÇAS & INTELIGÊNCIA PREDITIVA
              ============================================== -->
-        <section class="summary-cards-row" id="overview">
-          
-          <!-- Card 1: Saldo Líquido (Secondary Role) -->
-          <div class="summary-card md3-card md3-card--elevated card-coral" data-card-type="kpi">
-            <div class="card-top-row md3-card__header-slot" data-slot="header">
-              <div class="summary-icon-box coral">
-                <span class="material-symbols-rounded">account_balance_wallet</span>
-              </div>
-              <span class="card-tag positive md3-badge md3-badge--success">+34.5%</span>
-            </div>
-            <div class="card-value-group md3-card__content-slot" data-slot="content">
-              <span class="card-label">Saldo Líquido (Agosto)</span>
-              <h2 class="card-big-num" id="kpiSaldo">+ R$ 589,23</h2>
-            </div>
-            <div class="card-footer-info" data-slot="supporting-text">
-              <span>H2 Persistente • 100% Conciliado</span>
-            </div>
-          </div>
+        <div id="view-financas" class="view-section view-panel" style="display: none;">
 
-          <!-- Card 2: Total Recebido (Tertiary Role) -->
-          <div class="summary-card md3-card md3-card--elevated card-yellow" data-card-type="kpi">
-            <div class="card-top-row md3-card__header-slot" data-slot="header">
-              <div class="summary-icon-box yellow">
-                <span class="material-symbols-rounded">south_west</span>
-              </div>
-              <span class="card-tag neutral md3-badge md3-badge--warning">7 Entradas</span>
+          <div class="tab-view-header">
+            <div>
+              <h2>Gestão Financeira & Inteligência Preditiva</h2>
+              <p>Métricas de fluxo de caixa, evolução semanal no banco H2, categorização e inteligência preditiva</p>
             </div>
-            <div class="card-value-group md3-card__content-slot" data-slot="content">
-              <span class="card-label">Total Recebido</span>
-              <h2 class="card-big-num" id="kpiReceitas">R$ 2.299,00</h2>
-            </div>
-            <div class="card-footer-info" data-slot="supporting-text">
-              <span>Ramon, Gildeth e Sheila</span>
-            </div>
-          </div>
-
-          <!-- Card 3: Total Gasto (Primary Role) -->
-          <div class="summary-card md3-card md3-card--elevated card-green" data-card-type="kpi">
-            <div class="card-top-row md3-card__header-slot" data-slot="header">
-              <div class="summary-icon-box green">
-                <span class="material-symbols-rounded">north_east</span>
-              </div>
-              <span class="card-tag negative md3-badge">36 Saídas</span>
-            </div>
-            <div class="card-value-group md3-card__content-slot" data-slot="content">
-              <span class="card-label">Total Gasto</span>
-              <h2 class="card-big-num" id="kpiDespesas">R$ 1.709,77</h2>
-            </div>
-            <div class="card-footer-info" data-slot="supporting-text">
-              <span>Alimentação, Transporte e Compras</span>
-            </div>
-          </div>
-
-          <!-- Card 4: Trilha Santander DIO (Educational Role) -->
-          <div class="summary-card md3-card md3-card--elevated card-purple" data-card-type="kpi">
-            <div class="card-top-row md3-card__header-slot" data-slot="header">
-              <div class="summary-icon-box purple">
-                <span class="material-symbols-rounded">school</span>
-              </div>
-              <span class="card-tag purple-tag md3-badge">Módulo 1</span>
-            </div>
-            <div class="card-value-group md3-card__content-slot" data-slot="content">
-              <span class="card-label">Trilha Santander 2026</span>
-              <h2 class="card-big-num" id="kpiDio">7.7% Concluído</h2>
-            </div>
-            <div class="card-mini-progress md3-linear-progress" data-slot="progress">
-              <div class="mini-progress-fill md3-linear-progress__indicator" id="kpiDioBar" style="width: 7.7%;"></div>
-            </div>
-          </div>
-
-        </section>
-
-        <!-- ==============================================
-             4. PAINEL CENTRAL DE GRÁFICOS (4 M3 PANELS)
-             ============================================== -->
-        <section class="charts-master-grid" id="financas">
-          
-          <!-- Chart 1: Evolução Financeira -->
-          <div class="chart-panel md3-card md3-card--elevated card-wide">
-            <div class="panel-head-row md3-card__header-slot" data-slot="header">
-              <div>
-                <h3 class="panel-heading">Evolução Financeira de Receitas vs Despesas</h3>
-                <span class="panel-subtext">Histórico comparativo semanal consolidado no banco H2 (Agosto/2026)</span>
-              </div>
+            <div class="tab-header-actions">
               <a href="/download/financeiro/relatorios_pdf/relatorio_agosto_2026.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
                 <span class="material-symbols-rounded">description</span>
-                <span>Relatório PDF</span>
+                <span>Relatório Financeiro PDF</span>
               </a>
             </div>
-            <div class="canvas-holder-large md3-card__media-slot" id="holderEvolucao" data-slot="media">
-              <canvas id="chartEvolucaoFinanceira"></canvas>
-            </div>
           </div>
 
-          <!-- Chart 2: Gastos por Categoria -->
-          <div class="chart-panel md3-card md3-card--elevated">
-            <div class="panel-head-row md3-card__header-slot" data-slot="header">
-              <div>
-                <h3 class="panel-heading">Gastos por Categoria</h3>
-                <span class="panel-subtext">Detalhamento por tipo de despesa</span>
+          <!-- PAINEL CENTRAL DE GRÁFICOS FINANCEIROS -->
+          <section class="charts-master-grid" id="financas">
+            
+            <!-- Chart 1: Evolução Financeira -->
+            <div class="chart-panel md3-card md3-card--elevated card-wide">
+              <div class="panel-head-row md3-card__header-slot" data-slot="header">
+                <div>
+                  <h3 class="panel-heading">Evolução Financeira de Receitas vs Despesas</h3>
+                  <span class="panel-subtext">Histórico comparativo semanal consolidado no banco H2 (Agosto/2026)</span>
+                </div>
+                <a href="/download/financeiro/relatorios_pdf/relatorio_agosto_2026.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
+                  <span class="material-symbols-rounded">description</span>
+                  <span>Relatório PDF</span>
+                </a>
+              </div>
+              <div class="canvas-holder-large md3-card__media-slot" id="holderEvolucao" data-slot="media">
+                <canvas id="chartEvolucaoFinanceira"></canvas>
               </div>
             </div>
-            <div class="canvas-holder-medium md3-card__media-slot" id="holderCategorias" data-slot="media">
-              <canvas id="chartGastosCategoria"></canvas>
-            </div>
-          </div>
 
-          <!-- Chart 3: Target vs Reality -->
-          <div class="chart-panel md3-card md3-card--elevated">
-            <div class="panel-head-row md3-card__header-slot" data-slot="header">
-              <div>
-                <h3 class="panel-heading">Meta Orçamentária vs Realizado</h3>
-                <span class="panel-subtext">Planejado (Teto R$ 2.000) vs Gasto Real (R$ 1.709)</span>
+            <!-- Chart 2: Gastos por Categoria -->
+            <div class="chart-panel md3-card md3-card--elevated">
+              <div class="panel-head-row md3-card__header-slot" data-slot="header">
+                <div>
+                  <h3 class="panel-heading">Gastos por Categoria</h3>
+                  <span class="panel-subtext">Detalhamento por tipo de despesa</span>
+                </div>
+              </div>
+              <div class="canvas-holder-medium md3-card__media-slot" id="holderCategorias" data-slot="media">
+                <canvas id="chartGastosCategoria"></canvas>
               </div>
             </div>
-            <div class="canvas-holder-medium md3-card__media-slot" id="holderTarget" data-slot="media">
-              <canvas id="chartTargetVsReality"></canvas>
+
+            <!-- Chart 3: Target vs Reality -->
+            <div class="chart-panel md3-card md3-card--elevated">
+              <div class="panel-head-row md3-card__header-slot" data-slot="header">
+                <div>
+                  <h3 class="panel-heading">Meta Orçamentária vs Realizado</h3>
+                  <span class="panel-subtext">Planejado (Teto R$ 2.000) vs Gasto Real (R$ 1.709)</span>
+                </div>
+              </div>
+              <div class="canvas-holder-medium md3-card__media-slot" id="holderTarget" data-slot="media">
+                <canvas id="chartTargetVsReality"></canvas>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- INTELIGÊNCIA PREDITIVA & CONSULTOR FINANCEIRO (FASE 9) -->
+          <section class="projecao-financeira-card md3-card md3-card--elevated" id="projecao-section">
+            <div class="panel-head-row md3-card__header-slot" data-slot="header">
+              <div class="projecao-title-group">
+                <div class="projecao-icon-squircle" title="Consultoria Preditiva H2">
+                  <span class="material-symbols-rounded">insights</span>
+                </div>
+                <div>
+                  <h3 class="panel-heading">Inteligência Preditiva & Projeção Orçamentária</h3>
+                  <span class="panel-subtext">Estimativa de fechamento de mês baseada em Burn Rate diário real no banco H2</span>
+                </div>
+              </div>
+              <div class="projecao-status-pill" id="projecaoStatusBadge">
+                <span class="md3-badge md3-badge--success" id="projecaoStatusTxt">SAUDÁVEL</span>
+              </div>
+            </div>
+
+            <div class="projecao-grid-body md3-card__content-slot" data-slot="content">
+              <!-- Metric 1: Burn Rate Diário -->
+              <div class="projecao-metric-box">
+                <span class="p-metric-label">Burn Rate Diário</span>
+                <div class="p-metric-val" id="projBurnRate">R$ 1.574,07 / dia</div>
+                <span class="p-metric-sub" id="projDiasInfo">27 dias decorridos • 4 restantes</span>
+              </div>
+
+              <!-- Metric 2: Gasto Adicional Estimado -->
+              <div class="projecao-metric-box">
+                <span class="p-metric-label">Gasto Adicional Estimado</span>
+                <div class="p-metric-val" id="projGastoAdicional">R$ 6.296,28</div>
+                <span class="p-metric-sub">Até o Fechamento do Ciclo</span>
+              </div>
+
+              <!-- Metric 3: Gasto Total Fechamento -->
+              <div class="projecao-metric-box">
+                <span class="p-metric-label">Gasto Total Projetado</span>
+                <div class="p-metric-val" id="projGastoTotal">R$ 48.796,28</div>
+                <span class="p-metric-sub">Teto Orçamentário: R$ 60.000,00</span>
+              </div>
+
+              <!-- Metric 4: Saldo Final Estimado -->
+              <div class="projecao-metric-box highlight-box">
+                <span class="p-metric-label">Saldo Final Projetado</span>
+                <div class="p-metric-val positive" id="projSaldoFinal">+ R$ 101.203,72</div>
+                <span class="p-metric-sub">Superávit no Fechamento</span>
+              </div>
+            </div>
+
+            <!-- Recommendation Banner -->
+            <div class="projecao-recommendation-box" data-slot="supporting-text">
+              <span class="material-symbols-rounded rec-icon">psychology_alt</span>
+              <div class="rec-content">
+                <strong class="rec-title">Diagnóstico & Recomendação Estratégica do NOVA [MOCK]:</strong>
+                <p class="rec-desc" id="projRecomendacaoTxt">Fluxo orçamentário sob controle! Sugestão de aporte de R$ 50.000,00 na Reserva Estratégica e Fundos de Longo Prazo.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- CAIXINHAS NUBANK & PATRIMÔNIO LÍQUIDO TOTAL -->
+          <section class="caixinhas-panel-card md3-card md3-card--elevated" id="caixinhas-section">
+            <div class="panel-head-row md3-card__header-slot" data-slot="header">
+              <div class="projecao-title-group">
+                <div class="projecao-icon-squircle caixinha-icon" title="Caixinhas & Investimentos Nubank">
+                  <span class="material-symbols-rounded">savings</span>
+                </div>
+                <div>
+                  <h3 class="panel-heading">Caixinhas Nubank & Patrimônio Líquido Total</h3>
+                  <span class="panel-subtext">Reserva de Emergência, Fundo de Expansão e Saldo Consolidado [MOCK]</span>
+                </div>
+              </div>
+              <div class="patrimonio-pill">
+                <span class="md3-badge md3-badge--success" id="kpiPatrimonioTotal">Patrimônio: R$ 607.500,00</span>
+              </div>
+            </div>
+
+            <div class="caixinhas-grid-body md3-card__content-slot" data-slot="content" id="caixinhasContainer">
+              <!-- Caixinha 1: Reserva de Emergência -->
+              <div class="caixinha-item-card">
+                <div class="caixinha-item-top">
+                  <span class="caixinha-tag md3-badge">🛡️ Reserva Estratégica</span>
+                  <span class="caixinha-rend">+R$ 3.500,00/mês</span>
+                </div>
+                <h4 class="caixinha-val" id="valReservaEmergencia">R$ 350.000,00</h4>
+                <span class="caixinha-sub">Rendimento 100% CDI • Liquidez Imediata</span>
+              </div>
+
+              <!-- Caixinha 2: Fundo de Expansão -->
+              <div class="caixinha-item-card">
+                <div class="caixinha-item-top">
+                  <span class="caixinha-tag md3-badge">📈 Fundo de Expansão & Metas</span>
+                  <span class="caixinha-rend">+R$ 1.500,00/mês</span>
+                </div>
+                <h4 class="caixinha-val" id="valFundoCasal">R$ 150.000,00</h4>
+                <span class="caixinha-sub">Alocação de Médio Prazo • Rendimento Automático</span>
+              </div>
+
+              <!-- Caixinha 3: Saldo Conta Corrente H2 -->
+              <div class="caixinha-item-card">
+                <div class="caixinha-item-top">
+                  <span class="caixinha-tag md3-badge">💳 Conta Operacional (H2)</span>
+                  <span class="caixinha-rend">Disponível</span>
+                </div>
+                <h4 class="caixinha-val" id="valSaldoConta">R$ 107.500,00</h4>
+                <span class="caixinha-sub">Capital Operacional do Período</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- EXTRATO COMPLETO DE MOVIMENTAÇÕES (BANCO H2 & CONCILIAÇÃO) -->
+          <section class="table-panel-card md3-card md3-card--elevated" id="extrato-section">
+            <div class="panel-head-row md3-card__header-slot" data-slot="header">
+              <div>
+                <h3 class="panel-heading">Extrato Completo de Movimentações (H2)</h3>
+                <span class="panel-subtext">Histórico detalhado de receitas, despesas e conciliação bancária</span>
+              </div>
+              <div class="table-actions">
+                <span class="table-counter-pill md3-badge" id="extratoCounterPill">Lançamentos Conciliados</span>
+              </div>
+            </div>
+
+            <div class="table-responsive-wrapper md3-card__content-slot" data-slot="content">
+              <table class="dabang-table md3-data-table" id="extratoTable">
+                <thead>
+                  <tr>
+                    <th>DATA</th>
+                    <th>DESCRIÇÃO</th>
+                    <th>CATEGORIA</th>
+                    <th>TIPO</th>
+                    <th style="text-align: right; padding-right: 24px;">VALOR</th>
+                  </tr>
+                </thead>
+                <tbody id="extratoTableBody">
+                  <!-- Injetado dinamicamente via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+        </div> <!-- /#view-financas -->
+
+        <!-- ==============================================
+             3. ABA DEDICADA: CANDIDATURAS 360° & VAGAS
+             ============================================== -->
+        <div id="view-candidaturas" class="view-section view-panel" style="display: none;">
+
+          <div class="tab-view-header">
+            <div>
+              <h2>Esteira de Candidaturas 360° & Vagas Analisadas</h2>
+              <p>Scores de match técnico, dossiês oficiais Harvard Tech compilados e abordagens de alta conversão</p>
+            </div>
+            <div class="tab-header-actions">
+              <a href="/download/carreira/base/pdf/curriculo_fabio_rodrigues_pt.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal" aria-label="Baixar Currículo Base oficial em PDF">
+                <span class="material-symbols-rounded">verified_user</span>
+                <span>Currículo Base (PT)</span>
+              </a>
             </div>
           </div>
 
-          <!-- Chart 4: Match de Carreira das Vagas -->
-          <div class="chart-panel md3-card md3-card--elevated card-wide">
+          <!-- Chart: Match de Carreira das Vagas -->
+          <div class="chart-panel md3-card md3-card--elevated card-wide" style="margin-bottom: 8px;">
             <div class="panel-head-row md3-card__header-slot" data-slot="header">
               <div>
                 <h3 class="panel-heading">Aderência Técnica nas Vagas Mapeadas</h3>
                 <span class="panel-subtext">Scores de match calculados pelo motor analítico do NOVA</span>
               </div>
-              <a href="/download/carreira/base/pdf/curriculo_fabio_rodrigues_pt.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal" aria-label="Baixar Currículo Base oficial em PDF">
-                <span class="material-symbols-rounded">verified_user</span>
-                <span>CV Base (PT)</span>
-              </a>
             </div>
             <div class="canvas-holder-horizontal md3-card__media-slot" id="holderMatch" data-slot="media">
               <canvas id="chartMatchCarreira"></canvas>
             </div>
           </div>
 
-        </section>
+          <!-- Career Track Filter Chips -->
+          <div class="career-track-filters">
+            <button class="btn-filter-trilha active" onclick="filtrarTrilhaCandidaturas('todas', this)">
+              <span class="material-symbols-rounded">apps</span>
+              <span>Todas as Vagas</span>
+            </button>
+            <button class="btn-filter-trilha" onclick="filtrarTrilhaCandidaturas('tech', this)">
+              <span class="material-symbols-rounded">terminal</span>
+              <span>💻 Tech & Back-end</span>
+            </button>
+            <button class="btn-filter-trilha" onclick="filtrarTrilhaCandidaturas('mkt', this)">
+              <span class="material-symbols-rounded">campaign</span>
+              <span>🎬 Audiovisual & Marketing</span>
+            </button>
+            <button class="btn-filter-trilha" onclick="filtrarTrilhaCandidaturas('suporte', this)">
+              <span class="material-symbols-rounded">support_agent</span>
+              <span>📋 Suporte SaaS & CX</span>
+            </button>
+          </div>
 
-        <!-- ==============================================
-             4.5. INTELIGÊNCIA PREDITIVA & CONSULTOR FINANCEIRO (FASE 9)
-             ============================================== -->
-        <section class="projecao-financeira-card md3-card md3-card--elevated" id="projecao-section">
-          <div class="panel-head-row md3-card__header-slot" data-slot="header">
-            <div class="projecao-title-group">
-              <div class="projecao-icon-squircle" title="Consultoria Preditiva H2">
-                <span class="material-symbols-rounded">insights</span>
-              </div>
+          <!-- TABELA DE CANDIDATURAS 360° (M3 DATA TABLE) -->
+          <section class="table-panel-card md3-card md3-card--elevated" id="candidaturas">
+            <div class="panel-head-row md3-card__header-slot" data-slot="header">
               <div>
-                <h3 class="panel-heading">Inteligência Preditiva & Projeção Orçamentária (Fase 9)</h3>
-                <span class="panel-subtext">Estimativa de fechamento de mês baseada em Burn Rate diário real no banco H2</span>
+                <h3 class="panel-heading">Vagas Ativas & Documentos Compilados</h3>
+                <span class="panel-subtext">Documentos oficiais em PDF Harvard Tech e Cover Letter em DOCX</span>
+              </div>
+              <div class="table-actions">
+                <span class="table-counter-pill md3-badge" id="tableCounterPill">4 Empresas Ativas</span>
               </div>
             </div>
-            <div class="projecao-status-pill" id="projecaoStatusBadge">
-              <span class="md3-badge md3-badge--success" id="projecaoStatusTxt">SAUDÁVEL</span>
-            </div>
-          </div>
 
-          <div class="projecao-grid-body md3-card__content-slot" data-slot="content">
-            <!-- Metric 1: Burn Rate Diário -->
-            <div class="projecao-metric-box">
-              <span class="p-metric-label">Burn Rate Diário</span>
-              <div class="p-metric-val" id="projBurnRate">R$ 1.574,07 / dia</div>
-              <span class="p-metric-sub" id="projDiasInfo">27 dias decorridos • 4 restantes</span>
+            <div class="table-responsive-wrapper md3-card__content-slot" data-slot="content">
+              <table class="dabang-table md3-data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>EMPRESA</th>
+                    <th>CARGO & LOCALIDADE</th>
+                    <th>MATCH TÉCNICO</th>
+                    <th class="col-faixa-salarial">FAIXA SALARIAL</th>
+                    <th>DOCUMENTOS OFICIAIS</th>
+                    <th>ABORDAGEM</th>
+                  </tr>
+                </thead>
+                <tbody id="candidatesTableBody">
+                  <!-- Linhas injetadas via app.js -->
+                </tbody>
+              </table>
             </div>
+          </section>
 
-            <!-- Metric 2: Gasto Adicional Estimado -->
-            <div class="projecao-metric-box">
-              <span class="p-metric-label">Gasto Adicional Estimado</span>
-              <div class="p-metric-val" id="projGastoAdicional">R$ 6.296,28</div>
-              <span class="p-metric-sub">Até o Fechamento do Ciclo</span>
-            </div>
-
-            <!-- Metric 3: Gasto Total Fechamento -->
-            <div class="projecao-metric-box">
-              <span class="p-metric-label">Gasto Total Projetado</span>
-              <div class="p-metric-val" id="projGastoTotal">R$ 48.796,28</div>
-              <span class="p-metric-sub">Teto Orçamentário: R$ 60.000,00</span>
-            </div>
-
-            <!-- Metric 4: Saldo Final Estimado -->
-            <div class="projecao-metric-box highlight-box">
-              <span class="p-metric-label">Saldo Final Projetado</span>
-              <div class="p-metric-val positive" id="projSaldoFinal">+ R$ 101.203,72</div>
-              <span class="p-metric-sub">Superávit no Fechamento</span>
-            </div>
-          </div>
-
-          <!-- Recommendation Banner -->
-          <div class="projecao-recommendation-box" data-slot="supporting-text">
-            <span class="material-symbols-rounded rec-icon">psychology_alt</span>
-            <div class="rec-content">
-              <strong class="rec-title">Diagnóstico & Recomendação Estratégica do NOVA [MOCK]:</strong>
-              <p class="rec-desc" id="projRecomendacaoTxt">Fluxo orçamentário sob controle! Sugestão de aporte de R$ 50.000,00 na Reserva Estratégica e Fundos de Longo Prazo.</p>
-            </div>
-          </div>
-        </section>
+        </div> <!-- /#view-candidaturas -->
 
         <!-- ==============================================
-             4.6. CAIXINHAS NUBANK & PATRIMÔNIO LÍQUIDO TOTAL
+             4. ABA DEDICADA: ESTUDOS & TRILHA SANTANDER DIO
              ============================================== -->
-        <section class="caixinhas-panel-card md3-card md3-card--elevated" id="caixinhas-section">
-          <div class="panel-head-row md3-card__header-slot" data-slot="header">
-            <div class="projecao-title-group">
-              <div class="projecao-icon-squircle caixinha-icon" title="Caixinhas & Investimentos Nubank">
-                <span class="material-symbols-rounded">savings</span>
-              </div>
-              <div>
-                <h3 class="panel-heading">Caixinhas Nubank & Patrimônio Líquido Total</h3>
-                <span class="panel-subtext">Reserva de Emergência, Fundo de Expansão e Saldo Consolidado [MOCK]</span>
-              </div>
-            </div>
-            <div class="patrimonio-pill">
-              <span class="md3-badge md3-badge--success" id="kpiPatrimonioTotal">Patrimônio: R$ 607.500,00</span>
-            </div>
-          </div>
+        <div id="view-estudos" class="view-section view-panel" style="display: none;">
 
-          <div class="caixinhas-grid-body md3-card__content-slot" data-slot="content" id="caixinhasContainer">
-            <!-- Caixinha 1: Reserva de Emergência -->
-            <div class="caixinha-item-card">
-              <div class="caixinha-item-top">
-                <span class="caixinha-tag md3-badge">🛡️ Reserva Estratégica</span>
-                <span class="caixinha-rend">+R$ 3.500,00/mês</span>
-              </div>
-              <h4 class="caixinha-val" id="valReservaEmergencia">R$ 350.000,00</h4>
-              <span class="caixinha-sub">Rendimento 100% CDI • Liquidez Imediata</span>
-            </div>
-
-            <!-- Caixinha 2: Fundo de Expansão -->
-            <div class="caixinha-item-card">
-              <div class="caixinha-item-top">
-                <span class="caixinha-tag md3-badge">📈 Fundo de Expansão & Metas</span>
-                <span class="caixinha-rend">+R$ 1.500,00/mês</span>
-              </div>
-              <h4 class="caixinha-val" id="valFundoCasal">R$ 150.000,00</h4>
-              <span class="caixinha-sub">Alocação de Médio Prazo • Rendimento Automático</span>
-            </div>
-
-            <!-- Caixinha 3: Saldo Conta Corrente H2 -->
-            <div class="caixinha-item-card">
-              <div class="caixinha-item-top">
-                <span class="caixinha-tag md3-badge">💳 Conta Operacional (H2)</span>
-                <span class="caixinha-rend">Disponível</span>
-              </div>
-              <h4 class="caixinha-val" id="valSaldoConta">R$ 107.500,00</h4>
-              <span class="caixinha-sub">Capital Operacional do Período</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==============================================
-             5. TABELA DE CANDIDATURAS 360° (M3 DATA TABLE)
-             ============================================== -->
-        <section class="table-panel-card md3-card md3-card--elevated" id="candidaturas">
-          <div class="panel-head-row md3-card__header-slot" data-slot="header">
+          <div class="tab-view-header">
             <div>
-              <h3 class="panel-heading">Esteira de Candidaturas 360° & Vagas Analisadas</h3>
-              <span class="panel-subtext">Documentos oficiais em PDF Harvard Tech e Cover Letter em DOCX</span>
+              <h2 id="estudosHeaderTitle">Trilha Santander 2026 & Mentoria Técnica Back-end</h2>
+              <p id="estudosHeaderSub">Bootcamp Santander 2026 - AI Java Back-end (DIO) • Clean Architecture • Metodologias Ativas</p>
             </div>
-            <div class="table-actions">
-              <span class="table-counter-pill md3-badge">4 Empresas Ativas</span>
-            </div>
-          </div>
-
-          <div class="table-responsive-wrapper md3-card__content-slot" data-slot="content">
-            <table class="dabang-table md3-data-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>EMPRESA</th>
-                  <th>CARGO & LOCALIDADE</th>
-                  <th>MATCH TÉCNICO</th>
-                  <th>FAIXA SALARIAL</th>
-                  <th>DOCUMENTOS OFICIAIS</th>
-                  <th>ABORDAGEM</th>
-                </tr>
-              </thead>
-              <tbody id="candidatesTableBody">
-                <!-- Linhas injetadas via app.js -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- ==============================================
-             6. ESTUDOS & ENGENHARIA SUMMARY CARD
-             ============================================== -->
-        <section class="dio-summary-strip" id="estudos">
-          <div class="bottom-widget-card md3-card md3-card--elevated">
-            <div class="widget-head md3-card__header-slot" data-slot="header">
-              <div class="widget-title-group">
-                <span class="widget-icon"><span class="material-symbols-rounded">school</span></span>
-                <div>
-                  <h4>Trilha Santander 2026 & Engenharia Back-end</h4>
-                  <span class="widget-sub">DIO AI Java Back-end • Clean Architecture • Spring AI MCP</span>
-                </div>
-              </div>
+            <div class="tab-header-actions">
               <a href="/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
                 <span class="material-symbols-rounded">menu_book</span>
                 <span>Manual PDF (6 Pág.)</span>
               </a>
             </div>
+          </div>
 
-            <div class="dio-progress-content md3-card__content-slot" data-slot="content">
-              <div class="dio-bar-header">
-                <span>Progresso da Trilha Santander</span>
-                <strong>2 de 26 Módulos (7.7%)</strong>
-              </div>
-              <div class="dio-bar-track md3-linear-progress">
-                <div class="dio-bar-colored md3-linear-progress__indicator" style="width: 7.7%;"></div>
+          <!-- ESTUDOS SUMMARY STRIP -->
+          <section class="dio-summary-strip" id="estudos">
+            <div class="bottom-widget-card md3-card md3-card--elevated">
+              <div class="widget-head md3-card__header-slot" data-slot="header">
+                <div class="widget-title-group">
+                  <span class="widget-icon"><span class="material-symbols-rounded">school</span></span>
+                  <div>
+                    <h4 id="estudosWidgetTitle">Trilha Santander 2026 & Engenharia Back-end</h4>
+                    <span class="widget-sub" id="estudosWidgetSub">DIO AI Java Back-end • Clean Architecture • Spring AI MCP</span>
+                  </div>
+                </div>
+                <a href="/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
+                  <span class="material-symbols-rounded">menu_book</span>
+                  <span>Manual PDF</span>
+                </a>
               </div>
 
-              <div class="dio-metrics-grid">
-                <div class="dio-metric-item">
-                  <span class="d-label">Módulo Atual</span>
-                  <strong class="d-val">Dominando Java 21</strong>
+              <div class="dio-progress-content md3-card__content-slot" data-slot="content">
+                <div class="dio-bar-header">
+                  <span id="estudosBarLabel">Progresso da Trilha Santander</span>
+                  <strong id="estudosProgressNum">2 de 26 Módulos (7.7%)</strong>
                 </div>
-                <div class="dio-metric-item">
-                  <span class="d-label">Testes JUnit 5</span>
-                  <strong class="d-val text-green">15/15 Passando (100%)</strong>
+                <div class="dio-bar-track md3-linear-progress">
+                  <div class="dio-bar-colored md3-linear-progress__indicator" id="estudosProgressBar" style="width: 7.7%;"></div>
                 </div>
-                <div class="dio-metric-item">
-                  <span class="d-label">Persistência</span>
-                  <strong class="d-val">H2 ACID em Arquivo</strong>
+
+                <div class="dio-metrics-grid" id="estudosMetricsGrid">
+                  <div class="dio-metric-item">
+                    <span class="d-label">Módulo Atual</span>
+                    <strong class="d-val" id="estudosModAtual">Dominando Java 21</strong>
+                  </div>
+                  <div class="dio-metric-item">
+                    <span class="d-label">Testes JUnit 5</span>
+                    <strong class="d-val text-green" id="estudosTestesVal">15/15 Passando (100%)</strong>
+                  </div>
+                  <div class="dio-metric-item">
+                    <span class="d-label">Persistência</span>
+                    <strong class="d-val" id="estudosPersistVal">H2 ACID em Arquivo</strong>
+                  </div>
+                  <div class="dio-metric-item">
+                    <span class="d-label">Protocolo MCP</span>
+                    <strong class="d-val" id="estudosMcpVal">Spring AI Model Context</strong>
+                  </div>
                 </div>
-                <div class="dio-metric-item">
-                  <span class="d-label">Protocolo MCP</span>
-                  <strong class="d-val">Spring AI Model Context</strong>
+              </div>
+            </div>
+          </section>
+
+          <!-- DETAILED MODULES GRID -->
+          <div class="estudos-modules-grid" id="estudosModulesGrid">
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 01</span>
+                <span class="md3-badge md3-badge--success">CONCLUÍDO</span>
+              </div>
+              <h4 class="module-card-title">Fundamentos de Java 21 & POO</h4>
+              <p class="module-card-desc">Sintaxe moderna, orientação a objetos profunda, tipos primitivos, wrappers e boas práticas.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded">check_circle</span> Classes, Objetos e Encapsulamento</li>
+                <li><span class="material-symbols-rounded">check_circle</span> Herança, Polimorfismo e Interfaces</li>
+                <li><span class="material-symbols-rounded">check_circle</span> Tratamento de Exceções & Collections API</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card" style="border-color: var(--nova-primary);">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 02</span>
+                <span class="md3-badge md3-badge--warning">EM ANDAMENTO</span>
+              </div>
+              <h4 class="module-card-title">Dominando Java 21 & Features Modernas</h4>
+              <p class="module-card-desc">Records imutáveis, Pattern Matching avançado, Sealed Classes, Sequenced Collections e Virtual Threads.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded">radio_button_checked</span> Records & Imutabilidade de Domínio</li>
+                <li><span class="material-symbols-rounded">radio_button_checked</span> Pattern Matching for switch</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Virtual Threads (Project Loom)</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 03</span>
+                <span class="md3-badge">EM BREVE</span>
+              </div>
+              <h4 class="module-card-title">Ecossistema Spring Boot 3.3</h4>
+              <p class="module-card-desc">Construção de APIs RESTful robustas, Spring Data JPA, H2 Database e validação Bean Validation.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring Web & Controladores REST</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring Data JPA & Transações ACID</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Tratamento Centralizado de Erros</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 04</span>
+                <span class="md3-badge">EM BREVE</span>
+              </div>
+              <h4 class="module-card-title">Clean Architecture & SOLID</h4>
+              <p class="module-card-desc">Segregação estrita em camadas de Domínio, Aplicação, Infraestrutura e Apresentação sem acoplamento.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Princípios SOLID na Prática</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Use Cases Independentes de Framework</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Inversão de Dependências (DIP)</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 05</span>
+                <span class="md3-badge">EM BREVE</span>
+              </div>
+              <h4 class="module-card-title">Spring AI & Model Context Protocol</h4>
+              <p class="module-card-desc">Integração do ecossistema Java com LLMs (Gemini), servidor de ferramentas MCP e engenharia de contexto.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring AI MCP Server</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Tool Calling & Function Execution</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Pipelines Autônomos de IA</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 06</span>
+                <span class="md3-badge">EM BREVE</span>
+              </div>
+              <h4 class="module-card-title">Testes Automatizados com JUnit 5</h4>
+              <p class="module-card-desc">Estratégias completas de TDD, mocks com Mockito, testes de integração de Use Cases e validação de regressão.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Testes Unitários de Regras de Negócio</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Mocking de Portas e Repositórios</li>
+                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Cobertura de Código & AssertJ</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- METODOLOGIAS ATIVAS GRID -->
+          <div class="metodologias-grid">
+            <div class="metodologia-card">
+              <div class="metodologia-card-head">
+                <span class="material-symbols-rounded text-green">psychology</span>
+                <h4>Técnica Feynman Aplicada</h4>
+              </div>
+              <p>Explicações conceituais didáticas e assertivas em linguagem clara com analogias da vida real antes de aprofundar na sintaxe e contratos de código.</p>
+            </div>
+
+            <div class="metodologia-card">
+              <div class="metodologia-card-head">
+                <span class="material-symbols-rounded text-coral">code</span>
+                <h4>Active Recall & Desafios TDD</h4>
+              </div>
+              <p>Fixação ativa orientada a testes automatizados JUnit 5. Cada conceito aprendido é validado por um desafio com assertivas de código.</p>
+            </div>
+          </div>
+
+        </div> <!-- /#view-estudos -->
+
+        <!-- ==============================================
+             6. ABA DEDICADA: ENGENHARIA, TESTES & TELEMETRIA
+             ============================================== -->
+        <div id="view-engenharia" class="view-section view-panel" style="display: none;">
+
+          <div class="tab-view-header">
+            <div>
+              <h2>Engenharia de Software, Arquitetura & Telemetria</h2>
+              <p>Arquitetura Clean Architecture em camadas estritas, microsserviço Spring Boot 3.3 e suíte de testes JUnit 5</p>
+            </div>
+            <div class="tab-header-actions">
+              <a href="https://github.com/fabiorodrigues-tech-dev/NOVA" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal" title="Acessar repositório oficial no GitHub">
+                <span class="material-symbols-rounded">code</span>
+                <span>GitHub Repositório</span>
+              </a>
+              <a href="https://github.com/fabiorodrigues-tech-dev/NOVA/actions" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal" title="Acessar GitHub Actions e CI/CD">
+                <span class="material-symbols-rounded">sync</span>
+                <span>GitHub Actions</span>
+              </a>
+              <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
+                <span class="material-symbols-rounded">bolt</span>
+                <span>Swagger UI (8081)</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="eng-metrics-grid">
+            <!-- Card 1: JUnit 5 Tests -->
+            <div class="eng-card">
+              <div class="eng-card-header">
+                <div class="eng-card-title">
+                  <span class="material-symbols-rounded text-green">verified</span>
+                  <h4>Suíte de Testes Automatizados</h4>
+                </div>
+                <span class="md3-badge md3-badge--success card-badge metric-pill tech-tag">100% PASS</span>
+              </div>
+              <p style="font-size: 12px; color: var(--nova-on-surface-variant); line-height: 1.45;">
+                Garantia de regressão contínua com JUnit 5 e Mockito cobrindo regras de negócio, use cases de finanças, persistência e síntese vocal.
+              </p>
+              <div class="eng-tech-list">
+                <div class="eng-tech-item">
+                  <span>Testes Executados</span>
+                  <strong>40 Testes (40/40)</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Framework de Testes</span>
+                  <strong>JUnit 5 + Mockito 5</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Tempo de Execução</span>
+                  <strong>~2.8 segundos</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Script de Validação</span>
+                  <strong>./run-tests.sh</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Clean Architecture -->
+            <div class="eng-card">
+              <div class="eng-card-header">
+                <div class="eng-card-title">
+                  <span class="material-symbols-rounded text-blue">layers</span>
+                  <h4>Clean Architecture & SOLID</h4>
+                </div>
+                <span class="md3-badge card-badge metric-pill tech-tag">4 CAMADAS</span>
+              </div>
+              <p style="font-size: 12px; color: var(--nova-on-surface-variant); line-height: 1.45;">
+                Desacoplamento estrito entre regras de negócio corporativas e detalhes de infraestrutura (banco de dados, frameworks e rede).
+              </p>
+              <div class="eng-tech-list">
+                <div class="eng-tech-item">
+                  <span>Domain</span>
+                  <strong>Entities, Value Objects & Enums</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Application</span>
+                  <strong>Use Cases & Input/Output Ports</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Infrastructure</span>
+                  <strong>H2 Repositories, Edge-TTS & OFX Parser</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Presentation</span>
+                  <strong>REST Controllers & Voice Bridge</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Persistência H2 ACID -->
+            <div class="eng-card">
+              <div class="eng-card-header">
+                <div class="eng-card-title">
+                  <span class="material-symbols-rounded text-yellow">database</span>
+                  <h4>Persistência Relacional H2 ACID</h4>
+                </div>
+                <span class="md3-badge md3-badge--warning card-badge metric-pill tech-tag">ARQUIVO EMBEDDED</span>
+              </div>
+              <p style="font-size: 12px; color: var(--nova-on-surface-variant); line-height: 1.45;">
+                Banco relacional ACID persistido em arquivo local (`financeiro/banco_h2`), com conciliação bancária automática de extratos OFX.
+              </p>
+              <div class="eng-tech-list">
+                <div class="eng-tech-item">
+                  <span>Engine de Persistência</span>
+                  <strong>H2 Database 2.2</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Modo de Armazenamento</span>
+                  <strong>File-based (financeiro/banco_h2)</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Transações</span>
+                  <strong>ACID Completo</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Importador OFX</span>
+                  <strong>Parser Nativo Java 21</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Protocolo MCP & IA -->
+            <div class="eng-card">
+              <div class="eng-card-header">
+                <div class="eng-card-title">
+                  <span class="material-symbols-rounded text-purple">psychology</span>
+                  <h4>Spring AI & Protocolo MCP</h4>
+                </div>
+                <span class="md3-badge card-badge metric-pill tech-tag">MODEL CONTEXT PROTOCOL</span>
+              </div>
+              <p style="font-size: 12px; color: var(--nova-on-surface-variant); line-height: 1.45;">
+                Exposição de ferramentas operacionais padronizadas para agentes autônomos e orquestração de LLMs via Spring AI.
+              </p>
+              <div class="eng-tech-list">
+                <div class="eng-tech-item">
+                  <span>Protocolo de Integração</span>
+                  <strong>Model Context Protocol (MCP)</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Modelos LLM</span>
+                  <strong>Gemini 2.5 Flash / Pro</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Síntese de Voz</span>
+                  <strong>Edge-TTS 24 kHz Base64</strong>
+                </div>
+                <div class="eng-tech-item">
+                  <span>Fallback de Dúvidas</span>
+                  <strong>3 Níveis (Local > Core > Web)</strong>
                 </div>
               </div>
             </div>
           </div>
-        </section>
 
-        </div> <!-- /#dashboard-view -->
+        </div> <!-- /#view-engenharia -->
 
         <!-- ==============================================
-             SEÇÃO UNIFICADA: NOVA VOICE STUDIO PRO (GOOGLE STORE & M3 SLOTS)
+             5. ABA DEDICADA: NOVA VOICE STUDIO PRO
              ============================================== -->
-        <div id="voice-studio-view" class="view-panel" style="display: none;">
+        <div id="view-voice-studio" class="view-section view-panel" style="display: none;">
           
           <!-- 1. Executive Showcase Bento Grid -->
           <section class="vs-showcase-grid">
@@ -800,14 +1242,14 @@
               <!-- Coluna de Texto & Presets -->
               <div class="vs-lab-input-col">
                 <div class="vs-textarea-wrapper">
-                  <textarea id="vsTextInput" class="vs-custom-textarea" rows="3" placeholder="Digite uma frase personalizada para sintetizar...">Olá, Fábio! Todos os serviços do NOVA estão operacionais e prontos para uso.</textarea>
+                  <textarea id="vsTextInput" class="vs-custom-textarea" rows="3" placeholder="Digite uma frase personalizada para sintetizar...">Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro.</textarea>
                   <button class="btn-clear-text" onclick="document.getElementById('vsTextInput').value=''; document.getElementById('vsTextInput').focus();" title="Limpar texto">
                     <span class="material-symbols-rounded">close</span>
                   </button>
                 </div>
                 <div class="vs-presets-row">
                   <span class="vs-presets-label">Sugestões Rápidas:</span>
-                  <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Olá, Fábio! Todos os serviços do NOVA estão operacionais e prontos para uso.')">🚀 Status Geral</button>
+                  <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro.')">🚀 Boas-Vindas Tech Recruiters</button>
                   <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Fábio, seu saldo líquido de Agosto é de R$ 589,23 com 43 lançamentos conciliados no H2.')">💰 Saldo Financeiro</button>
                   <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Sua candidatura para Analista de Endomarketing no Grupo Luck atingiu 92% de match!')">💼 Vaga Grupo Luck</button>
                   <button class="btn-vs-preset md3-chip md3-chip--suggestion" onclick="definirFraseTeste('Você concluiu 2 módulos na Trilha Santander 2026 AI Java Back-end na DIO.')">🎓 Trilha DIO</button>
@@ -879,7 +1321,9 @@
           <!-- Hidden Audio Element para Reprodução -->
           <audio id="vsAudioPlayer"></audio>
 
-        </div> <!-- /#voice-studio-view -->
+        </div> <!-- /#view-voice-studio -->
+
+      </div> <!-- /.views-container -->
 
       </main>
 
@@ -911,6 +1355,61 @@
           <span class="material-symbols-rounded">content_copy</span>
           <span>Copiar Pitch para Área de Transferência</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Material 3: Desbloqueio de Dados Reais por PIN -->
+  <div class="modal-overlay pin-modal" id="pin-modal" data-id="pinSecurityModal" role="dialog" aria-modal="true" aria-labelledby="pinModalTitle">
+    <div class="modal-window pin-modal-window">
+      <div class="modal-top">
+        <div class="pin-modal-header-info">
+          <div class="pin-modal-badge-icon">
+            <span class="material-symbols-rounded">shield_lock</span>
+          </div>
+          <div>
+            <h3 id="pinModalTitle">Acesso a Dados Reais</h3>
+            <span class="modal-subheading">Proteção LGPD • Acesso Restrito de Administrador</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="fecharModalPin()" aria-label="Fechar modal">&times;</button>
+      </div>
+      <div class="modal-content-area pin-modal-content">
+        <p class="pin-modal-desc">
+          Para visualizar os dados reais do banco H2, movimentações financeiras e candidaturas não anonimizadas, confirme seu <strong>PIN de Administrador</strong>.
+        </p>
+        <form id="pinAuthForm" onsubmit="event.preventDefault(); submeterPinAutenticacao();">
+          <div class="pin-input-group">
+            <label for="adminPinInput" class="pin-field-label">PIN de Administrador</label>
+            <div class="pin-input-wrapper">
+              <span class="material-symbols-rounded pin-field-icon" aria-hidden="true">password</span>
+              <input 
+                type="password" 
+                id="adminPinInput" 
+                class="pin-input-field" 
+                placeholder="Digite o PIN de Administrador" 
+                maxlength="16" 
+                autocomplete="current-password"
+                inputmode="numeric"
+                required
+              >
+              <button type="button" class="btn-toggle-pin-visibility" onclick="alternarVisibilidadePin()" title="Mostrar/Ocultar PIN" aria-label="Mostrar ou ocultar dígitos do PIN">
+                <span class="material-symbols-rounded" id="pinVisibilityIcon">visibility</span>
+              </button>
+            </div>
+          </div>
+          <div class="pin-error-message" id="pinErrorMessage" style="display: none;" role="alert">
+            <span class="material-symbols-rounded pin-err-icon">error</span>
+            <span id="pinErrorText">PIN incorreto. Tente novamente.</span>
+          </div>
+          <div class="pin-modal-actions">
+            <button type="button" class="md3-button md3-button--text btn-pin-cancel" onclick="fecharModalPin()">Cancelar</button>
+            <button type="submit" id="btnConfirmPin" class="md3-button md3-button--filled btn-confirm-pin">
+              <span class="material-symbols-rounded">lock_open</span>
+              <span>Desbloquear</span>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
