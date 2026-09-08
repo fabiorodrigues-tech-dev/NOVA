@@ -920,45 +920,126 @@ async def sintetizar_audio_base64(texto: str, voz_id: str, taxa: str = "+0%") ->
             except Exception:
                 pass
 
-def processar_intencao_voz(comando_texto: str) -> str:
+def processar_intencao_voz(comando_texto: str, is_demo: bool = True) -> str:
     """
-    Roteador semântico de inteligência por voz para Carreira, Estudos, Finanças e Conhecimento Geral.
+    Roteador semântico de inteligência por voz para Carreira, Estudos, Finanças, Apresentação e Conhecimento Geral.
+    Aplica isolamento estrito LGPD Safe quando is_demo for True.
     """
-    cmd = comando_texto.lower().strip() if comando_texto else ""
+    cmd = (comando_texto or "").lower().strip()
 
-    # 0. Saudação Inicial / Boas-Vindas Tech Recruiters
+    # 1. Apresentação / Capacidades do Assistente
+    # "o que você pode fazer", "o que voce faz", "quais suas funcoes", "quais seus comandos", "como pode me ajudar"
+    termos_apresentacao = [
+        "o que você pode fazer", "o que voce pode fazer",
+        "o que você faz", "o que voce faz",
+        "o que você sabe fazer", "o que voce sabe fazer",
+        "quais suas funcoes", "quais suas funções",
+        "quais seus comandos", "quais os comandos",
+        "como pode me ajudar", "como me ajuda",
+        "o que você faz aqui", "o que voce faz aqui",
+        "quem é você", "quem e voce", "suas funções", "suas funcoes",
+        "o que pode fazer"
+    ]
+    if any(p in cmd for p in termos_apresentacao):
+        return (
+            "Olá! Sou o NOVA, seu assistente de inteligência e orquestrador de engenharia. "
+            "Posso consultar seu saldo e projeção financeira em tempo real, "
+            "apresentar suas candidaturas ativas e índice de match por vaga, "
+            "acompanhar seu plano de estudos e mentoria técnica, "
+            "e monitorar a telemetria do microsserviço Spring Boot com suíte de testes. "
+            "Você pode me perguntar: 'qual meu saldo', 'quais minhas vagas', ou 'como estão meus estudos'."
+        )
+
+    # 2. Finanças / Saldo / Gastos / Previsão
+    # "qual meu saldo", "resumo financeiro", "gastos", "previsão"
+    termos_financas = [
+        "qual meu saldo", "qual o meu saldo", "meu saldo", "saldo",
+        "resumo financeiro", "gastos", "gasto", "quanto gastei",
+        "previsão", "previsao", "previsao financeira", "projecao", "projeção",
+        "despesas", "despesa", "receitas", "receita", "dinheiro", "caixa", "quanto sobrou"
+    ]
+    if any(p in cmd for p in termos_financas):
+        if is_demo:
+            return (
+                "No Modo Demonstração protegido por privacidade, seu saldo consolidado é de 4.250 reais, "
+                "com 7 entradas de receitas e 36 saídas controladas no período apurado. "
+                "O fluxo financeiro está saudável, mantendo as reservas técnicas e superávit operacional estimado."
+            )
+        else:
+            fin = obter_resumo_financeiro(demo=False)
+            saldo = fin.get("saldo", 589.23)
+            rec = fin.get("totalReceitas", 2299.00)
+            desp = fin.get("totalGasto", 1709.77)
+            saldo_fmt = f"{saldo:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+            rec_fmt = f"{rec:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+            desp_fmt = f"{desp:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+            return (
+                f"Fábio, seu saldo real consolidado no banco H2 é de {saldo_fmt} reais. "
+                f"No período apurado, suas receitas somam {rec_fmt} reais e o total de despesas pagas é de {desp_fmt} reais, "
+                f"mantendo seu fluxo de caixa positivo e dados protegidos."
+            )
+
+    # 3. Carreira / Vagas / Candidaturas / Melhor Vaga
+    # "minha carreira", "vagas", "melhor vaga", "candidaturas"
+    termos_carreira = [
+        "minha carreira", "carreira", "vagas", "vaga", "melhor vaga",
+        "candidaturas", "candidatura", "onde me candidatar", "oportunidades",
+        "empresas", "recruiter", "pitch", "entrevistas", "processos seletivos"
+    ]
+    if any(p in cmd for p in termos_carreira):
+        if is_demo:
+            return (
+                "No Modo Demonstração, temos três oportunidades de referência mapeadas: "
+                "TechCorp Global com 96% de aderência técnica para Arquiteto Back-end, "
+                "FinScale Systems com 94% para Especialista Java e CloudLab AI com 91% de match para Engenharia de IA."
+            )
+        else:
+            vagas = obter_dados_candidaturas(demo=False)
+            total_vagas = len(vagas)
+            melhor = max(vagas, key=lambda v: v.get("match", 0)) if vagas else None
+            melhor_nome = melhor.get("nome", "Gummy") if melhor else "Gummy"
+            melhor_match = melhor.get("match", 96) if melhor else 96
+            return (
+                f"Fábio, no seu painel de carreiras temos {total_vagas} oportunidades mapeadas com alto índice de match. "
+                f"A principal oportunidade é a {melhor_nome} com {melhor_match}% de aderência técnica para Tech e Vídeo, "
+                f"seguida por Capgemini com 92% para Java Back-end, Accenture com 88% e Deloitte com 86%."
+            )
+
+    # 4. Estudos / Progresso / O que estudar
+    # "estudos", "o que estudar", "progresso"
+    termos_estudos = [
+        "estudos", "estudo", "o que estudar", "progresso",
+        "trilha", "dio", "santander", "curso", "módulo", "modulo",
+        "feynman", "formação", "formacao", "plano de estudos"
+    ]
+    if any(p in cmd for p in termos_estudos):
+        if is_demo:
+            return (
+                "No seu currículo do Modo Demonstração, você está na Especialização em Engenharia de Sistemas Distribuídos e Cloud Native "
+                "com 90% de conclusão em 18 de 20 módulos finalizados, focando em Virtual Threads no Java 21, Kafka e arquitetura orientada a eventos."
+            )
+        else:
+            return (
+                "Fábio, você atingiu 100% de conclusão na Trilha Santander 2026 AI Java Back-end da DIO com 26 de 26 atividades e certificado emitido, "
+                "além de ter concluído todos os 5 módulos da Especialização Full Stack e Cloud DevOps cobrindo Docker, CI/CD e deploy no Render."
+            )
+
+    # 5. Engenharia / Status / Testes / Microsserviço
+    termos_engenharia = [
+        "engenharia", "status", "sistema", "sistemas", "operacional", "operacionais",
+        "microsserviço", "microsservico", "teste", "testes", "junit", "spring boot", "health"
+    ]
+    if any(p in cmd for p in termos_engenharia):
+        return (
+            "Todos os sistemas do NOVA estão plenamente operacionais: "
+            "Microsserviço Spring Boot 3 na porta 8081 ativo, persistência relacional H2 ACID e 40 testes automatizados JUnit 5 aprovados com 100% de sucesso."
+        )
+
+    # 6. Saudação Inicial / Boas-Vindas
     if not cmd or cmd in ["olá", "ola", "oi", "bom dia", "boa tarde", "boa noite", "nova", "hello", "hi"]:
         return "Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro."
 
-    # 1. Finanças & H2 ("saldo", "resumo financeiro", "gastos")
-    if any(k in cmd for k in ["saldo", "resumo financeiro", "gasto", "gastos", "despesa", "despesas", "receita", "receitas", "finança", "finanças", "dinheiro", "caixa", "quanto sobrou"]):
-        return (
-            "Fábio, seu saldo consolidado atual é de 589 reais e 23 centavos. "
-            "No período apurado, suas receitas somam 2.299 reais e o total de despesas pagas é de 1.709 reais e 77 centavos, mantendo seu fluxo de caixa positivo com 34.5% de economia."
-        )
-
-    # 2. Carreira & Vagas ("carreira", "vagas", "melhor vaga")
-    if any(k in cmd for k in ["vaga", "vagas", "carreira", "candidatura", "candidaturas", "melhor vaga", "onde me candidatar", "capgemini", "gummy", "deloitte", "accenture", "recruiter", "pitch", "emprego"]):
-        return (
-            "Fábio, no painel de carreiras temos quatro oportunidades mapeadas com alto índice de match: "
-            "Gummy com 96% de aderência técnica para Tech e Vídeo, Capgemini com 92% para Java Back-end, Accenture com 88% e Deloitte com 86%."
-        )
-
-    # 3. Estudos & Avanço Técnico ("estudos", "progresso")
-    if any(k in cmd for k in ["estudo", "estudos", "progresso", "trilha", "dio", "santander", "módulo", "modulo", "curso", "feynman"]):
-        return (
-            "No seu plano de estudos avançados de Engenharia de Sistemas Distribuídos e Cloud Native, você atingiu 90% de conclusão com 18 de 20 módulos finalizados. "
-            "Já na Trilha Santander 2026 da DIO, você concluiu 2 de 26 módulos com 7.7% de progresso, dominando os fundamentos de Java 21 e POO."
-        )
-
-    # 4. Geral / Ajuda / Status / Health Check ("ajuda", "comandos", "status")
-    if any(k in cmd for k in ["ajuda", "comando", "comandos", "status", "health", "sistema", "sistemas", "operacional", "operacionais", "microsserviço", "microsservico", "teste", "testes"]):
-        return (
-            "Todos os sistemas do NOVA estão plenamente operacionais: "
-            "Microsserviço Spring Boot 3 na porta 8081 ativo, banco H2 com persistência ACID e 40 testes automatizados JUnit 5 aprovados com 100% de sucesso."
-        )
-
-    # 5. Conceitos Técnicos / Conhecimento Geral (Nível 2)
+    # 7. Conceitos Técnicos (Nível 2)
     if "clean architecture" in cmd or "arquitetura hexagonal" in cmd:
         return "Clean Architecture é um padrão arquitetural que isola as regras de negócio de frameworks e bancos de dados através de casos de uso e inversão de dependências."
     elif "tdd" in cmd or "test driven" in cmd:
@@ -968,8 +1049,12 @@ def processar_intencao_voz(comando_texto: str) -> str:
     elif "mcp" in cmd or "model context" in cmd:
         return "O Model Context Protocol é o padrão aberto para integrar ferramentas e bancos de dados diretamente ao contexto de agentes e modelos de inteligência artificial."
 
-    # 6. Fallback Geral
-    return "Olá, Fábio! Reconheci seu comando. Todos os microsserviços de finanças H2, candidaturas 360° e estudos avançados estão 100% operacionais no NOVA Control Center."
+    # 8. Fallback Geral
+    return (
+        "Reconheci seu comando. Como assistente do NOVA, posso apresentar seu saldo financeiro, "
+        "vagas de carreira, progresso de estudos ou telemetria dos sistemas. "
+        "Experimente perguntar: 'qual meu saldo', ou 'o que você pode fazer'."
+    )
 
 class DashboardHandler(BaseHTTPRequestHandler):
 
@@ -1133,11 +1218,22 @@ class DashboardHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers.get('Content-Length', 0))
             body = self.rfile.read(content_length)
             try:
-                req_data = json.loads(body.decode('utf-8'))
+                req_data = json.loads(body.decode('utf-8')) if body else {}
                 comando = req_data.get("comando", "Olá")
+                req_demo = req_data.get("is_demo")
                 
-                # 1. Processa semântica em Carreira, Estudos, Finanças ou Conceitos
-                resposta_texto = processar_intencao_voz(comando)
+                # Política de Privacidade Estrita (LGPD Safe):
+                # Se is_demo for True ou se o PIN 7770 não estiver autenticado, força is_demo = True
+                autenticado = is_pin_valido(self)
+                if req_demo is True or not autenticado:
+                    demo_ativo = True
+                elif req_demo is False and autenticado:
+                    demo_ativo = False
+                else:
+                    demo_ativo = is_demo_mode(self)
+                
+                # 1. Processa semântica em Carreira, Estudos, Finanças ou Apresentação
+                resposta_texto = processar_intencao_voz(comando, is_demo=demo_ativo)
 
                 # 2. Configurações de voz
                 cfg = carregar_config_voz()
@@ -1151,6 +1247,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
                     "texto": resposta_texto,
                     "audio_base64": audio_b64,
                     "voz": voz_id,
+                    "is_demo": demo_ativo,
                     "status": "SUCESSO"
                 })
             except Exception as e:

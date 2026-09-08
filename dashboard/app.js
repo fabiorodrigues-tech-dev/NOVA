@@ -13,6 +13,7 @@ let pitchTextoAtual = "";
 // Voice Recognition & Audio Player & Living Shader Engine
 let recognition = null;
 let isRecording = false;
+let isProcessingVoice = false;
 let currentAudioPlayer = null;
 let estadoAtualDashboard = 'normal';
 let novaLivingShaderEngine = null;
@@ -1222,37 +1223,67 @@ function inicializarSpeechRecognition() {
   recognition.onstart = () => {
     isRecording = true;
     atualizarEstadoVoz('listening', 'Ouvindo sua voz...');
-    document.getElementById('btnMicToggle').classList.add('active');
-    document.getElementById('btnMicLabel').innerText = 'Gravando...';
+    const btnMic = document.getElementById('btnMicToggle');
+    if (btnMic) btnMic.classList.add('active');
+    const btnLbl = document.getElementById('btnMicLabel');
+    if (btnLbl) btnLbl.innerText = 'Gravando...';
   };
 
   recognition.onresult = async (event) => {
-    const transcricao = event.results[0][0].transcript;
-    if (transcricao) {
-      adicionarMensagemChat('user', transcricao);
-      atualizarEstadoVoz('thinking', 'Processando resposta...');
-      await enviarComandoParaBackend(transcricao);
+    // 1. Anti-Loop Acústico: Se já estiver processando requisição ou reproduzindo áudio, ignora captura
+    if (isProcessingVoice) {
+      return;
     }
+
+    // 2. Só envia requisição quando isFinal for true, evitando múltiplos envios em loop
+    if (!event.results || !event.results[0] || event.results[0].isFinal !== true) {
+      return;
+    }
+
+    const transcricao = (event.results[0][0].transcript || "").trim();
+    if (!transcricao) return;
+
+    // 3. Bloqueia novas capturas e interrompe o microfone temporariamente
+    isProcessingVoice = true;
+    try {
+      recognition.abort();
+    } catch (e) {}
+
+    adicionarMensagemChat('user', transcricao, transcricao);
+    atualizarEstadoVoz('thinking', 'Processando resposta...');
+    await enviarComandoParaBackend(transcricao);
   };
 
   recognition.onerror = (event) => {
     console.warn("Erro no reconhecimento de fala:", event.error);
-    atualizarEstadoVoz('idle', 'Pronto para ouvir');
-    document.getElementById('btnMicToggle').classList.remove('active');
-    document.getElementById('btnMicLabel').innerText = 'Pressione para Falar';
+    if (!isProcessingVoice) {
+      atualizarEstadoVoz('idle', 'Pronto para ouvir');
+    }
+    const btnMic = document.getElementById('btnMicToggle');
+    if (btnMic) btnMic.classList.remove('active');
+    const btnLbl = document.getElementById('btnMicLabel');
+    if (btnLbl) btnLbl.innerText = 'Pressione para Falar';
     isRecording = false;
   };
 
   recognition.onend = () => {
     isRecording = false;
-    document.getElementById('btnMicToggle').classList.remove('active');
-    document.getElementById('btnMicLabel').innerText = 'Pressione para Falar';
+    const btnMic = document.getElementById('btnMicToggle');
+    if (btnMic) btnMic.classList.remove('active');
+    const btnLbl = document.getElementById('btnMicLabel');
+    if (btnLbl) btnLbl.innerText = 'Pressione para Falar';
   };
 }
 
 function toggleGravacaoVoz() {
   if (!recognition) {
     showToast("⚠️ Reconhecimento de voz não suportado neste navegador.");
+    return;
+  }
+
+  // Previne acionamento durante processamento ou reprodução
+  if (isProcessingVoice) {
+    showToast("Aguarde a resposta atual terminar antes de falar.");
     return;
   }
 
@@ -1269,56 +1300,84 @@ function toggleGravacaoVoz() {
 
 function enviarTextoDigitado() {
   const input = document.getElementById('vaTextInput');
-  const texto = input.value.trim();
+  const texto = input ? input.value.trim() : '';
   if (!texto) return;
 
-  adicionarMensagemChat('user', texto);
+  // Interrompe áudio anterior se estiver tocando
+  if (isProcessingVoice && currentAudioPlayer) {
+    try { currentAudioPlayer.pause(); } catch (e) {}
+    currentAudioPlayer = null;
+  }
+
+  isProcessingVoice = true;
+  if (recognition) {
+    try { recognition.abort(); } catch (e) {}
+  }
+
+  adicionarMensagemChat('user', texto, texto);
   atualizarEstadoVoz('thinking', 'Processando resposta...');
-  input.value = '';
+  if (input) input.value = '';
   enviarComandoParaBackend(texto);
 }
 
 function executarPromptRapido(prompt) {
-  document.getElementById('vaTextInput').value = prompt;
+  const input = document.getElementById('vaTextInput');
+  if (input) input.value = prompt;
   enviarTextoDigitado();
 }
 
 async function enviarComandoParaBackend(comando) {
   const selectVoz = document.getElementById('selectVoiceModel');
   const vozEscolhida = selectVoz ? selectVoz.value : 'pt-BR-FranciscaNeural';
+  const isDemoModeActive = isDemoMode();
 
   try {
     const res = await fetch('/api/voice/interact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ comando, voz: vozEscolhida })
+      headers: {
+        'Content-Type': 'application/json',
+        ...obterAuthHeaders()
+      },
+      body: JSON.stringify({
+        comando,
+        voz: vozEscolhida,
+        is_demo: isDemoModeActive
+      })
     });
 
     if (!res.ok) throw new Error("Erro na resposta do servidor");
     const data = await res.json();
 
-    // Adiciona resposta do assistente no diálogo
-    adicionarMensagemChat('assistant', data.texto);
+    // Adiciona resposta do assistente no diálogo passando comando para checagem de apresentação
+    adicionarMensagemChat('assistant', data.texto, comando);
 
-    // Reproduz o áudio retornado em Base64
+    // Reproduz o áudio neural retornado em Base64
     if (data.audio_base64) {
       reproduzirAudioBase64(data.audio_base64);
     } else {
       atualizarEstadoVoz('idle', 'Pronto para ouvir');
+      isProcessingVoice = false;
     }
 
   } catch (err) {
     console.error("Erro na interação de voz:", err);
-    adicionarMensagemChat('assistant', "Desculpe, ocorreu uma instabilidade ao conectar com o serviço de voz.");
+    adicionarMensagemChat('assistant', "Desculpe, ocorreu uma instabilidade ao conectar com o serviço de voz.", comando);
     atualizarEstadoVoz('idle', 'Pronto para ouvir');
+    isProcessingVoice = false;
   }
 }
 
 function reproduzirAudioBase64(base64Data) {
   if (currentAudioPlayer) {
-    currentAudioPlayer.pause();
+    try { currentAudioPlayer.pause(); } catch (e) {}
     currentAudioPlayer = null;
   }
+
+  // Interrompe o microfone temporariamente para evitar loop acústico
+  if (recognition) {
+    try { recognition.abort(); } catch (e) {}
+  }
+  isProcessingVoice = true;
 
   const audioSrc = "data:audio/mp3;base64," + base64Data;
   currentAudioPlayer = new Audio(audioSrc);
@@ -1331,16 +1390,21 @@ function reproduzirAudioBase64(base64Data) {
   currentAudioPlayer.onended = () => {
     atualizarEstadoVoz('idle', 'Pronto para ouvir');
     currentAudioPlayer = null;
+    isProcessingVoice = false; // Libera o microfone novamente
   };
 
   currentAudioPlayer.onerror = () => {
     console.error("Erro ao tocar áudio");
     atualizarEstadoVoz('idle', 'Pronto para ouvir');
+    currentAudioPlayer = null;
+    isProcessingVoice = false; // Libera o microfone
   };
 
   currentAudioPlayer.play().catch(e => {
     console.warn("Autoplay bloqueado pelo navegador:", e);
     atualizarEstadoVoz('idle', 'Pronto para ouvir');
+    currentAudioPlayer = null;
+    isProcessingVoice = false;
   });
 }
 
@@ -1360,19 +1424,64 @@ function atualizarEstadoVoz(estado, textoStatus) {
   }
 }
 
-function adicionarMensagemChat(remetente, texto) {
+function adicionarMensagemChat(remetente, texto, comandoOrigem = '') {
   const dialogBox = document.getElementById('vaDialogBox');
+  if (!dialogBox) return;
   const msg = document.createElement('div');
   msg.className = `va-message ${remetente}`;
 
   const avatar = remetente === 'user' ? '👤' : '🌌';
   const author = remetente === 'user' ? 'Você' : 'NOVA';
 
+  // Identifica intenção de apresentação para renderizar os 4 botões de atalho rápido
+  const cmdNorm = (comandoOrigem || "").toLowerCase();
+  const txtNorm = (texto || "").toLowerCase();
+  const termosApresentacao = [
+    "o que você pode fazer", "o que voce pode fazer",
+    "o que você faz", "o que voce faz",
+    "quais suas funcoes", "quais suas funções",
+    "quais seus comandos", "quais os comandos",
+    "como pode me ajudar", "o que você sabe fazer",
+    "o que voce sabe fazer", "o que pode fazer"
+  ];
+  const ehApresentacao = remetente === 'assistant' && (
+    termosApresentacao.some(t => cmdNorm.includes(t)) ||
+    txtNorm.includes("sou o nova, seu assistente") ||
+    txtNorm.includes("posso consultar seu saldo") ||
+    cmdNorm.includes("ajuda") ||
+    cmdNorm.includes("comandos")
+  );
+
+  let botoesApresentacaoHtml = '';
+  if (ehApresentacao) {
+    botoesApresentacaoHtml = `
+      <div class="va-quick-actions-bar" role="group" aria-label="Atalhos rápidos de navegação">
+        <button type="button" class="btn-va-action" onclick="executarPromptRapido('NOVA, qual é o meu saldo atual?')">
+          <span class="btn-va-icon">💰</span>
+          <span>Saldo</span>
+        </button>
+        <button type="button" class="btn-va-action" onclick="executarPromptRapido('quais são as minhas candidaturas ativas?')">
+          <span class="btn-va-icon">💼</span>
+          <span>Vagas</span>
+        </button>
+        <button type="button" class="btn-va-action" onclick="executarPromptRapido('como estão os meus estudos?')">
+          <span class="btn-va-icon">📚</span>
+          <span>Estudos</span>
+        </button>
+        <button type="button" class="btn-va-action" onclick="executarPromptRapido('status da engenharia e microsserviços')">
+          <span class="btn-va-icon">⚡</span>
+          <span>Engenharia</span>
+        </button>
+      </div>
+    `;
+  }
+
   msg.innerHTML = `
     <div class="msg-avatar">${avatar}</div>
     <div class="msg-content">
       <span class="msg-author">${author}</span>
       <p>${texto}</p>
+      ${botoesApresentacaoHtml}
     </div>
   `;
 
