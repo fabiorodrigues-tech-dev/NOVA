@@ -88,6 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
     alternarAbaDedicada('view-estudos', document.getElementById('menu-estudos'));
   } else if (hash.includes('engenharia') || viewParam === 'engenharia') {
     alternarAbaDedicada('view-engenharia', document.getElementById('menu-engenharia'));
+  } else if (hash.includes('api-docs') || viewParam === 'api-docs' || hash.includes('swagger')) {
+    alternarAbaDedicada('view-api-docs', document.getElementById('menu-api-docs'));
   }
 });
 
@@ -493,7 +495,7 @@ function renderizarExtratoFinanceiro(isDemo) {
 window.renderizarExtratoFinanceiro = renderizarExtratoFinanceiro;
 
 /* ==========================================================================
-   RENDERIZAÇÃO DA ABA ESTUDOS (MODO DEMO AVANÇADO SÊNIOR vs MODO REAL DIO)
+   RENDERIZAÇÃO DA ABA ESTUDOS (100% CONCLUÍDO • TRILHA 1 DIO & TRILHA 2 FULL STACK)
    ========================================================================== */
 function renderizarAbaEstudos(isDemo, dadosEstudos) {
   const headerTitle = document.getElementById('estudosHeaderTitle');
@@ -508,208 +510,186 @@ function renderizarAbaEstudos(isDemo, dadosEstudos) {
   const persistVal = document.getElementById('estudosPersistVal');
   const mcpVal = document.getElementById('estudosMcpVal');
   const modulesGrid = document.getElementById('estudosModulesGrid');
+  const trilha2Grid = document.getElementById('estudosTrilha2Grid');
 
-  if (isDemo) {
-    if (headerTitle) headerTitle.textContent = "Engenharia de Sistemas Distribuídos & Arquitetura Cloud Native";
-    if (headerSub) headerSub.textContent = "Especialização em Alta Concorrência, Event-Driven & Model Context Protocol";
-    if (widgetTitle) widgetTitle.textContent = "Engenharia de Sistemas Distribuídos & Arquitetura Cloud Native";
-    if (widgetSub) widgetSub.textContent = "Especialização em Alta Concorrência, Event-Driven & Model Context Protocol";
-    if (barLabel) barLabel.textContent = "Progresso da Especialização";
-    if (progressNum) progressNum.textContent = "18 de 20 Módulos (90% Concluído) • Nível Staff / Sênior";
-    if (progressBar) progressBar.style.width = "90%";
-    if (modAtual) modAtual.textContent = "Virtual Threads (Loom) & Kafka";
-    if (testesVal) testesVal.textContent = "40/40 Passando (100%)";
-    if (persistVal) persistVal.textContent = "H2 ACID / Kafka Event Store";
-    if (mcpVal) mcpVal.textContent = "Spring AI Model Context Protocol";
+  if (headerTitle) headerTitle.textContent = "Trilha Santander 2026 & Mentoria Técnica Back-end";
+  if (headerSub) headerSub.textContent = "Bootcamp Santander 2026 - AI Java Back-end (DIO) • Especialização Full Stack Cloud • Metodologias Ativas";
+  if (widgetTitle) widgetTitle.textContent = "Trilha Santander 2026 & Engenharia Back-end";
+  if (widgetSub) widgetSub.textContent = "DIO AI Java Back-end • Clean Architecture • Spring AI MCP";
+  if (barLabel) barLabel.textContent = "Progresso da Trilha Santander";
+  if (progressNum) {
+    progressNum.textContent = "26 de 26 Atividades (100% Concluído)";
+    progressNum.className = "text-green";
+  }
+  if (progressBar) {
+    progressBar.style.width = "100%";
+    progressBar.classList.add("bar-emerald-100");
+  }
+  if (modAtual) modAtual.textContent = "26/26 Concluídas";
+  if (testesVal) testesVal.textContent = "40/40 Passando (100%)";
+  if (persistVal) persistVal.textContent = "H2 ACID em Arquivo";
+  if (mcpVal) mcpVal.textContent = "Spring AI Model Context";
 
-    if (modulesGrid) {
-      modulesGrid.innerHTML = `
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 01</span>
-            <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
-          </div>
-          <h4 class="module-card-title">Microsserviços Reativos (Kafka)</h4>
-          <p class="module-card-desc">Arquitetura event-driven resiliente, brokers distribuídos, idempotência e particionamento de mensagens.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Producer/Consumer com Spring Kafka & Idempotência</li>
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Schema Registry Avro & Governança de Eventos</li>
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Resiliência com Dead Letter Queues (DLQ)</li>
-          </ul>
+  if (modulesGrid) {
+    modulesGrid.innerHTML = `
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 01</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">Fundamentos de Java 21 & POO</h4>
+        <p class="module-card-desc">Sintaxe moderna, orientação a objetos profunda, tipos primitivos, wrappers e boas práticas.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Classes, Objetos e Encapsulamento</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Herança, Polimorfismo e Interfaces</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Tratamento de Exceções & Collections API</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 02</span>
-            <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
-          </div>
-          <h4 class="module-card-title">Virtual Threads (Project Loom)</h4>
-          <p class="module-card-desc">Concorrência massiva sobre Java 21 gerenciando milhões de tarefas leves com baixa pegada de memória e IO não-bloqueante.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Structured Concurrency & Scoped Values no Java 21</li>
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Carrier Threads vs OS Threads sem Pinning de Socket</li>
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Migração de Thread Pools tradicionais para Virtual Executors</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 02</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">Dominando Java 21 & Features Modernas</h4>
+        <p class="module-card-desc">Records imutáveis, Pattern Matching avançado, Sealed Classes, Sequenced Collections e Virtual Threads.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Records & Imutabilidade de Domínio</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Pattern Matching for switch</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Virtual Threads (Project Loom)</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 03</span>
-            <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
-          </div>
-          <h4 class="module-card-title">Clean Architecture & DDD</h4>
-          <p class="module-card-desc">Segregação estrita em camadas de Domínio, Aplicação e Infraestrutura, com casos de uso desacoplados de frameworks.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Entidades Ricas, Value Objects e Agregados</li>
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Portas de Entrada e Saída (Arquitetura Hexagonal)</li>
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Inversão de Dependências (DIP) & SOLID Estrito</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 03</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">Ecossistema Spring Boot 3.3</h4>
+        <p class="module-card-desc">Construção de APIs RESTful robustas, Spring Data JPA, H2 Database e validação Bean Validation.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Spring Web & Controladores REST</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Spring Data JPA & Transações ACID</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Tratamento Centralizado de Erros (RFC 7807)</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card" style="border-color: var(--nova-primary);">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 04</span>
-            <span class="md3-badge md3-badge--warning card-badge metric-pill">EM ANDAMENTO</span>
-          </div>
-          <h4 class="module-card-title">Resiliência Distribuída (Saga Pattern)</h4>
-          <p class="module-card-desc">Transações distribuídas consistentes, coreografia vs orquestração de Sagas e compensação automática de falhas.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Saga Orchestrator com Spring Boot & Kafka</li>
-            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Transações Compensatórias e Idempotentes</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Outbox Pattern & CDC com Debezium</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 04</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">Clean Architecture & SOLID</h4>
+        <p class="module-card-desc">Segregação estrita em camadas de Domínio, Aplicação, Infraestrutura e Apresentação sem acoplamento.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Princípios SOLID na Prática</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Use Cases Independentes de Framework</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Inversão de Dependências (DIP)</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 05</span>
-            <span class="md3-badge md3-badge--warning card-badge metric-pill">EM ANDAMENTO</span>
-          </div>
-          <h4 class="module-card-title">Segurança Zero Trust & Protocolo MCP</h4>
-          <p class="module-card-desc">Defesa em profundidade, autenticação contínua e governança de contexto com Spring AI e Model Context Protocol.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Mutual TLS (mTLS) e Tokens JWT Criptografados</li>
-            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Servidor de Ferramentas Spring AI MCP (@Tool)</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Políticas de Contexto Seguro e Sandboxing para LLMs</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 05</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">Spring AI & Model Context Protocol</h4>
+        <p class="module-card-desc">Integração do ecossistema Java com LLMs (Gemini), servidor de ferramentas MCP e engenharia de contexto.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Spring AI MCP Server (@Tool)</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Tool Calling & Function Execution</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Pipelines Autônomos de IA & Fallback</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 06</span>
-            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
-          </div>
-          <h4 class="module-card-title">Observabilidade & Métricas em Escala</h4>
-          <p class="module-card-desc">Tracing distribuído com OpenTelemetry, dashboards Grafana e telemetria preditiva de anomalias em produção.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> OpenTelemetry Tracing & Micrometer</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Prometheus & Grafana Health Dashboards</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Detecção Preditiva de Degradação de Latência</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 06</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
-      `;
-    }
-  } else {
-    // Modo Real (PIN 7770): Trilha Santander DIO
-    if (headerTitle) headerTitle.textContent = "Trilha Santander 2026 & Mentoria Técnica Back-end";
-    if (headerSub) headerSub.textContent = "Bootcamp Santander 2026 - AI Java Back-end (DIO) • Clean Architecture • Metodologias Ativas";
-    if (widgetTitle) widgetTitle.textContent = "Trilha Santander 2026 & Engenharia Back-end";
-    if (widgetSub) widgetSub.textContent = "DIO AI Java Back-end • Clean Architecture • Spring AI MCP";
-    if (barLabel) barLabel.textContent = "Progresso da Trilha Santander";
-    if (progressNum) progressNum.textContent = "2 de 26 Módulos (7.7%)";
-    if (progressBar) progressBar.style.width = "7.7%";
-    if (modAtual) modAtual.textContent = "Dominando Java 21";
-    if (testesVal) testesVal.textContent = "40/40 Passando (100%)";
-    if (persistVal) persistVal.textContent = "H2 ACID em Arquivo";
-    if (mcpVal) mcpVal.textContent = "Spring AI Model Context";
+        <h4 class="module-card-title">Testes Automatizados com JUnit 5</h4>
+        <p class="module-card-desc">Estratégias completas de TDD, mocks com Mockito, testes de integração de Use Cases e validação de regressão.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Testes Unitários de Regras de Negócio</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Mocking de Portas e Repositórios</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Cobertura de Código & AssertJ (40/40)</li>
+        </ul>
+      </div>
+    `;
+  }
 
-    if (modulesGrid) {
-      modulesGrid.innerHTML = `
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 01</span>
-            <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
-          </div>
-          <h4 class="module-card-title">Fundamentos de Java 21 & POO</h4>
-          <p class="module-card-desc">Sintaxe moderna, orientação a objetos profunda, tipos primitivos, wrappers e boas práticas.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Classes, Objetos e Encapsulamento</li>
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Herança, Polimorfismo e Interfaces</li>
-            <li><span class="material-symbols-rounded text-green">check_circle</span> Tratamento de Exceções & Collections API</li>
-          </ul>
+  if (trilha2Grid) {
+    trilha2Grid.innerHTML = `
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 01</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">TypeScript Avançado & React Reativo</h4>
+        <p class="module-card-desc">Desenvolvimento frontend moderno e tipado com SPA reativo, hooks customizados e consumo de APIs.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Tipagem Estrita, Generics e Utility Types</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Hooks Avançados & Gestão de Estado Imutável</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Integração com REST APIs e WebSockets</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card" style="border-color: var(--nova-primary);">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 02</span>
-            <span class="md3-badge md3-badge--warning card-badge metric-pill">EM ANDAMENTO</span>
-          </div>
-          <h4 class="module-card-title">Dominando Java 21 & Features Modernas</h4>
-          <p class="module-card-desc">Records imutáveis, Pattern Matching avançado, Sealed Classes, Sequenced Collections e Virtual Threads.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Records & Imutabilidade de Domínio</li>
-            <li><span class="material-symbols-rounded text-yellow">radio_button_checked</span> Pattern Matching for switch</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Virtual Threads (Project Loom)</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 02</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">Design Systems no Figma & Material Design 3</h4>
+        <p class="module-card-desc">Criação de interfaces elegantes no padrão Apple com Glassmorphism profundo, acessibilidade e Bento Grid.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Design Tokens, Variáveis e Tipografia Expressiva</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Glassmorphism & Micro-interações Apple Standard</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Componentes Reutilizáveis & Acessibilidade WCAG 2.1</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 03</span>
-            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
-          </div>
-          <h4 class="module-card-title">Ecossistema Spring Boot 3.3</h4>
-          <p class="module-card-desc">Construção de APIs RESTful robustas, Spring Data JPA, H2 Database e validação Bean Validation.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring Web & Controladores REST</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring Data JPA & Transações ACID</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Tratamento Centralizado de Erros</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 03</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">Containerização com Docker & Multi-stage</h4>
+        <p class="module-card-desc">Padronização de ambientes de execução, empacotamento enxuto de microsserviços e isolamento de dependências.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Dockerfiles Otimizados com Multi-stage Build</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Minimização de Imagens com Distroless e Alpine</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Docker Compose para Orquestração Multi-serviço</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 04</span>
-            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
-          </div>
-          <h4 class="module-card-title">Clean Architecture & SOLID</h4>
-          <p class="module-card-desc">Segregação estrita em camadas de Domínio, Aplicação, Infraestrutura e Apresentação sem acoplamento.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Princípios SOLID na Prática</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Use Cases Independentes de Framework</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Inversão de Dependências (DIP)</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 04</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
+        <h4 class="module-card-title">CI/CD com GitHub Actions & Testes</h4>
+        <p class="module-card-desc">Esteiras de entrega contínua com execução automática de testes JUnit 5, linter e validações a cada push.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Pipelines de Integração Contínua Automatizados</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Execução de Testes JUnit 5 e Linters no Push</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Build e Validação de Artefatos em Pipeline</li>
+        </ul>
+      </div>
 
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 05</span>
-            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
-          </div>
-          <h4 class="module-card-title">Spring AI & Model Context Protocol</h4>
-          <p class="module-card-desc">Integração do ecossistema Java com LLMs (Gemini), servidor de ferramentas MCP e engenharia de contexto.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring AI MCP Server</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Tool Calling & Function Execution</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Pipelines Autônomos de IA</li>
-          </ul>
+      <div class="estudo-module-card">
+        <div class="module-card-top">
+          <span class="module-number-badge">MÓDULO 05</span>
+          <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
         </div>
-
-        <div class="estudo-module-card">
-          <div class="module-card-top">
-            <span class="module-number-badge">MÓDULO 06</span>
-            <span class="md3-badge card-badge metric-pill">EM BREVE</span>
-          </div>
-          <h4 class="module-card-title">Testes Automatizados com JUnit 5</h4>
-          <p class="module-card-desc">Estratégias completas de TDD, mocks com Mockito, testes de integração de Use Cases e validação de regressão.</p>
-          <ul class="module-topics-list">
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Testes Unitários de Regras de Negócio</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Mocking de Portas e Repositórios</li>
-            <li><span class="material-symbols-rounded">radio_button_unchecked</span> Cobertura de Código & AssertJ</li>
-          </ul>
-        </div>
-      `;
-    }
+        <h4 class="module-card-title">Deploy em Nuvem & Infraestrutura Cloud (Render)</h4>
+        <p class="module-card-desc">Publicação produtiva em nuvem pública com SSL automático, variáveis de ambiente seguras e zero downtime.</p>
+        <ul class="module-topics-list">
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Deploy Contínuo de Microsserviços e Web SPAs</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Configuração de Variáveis de Ambiente e Secrets</li>
+          <li><span class="material-symbols-rounded text-green">check_circle</span> Health Checks, Monitoramento de Uptime e SSL</li>
+        </ul>
+      </div>
+    `;
   }
 }
 window.renderizarAbaEstudos = renderizarAbaEstudos;
@@ -1490,11 +1470,13 @@ function renderizarTopKPIs(fin, estudos) {
   }
 
   if (estudos) {
-    const isDemo = isDemoMode();
-    const percentual = isDemo ? 90.0 : (estudos.progresso_percentual || 7.7);
+    const percentual = 100.0;
     animarContagem('kpiDio', percentual, '', '% Concluído', 850, 1);
     const bar = document.getElementById('kpiDioBar');
-    if (bar) bar.style.width = `${percentual}%`;
+    if (bar) {
+      bar.style.width = '100%';
+      bar.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+    }
   }
 }
 
@@ -1915,7 +1897,8 @@ function alternarAbaDedicada(abaId, linkElem) {
     'view-candidaturas': 'menu-candidaturas',
     'view-estudos': 'menu-estudos',
     'view-voice-studio': 'menu-voice-studio',
-    'view-engenharia': 'menu-engenharia'
+    'view-engenharia': 'menu-engenharia',
+    'view-api-docs': 'menu-api-docs'
   };
 
   document.querySelectorAll('.dabang-sidebar .menu-link').forEach(l => l.classList.remove('active'));
@@ -1932,7 +1915,7 @@ function alternarAbaDedicada(abaId, linkElem) {
   // 4. Sem saltos de tela e sem recarregar a página
   window.scrollTo({ top: 0, behavior: 'instant' });
 
-  // 5. Redimensiona gráficos quando as abas se tornam visíveis
+  // 5. Redimensiona gráficos quando as abas se tornam visíveis e inicializa dados
   if (abaId === 'view-financas') {
     requestAnimationFrame(() => {
       if (chartEvolucao) chartEvolucao.resize();
@@ -1945,6 +1928,8 @@ function alternarAbaDedicada(abaId, linkElem) {
     });
   } else if (abaId === 'view-voice-studio') {
     carregarVoiceStudio();
+  } else if (abaId === 'view-api-docs') {
+    selecionarEndpointPayload(endpointPayloadAtualChave || 'resumo');
   }
 
   if (window.lucide) {
@@ -2010,6 +1995,8 @@ function navegarParaSecao(secaoId, scrollTargetId) {
     alternarAbaDedicada('view-estudos', document.getElementById('menu-estudos'));
   } else if (scrollTargetId === 'engenharia' || secaoId === 'engenharia') {
     alternarAbaDedicada('view-engenharia', document.getElementById('menu-engenharia'));
+  } else if (scrollTargetId === 'api-docs' || secaoId === 'api-docs') {
+    alternarAbaDedicada('view-api-docs', document.getElementById('menu-api-docs'));
   } else {
     alternarAbaDedicada('view-dashboard', document.getElementById('menu-overview'));
   }
@@ -2313,5 +2300,160 @@ async function definirVozPadraoStudio(vozId, nome) {
     showToast("⚠️ Erro ao salvar voz padrão.");
   }
 }
+
+/* ==========================================================================
+   10. SPRING BOOT REST API EXPLORER & ARQUITETURA (VIEW-API-DOCS)
+   ========================================================================== */
+
+const PAYLOADS_API_DOCS = {
+  resumo: {
+    metodo: 'GET',
+    endpoint: '/api/transacoes/resumo',
+    desc: 'Cálculo consolidado de receitas, despesas e saldo atual em tempo real',
+    statusReq: 'Nenhum Request Body (Endpoint de Consulta GET)',
+    reqBody: '// Query Parameters (opcionais):\n// ?mes=09&ano=2026\n// Sem payload no corpo da requisição HTTP GET',
+    statusResp: 'Response Body (HTTP 200 OK)',
+    respBody: JSON.stringify({
+      totalReceitas: 8500.00,
+      totalDespesas: 3210.50,
+      saldoConsolidado: 5289.50,
+      burnRateDiario: 107.02,
+      diasRestantesMes: 22,
+      projecaoFimMes: 5120.00,
+      statusFinanceiro: "SUPERAVIT"
+    }, null, 2)
+  },
+  cadastrar: {
+    metodo: 'POST',
+    endpoint: '/api/transacoes',
+    desc: 'Cadastro de transação com Bean Validation (@Valid) e persistência ACID',
+    statusReq: 'Request Body (JSON - Jakarta Bean Validation 3.0)',
+    reqBody: JSON.stringify({
+      descricao: "Servidor Cloud Render - Produção",
+      valor: 45.00,
+      tipo: "DESPESA",
+      categoria: "SERVICOS",
+      data: "2026-09-08"
+    }, null, 2),
+    statusResp: 'Response Body (HTTP 201 CREATED)',
+    respBody: JSON.stringify({
+      id: 142,
+      descricao: "Servidor Cloud Render - Produção",
+      valor: 45.00,
+      tipo: "DESPESA",
+      categoria: "SERVICOS",
+      data: "2026-09-08T16:12:00",
+      statusConciliacao: "CONFIRMADO_H2"
+    }, null, 2)
+  },
+  'importar-ofx': {
+    metodo: 'POST',
+    endpoint: '/api/transacoes/importar-ofx',
+    desc: 'Parser e deduplicação bancária inteligente para extratos Nubank OFX/CSV',
+    statusReq: 'Request Body (multipart/form-data)',
+    reqBody: '// Content-Type: multipart/form-data\n// Campo: file (extrato_nubank_setembro.ofx)\n// O parser nativo Java 21 extrai DTPOSTED, TRNAMT, TRNTYPE e FITID',
+    statusResp: 'Response Body (HTTP 200 OK)',
+    respBody: JSON.stringify({
+      arquivo: "extrato_nubank_setembro.ofx",
+      transacoesLidas: 18,
+      importadas: 15,
+      duplicadasIgnoradas: 3,
+      saldoAtualizado: 5289.50,
+      status: "SUCESSO_CONCILIACAO_H2"
+    }, null, 2)
+  },
+  projecao: {
+    metodo: 'GET',
+    endpoint: '/api/transacoes/projecao',
+    desc: 'IA Preditiva de fechamento de mês, burn rate diário e dias de reserva financeira',
+    statusReq: 'Nenhum Request Body (Endpoint de Consulta GET)',
+    reqBody: '// Query Parameters (opcionais):\n// ?horizonteDias=30\n// Baseado no histórico relacional H2 de despesas e caixinhas',
+    statusResp: 'Response Body (HTTP 200 OK)',
+    respBody: JSON.stringify({
+      saldoAtual: 5289.50,
+      mediaDespesaDiaria: 107.02,
+      diasAteFechamento: 22,
+      previsaoDespesas: 2354.44,
+      saldoEstimadoFimMes: 2935.06,
+      mesesReservaSeguranca: 4.8,
+      riscoDeficit: "BAIXO"
+    }, null, 2)
+  },
+  voice: {
+    metodo: 'POST',
+    endpoint: '/api/voice/command',
+    desc: 'Orquestração de comandos por voz, integração com Edge-TTS neural e Spring AI',
+    statusReq: 'Request Body (JSON)',
+    reqBody: JSON.stringify({
+      comando: "NOVA, qual é o meu saldo atual e projeção de fechamento?",
+      origem: "DASHBOARD_VOICE_ORB",
+      voz: "pt-BR-FranciscaNeural",
+      taxa: "+0%"
+    }, null, 2),
+    statusResp: 'Response Body (HTTP 200 OK)',
+    respBody: JSON.stringify({
+      textoResposta: "Seu saldo consolidado no banco H2 é de R$ 5.289,50 com projeção superavitária de R$ 2.935,06.",
+      audioBase64: "UklGRi4AAABXQVZFZm10IBAAAAABAAEA...",
+      vozUtilizada: "pt-BR-FranciscaNeural",
+      mcpToolInvocada: "consultar_projecao",
+      sucesso: true
+    }, null, 2)
+  }
+};
+
+let endpointPayloadAtualChave = 'resumo';
+
+function selecionarEndpointPayload(chave) {
+  const dados = PAYLOADS_API_DOCS[chave] || PAYLOADS_API_DOCS.resumo;
+  endpointPayloadAtualChave = chave;
+
+  const methodPill = document.getElementById('payloadMethodPill');
+  const endpointPath = document.getElementById('payloadEndpointPath');
+  const endpointDesc = document.getElementById('payloadEndpointDesc');
+  const reqLabel = document.getElementById('payloadRequestLabel');
+  const reqCode = document.getElementById('payloadRequestCode');
+  const respLabel = document.getElementById('payloadResponseLabel');
+  const respCode = document.getElementById('payloadResponseCode');
+
+  if (methodPill) {
+    methodPill.textContent = dados.metodo;
+    methodPill.className = `api-method-pill ${dados.metodo.toLowerCase()}`;
+  }
+  if (endpointPath) endpointPath.textContent = dados.endpoint;
+  if (endpointDesc) endpointDesc.textContent = dados.desc;
+  if (reqLabel) reqLabel.textContent = dados.statusReq;
+  if (reqCode) reqCode.textContent = dados.reqBody;
+  if (respLabel) respLabel.textContent = dados.statusResp;
+  if (respCode) respCode.textContent = dados.respBody;
+
+  // Atualiza botões switchers
+  document.querySelectorAll('.payload-endpoint-switchers .btn-switcher').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(chave)) {
+      btn.classList.add('active');
+    }
+  });
+}
+window.selecionarEndpointPayload = selecionarEndpointPayload;
+
+function copiarPayloadAtual() {
+  const dados = PAYLOADS_API_DOCS[endpointPayloadAtualChave];
+  if (!dados) return;
+
+  const payloadCompleto = `// ${dados.metodo} ${dados.endpoint}\n// ${dados.desc}\n\n// --- REQUEST ---\n${dados.reqBody}\n\n// --- RESPONSE ---\n${dados.respBody}`;
+  navigator.clipboard.writeText(payloadCompleto).then(() => {
+    const btnText = document.getElementById('btnCopyText');
+    if (btnText) {
+      const original = btnText.textContent;
+      btnText.textContent = 'Copiado!';
+      setTimeout(() => { btnText.textContent = original; }, 1800);
+    }
+    showToast(`Contrato ${dados.metodo} ${dados.endpoint} copiado!`);
+  }).catch(() => {
+    showToast(`Erro ao copiar para a área de transferência`);
+  });
+}
+window.copiarPayloadAtual = copiarPayloadAtual;
+
 
 

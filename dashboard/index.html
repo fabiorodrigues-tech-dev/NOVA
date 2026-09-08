@@ -151,7 +151,7 @@
 
         <div class="menu-category">SISTEMA & ENGENHARIA</div>
 
-        <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" class="menu-link nav-item md3-nav-item" aria-label="Abrir documentação Swagger da API Spring Boot">
+        <a href="#api-docs" class="menu-link nav-item md3-nav-item" id="menu-api-docs" onclick="alternarAbaDedicada('view-api-docs', this); return false;" aria-label="Abrir documentação da API REST Spring Boot">
           <div class="md3-nav-item__active-indicator" aria-hidden="true"></div>
           <div class="md3-nav-item__content">
             <span class="menu-icon"><span class="material-symbols-rounded">bolt</span></span>
@@ -833,9 +833,13 @@
           <div class="tab-view-header">
             <div>
               <h2 id="estudosHeaderTitle">Trilha Santander 2026 & Mentoria Técnica Back-end</h2>
-              <p id="estudosHeaderSub">Bootcamp Santander 2026 - AI Java Back-end (DIO) • Clean Architecture • Metodologias Ativas</p>
+              <p id="estudosHeaderSub">Bootcamp Santander 2026 - AI Java Back-end (DIO) • Especialização Full Stack Cloud • Metodologias Ativas</p>
             </div>
             <div class="tab-header-actions">
+              <div class="certified-seal-pill">
+                <span class="material-symbols-rounded text-green">verified</span>
+                <span>CERTIFICADO EMITIDO</span>
+              </div>
               <a href="/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
                 <span class="material-symbols-rounded">menu_book</span>
                 <span>Manual PDF (6 Pág.)</span>
@@ -854,29 +858,29 @@
                     <span class="widget-sub" id="estudosWidgetSub">DIO AI Java Back-end • Clean Architecture • Spring AI MCP</span>
                   </div>
                 </div>
-                <a href="/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
-                  <span class="material-symbols-rounded">menu_book</span>
-                  <span>Manual PDF</span>
-                </a>
+                <span class="md3-badge badge-certified">
+                  <span class="material-symbols-rounded" style="font-size: 14px;">workspace_premium</span>
+                  <span>100% CONCLUÍDO</span>
+                </span>
               </div>
 
               <div class="dio-progress-content md3-card__content-slot" data-slot="content">
                 <div class="dio-bar-header">
                   <span id="estudosBarLabel">Progresso da Trilha Santander</span>
-                  <strong id="estudosProgressNum">2 de 26 Módulos (7.7%)</strong>
+                  <strong id="estudosProgressNum" class="text-green">26 de 26 Atividades (100% Concluído)</strong>
                 </div>
                 <div class="dio-bar-track md3-linear-progress">
-                  <div class="dio-bar-colored md3-linear-progress__indicator" id="estudosProgressBar" style="width: 7.7%;"></div>
+                  <div class="dio-bar-colored md3-linear-progress__indicator bar-emerald-100" id="estudosProgressBar" style="width: 100%;"></div>
                 </div>
 
                 <div class="dio-metrics-grid" id="estudosMetricsGrid">
                   <div class="dio-metric-item">
-                    <span class="d-label">Módulo Atual</span>
-                    <strong class="d-val" id="estudosModAtual">Dominando Java 21</strong>
+                    <span class="d-label">Status Formação</span>
+                    <strong class="d-val text-green" id="estudosModAtual">26/26 Concluídas</strong>
                   </div>
                   <div class="dio-metric-item">
                     <span class="d-label">Testes JUnit 5</span>
-                    <strong class="d-val text-green" id="estudosTestesVal">15/15 Passando (100%)</strong>
+                    <strong class="d-val text-green" id="estudosTestesVal">40/40 Passando (100%)</strong>
                   </div>
                   <div class="dio-metric-item">
                     <span class="d-label">Persistência</span>
@@ -891,95 +895,186 @@
             </div>
           </section>
 
-          <!-- DETAILED MODULES GRID -->
+          <!-- SECTION: TRILHA 1 SANTANDER DIO -->
+          <div class="estudos-section-title">
+            <div class="section-title-left">
+              <span class="material-symbols-rounded text-green">verified</span>
+              <h3>Trilha 1: Bootcamp Santander 2026 - AI Java Back-end (DIO)</h3>
+            </div>
+            <span class="md3-badge md3-badge--success card-badge metric-pill">CERTIFICADO EMITIDO</span>
+          </div>
+
+          <!-- DETAILED MODULES GRID TRILHA 1 -->
           <div class="estudos-modules-grid" id="estudosModulesGrid">
             <div class="estudo-module-card">
               <div class="module-card-top">
                 <span class="module-number-badge">MÓDULO 01</span>
-                <span class="md3-badge md3-badge--success">CONCLUÍDO</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
               </div>
               <h4 class="module-card-title">Fundamentos de Java 21 & POO</h4>
               <p class="module-card-desc">Sintaxe moderna, orientação a objetos profunda, tipos primitivos, wrappers e boas práticas.</p>
               <ul class="module-topics-list">
-                <li><span class="material-symbols-rounded">check_circle</span> Classes, Objetos e Encapsulamento</li>
-                <li><span class="material-symbols-rounded">check_circle</span> Herança, Polimorfismo e Interfaces</li>
-                <li><span class="material-symbols-rounded">check_circle</span> Tratamento de Exceções & Collections API</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Classes, Objetos e Encapsulamento</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Herança, Polimorfismo e Interfaces</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Tratamento de Exceções & Collections API</li>
               </ul>
             </div>
 
-            <div class="estudo-module-card" style="border-color: var(--nova-primary);">
+            <div class="estudo-module-card">
               <div class="module-card-top">
                 <span class="module-number-badge">MÓDULO 02</span>
-                <span class="md3-badge md3-badge--warning">EM ANDAMENTO</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
               </div>
               <h4 class="module-card-title">Dominando Java 21 & Features Modernas</h4>
               <p class="module-card-desc">Records imutáveis, Pattern Matching avançado, Sealed Classes, Sequenced Collections e Virtual Threads.</p>
               <ul class="module-topics-list">
-                <li><span class="material-symbols-rounded">radio_button_checked</span> Records & Imutabilidade de Domínio</li>
-                <li><span class="material-symbols-rounded">radio_button_checked</span> Pattern Matching for switch</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Virtual Threads (Project Loom)</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Records & Imutabilidade de Domínio</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Pattern Matching for switch</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Virtual Threads (Project Loom)</li>
               </ul>
             </div>
 
             <div class="estudo-module-card">
               <div class="module-card-top">
                 <span class="module-number-badge">MÓDULO 03</span>
-                <span class="md3-badge">EM BREVE</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
               </div>
               <h4 class="module-card-title">Ecossistema Spring Boot 3.3</h4>
               <p class="module-card-desc">Construção de APIs RESTful robustas, Spring Data JPA, H2 Database e validação Bean Validation.</p>
               <ul class="module-topics-list">
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring Web & Controladores REST</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring Data JPA & Transações ACID</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Tratamento Centralizado de Erros</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Spring Web & Controladores REST</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Spring Data JPA & Transações ACID</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Tratamento Centralizado de Erros (RFC 7807)</li>
               </ul>
             </div>
 
             <div class="estudo-module-card">
               <div class="module-card-top">
                 <span class="module-number-badge">MÓDULO 04</span>
-                <span class="md3-badge">EM BREVE</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
               </div>
               <h4 class="module-card-title">Clean Architecture & SOLID</h4>
               <p class="module-card-desc">Segregação estrita em camadas de Domínio, Aplicação, Infraestrutura e Apresentação sem acoplamento.</p>
               <ul class="module-topics-list">
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Princípios SOLID na Prática</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Use Cases Independentes de Framework</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Inversão de Dependências (DIP)</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Princípios SOLID na Prática</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Use Cases Independentes de Framework</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Inversão de Dependências (DIP)</li>
               </ul>
             </div>
 
             <div class="estudo-module-card">
               <div class="module-card-top">
                 <span class="module-number-badge">MÓDULO 05</span>
-                <span class="md3-badge">EM BREVE</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
               </div>
               <h4 class="module-card-title">Spring AI & Model Context Protocol</h4>
               <p class="module-card-desc">Integração do ecossistema Java com LLMs (Gemini), servidor de ferramentas MCP e engenharia de contexto.</p>
               <ul class="module-topics-list">
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Spring AI MCP Server</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Tool Calling & Function Execution</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Pipelines Autônomos de IA</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Spring AI MCP Server (@Tool)</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Tool Calling & Function Execution</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Pipelines Autônomos de IA & Fallback</li>
               </ul>
             </div>
 
             <div class="estudo-module-card">
               <div class="module-card-top">
                 <span class="module-number-badge">MÓDULO 06</span>
-                <span class="md3-badge">EM BREVE</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
               </div>
               <h4 class="module-card-title">Testes Automatizados com JUnit 5</h4>
               <p class="module-card-desc">Estratégias completas de TDD, mocks com Mockito, testes de integração de Use Cases e validação de regressão.</p>
               <ul class="module-topics-list">
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Testes Unitários de Regras de Negócio</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Mocking de Portas e Repositórios</li>
-                <li><span class="material-symbols-rounded">radio_button_unchecked</span> Cobertura de Código & AssertJ</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Testes Unitários de Regras de Negócio</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Mocking de Portas e Repositórios</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Cobertura de Código & AssertJ (40/40)</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- SECTION: TRILHA 2 FULL STACK & CLOUD DEVOPS -->
+          <div class="estudos-section-title" style="margin-top: 28px;">
+            <div class="section-title-left">
+              <span class="material-symbols-rounded text-blue">cloud_done</span>
+              <h3>Trilha 2: Especialização Full Stack & Cloud DevOps</h3>
+            </div>
+            <span class="md3-badge badge-certified">100% CONCLUÍDO</span>
+          </div>
+
+          <!-- DETAILED MODULES GRID TRILHA 2 -->
+          <div class="estudos-modules-grid" id="estudosTrilha2Grid">
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 01</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+              </div>
+              <h4 class="module-card-title">TypeScript Avançado & React Reativo</h4>
+              <p class="module-card-desc">Desenvolvimento frontend moderno e tipado com SPA reativo, hooks customizados e consumo de APIs.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Tipagem Estrita, Generics e Utility Types</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Hooks Avançados & Gestão de Estado Imutável</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Integração com REST APIs e WebSockets</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 02</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+              </div>
+              <h4 class="module-card-title">Design Systems no Figma & Material Design 3</h4>
+              <p class="module-card-desc">Criação de interfaces elegantes no padrão Apple com Glassmorphism profundo, acessibilidade e Bento Grid.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Design Tokens, Variáveis e Tipografia Expressiva</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Glassmorphism & Micro-interações Apple Standard</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Componentes Reutilizáveis & Acessibilidade WCAG 2.1</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 03</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+              </div>
+              <h4 class="module-card-title">Containerização com Docker & Multi-stage</h4>
+              <p class="module-card-desc">Padronização de ambientes de execução, empacotamento enxuto de microsserviços e isolamento de dependências.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Dockerfiles Otimizados com Multi-stage Build</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Minimização de Imagens com Distroless e Alpine</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Docker Compose para Orquestração Multi-serviço</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 04</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+              </div>
+              <h4 class="module-card-title">CI/CD com GitHub Actions & Testes</h4>
+              <p class="module-card-desc">Esteiras de entrega contínua com execução automática de testes JUnit 5, linter e validações a cada push.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Pipelines de Integração Contínua Automatizados</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Execução de Testes JUnit 5 e Linters no Push</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Build e Validação de Artefatos em Pipeline</li>
+              </ul>
+            </div>
+
+            <div class="estudo-module-card">
+              <div class="module-card-top">
+                <span class="module-number-badge">MÓDULO 05</span>
+                <span class="md3-badge md3-badge--success card-badge metric-pill">CONCLUÍDO</span>
+              </div>
+              <h4 class="module-card-title">Deploy em Nuvem & Infraestrutura Cloud (Render)</h4>
+              <p class="module-card-desc">Publicação produtiva em nuvem pública com SSL automático, variáveis de ambiente seguras e zero downtime.</p>
+              <ul class="module-topics-list">
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Deploy Contínuo de Microsserviços e Web SPAs</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Configuração de Variáveis de Ambiente e Secrets</li>
+                <li><span class="material-symbols-rounded text-green">check_circle</span> Health Checks, Monitoramento de Uptime e SSL</li>
               </ul>
             </div>
           </div>
 
           <!-- METODOLOGIAS ATIVAS GRID -->
-          <div class="metodologias-grid">
+          <div class="metodologias-grid" style="margin-top: 24px;">
             <div class="metodologia-card">
               <div class="metodologia-card-head">
                 <span class="material-symbols-rounded text-green">psychology</span>
@@ -1018,10 +1113,10 @@
                 <span class="material-symbols-rounded">sync</span>
                 <span>GitHub Actions</span>
               </a>
-              <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
+              <button type="button" onclick="alternarAbaDedicada('view-api-docs', document.getElementById('menu-api-docs'))" class="btn-panel-ghost md3-button md3-button--tonal" title="Acessar documentação e contratos da API REST Spring Boot">
                 <span class="material-symbols-rounded">bolt</span>
-                <span>Swagger UI (8081)</span>
-              </a>
+                <span>Spring Boot API (8081)</span>
+              </button>
             </div>
           </div>
 
@@ -1031,7 +1126,7 @@
               <div class="eng-card-header">
                 <div class="eng-card-title">
                   <span class="material-symbols-rounded text-green">verified</span>
-                  <h4>Suíte de Testes Automatizados</h4>
+                  <h4>Suíte de Testes</h4>
                 </div>
                 <span class="md3-badge md3-badge--success card-badge metric-pill tech-tag">100% PASS</span>
               </div>
@@ -1063,7 +1158,7 @@
               <div class="eng-card-header">
                 <div class="eng-card-title">
                   <span class="material-symbols-rounded text-blue">layers</span>
-                  <h4>Clean Architecture & SOLID</h4>
+                  <h4>Clean Architecture</h4>
                 </div>
                 <span class="md3-badge card-badge metric-pill tech-tag">4 CAMADAS</span>
               </div>
@@ -1095,9 +1190,9 @@
               <div class="eng-card-header">
                 <div class="eng-card-title">
                   <span class="material-symbols-rounded text-yellow">database</span>
-                  <h4>Persistência Relacional H2 ACID</h4>
+                  <h4>Persistência H2</h4>
                 </div>
-                <span class="md3-badge md3-badge--warning card-badge metric-pill tech-tag">ARQUIVO EMBEDDED</span>
+                <span class="md3-badge md3-badge--warning card-badge metric-pill tech-tag">BANCO ACID</span>
               </div>
               <p style="font-size: 12px; color: var(--nova-on-surface-variant); line-height: 1.45;">
                 Banco relacional ACID persistido em arquivo local (`financeiro/banco_h2`), com conciliação bancária automática de extratos OFX.
@@ -1127,9 +1222,9 @@
               <div class="eng-card-header">
                 <div class="eng-card-title">
                   <span class="material-symbols-rounded text-purple">psychology</span>
-                  <h4>Spring AI & Protocolo MCP</h4>
+                  <h4>Spring AI Engine</h4>
                 </div>
-                <span class="md3-badge card-badge metric-pill tech-tag">MODEL CONTEXT PROTOCOL</span>
+                <span class="md3-badge card-badge metric-pill tech-tag">MCP SERVER</span>
               </div>
               <p style="font-size: 12px; color: var(--nova-on-surface-variant); line-height: 1.45;">
                 Exposição de ferramentas operacionais padronizadas para agentes autônomos e orquestração de LLMs via Spring AI.
@@ -1156,6 +1251,202 @@
           </div>
 
         </div> <!-- /#view-engenharia -->
+
+        <!-- ==============================================
+             6. ABA DEDICADA: SPRING BOOT REST API EXPLORER & ARQUITETURA
+             ============================================== -->
+        <div id="view-api-docs" class="view-section view-panel" style="display: none;">
+          
+          <div class="tab-view-header">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                <h2>Spring Boot REST API & Arquitetura</h2>
+                <span class="api-status-badge">
+                  <span class="telemetry-pulse-dot" aria-hidden="true" style="width: 8px; height: 8px;">
+                    <span class="pulse-ring"></span>
+                    <span class="pulse-core"></span>
+                  </span>
+                  <span>Porta 8081 Ativa</span>
+                </span>
+              </div>
+              <p>Contratos HTTP, especificações de segurança ACID, documentação de Use Cases e explorador interativo de payloads JSON</p>
+            </div>
+            <div class="tab-header-actions">
+              <div class="api-runtime-chip">
+                <span>🟢 Microsserviço Java 21 LTS • Spring Boot 3.3.3 • Porta 8081</span>
+              </div>
+              <a href="https://github.com/fabiorodrigues-tech-dev/NOVA" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal" title="Acessar código-fonte no GitHub">
+                <span class="material-symbols-rounded">code</span>
+                <span>GitHub Repositório</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Architecture & Specs Bento Grid -->
+          <div class="api-specs-grid">
+            <div class="api-spec-card md3-card md3-card--elevated">
+              <div class="api-spec-head">
+                <span class="material-symbols-rounded text-blue">hub</span>
+                <div>
+                  <h4>Arquitetura & Runtime</h4>
+                  <span class="spec-sub">Stack Corporativa Java 21 LTS</span>
+                </div>
+              </div>
+              <div class="api-spec-details">
+                <div class="spec-row"><span>Runtime</span><strong>Java 21 LTS (OpenJDK 21.0.3)</strong></div>
+                <div class="spec-row"><span>Framework</span><strong>Spring Boot 3.3.3 Web + JPA</strong></div>
+                <div class="spec-row"><span>Persistência</span><strong>H2 Database 2.2 ACID Relacional</strong></div>
+                <div class="spec-row"><span>Clean Architecture</span><strong>Domínio, Aplicação, Infra, Web</strong></div>
+              </div>
+            </div>
+
+            <div class="api-spec-card md3-card md3-card--elevated">
+              <div class="api-spec-head">
+                <span class="material-symbols-rounded text-green">security</span>
+                <div>
+                  <h4>Segurança & Validações</h4>
+                  <span class="spec-sub">Controle de Acesso & Integridade</span>
+                </div>
+              </div>
+              <div class="api-spec-details">
+                <div class="spec-row"><span>Autenticação</span><strong>PIN Admin Bearer Token (7770)</strong></div>
+                <div class="spec-row"><span>Validação de Dados</span><strong>Jakarta Bean Validation 3.0 (@Valid)</strong></div>
+                <div class="spec-row"><span>Tratamento de Erros</span><strong>RFC 7807 (ProblemDetail Global)</strong></div>
+                <div class="spec-row"><span>Privacidade LGPD</span><strong>Modo Demo Sanitizado / Isolado</strong></div>
+              </div>
+            </div>
+
+            <div class="api-spec-card md3-card md3-card--elevated">
+              <div class="api-spec-head">
+                <span class="material-symbols-rounded text-purple">psychology</span>
+                <div>
+                  <h4>Spring AI & Protocolo MCP</h4>
+                  <span class="spec-sub">Orquestração para LLMs</span>
+                </div>
+              </div>
+              <div class="api-spec-details">
+                <div class="spec-row"><span>Protocolo</span><strong>Model Context Protocol (MCP Server)</strong></div>
+                <div class="spec-row"><span>Ferramentas (@Tool)</span><strong>cadastrar_transacao, consultar_projecao</strong></div>
+                <div class="spec-row"><span>Voz Neural</span><strong>Edge-TTS 24kHz Base64 Stream</strong></div>
+                <div class="spec-row"><span>Fallback Inteligente</span><strong>3 Níveis: Local > Core > Web</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Endpoints Table -->
+          <div class="api-table-card md3-card md3-card--elevated">
+            <div class="widget-head" style="margin-bottom: 16px;">
+              <div class="widget-title-group">
+                <span class="widget-icon"><span class="material-symbols-rounded">api</span></span>
+                <div>
+                  <h4>Endpoints Mapeados da API REST</h4>
+                  <span class="widget-sub">Contratos RESTful mapeados no microsserviço Spring Boot com respostas e parâmetros</span>
+                </div>
+              </div>
+              <span class="md3-badge md3-badge--success" style="font-weight: 700;">5 ENDPOINTS MAPEADOS</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="api-endpoints-table">
+                <thead>
+                  <tr>
+                    <th style="width: 80px;">MÉTODO</th>
+                    <th style="width: 250px;">ENDPOINT</th>
+                    <th>DESCRIÇÃO & REGRA DE NEGÓCIO</th>
+                    <th style="width: 120px;">STATUS</th>
+                    <th style="width: 120px;">SEGURANÇA</th>
+                    <th style="width: 110px; text-align: right;">INTERAÇÃO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr onclick="selecionarEndpointPayload('resumo')" style="cursor: pointer;">
+                    <td><span class="api-method-pill get">GET</span></td>
+                    <td><code class="api-endpoint-path">/api/transacoes/resumo</code></td>
+                    <td>Cálculo consolidado de receitas, despesas e saldo atual em tempo real</td>
+                    <td><span class="status-code-badge ok">200 OK</span></td>
+                    <td><span class="auth-pill safe">Demo Safe</span></td>
+                    <td style="text-align: right;"><button type="button" class="btn-api-select" onclick="selecionarEndpointPayload('resumo'); event.stopPropagation();">Payload</button></td>
+                  </tr>
+                  <tr onclick="selecionarEndpointPayload('cadastrar')" style="cursor: pointer;">
+                    <td><span class="api-method-pill post">POST</span></td>
+                    <td><code class="api-endpoint-path">/api/transacoes</code></td>
+                    <td>Cadastro de nova transação financeira com Bean Validation (@Valid) e persistência ACID</td>
+                    <td><span class="status-code-badge created">201 CREATED</span></td>
+                    <td><span class="auth-pill admin">PIN Admin</span></td>
+                    <td style="text-align: right;"><button type="button" class="btn-api-select" onclick="selecionarEndpointPayload('cadastrar'); event.stopPropagation();">Payload</button></td>
+                  </tr>
+                  <tr onclick="selecionarEndpointPayload('importar-ofx')" style="cursor: pointer;">
+                    <td><span class="api-method-pill post">POST</span></td>
+                    <td><code class="api-endpoint-path">/api/transacoes/importar-ofx</code></td>
+                    <td>Parser e deduplicação bancária inteligente para extratos Nubank (OFX/CSV) com reconciliação H2</td>
+                    <td><span class="status-code-badge ok">200 OK</span></td>
+                    <td><span class="auth-pill admin">PIN Admin</span></td>
+                    <td style="text-align: right;"><button type="button" class="btn-api-select" onclick="selecionarEndpointPayload('importar-ofx'); event.stopPropagation();">Payload</button></td>
+                  </tr>
+                  <tr onclick="selecionarEndpointPayload('projecao')" style="cursor: pointer;">
+                    <td><span class="api-method-pill get">GET</span></td>
+                    <td><code class="api-endpoint-path">/api/transacoes/projecao</code></td>
+                    <td>IA Preditiva de fechamento de mês, burn rate diário e dias de reserva financeira</td>
+                    <td><span class="status-code-badge ok">200 OK</span></td>
+                    <td><span class="auth-pill safe">Demo Safe</span></td>
+                    <td style="text-align: right;"><button type="button" class="btn-api-select" onclick="selecionarEndpointPayload('projecao'); event.stopPropagation();">Payload</button></td>
+                  </tr>
+                  <tr onclick="selecionarEndpointPayload('voice')" style="cursor: pointer;">
+                    <td><span class="api-method-pill post">POST</span></td>
+                    <td><code class="api-endpoint-path">/api/voice/command</code></td>
+                    <td>Orquestração de comandos por voz, integração com Edge-TTS neural e roteamento para Spring AI</td>
+                    <td><span class="status-code-badge ok">200 OK</span></td>
+                    <td><span class="auth-pill public">Livre</span></td>
+                    <td style="text-align: right;"><button type="button" class="btn-api-select" onclick="selecionarEndpointPayload('voice'); event.stopPropagation();">Payload</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- JSON Payload Inspector -->
+          <div class="api-payload-card md3-card md3-card--elevated">
+            <div class="payload-header-bar">
+              <div class="payload-endpoint-info">
+                <span class="api-method-pill post" id="payloadMethodPill">POST</span>
+                <code id="payloadEndpointPath">/api/transacoes</code>
+                <span class="payload-title-desc" id="payloadEndpointDesc">Cadastro de transação com Bean Validation</span>
+              </div>
+              <div class="payload-actions">
+                <div class="payload-endpoint-switchers">
+                  <button type="button" class="btn-switcher active" onclick="selecionarEndpointPayload('resumo')">/resumo</button>
+                  <button type="button" class="btn-switcher" onclick="selecionarEndpointPayload('cadastrar')">/transacoes</button>
+                  <button type="button" class="btn-switcher" onclick="selecionarEndpointPayload('importar-ofx')">/importar-ofx</button>
+                  <button type="button" class="btn-switcher" onclick="selecionarEndpointPayload('projecao')">/projecao</button>
+                  <button type="button" class="btn-switcher" onclick="selecionarEndpointPayload('voice')">/voice/command</button>
+                </div>
+                <button type="button" class="btn-copy-payload md3-button md3-button--tonal" onclick="copiarPayloadAtual()" title="Copiar JSON">
+                  <span class="material-symbols-rounded">content_copy</span>
+                  <span id="btnCopyText">Copiar JSON</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="payload-panes-grid">
+              <div class="payload-code-pane">
+                <div class="pane-label">
+                  <span class="material-symbols-rounded">data_object</span>
+                  <span id="payloadRequestLabel">Request Body (JSON)</span>
+                </div>
+                <pre class="json-pre-box"><code id="payloadRequestCode" class="language-json"></code></pre>
+              </div>
+
+              <div class="payload-code-pane">
+                <div class="pane-label">
+                  <span class="material-symbols-rounded">reply</span>
+                  <span id="payloadResponseLabel">Response Body (HTTP 201)</span>
+                </div>
+                <pre class="json-pre-box"><code id="payloadResponseCode" class="language-json"></code></pre>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- /#view-api-docs -->
 
         <!-- ==============================================
              5. ABA DEDICADA: NOVA VOICE STUDIO PRO

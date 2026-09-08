@@ -739,26 +739,28 @@ def obter_dados_candidaturas(demo=False):
 def obter_dados_estudos(demo=False):
     if demo:
         return {
-            "trilha": "Engenharia de Sistemas Distribuídos & Arquitetura Cloud Native",
-            "plataforma": "Especialização em Alta Concorrência, Event-Driven & Model Context Protocol",
-            "modulos_concluidos": 18,
-            "total_modulos": 20,
-            "progresso_percentual": 90.0,
-            "modulo_atual": "Virtual Threads (Loom) & Event-Driven (Kafka)",
-            "proxima_meta": "Resiliência Distribuída (Saga Pattern) & Zero Trust",
-            "nivel": "Nível Staff / Sênior",
+            "trilha": "Bootcamp Santander 2026 - AI Java Back-end (DIO) & Full Stack Cloud",
+            "plataforma": "DIO (Digital Innovation One) & Especialização Cloud DevOps",
+            "modulos_concluidos": 26,
+            "total_modulos": 26,
+            "progresso_percentual": 100.0,
+            "modulo_atual": "Formação Completa Concluída (26/26)",
+            "proxima_meta": "Certificado Emitido & Especialização Full Stack Cloud",
+            "status": "CERTIFICADO EMITIDO",
+            "nivel": "Java Back-end & Full Stack Cloud",
             "manual_pdf": "/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
         }
     
     return {
-        "trilha": "Bootcamp Santander 2026 - AI Java Back-end",
-        "plataforma": "DIO (Digital Innovation One)",
-        "modulos_concluidos": 2,
+        "trilha": "Bootcamp Santander 2026 - AI Java Back-end (DIO) & Full Stack Cloud",
+        "plataforma": "DIO (Digital Innovation One) & Especialização Cloud DevOps",
+        "modulos_concluidos": 26,
         "total_modulos": 26,
-        "progresso_percentual": 7.7,
-        "modulo_atual": "Dominando a Linguagem de Programação Java",
-        "proxima_meta": "Módulo 3: POO & Estruturas de Dados Avançadas",
-        "nivel": "Java Back-end",
+        "progresso_percentual": 100.0,
+        "modulo_atual": "Formação Completa Concluída (26/26)",
+        "proxima_meta": "Certificado Emitido & Especialização Full Stack Cloud",
+        "status": "CERTIFICADO EMITIDO",
+        "nivel": "Java Back-end & Full Stack Cloud",
         "manual_pdf": "/download/estudos/guia_estudos_nova/Manual_Engenharia_e_Arquitetura_NOVA.pdf"
     }
 
