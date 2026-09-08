@@ -1,6 +1,6 @@
-# 📍 NOVA — Status do Projeto (v3.5 - 100% Completo)
+# 📍 NOVA — Status do Projeto (v3.6 - 100% Completo & Sincronizado)
 
-> Documento oficial de estado consolidado do ecossistema NOVA. Reflete a conclusão integral de **todas as 9 Fases do Roadmap**, com Inteligência Preditiva & Consultoria Financeira, CI/CD GitHub Actions, Importador OFX/CSV, Voice AI Neural, Dashboard Material 3 Expressive e Clean Architecture.
+> Documento oficial de estado consolidado do ecossistema NOVA. Reflete a conclusão integral de **todas as 9 Fases do Roadmap**, com Inteligência Preditiva & Consultoria Financeira, CI/CD GitHub Actions, Importador OFX/CSV, Voice AI Neural sincronizada com autenticação por PIN 7770, Dashboard SPA em 7 abas dedicadas e Clean Architecture.
 
 **Última atualização:** 08/09/2026  
 **Ecossistema:** Java 21, Spring Boot 3.3.3, Spring AI (MCP), Python, Antigravity, Apple Silicon M1  
