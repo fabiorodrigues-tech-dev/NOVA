@@ -1,12 +1,23 @@
+#!/usr/bin/env python3
+"""
+Gerador de Dossiê Técnico Executivo em PDF — Ecossistema NOVA
+Diagramação nativa com ReportLab: Tabelas estruturadas, fluxo tipográfico responsivo,
+zero overflow de margens, zero código cru de markdown ou mermaid.
+"""
+
 import os
 import sys
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable, Preformatted
+    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable
 )
 from reportlab.pdfgen import canvas
+
+PAGE_WIDTH, PAGE_HEIGHT = A4
+MARGIN = 42.5  # 15mm
+USABLE_WIDTH = PAGE_WIDTH - (MARGIN * 2)  # ~510.27 pt -> 510 pt
 
 class NumberedCanvas(canvas.Canvas):
     def __init__(self, *args, **kwargs):
@@ -32,130 +43,155 @@ class NumberedCanvas(canvas.Canvas):
         
         # Header (pages > 1)
         if self._pageNumber > 1:
-            self.drawString(54, 755, "NOVA Ecosystem — Dossiê Técnico de Engenharia & Governança")
-            self.drawRightString(612 - 54, 755, "Enterprise-Grade Architecture")
+            self.drawString(MARGIN, PAGE_HEIGHT - 32, "NOVA Ecosystem • Dossiê Técnico de Engenharia & Governança")
+            self.drawRightString(PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 32, "Enterprise-Grade Architecture v3.6")
             self.setStrokeColor(colors.HexColor("#CBD5E1"))
             self.setLineWidth(0.5)
-            self.line(54, 747, 612 - 54, 747)
+            self.line(MARGIN, PAGE_HEIGHT - 38, PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 38)
 
-        # Footer
+        # Footer em todas as páginas
         page_text = f"Página {self._pageNumber} de {page_count}"
-        self.drawRightString(612 - 54, 36, page_text)
-        self.drawString(54, 36, "Autoria: Fábio Rodrigues • Desenvolvedor Java Back-end & Arquiteto de Software")
+        self.drawRightString(PAGE_WIDTH - MARGIN, 28, page_text)
+        self.drawString(MARGIN, 28, "Autoria: Fábio Rodrigues • Desenvolvedor Java Back-end & Arquiteto de Software")
         self.setStrokeColor(colors.HexColor("#CBD5E1"))
         self.setLineWidth(0.5)
-        self.line(54, 48, 612 - 54, 48)
+        self.line(MARGIN, 38, PAGE_WIDTH - MARGIN, 38)
         self.restoreState()
 
 
-def render_code_block(text, style, max_lines_per_chunk=35):
-    """Divide blocos de código grandes em chunks de Preformatted para paginação suave."""
-    lines = text.split("\n")
-    flowables = []
-    for i in range(0, len(lines), max_lines_per_chunk):
-        chunk = "\n".join(lines[i:i + max_lines_per_chunk])
-        t = Table([[Preformatted(chunk, style)]], colWidths=[504])
-        t.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#0F172A")),
-            ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#E2E8F0")),
-            ('TOPPADDING', (0, 0), (-1, -1), 6),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-            ('LEFTPADDING', (0, 0), (-1, -1), 8),
-            ('RIGHTPADDING', (0, 0), (-1, -1), 8),
-        ]))
-        flowables.append(t)
-        flowables.append(Spacer(1, 4))
-    return flowables
+def wrap_code_paragraph(text, style):
+    """Formata código com quebra de linha segura dentro de um Paragraph."""
+    safe_text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    formatted = safe_text.replace("\n", "<br/>").replace(" ", "&nbsp;")
+    return Paragraph(f'<font face="Courier">{formatted}</font>', style)
 
 
 def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
-    # Garante existência da pasta docs
     os.makedirs(os.path.dirname(output_path) if os.path.dirname(output_path) else ".", exist_ok=True)
 
     doc = SimpleDocTemplate(
         output_path,
-        pagesize=letter,
-        leftMargin=54,
-        rightMargin=54,
-        topMargin=54,
-        bottomMargin=54
+        pagesize=A4,
+        leftMargin=MARGIN,
+        rightMargin=MARGIN,
+        topMargin=MARGIN,
+        bottomMargin=MARGIN
     )
 
     styles = getSampleStyleSheet()
-    
-    # Cores Corporativas
-    PRIMARY = colors.HexColor("#0F172A")     # Slate 900
-    ACCENT = colors.HexColor("#2563EB")      # Blue 600
-    SUCCESS = colors.HexColor("#059669")     # Emerald 600
-    BG_CARD = colors.HexColor("#F8FAFC")     # Slate 50
-    BORDER_CARD = colors.HexColor("#E2E8F0") # Slate 200
-    CODE_TXT = colors.HexColor("#38BDF8")
 
-    # Estilos customizados
-    style_cover_title = ParagraphStyle(
-        'CoverTitle',
+    # Paleta Corporativa Material 3 & Slate
+    PRIMARY = colors.HexColor("#0F172A")       # Slate 900
+    SECONDARY = colors.HexColor("#1E293B")     # Slate 800
+    ACCENT = colors.HexColor("#2563EB")        # Blue 600
+    ACCENT_LIGHT = colors.HexColor("#EFF6FF")  # Blue 50
+    SUCCESS = colors.HexColor("#059669")       # Emerald 600
+    SUCCESS_LIGHT = colors.HexColor("#ECFDF5")  # Emerald 50
+    WARN = colors.HexColor("#D97706")          # Amber 600
+    BG_CARD = colors.HexColor("#F8FAFC")       # Slate 50
+    BORDER_CARD = colors.HexColor("#E2E8F0")   # Slate 200
+    TEXT_MUTED = colors.HexColor("#64748B")    # Slate 500
+
+    style_title = ParagraphStyle(
+        'DocTitle',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=21,
-        leading=25,
+        fontSize=18,
+        leading=22,
         textColor=PRIMARY,
-        spaceAfter=4
+        spaceAfter=2
     )
 
-    style_cover_sub = ParagraphStyle(
-        'CoverSub',
+    style_subtitle = ParagraphStyle(
+        'DocSub',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=11,
+        fontSize=10.5,
         leading=14,
         textColor=ACCENT,
-        spaceAfter=12
+        spaceAfter=8
     )
 
     style_h1 = ParagraphStyle(
         'Header1',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=13.5,
-        leading=16.5,
+        fontSize=12.5,
+        leading=16,
         textColor=PRIMARY,
-        spaceBefore=12,
-        spaceAfter=8,
+        spaceBefore=10,
+        spaceAfter=6,
+        keepWithNext=True
+    )
+
+    style_h2 = ParagraphStyle(
+        'Header2',
+        parent=styles['Normal'],
+        fontName='Helvetica-Bold',
+        fontSize=10,
+        leading=13,
+        textColor=SECONDARY,
+        spaceBefore=6,
+        spaceAfter=4,
         keepWithNext=True
     )
 
     style_body = ParagraphStyle(
-        'BodyDark',
-        parent=styles['Normal'],
-        fontName='Helvetica',
-        fontSize=8.8,
-        leading=12.5,
-        textColor=colors.HexColor("#334155"),
-        spaceAfter=6
-    )
-
-    style_body_bold = ParagraphStyle(
-        'BodyDarkBold',
-        parent=style_body,
-        fontName='Helvetica-Bold'
-    )
-
-    style_callout = ParagraphStyle(
-        'CalloutText',
+        'Body',
         parent=styles['Normal'],
         fontName='Helvetica',
         fontSize=8.5,
         leading=12,
-        textColor=colors.HexColor("#1E293B")
+        textColor=SECONDARY,
+        spaceAfter=4
     )
 
-    style_code = ParagraphStyle(
-        'CodeStyle',
+    style_body_bold = ParagraphStyle(
+        'BodyBold',
+        parent=style_body,
+        fontName='Helvetica-Bold'
+    )
+
+    style_th = ParagraphStyle(
+        'TH',
+        parent=styles['Normal'],
+        fontName='Helvetica-Bold',
+        fontSize=8,
+        leading=10.5,
+        textColor=colors.white
+    )
+
+    style_td = ParagraphStyle(
+        'TD',
+        parent=styles['Normal'],
+        fontName='Helvetica',
+        fontSize=8,
+        leading=11,
+        textColor=SECONDARY
+    )
+
+    style_td_bold = ParagraphStyle(
+        'TDBold',
+        parent=style_td,
+        fontName='Helvetica-Bold'
+    )
+
+    style_td_code = ParagraphStyle(
+        'TDCode',
         parent=styles['Normal'],
         fontName='Courier',
         fontSize=7.2,
-        leading=9.2,
-        textColor=CODE_TXT
+        leading=9.5,
+        textColor=PRIMARY
+    )
+
+    style_callout = ParagraphStyle(
+        'Callout',
+        parent=styles['Normal'],
+        fontName='Helvetica',
+        fontSize=8.2,
+        leading=11.5,
+        textColor=SECONDARY
     )
 
     story = []
@@ -163,11 +199,11 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
     # =========================================================================
     # CABEÇALHO DO DOSSIÊ MASTER
     # =========================================================================
-    story.append(Paragraph("🌌 DOSSIÊ TÉCNICO & AUDITORIA ARQUITETURAL", style_cover_title))
-    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.6 | Clean Architecture, Spring AI MCP & DevSecOps", style_cover_sub))
-    story.append(HRFlowable(width="100%", thickness=1.5, color=ACCENT, spaceBefore=2, spaceAfter=10))
+    story.append(Paragraph("DOSSIÊ TÉCNICO & AUDITORIA ARQUITETURAL", style_title))
+    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.6 | Clean Architecture, Spring AI MCP & DevSecOps", style_subtitle))
+    story.append(HRFlowable(width="100%", thickness=1.5, color=ACCENT, spaceBefore=2, spaceAfter=8))
 
-    # Meta Informações em Grid/Tabela
+    # Tabela de Metadados Executivos (Largura: 510 pt)
     meta_data = [
         [
             Paragraph("<b>Arquiteto / Autor:</b> Fábio Rodrigues", style_body),
@@ -182,207 +218,384 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
             Paragraph("<b>Maturidade Técnica:</b> <font color='#059669'><b>ENTERPRISE READY (PRODUCTION-GRADE)</b></font>", style_body)
         ]
     ]
-    meta_table = Table(meta_data, colWidths=[250, 254])
-    meta_table.setStyle(TableStyle([
+    t_meta = Table(meta_data, colWidths=[250, 260])
+    t_meta.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), BG_CARD),
         ('BOX', (0, 0), (-1, -1), 1, BORDER_CARD),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
-        ('TOPPADDING', (0, 0), (-1, -1), 5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
         ('LEFTPADDING', (0, 0), (-1, -1), 8),
         ('RIGHTPADDING', (0, 0), (-1, -1), 8),
     ]))
-    story.append(meta_table)
-    story.append(Spacer(1, 10))
-
-    # =========================================================================
-    # 1. ÁRVORE DE DIRETÓRIOS OFICIAL LIMPA
-    # =========================================================================
-    story.append(Paragraph("1. Árvore de Diretórios Oficial Limpa (Estrutura Production-Grade)", style_h1))
-    story.append(Paragraph(
-        "A estrutura abaixo representa a árvore consolidada do projeto. Todos os dados bancários reais, "
-        "extratos brutos e binários de compilação (como a pasta <code>target/</code> do Maven) estão devidamente sanitizados "
-        "e preservados através de marcadores <code>.gitkeep</code> para garantir que o repositório público seja 100% reproduzível e seguro.",
-        style_body
-    ))
-
-    tree_text = """nova/
-├── .github/
-│   └── workflows/
-│       └── ci.yml                   # CI/CD automatizado no GitHub Actions (Java 21 + Maven)
-│
-├── .agents/
-│   └── skills/
-│       ├── agente-codigo/           # Java 21, Spring Boot 3, Clean Architecture, Scaffolding
-│       ├── agente-estudos/          # Trilha Santander 2026 DIO, Metodologia Feynman, Flashcards
-│       ├── agente-carreira-e-operacoes/ # Gestão 360° de Vagas (Tech e Audiovisual), Pitches
-│       └── agente-financeiro/       # Gestão Orçamentária, Projeções Preditivas e Caixinhas
-│
-├── carreira/                        # Esteiras de Candidaturas 360°
-│   ├── base/                        # Currículos mestres (dev e marketing) e dados de portfólio
-│   └── vagas_analisadas/            # Pastas por empresa (Capgemini, Gummy, RIO AVE, Luck)
-│
-├── dashboard/                       # NOVA Control Center (Porta 3000)
-│   ├── index.html                   # Interface Web com Material 3 Expressive e Bento Grid
-│   ├── app.js                       # Lógica de telemetria, gráficos Chart.js e Voice Orb
-│   ├── styles.css                   # Design Tokens M3 Expressive, Glassmorphism profundo
-│   └── server.py                    # Gateway HTTP em Python com rotas REST e proxy reverso
-│
-├── docs/                            # Repositório Oficial de Governança & Arquitetura
-│   ├── README.md                    # Índice técnico dos manuais e dossiês
-│   ├── dossie_tecnico_nova.pdf      # Dossiê Técnico Master consolidado em PDF
-│   ├── assets/                      # Previews em alta definição (Light e Dark Theme)
-│   └── design_system/               # Especificações completas do Design System M3 Expressive
-│
-├── estudos/                         # Trilha Santander 2026 DIO & Manuais Técnicos
-│   ├── trilha_tracker.md            # Acompanhamento detalhado módulo a módulo
-│   └── guia_estudos_nova/           # Dossiê e Manual de Engenharia e Arquitetura em PDF
-│
-├── financeiro/                      # Módulo Financeiro Oficial (Sanitizado)
-│   ├── extratos_ofx/.gitkeep        # Diretório para extratos OFX (Protegido por .gitignore)
-│   ├── investimentos_caixinhas/.gitkeep # Diretório de Caixinhas (Protegido por .gitignore)
-│   └── relatorios_pdf/.gitkeep      # Diretório de relatórios gerados (Protegido por .gitignore)
-│
-├── java-services/
-│   └── agente-financeiro/           # Microsserviço Back-end Java 21 / Spring Boot 3
-│       ├── src/main/java/com/nova/agentefinanceiro/
-│       │   ├── application/         # DTOs e Use Cases (Projeção, Caixinhas, OFX, Webhook)
-│       │   ├── domain/              # Modelos ricos de domínio e contratos de repositório
-│       │   └── infrastructure/      # Adaptadores JPA, Controllers REST e Tools MCP
-│       ├── src/test/java/           # Suíte de 40 testes unitários e de integração JUnit 5
-│       ├── data/.gitkeep            # Diretório de banco H2 local (Sanitizado)
-│       └── run-tests.sh             # Script de execução rápida de testes (100% Passing)
-│
-├── scripts/                         # Scripts Python (Chart Engine, Geradores PDF)
-├── voz/                             # Voice Studio Web (Porta 5050) & Configuração TTS
-├── AGENTS.md                        # Regras centrais de orquestração do MAIN Agent
-├── COMANDOS.md                      # Catálogo completo de atalhos rápidos (/ e !)
-├── nova-status.md                   # Relatório de status e telemetria operacional
-├── start-all.sh                     # Inicializador simultâneo de todos os microsserviços
-├── stop-all.sh                      # Encerrador seguro de portas locais
-└── README.md                        # Documentação oficial do projeto"""
-
-    for flowable in render_code_block(tree_text, style_code, max_lines_per_chunk=38):
-        story.append(flowable)
-    story.append(Spacer(1, 10))
-
-    # =========================================================================
-    # 2. CONTEÚDO ATUAL DO README.MD
-    # =========================================================================
-    story.append(PageBreak())
-    story.append(Paragraph("2. Conteúdo Oficial do README.md (Documentação do Repositório)", style_h1))
-    story.append(Paragraph(
-        "Apresentação integral da documentação do repositório, com vitrine visual (UI Preview), "
-        "diagramas Mermaid, catálogo de comandos e tabela das 9 fases concluídas.",
-        style_body
-    ))
-
-    readme_content = ""
-    try:
-        with open("README.md", "r", encoding="utf-8") as f:
-            readme_content = f.read()
-    except Exception as e:
-        readme_content = f"Erro ao ler README.md: {e}"
-
-    for flowable in render_code_block(readme_content, style_code, max_lines_per_chunk=38):
-        story.append(flowable)
-    story.append(Spacer(1, 10))
-
-    # =========================================================================
-    # 3. VALIDAÇÃO DE SEGURANÇA & CONTEÚDO DO .GITIGNORE
-    # =========================================================================
-    story.append(PageBreak())
-    story.append(Paragraph("3. Validação de Segurança & Isolamento de Dados (.gitignore)", style_h1))
-    story.append(Paragraph(
-        "<b>Parecer de Segurança da Informação (DevSecOps & LGPD):</b> O arquivo <code>.gitignore</code> foi auditado para garantir total isolamento de "
-        "dados bancários e privacidade. Todos os extratos bancários OFX, comprovantes de investimento e arquivos locais do banco H2 estão "
-        "estritamente bloqueados e fora do controle de versão.",
-        style_body
-    ))
-
-    gitignore_content = ""
-    try:
-        with open(".gitignore", "r", encoding="utf-8") as f:
-            gitignore_content = f.read()
-    except Exception as e:
-        gitignore_content = f"Erro ao ler .gitignore: {e}"
-
-    for flowable in render_code_block(gitignore_content, style_code, max_lines_per_chunk=38):
-        story.append(flowable)
+    story.append(t_meta)
     story.append(Spacer(1, 8))
 
-    # Tabela de Checklist de Segurança
-    sec_check_data = [
-        [Paragraph("<b>Item de Segurança Auditado</b>", style_body_bold), Paragraph("<b>Regra .gitignore</b>", style_body_bold), Paragraph("<b>Status</b>", style_body_bold)],
-        [Paragraph("Extratos Bancários OFX do Nubank", style_body), Paragraph("<code>financeiro/extratos_ofx/*.ofx</code>", style_body), Paragraph("<font color='#059669'><b>ISOLADO COM SUCESSO</b></font>", style_body)],
-        [Paragraph("Prints e Comprovantes de Caixinhas", style_body), Paragraph("<code>financeiro/investimentos_caixinhas/*</code>", style_body), Paragraph("<font color='#059669'><b>ISOLADO COM SUCESSO</b></font>", style_body)],
-        [Paragraph("Banco H2 Local em Arquivo", style_body), Paragraph("<code>*.mv.db</code> / <code>data/*.db</code>", style_body), Paragraph("<font color='#059669'><b>ISOLADO COM SUCESSO</b></font>", style_body)],
-        [Paragraph("Chaves de API & Segredos (.env)", style_body), Paragraph("<code>.env</code> / <code>*.key</code> / <code>*.pem</code>", style_body), Paragraph("<font color='#059669'><b>ISOLADO COM SUCESSO</b></font>", style_body)],
-        [Paragraph("Artefatos de Build Maven (target/)", style_body), Paragraph("<code>target/</code> / <code>*.class</code>", style_body), Paragraph("<font color='#059669'><b>ISOLADO COM SUCESSO</b></font>", style_body)]
-    ]
-    sec_table = Table(sec_check_data, colWidths=[180, 180, 144])
-    sec_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#F1F5F9")),
-        ('BOX', (0, 0), (-1, -1), 1, BORDER_CARD),
-        ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
-        ('TOPPADDING', (0, 0), (-1, -1), 5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
-        ('LEFTPADDING', (0, 0), (-1, -1), 8),
-        ('RIGHTPADDING', (0, 0), (-1, -1), 8),
-    ]))
-    story.append(sec_table)
-    story.append(Spacer(1, 10))
-
     # =========================================================================
-    # 4. STATUS DA ESTEIRA DE CI/CD (.github/workflows/ci.yml)
+    # 1. MATRIZ ARQUITETURAL DO ECOSSISTEMA (VISUAL SERVICE ARCHITECTURE)
     # =========================================================================
-    story.append(PageBreak())
-    story.append(Paragraph("4. Resumo do Status da Esteira de CI/CD (GitHub Actions)", style_h1))
+    story.append(Paragraph("1. Matriz Arquitetural Integrada do Ecossistema NOVA", style_h1))
     story.append(Paragraph(
-        "O pipeline de CI/CD foi estruturado para garantir validação contínua e integridade de código a cada push na branch <code>main</code>. "
-        "Ele executa dois jobs paralelos e independentes:",
+        "A arquitetura do NOVA é estruturada em 4 camadas concêntricas de serviço, interligando "
+        "interfaces ricas para o usuário, orquestração central de inteligência artificial, agentes especialistas dedicados "
+        "e microsserviços resilientes em Java 21 e Spring Boot 3.3.3.",
         style_body
     ))
 
-    ci_job_data = [
+    arch_data = [
         [
-            Paragraph("<b>Job 1: ☕ Java 21 & Spring Boot Test Suite</b>", style_body_bold),
-            Paragraph(
-                "• <b>Ambiente:</b> Ubuntu Latest com Eclipse Temurin JDK 21.<br/>"
-                "• <b>Compilação:</b> <code>mvn clean compile -B</code> com cache Maven ativo.<br/>"
-                "• <b>Execução de Testes:</b> <code>mvn test -B</code> executando 40 testes JUnit 5 + Mockito.<br/>"
-                "• <b>Artefatos:</b> Upload automático dos relatórios Surefire para auditoria.<br/>"
-                "• <b>Resultado:</b> 100% de sucesso em testes unitários e de integração REST.",
-                style_body
-            )
+            Paragraph("Camada de Serviço", style_th),
+            Paragraph("Componentes & Tecnologias", style_th),
+            Paragraph("Responsabilidade & Protocolos", style_th)
         ],
         [
-            Paragraph("<b>Job 2: 🐍 Python Quality & Voice AI Check</b>", style_body_bold),
-            Paragraph(
-                "• <b>Ambiente:</b> Ubuntu Latest com Python 3.11.<br/>"
-                "• <b>Dependências:</b> Instalação automática do ecossistema <code>edge-tts</code>, <code>reportlab</code> e <code>flake8</code>.<br/>"
-                "• <b>Linter & Validação:</b> Verificação estática de sintaxe (E9, F63, F7, F82) nos scripts do Dashboard e Voice Bridge.",
-                style_body
-            )
+            Paragraph("<b>1. Interfaces & Acesso (UI Layer)</b>", style_td_bold),
+            Paragraph("• NOVA Control Center (SPA 7 Abas)<br/>• Voice Studio Web (Porta 5050)<br/>• Chat CLI (Atalhos / e !)<br/>• Túnel HTTPS Seguro (/compartilhar)", style_td),
+            Paragraph("Exibição de telemetria em tempo real, interação vocal neural Base64, controle de privacidade LGPD Safe e cockpit analítico com Living Shader WebGL.", style_td)
+        ],
+        [
+            Paragraph("<b>2. Orquestração Central (MAIN Agent)</b>", style_td_bold),
+            Paragraph("• MAIN Agent (NOVA Orchestrator)<br/>• Roteador Semântico com Fallback 3 Níveis", style_td),
+            Paragraph("Triagem autônoma de intenções, delegação para agentes especialistas, aplicação de regras de ouro e governança de dados.", style_td)
+        ],
+        [
+            Paragraph("<b>3. Agentes Especialistas (.agents/skills/)</b>", style_td_bold),
+            Paragraph("• 💰 <code>agente-financeiro</code><br/>• 💼 <code>agente-carreira-e-operacoes</code><br/>• 💻 <code>agente-codigo</code><br/>• 📚 <code>agente-estudos</code>", style_td),
+            Paragraph("Execução especializada: gestão orçamentária preditiva, esteira de candidaturas 360°, Clean Architecture/scaffolding e mentoria técnica ativa.", style_td)
+        ],
+        [
+            Paragraph("<b>4. Backend, MCP & Persistência</b>", style_td_bold),
+            Paragraph("• Spring Boot 3.3.3 API (Porta 8081)<br/>• Spring AI Model Context Protocol (MCP)<br/>• Banco H2 ACID (financiadb.mv.db)<br/>• Motor Gráfico (chart_engine.py)<br/>• Neural TTS Bridge (edge-tts)", style_td),
+            Paragraph("Persistência transacional ACID, contratos REST padronizados (RFC 7807), ferramentas corporativas @Tool expostas para LLMs e geração de relatórios gráficos.", style_td)
         ]
     ]
-    ci_table = Table(ci_job_data, colWidths=[170, 334])
-    ci_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), BG_CARD),
-        ('BOX', (0, 0), (-1, -1), 1, BORDER_CARD),
+    t_arch = Table(arch_data, colWidths=[130, 180, 200])
+    t_arch.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
+        ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
-        ('TOPPADDING', (0, 0), (-1, -1), 8),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
-        ('LEFTPADDING', (0, 0), (-1, -1), 10),
-        ('RIGHTPADDING', (0, 0), (-1, -1), 10),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
     ]))
-    story.append(ci_table)
-    story.append(Spacer(1, 14))
+    story.append(t_arch)
+    story.append(Spacer(1, 8))
 
     # =========================================================================
-    # 5. SUMÁRIO EXECUTIVO & PARECER DE ARQUITETURA ENTERPRISE
+    # 2. ESPECIFICAÇÃO DAS 7 ABAS DA SPA (NOVA CONTROL CENTER)
     # =========================================================================
-    story.append(Paragraph("5. Sumário Executivo & Parecer Arquitetural Enterprise Ready", style_h1))
+    story.append(Paragraph("2. Módulos & Abas Dedicadas da SPA (NOVA Control Center)", style_h1))
+    story.append(Paragraph(
+        "O NOVA Control Center opera como uma Single Page Application de alto desempenho, eliminando saltos de página e "
+        "oferecendo navegação instantânea em 7 módulos totalmente isolados:",
+        style_body
+    ))
+
+    spa_data = [
+        [
+            Paragraph("Módulo / Aba", style_th),
+            Paragraph("Escopo Técnico & Funcionalidades", style_th),
+            Paragraph("Integrações & Tecnologias", style_th)
+        ],
+        [
+            Paragraph("<b>Cockpit Central</b>", style_td_bold),
+            Paragraph("Visão executiva consolidada, Voice Assistant interativo, KPIs corporativos e Living Shader WebGL reativo.", style_td),
+            Paragraph("WebGL, Web Speech API, Chart.js, Bento Grid", style_td)
+        ],
+        [
+            Paragraph("<b>Finanças (H2)</b>", style_td_bold),
+            Paragraph("Balanço patrimonial, auditoria de despesas, burn rate diário, projeção de fechamento e gestão de Caixinhas Nubank.", style_td),
+            Paragraph("Java 21, Spring Boot 3, Banco H2 ACID, Parser OFX/CSV", style_td)
+        ],
+        [
+            Paragraph("<b>Candidaturas 360°</b>", style_td_bold),
+            Paragraph("Rastreamento de vagas ativas, índices de aderência técnica (Match %), filtros por trilha e exportação de dossiês.", style_td),
+            Paragraph("Harvard Tech ATS, Dossiês PDF/DOCX, Matplotlib Engine", style_td)
+        ],
+        [
+            Paragraph("<b>Estudos & Trilhas</b>", style_td_bold),
+            Paragraph("Monitoramento de trilhas ativas (Santander DIO 26/26 com Certificado e Full Stack 5/5), emissão de certificados e resumos.", style_td),
+            Paragraph("Metodologias Ativas, Feynman Engine, Markdown Renderer", style_td)
+        ],
+        [
+            Paragraph("<b>Voice Studio Pro</b>", style_td_bold),
+            Paragraph("Laboratório de síntese vocal neural, catálogo de vozes PT-BR/globais, análise de latência e testes de fala executivos.", style_td),
+            Paragraph("Python 3, Microsoft edge-tts, Audio Buffer Stream", style_td)
+        ],
+        [
+            Paragraph("<b>Engenharia & Testes</b>", style_td_bold),
+            Paragraph("Telemetria pulsante dos microsserviços, 4 camadas Clean Architecture, status H2 ACID e suíte de 40 testes JUnit 5 100% PASS.", style_td),
+            Paragraph("JUnit 5, Mockito, AssertJ, Spring Actuator", style_td)
+        ],
+        [
+            Paragraph("<b>Spring Boot API</b>", style_td_bold),
+            Paragraph("Painel interativo de contratos REST, documentação de 5 endpoints mapeados, esquemas JSON e RFC 7807 ProblemDetail.", style_td),
+            Paragraph("Springdoc OpenAPI, RFC 7807, Spring AI MCP Tools", style_td)
+        ]
+    ]
+    t_spa = Table(spa_data, colWidths=[110, 240, 160])
+    t_spa.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
+        ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
+        ('TOPPADDING', (0, 0), (-1, -1), 3.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3.5),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
+    ]))
+    story.append(t_spa)
+    story.append(Spacer(1, 8))
+
+    # =========================================================================
+    # 3. CLEAN ARCHITECTURE (PORTS & ADAPTERS) EM JAVA 21
+    # =========================================================================
+    story.append(PageBreak())
+    story.append(Paragraph("3. Clean Architecture & Isolamento de Camadas (Ports & Adapters)", style_h1))
+    story.append(Paragraph(
+        "O microsserviço <code>agente-financeiro</code> foi projetado segundo os preceitos de Clean Architecture e DDD, "
+        "garantindo que as regras de domínio sejam completamente puras e desacopladas de frameworks externos.",
+        style_body
+    ))
+
+    layers_data = [
+        [
+            Paragraph("Camada Arquitetural", style_th),
+            Paragraph("Pacotes Java & Responsabilidade", style_th),
+            Paragraph("Regra de Dependência & Padrões", style_th)
+        ],
+        [
+            Paragraph("<b>1. Domain<br/>(Núcleo Puro)</b>", style_td_bold),
+            Paragraph("• <code>model/</code>: Entidades ricas (<code>Transacao</code>, <code>Caixinha</code>, <code>ResumoFinanceiro</code>)<br/>"
+                      "• <code>repository/</code>: Portas de Saída (Interfaces <code>TransacaoRepository</code>, <code>CaixinhaRepository</code>)", style_td),
+            Paragraph("<b>Zero Dependência Externa:</b> Não importa Spring, JPA, Hibernate ou bibliotecas terceiras. Invariantes de negócio são validadas aqui.", style_td)
+        ],
+        [
+            Paragraph("<b>2. Application<br/>(Casos de Uso)</b>", style_td_bold),
+            Paragraph("• <code>usecase/</code>: Lógica de aplicação (Cadastrar, Listar, Importar OFX, Projeção Preditiva, Caixinhas, Webhook)<br/>"
+                      "• <code>dto/</code>: Java Records imutáveis de Request e Response", style_td),
+            Paragraph("<b>Orquestração de Negócio:</b> Depende estritamente da camada Domain. Injeção de dependência feita via construtores canônicos.", style_td)
+        ],
+        [
+            Paragraph("<b>3. Infrastructure<br/>(Adaptadores)</b>", style_td_bold),
+            Paragraph("• <code>persistence/</code>: Entidades JPA, Spring Data Repositories e Mappers bidirecionais<br/>"
+                      "• <code>web/</code>: Controllers RESTful, ProblemDetail RFC 7807 e Global Exception Handler<br/>"
+                      "• <code>mcp/</code>: Spring AI Model Context Protocol Tools (<code>@Tool</code>)", style_td),
+            Paragraph("<b>Inversão de Dependência (DIP):</b> Implementa as interfaces do Domain e consome os Casos de Uso. É a camada periférica descartável e configurável.", style_td)
+        ]
+    ]
+    t_layers = Table(layers_data, colWidths=[110, 230, 170])
+    t_layers.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
+        ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
+    ]))
+    story.append(t_layers)
+    story.append(Spacer(1, 8))
+
+    # =========================================================================
+    # 4. CASOS DE USO AVANÇADOS, OFX & INTELIGÊNCIA PREDITIVA (FASE 9)
+    # =========================================================================
+    story.append(Paragraph("4. Casos de Uso Avançados, Ingestão OFX & Inteligência Preditiva (Fase 9)", style_h1))
+    story.append(Paragraph(
+        "A Fase 9 introduziu recursos corporativos de CFO Algorítmico, ingestão de extratos do Nubank e gestão de ativos patrimoniais:",
+        style_body
+    ))
+
+    usecase_data = [
+        [
+            Paragraph("Caso de Uso", style_th),
+            Paragraph("Comportamento & Fórmulas", style_th),
+            Paragraph("Garantias & Retorno", style_th)
+        ],
+        [
+            Paragraph("<b>ImportarExtratoOfxUseCase</b>", style_td_bold),
+            Paragraph("Parser nativo SGML/XML de extratos <code>.ofx</code> e <code>.csv</code> do Nubank em <code>financeiro/extratos_ofx/</code>. Extrai nós <code>&lt;STMTTRN&gt;</code>, <code>&lt;TRNAMT&gt;</code> e <code>&lt;MEMO&gt;</code>.", style_td),
+            Paragraph("Deduplicação rigorosa contra duplicidade no banco H2 ACID. Classificação automática de categorias.", style_td)
+        ],
+        [
+            Paragraph("<b>CalcularProjecaoFinanceiraUseCase</b>", style_td_bold),
+            Paragraph("• <b>Burn Rate Diário:</b> Despesas Acumuladas / Dias Decorridos<br/>"
+                      "• <b>Gasto Projetado:</b> Despesas Atuais + (Burn Rate × Dias Restantes)<br/>"
+                      "• <b>Saldo Final:</b> Receitas Atuais - Gasto Projetado", style_td),
+            Paragraph("Classificação de risco em tempo real (<code>SAUDÁVEL</code>, <code>ALERTA</code>, <code>CRÍTICO</code>) com diagnóstico orçamentário.", style_td)
+        ],
+        [
+            Paragraph("<b>Gestão de Caixinhas & Patrimônio</b>", style_td_bold),
+            Paragraph("Gestão transacional de Caixinhas Nubank (Reserva de Emergência e Reserva Casal) com aportes e histórico no H2.", style_td),
+            Paragraph("Recálculo dinâmico do <b>Patrimônio Líquido Total</b> somando conta corrente H2 e ativos das Caixinhas.", style_td)
+        ],
+        [
+            Paragraph("<b>Spring AI MCP Tools (@Tool)</b>", style_td_bold),
+            Paragraph("Ferramentas expostas para IA: <code>consultar_resumo_financeiro</code>, <code>consultar_projecao_financeira</code>, <code>atualizar_caixinha</code> e <code>processar_notificacao_nubank</code>.", style_td),
+            Paragraph("Execução determinística e segura de comandos via Model Context Protocol por LLMs.", style_td)
+        ]
+    ]
+    t_usecases = Table(usecase_data, colWidths=[130, 220, 160])
+    t_usecases.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
+        ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
+    ]))
+    story.append(t_usecases)
+    story.append(Spacer(1, 8))
+
+    # =========================================================================
+    # 5. COBERTURA DE TESTES AUTOMATIZADOS (40/40 JUNIT 5 - 100% GREEN)
+    # =========================================================================
+    story.append(PageBreak())
+    story.append(Paragraph("5. Relatório Oficial da Suíte de Testes Automatizados (40/40 Green)", style_h1))
+    story.append(Paragraph(
+        "A integridade, robustez e conformidade arquitetural do backend são asseguradas por uma suíte de "
+        "<b>40 testes automatizados</b> executados com 100% de aprovação via <code>./run-tests.sh</code>:",
+        style_body
+    ))
+
+    tests_data = [
+        [
+            Paragraph("Módulo / Suíte de Teste", style_th),
+            Paragraph("Tipo", style_th),
+            Paragraph("Casos de Teste Validados", style_th),
+            Paragraph("Resultado", style_th)
+        ],
+        [
+            Paragraph("<b>ImportarExtratoOfxUseCaseTest</b>", style_td_bold),
+            Paragraph("Unitário", style_td),
+            Paragraph("Validação de parsing de nós SGML/XML, tratamento de tags nulas e regra de deduplicação.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
+            Paragraph("<b>CalcularProjecaoFinanceiraUseCaseTest</b>", style_td_bold),
+            Paragraph("Unitário", style_td),
+            Paragraph("Cálculo matemático de Burn Rate, projeção de fechamento e cenários Saudável, Alerta e Crítico.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
+            Paragraph("<b>CalcularResumoFinanceiroUseCaseTest</b>", style_td_bold),
+            Paragraph("Unitário", style_td),
+            Paragraph("Cálculo consolidado de saldo, total de receitas, despesas e distribuição percentual por categoria.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
+            Paragraph("<b>SalvarCaixinha / ListarCaixinhasTest</b>", style_td_bold),
+            Paragraph("Unitário", style_td),
+            Paragraph("Persistência e atualização de valores das Caixinhas Nubank e cálculo do Patrimônio Total.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
+            Paragraph("<b>ProcessarNotificacaoNubankTest</b>", style_td_bold),
+            Paragraph("Unitário", style_td),
+            Paragraph("Webhook semântico para conciliação automática de pagamentos e compras.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
+            Paragraph("<b>ProcessarComandoVozUseCaseTest</b>", style_td_bold),
+            Paragraph("Unitário", style_td),
+            Paragraph("Roteamento semântico de comandos neurais para ações determinísticas de backend.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
+            Paragraph("<b>TransacaoControllerTest</b>", style_td_bold),
+            Paragraph("Integração", style_td),
+            Paragraph("Testes MockMvc validando status HTTP, paginação e envelopes RFC 7807 ProblemDetail.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
+            Paragraph("<b>CaixinhaControllerTest</b>", style_td_bold),
+            Paragraph("Integração", style_td),
+            Paragraph("Testes MockMvc para endpoints REST de consulta e atualização de aportes em Caixinhas.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
+            Paragraph("<b>FinanceiroMcpToolsTest</b>", style_td_bold),
+            Paragraph("Tools MCP", style_td),
+            Paragraph("Validação determinística das chamadas anotadas com @Tool expostas para IA generativa.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ]
+    ]
+    t_tests = Table(tests_data, colWidths=[150, 60, 230, 70])
+    t_tests.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
+        ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+        ('LEFTPADDING', (0, 0), (-1, -1), 5),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 5),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
+    ]))
+    story.append(t_tests)
+    story.append(Spacer(1, 8))
+
+    # =========================================================================
+    # 6. DEVOPS, NUVEM 24/7 & DEVSECOPS (LGPD SAFE)
+    # =========================================================================
+    story.append(Paragraph("6. Infraestrutura DevOps, Nuvem 24/7 & Governança DevSecOps", style_h1))
+    story.append(Paragraph(
+        "A esteira de entrega contínua e a governança de dados foram desenhadas sob princípios de DevSecOps e LGPD:",
+        style_body
+    ))
+
+    devops_data = [
+        [
+            Paragraph("Pilar de Engenharia", style_th),
+            Paragraph("Especificação & Arquivos de Configuração", style_th),
+            Paragraph("Benefício Operacional", style_th)
+        ],
+        [
+            Paragraph("<b>Docker Multi-Stage</b>", style_td_bold),
+            Paragraph("<code>Dockerfile</code> multi-estágio: Build com <code>maven:3.9-eclipse-temurin-21</code> e runtime com Debian leve contendo JRE 21 LTS e Python 3.11.", style_td),
+            Paragraph("Container otimizado com execução simultânea dos microsserviços Java e servidor do Control Center.", style_td)
+        ],
+        [
+            Paragraph("<b>Deploy em Nuvem 24/7</b>", style_td_bold),
+            Paragraph("Blueprint <code>render.yaml</code> configurado com healthcheck ativo no endpoint <code>/api/status?demo=true</code>.<br/>URL: <code>https://nova-control-center-alsl.onrender.com</code>", style_td),
+            Paragraph("Disponibilidade pública contínua em nuvem sem dependência de máquina local ligada.", style_td)
+        ],
+        [
+            Paragraph("<b>CI/CD GitHub Actions</b>", style_td_bold),
+            Paragraph("Pipeline <code>.github/workflows/ci.yml</code> com jobs paralelos para compilação Java 21, suíte completa de testes JUnit 5 e análise estática Python (Flake8).", style_td),
+            Paragraph("Validação automatizada de integridade a cada push na branch <code>main</code>.", style_td)
+        ],
+        [
+            Paragraph("<b>DevSecOps & LGPD Safe</b>", style_td_bold),
+            Paragraph("• Inicialização 100% protegida em Modo Demonstração com dados fictícios.<br/>"
+                      "• Desbloqueio de dados reais sob autenticação por chave <code>ADMIN_PIN</code>.<br/>"
+                      "• Isolamento total no <code>.gitignore</code> para <code>*.ofx</code>, <code>*.csv</code> e <code>*.mv.db</code>.", style_td),
+            Paragraph("Proteção absoluta contra vazamento de dados bancários reais em gravações de tela ou acessos públicos.", style_td)
+        ]
+    ]
+    t_devops = Table(devops_data, colWidths=[120, 230, 160])
+    t_devops.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
+        ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
+        ('TOPPADDING', (0, 0), (-1, -1), 3.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3.5),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
+    ]))
+    story.append(t_devops)
+    story.append(Spacer(1, 10))
+
+    # =========================================================================
+    # 7. SUMÁRIO EXECUTIVO & PARECER DE ARQUITETURA ENTERPRISE
+    # =========================================================================
+    story.append(PageBreak())
+    story.append(Paragraph("7. Sumário Executivo & Parecer Arquitetural Enterprise Ready", style_h1))
     
     parecer_text = (
         "<b>PARECER DE PRONTIDÃO TÉCNICA CORPORATIVA (PRODUCTION-GRADE ARCHITECTURE):</b><br/><br/>"
@@ -400,10 +613,10 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         "<b>Status Oficial:</b> Homologado com louvor e chancelado como arquitetura <i>Production-Grade Enterprise</i>."
     )
 
-    parecer_card = Table([[Paragraph(parecer_text, style_callout)]], colWidths=[504])
+    parecer_card = Table([[Paragraph(parecer_text, style_callout)]], colWidths=[510])
     parecer_card.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#F0FDF4")),
-        ('BOX', (0, 0), (-1, -1), 1.5, SUCCESS),
+        ('BACKGROUND', (0, 0), (-1, -1), SUCCESS_LIGHT),
+        ('BOX', (0, 0), (-1, -1), 1.2, SUCCESS),
         ('TOPPADDING', (0, 0), (-1, -1), 10),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
         ('LEFTPADDING', (0, 0), (-1, -1), 12),
@@ -411,9 +624,8 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
     ]))
     story.append(parecer_card)
 
-    # Build PDF
     doc.build(story, canvasmaker=NumberedCanvas)
-    print(f"Dossiê Técnico Master gerado com sucesso em: {output_path}")
+    print(f"✅ Dossiê Técnico Executivo gerado com sucesso em: {output_path}")
 
 if __name__ == "__main__":
     out = sys.argv[1] if len(sys.argv) > 1 else "docs/dossie_tecnico_nova.pdf"

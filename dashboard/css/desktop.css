@@ -1,0 +1,245 @@
+/* ==========================================================================
+   NOVA CONTROL CENTER — DESKTOP ARCHITECTURE (>= 768px)
+   Layout dedicado para telas médias e grandes: Sidebar fixa de 260px, Bento Grid
+   de 4 colunas, Top Header expandido em linha única e design Material 3 Expressive.
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  /* Layout Base Desktop */
+  .dabang-layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Sidebar Lateral Fixa (260px) */
+  .dabang-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    background: var(--nova-surface, #111318);
+    border-right: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+    overflow-y: auto;
+    transition: width var(--transition-medium, 0.3s cubic-bezier(0.2, 0, 0, 1));
+  }
+
+  .sidebar-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 20px 16px;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 12px;
+    flex: 1;
+  }
+
+  .menu-category {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: var(--nova-outline, #909099);
+    padding: 12px 12px 6px;
+    text-transform: uppercase;
+  }
+
+  .menu-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: var(--radius-pill, 100px);
+    gap: 12px;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .menu-link .menu-text {
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  .sidebar-bottom-pro-card {
+    display: block;
+    margin: 16px 12px 20px;
+    padding: 14px;
+    border-radius: var(--radius-md, 16px);
+  }
+
+  /* Main Wrapper Deslocado da Sidebar */
+  .dabang-main,
+  .main-content {
+    margin-left: 260px !important;
+    width: calc(100% - 260px) !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 32px;
+  }
+
+  /* Top App Bar Expandida em Linha Única */
+  .dabang-top-header,
+  .top-header {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    gap: 16px;
+    background: rgba(17, 19, 24, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+    position: sticky;
+    top: 0;
+    z-index: 90;
+  }
+
+  .header-search-wrap,
+  .search-bar {
+    width: 320px;
+    max-width: 420px;
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius-pill, 100px);
+    padding: 8px 16px;
+    gap: 10px;
+  }
+
+  .search-kbd {
+    display: inline-flex;
+  }
+
+  .header-user-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .telemetry-status-text {
+    display: block;
+  }
+
+  .header-voice-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .user-profile-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Content Body */
+  .dabang-content-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Banner LGPD Desktop */
+  .lgpd-banner,
+  .demo-presentation-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: var(--radius-md, 16px);
+  }
+
+  /* Views Container SPA */
+  .views-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .view-section {
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .view-section.active {
+    display: flex !important;
+  }
+
+  /* Voice Assistant Hero (2 Colunas Desktop) */
+  .va-main-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    align-items: start;
+    width: 100%;
+  }
+
+  .va-orb-interactive-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .orb-visual-wrapper {
+    width: 280px;
+    height: 280px;
+  }
+
+  .nova-shader-orb-canvas {
+    width: 280px !important;
+    height: 280px !important;
+  }
+
+  /* Bento Grid de 4 Colunas (KPIs & Top Summary) */
+  .summary-cards-row,
+  .kpi-grid,
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+  }
+
+  /* Bento Grid dos Gráficos */
+  .charts-master-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    width: 100%;
+  }
+
+  .card-wide {
+    grid-column: span 12;
+  }
+
+  .card-half {
+    grid-column: span 6;
+  }
+
+  .card-third {
+    grid-column: span 4;
+  }
+
+  /* Bottom Navigation Bar fica oculta no desktop */
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}

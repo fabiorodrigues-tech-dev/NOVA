@@ -1076,6 +1076,14 @@ class DashboardHandler(BaseHTTPRequestHandler):
             self.serve_file(os.path.join(BASE_DIR, "index.html"), "text/html; charset=utf-8")
         elif path == "/styles.css":
             self.serve_file(os.path.join(BASE_DIR, "styles.css"), "text/css; charset=utf-8")
+        elif path.startswith("/css/"):
+            file_path = os.path.join(BASE_DIR, path.lstrip("/"))
+            if os.path.exists(file_path) and os.path.isfile(file_path):
+                self.serve_file(file_path, "text/css; charset=utf-8")
+            else:
+                self.send_response(404)
+                self.end_headers()
+                self.wfile.write(b"CSS nao encontrado")
         elif path == "/app.js":
             self.serve_file(os.path.join(BASE_DIR, "app.js"), "application/javascript; charset=utf-8")
         elif path.startswith("/assets/"):
