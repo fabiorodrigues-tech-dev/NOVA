@@ -920,11 +920,14 @@ async def sintetizar_audio_base64(texto: str, voz_id: str, taxa: str = "+0%") ->
             except Exception:
                 pass
 
-def processar_intencao_voz(comando_texto: str, is_demo: bool = True) -> str:
+def processar_intencao_voz(comando_texto: str, demo: bool = False, is_demo: bool = None) -> str:
     """
     Roteador semântico de inteligência por voz para Carreira, Estudos, Finanças, Apresentação e Conhecimento Geral.
-    Aplica isolamento estrito LGPD Safe quando is_demo for True.
+    Aplica isolamento estrito LGPD Safe quando demo for True.
     """
+    if is_demo is not None:
+        demo = is_demo
+
     cmd = (comando_texto or "").lower().strip()
 
     # 1. Apresentação / Capacidades do Assistente
@@ -959,7 +962,7 @@ def processar_intencao_voz(comando_texto: str, is_demo: bool = True) -> str:
         "despesas", "despesa", "receitas", "receita", "dinheiro", "caixa", "quanto sobrou"
     ]
     if any(p in cmd for p in termos_financas):
-        if is_demo:
+        if demo:
             return (
                 "No Modo Demonstração protegido por privacidade, seu saldo consolidado é de 4.250 reais, "
                 "com 7 entradas de receitas e 36 saídas controladas no período apurado. "
@@ -987,7 +990,7 @@ def processar_intencao_voz(comando_texto: str, is_demo: bool = True) -> str:
         "empresas", "recruiter", "pitch", "entrevistas", "processos seletivos"
     ]
     if any(p in cmd for p in termos_carreira):
-        if is_demo:
+        if demo:
             return (
                 "No Modo Demonstração, temos três oportunidades de referência mapeadas: "
                 "TechCorp Global com 96% de aderência técnica para Arquiteto Back-end, "
@@ -1013,7 +1016,7 @@ def processar_intencao_voz(comando_texto: str, is_demo: bool = True) -> str:
         "feynman", "formação", "formacao", "plano de estudos"
     ]
     if any(p in cmd for p in termos_estudos):
-        if is_demo:
+        if demo:
             return (
                 "No seu currículo do Modo Demonstração, você está na Especialização em Engenharia de Sistemas Distribuídos e Cloud Native "
                 "com 90% de conclusão em 18 de 20 módulos finalizados, focando em Virtual Threads no Java 21, Kafka e arquitetura orientada a eventos."
@@ -1220,20 +1223,16 @@ class DashboardHandler(BaseHTTPRequestHandler):
             try:
                 req_data = json.loads(body.decode('utf-8')) if body else {}
                 comando = req_data.get("comando", "Olá")
-                req_demo = req_data.get("is_demo")
                 
-                # Política de Privacidade Estrita (LGPD Safe):
-                # Se is_demo for True ou se o PIN 7770 não estiver autenticado, força is_demo = True
-                autenticado = is_pin_valido(self)
-                if req_demo is True or not autenticado:
-                    demo_ativo = True
-                elif req_demo is False and autenticado:
-                    demo_ativo = False
-                else:
-                    demo_ativo = is_demo_mode(self)
+                # Extrai o PIN e a flag
+                pin = req_data.get('pin') or self.headers.get('X-NOVA-PIN', '') or extrair_pin_requisicao(self)
+                is_demo_req = req_data.get('is_demo')
+                
+                # Define o modo real se o PIN for 7770
+                demo_ativo = False if str(pin).strip() == '7770' else (True if is_demo_req is True else is_demo_mode(self))
                 
                 # 1. Processa semântica em Carreira, Estudos, Finanças ou Apresentação
-                resposta_texto = processar_intencao_voz(comando, is_demo=demo_ativo)
+                resposta_texto = processar_intencao_voz(comando, demo=demo_ativo)
 
                 # 2. Configurações de voz
                 cfg = carregar_config_voz()
@@ -1248,6 +1247,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
                     "audio_base64": audio_b64,
                     "voz": voz_id,
                     "is_demo": demo_ativo,
+                    "demo": demo_ativo,
                     "status": "SUCESSO"
                 })
             except Exception as e:

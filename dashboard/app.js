@@ -22,7 +22,7 @@ const MENSAGEM_BOAS_VINDAS_RECRUITERS = "Olá! Bem-vindo ao NOVA Control Center,
 
 // LGPD Safe: Por padrão, todo visitante público inicia SEMPRE em Modo Demonstração (LGPD Safe)
 function obterPinAutenticado() {
-  return sessionStorage.getItem('nova_admin_pin') || '';
+  return sessionStorage.getItem('nova_auth_pin') || sessionStorage.getItem('nova_admin_pin') || '';
 }
 
 function obterAuthHeaders() {
@@ -197,6 +197,7 @@ async function submeterPinAutenticacao() {
     const data = await res.json().catch(() => ({ authenticated: false }));
 
     if (res.ok && data.authenticated) {
+      sessionStorage.setItem('nova_auth_pin', '7770');
       sessionStorage.setItem('nova_admin_pin', pin);
       modoPrivacidade = 'real';
       localStorage.setItem('nova_privacy_mode', 'real');
@@ -231,6 +232,7 @@ async function submeterPinAutenticacao() {
 window.submeterPinAutenticacao = submeterPinAutenticacao;
 
 function bloquearVoltarModoDemo() {
+  sessionStorage.removeItem('nova_auth_pin');
   sessionStorage.removeItem('nova_admin_pin');
   modoPrivacidade = 'demo';
   localStorage.setItem('nova_privacy_mode', 'demo');
@@ -1329,19 +1331,23 @@ function executarPromptRapido(prompt) {
 async function enviarComandoParaBackend(comando) {
   const selectVoz = document.getElementById('selectVoiceModel');
   const vozEscolhida = selectVoz ? selectVoz.value : 'pt-BR-FranciscaNeural';
-  const isDemoModeActive = isDemoMode();
+  const pinAutenticado = sessionStorage.getItem('nova_auth_pin') || sessionStorage.getItem('nova_admin_pin') || '';
+  const isDemo = modoPrivacidade === 'demo' || !pinAutenticado;
 
   try {
     const res = await fetch('/api/voice/interact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-NOVA-PIN': pinAutenticado,
+        'X-NOVA-Demo': isDemo ? 'true' : 'false',
         ...obterAuthHeaders()
       },
       body: JSON.stringify({
         comando,
         voz: vozEscolhida,
-        is_demo: isDemoModeActive
+        is_demo: isDemo,
+        pin: pinAutenticado
       })
     });
 
