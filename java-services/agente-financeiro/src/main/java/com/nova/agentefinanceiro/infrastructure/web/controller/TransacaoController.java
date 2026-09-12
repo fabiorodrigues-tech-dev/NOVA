@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,20 +76,67 @@ public class TransacaoController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/reconciliar-estrito")
+    public ResponseEntity<ImportacaoExtratoResponse> reconciliarEstrito() {
+        ImportacaoExtratoResponse response = importarExtratoOfxUseCase.reconciliarExtratosEstrito();
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/webhook-notificacao")
-    public ResponseEntity<TransacaoResponse> processarWebhookNotificacao(@RequestBody String payload) {
-        String texto = payload;
-        if (payload != null && payload.contains("\"textoNotificacao\"")) {
-            // Extrai campo se vier em JSON simples
+    public ResponseEntity<TransacaoResponse> processarWebhookNotificacao(
+            @RequestHeader(value = "X-NOVA-PIN", required = false) String headerPin,
+            @RequestBody(required = false) String payload
+    ) {
+        if (payload == null || payload.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        String texto = payload.trim();
+        String pin = headerPin;
+
+        // Se o payload for JSON, extrai campos notificacao / textoNotificacao / pin
+        if (texto.startsWith("{") && texto.endsWith("}")) {
             try {
-                int start = payload.indexOf("\"textoNotificacao\"") + 18;
-                int valStart = payload.indexOf("\"", start) + 1;
-                int valEnd = payload.indexOf("\"", valStart);
-                if (valStart > 0 && valEnd > valStart) {
-                    texto = payload.substring(valStart, valEnd);
+                if (texto.contains("\"pin\"")) {
+                    int pStart = texto.indexOf("\"pin\"") + 5;
+                    int colon = texto.indexOf(":", pStart);
+                    if (colon > 0) {
+                        int q1 = texto.indexOf("\"", colon);
+                        if (q1 > 0) {
+                            int q2 = texto.indexOf("\"", q1 + 1);
+                            if (q2 > q1) pin = texto.substring(q1 + 1, q2).trim();
+                        }
+                    }
+                }
+                if (texto.contains("\"notificacao\"")) {
+                    int nStart = texto.indexOf("\"notificacao\"") + 13;
+                    int colon = texto.indexOf(":", nStart);
+                    if (colon > 0) {
+                        int q1 = texto.indexOf("\"", colon);
+                        if (q1 > 0) {
+                            int q2 = texto.indexOf("\"", q1 + 1);
+                            if (q2 > q1) texto = texto.substring(q1 + 1, q2);
+                        }
+                    }
+                } else if (texto.contains("\"textoNotificacao\"")) {
+                    int nStart = texto.indexOf("\"textoNotificacao\"") + 18;
+                    int colon = texto.indexOf(":", nStart);
+                    if (colon > 0) {
+                        int q1 = texto.indexOf("\"", colon);
+                        if (q1 > 0) {
+                            int q2 = texto.indexOf("\"", q1 + 1);
+                            if (q2 > q1) texto = texto.substring(q1 + 1, q2);
+                        }
+                    }
                 }
             } catch (Exception ignored) {}
         }
+
+        // Validação de PIN de segurança se informado
+        if (pin != null && !pin.isBlank() && !"7770".equals(pin.trim())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         TransacaoResponse response = processarNotificacaoNubankUseCase.executar(texto);
         return ResponseEntity.ok(response);
     }

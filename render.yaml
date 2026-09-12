@@ -11,7 +11,7 @@ services:
     region: oregon
     branch: main
     autoDeploy: true
-    healthCheckPath: /api/status?demo=true
+    healthCheckPath: /health
     dockerfilePath: Dockerfile
     dockerContext: .
     envVars:

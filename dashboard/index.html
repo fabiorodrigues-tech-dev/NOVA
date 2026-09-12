@@ -18,8 +18,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="css/desktop.css" media="(min-width: 768px)">
-  <link rel="stylesheet" href="css/mobile.css" media="(max-width: 767px)">
+  <link rel="stylesheet" href="css/desktop.css" media="(min-width: 769px)">
+  <link rel="stylesheet" href="css/mobile.css" media="(max-width: 768px)">
 </head>
 <body>
 
@@ -147,7 +147,7 @@
           <div class="md3-nav-item__content">
             <span class="menu-icon"><span class="material-symbols-rounded">terminal</span></span>
             <span class="menu-text md3-nav-item__label">Engenharia & Testes</span>
-            <span class="menu-pill md3-badge md3-badge--success">100% OK</span>
+            <span class="menu-pill md3-badge md3-badge--success" style="white-space: nowrap !important; display: inline-flex; align-items: center; padding: 2px 8px; font-size: 10.5px;">100% OK</span>
           </div>
         </a>
 
@@ -185,15 +185,15 @@
 
       <!-- Top App Bar (M3 Search Bar & Actions Slot) -->
       <header class="top-header dabang-top-header md3-top-app-bar" role="banner">
-        <div class="header-search-wrap search-bar md3-search-bar" data-slot="search">
-          <span class="material-symbols-rounded search-lens" aria-hidden="true">search</span>
-          <input type="text" id="globalSearchInput" placeholder="Digite um comando ou /atalhos..." class="header-search-input" aria-label="Buscar vagas ou executar comandos rápidos">
-          <span class="search-kbd" aria-hidden="true">⌘K</span>
+        <div class="top-header-left header-search-wrap">
+          <span class="header-brand-title">NOVA</span>
+          <span class="header-breadcrumb-divider">/</span>
+          <span class="header-active-view-name">Cockpit Executivo</span>
         </div>
 
-        <div class="header-user-actions" data-slot="actions">
+        <div class="header-user-actions top-header-actions header-actions-group top-header-right" data-slot="actions">
           <!-- 1. Pill de Telemetria (🟢 Sistemas Operacionais) -->
-          <div class="header-telemetry-badge" id="telemetryStatusBadge" onclick="alternarAbaDedicada('view-engenharia', document.getElementById('menu-engenharia'))" title="Sistemas Operacionais: Spring Boot 8081 Ativo • H2 Database ACID • Cloud Render Online • Latência < 15ms" aria-label="Status dos Sistemas Operacionais">
+          <div class="header-telemetry-badge state-switcher-box" id="telemetryStatusBadge" onclick="alternarAbaDedicada('view-engenharia', document.getElementById('menu-engenharia'))" title="Sistemas Operacionais: Spring Boot 8081 Ativo • H2 Database ACID • Cloud Render Online • Latência < 15ms" aria-label="Status dos Sistemas Operacionais">
             <div class="telemetry-pulse-dot" aria-hidden="true">
               <span class="pulse-ring"></span>
               <span class="pulse-core"></span>
@@ -216,15 +216,9 @@
           </button>
 
           <!-- 3. Botão discreto de Modo Demo / Desbloqueio com PIN -->
-          <button id="btnPrivacyToggle" class="btn-privacy-toggle md3-chip md3-chip--assist demo-active" onclick="solicitarAlternanciaPrivacidade()" title="Alternar entre Modo Real e Modo Demonstração (Proteção LGPD / Gravação de Telas)" aria-label="Alternar Modo Real ou Demonstração">
+          <button id="btnPrivacyToggle" class="btn-privacy-toggle md3-chip demo-active" onclick="solicitarAlternanciaPrivacidade()" title="Alternar entre Modo Real e Modo Demonstração (Proteção LGPD / Gravação de Telas)" aria-label="Alternar Modo Real ou Demonstração">
             <span class="material-symbols-rounded privacy-mode-icon" id="privacyModeIcon" aria-hidden="true">shield</span>
-            <span id="privacyModeLabel">Modo Demo</span>
-          </button>
-
-          <!-- Botão de Trava de Dados Reais (Modo Real apenas) -->
-          <button id="btnLockRealData" class="btn-lock-data md3-chip" onclick="bloquearVoltarModoDemo()" title="Trancar dados e voltar imediatamente ao Modo Demonstração (LGPD Safe)" style="display: none;" aria-label="Trancar dados e voltar ao Modo Demo">
-            <span class="material-symbols-rounded" aria-hidden="true">lock</span>
-            <span>Bloquear</span>
+            <span id="privacyModeLabel">Modo Demo | Desbloquear</span>
           </button>
 
           <!-- Suporte Discreto (Tema e Refresh) -->
@@ -238,7 +232,7 @@
           </button>
 
           <!-- 4. Cápsula de perfil do usuário (FR Fábio Rodrigues) -->
-          <div class="user-profile-badge" aria-label="Perfil do Desenvolvedor: Fábio Rodrigues">
+          <div class="user-profile-badge user-info-capsule" aria-label="Perfil do Desenvolvedor: Fábio Rodrigues">
             <div class="user-avatar-circle" aria-hidden="true">FR</div>
             <div class="user-profile-details">
               <span class="user-name-txt">Fábio Rodrigues</span>
@@ -250,20 +244,6 @@
 
       <!-- Scrollable Main Content -->
       <main class="dabang-content-body">
-
-        <!-- Presentation & Demo Mode Banner (Default: Visible / LGPD Safe) -->
-        <div id="demoModeBanner" class="lgpd-banner demo-presentation-banner" style="display: flex;" role="status">
-          <div class="demo-banner-content">
-            <span class="material-symbols-rounded banner-icon">verified_user</span>
-            <div class="demo-banner-texts">
-              <strong>Modo Apresentação Ativo (LGPD Safe)</strong>
-              <span>Exibindo dados fictícios de demonstração para gravação de tela e acesso público.</span>
-            </div>
-          </div>
-          <button class="btn-banner-action" onclick="solicitarAlternanciaPrivacidade()" title="Clique para desbloquear dados reais com PIN">
-            Alternar para Dados Reais
-          </button>
-        </div>
 
         <!-- ==============================================
              CONTAINER ESTRUTURAL DE ABAS (VIEWS CONTAINER)
@@ -287,20 +267,28 @@
                 </div>
                 <div>
                   <h2>NOVA Voice Assistant</h2>
-                  <span class="va-subtitle">Interação Bidirecional por Voz • Reconhecimento em Tempo Real & Síntese Neural Base64</span>
+                  <span class="va-subtitle">Assistente de Inteligência Pessoal & Operações</span>
                 </div>
               </div>
 
-              <!-- Voice Selector Dropdown -->
-              <div class="va-voice-select-box">
-                <label for="selectVoiceModel"><span class="material-symbols-rounded">volume_up</span> Voz Ativa:</label>
-                <select id="selectVoiceModel" class="va-select-dropdown" onchange="trocarVozAtiva(this.value)">
-                  <option value="pt-BR-FranciscaNeural" selected>Francisca (Feminina - Fluida / Acolhedora)</option>
-                  <option value="pt-BR-AntonioNeural">Antônio (Masculino - Executivo / Natural)</option>
-                  <option value="pt-BR-FabioNeural">Fábio (Masculino - Tom Direto / Ágil)</option>
-                  <option value="pt-BR-ThalitaNeural">Thalita (Feminina - Expressiva / Dinâmica)</option>
-                  <option value="en-US-GuyNeural">Guy (Inglês - International Tech Lead)</option>
-                </select>
+              <!-- Voice Selector Dropdown & Action Buttons -->
+              <div class="va-header-controls" style="display: flex; align-items: center; gap: 10px;">
+                <div class="va-voice-select-box">
+                  <label for="selectVoiceModel"><span class="material-symbols-rounded">volume_up</span> Voz Ativa:</label>
+                  <select id="selectVoiceModel" class="va-select-dropdown" onchange="trocarVozAtiva(this.value)">
+                    <option value="pt-BR-FranciscaNeural" selected>Francisca (Feminina - Fluida / Acolhedora)</option>
+                    <option value="pt-BR-AntonioNeural">Antônio (Masculino - Executivo / Natural)</option>
+                    <option value="pt-BR-FabioNeural">Fábio (Masculino - Tom Direto / Ágil)</option>
+                    <option value="pt-BR-ThalitaNeural">Thalita (Feminina - Expressiva / Dinâmica)</option>
+                    <option value="en-US-GuyNeural">Guy (Inglês - International Tech Lead)</option>
+                  </select>
+                </div>
+
+                <button id="btnExpandVa" class="btn-va-expand" onclick="alternarExpansaoVoiceAssistant()" title="Expandir visualização">
+                  <span class="material-symbols-rounded" id="iconExpandVa">open_in_full</span>
+                </button>
+
+                <button id="btnCloseExpandedVa" class="btn-close-expanded" onclick="alternarExpansaoVoiceAssistant()" title="Fechar modo expandido (Esc)">✕ Fechar</button>
               </div>
             </div>
 
@@ -346,14 +334,14 @@
                     <div class="msg-avatar">🌌</div>
                     <div class="msg-content">
                       <span class="msg-author">NOVA</span>
-                      <p id="assistantWelcomeMsg">Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro.</p>
+                      <p id="assistantWelcomeMsg">Olá! Sou o assistente de inteligência do NOVA. Posso te ajudar com análises financeiras, esteira de candidaturas e telemetria do sistema. O que deseja consultar?</p>
                     </div>
                   </div>
                 </div>
 
                 <!-- Input Bar & Presets -->
                 <div class="va-input-group">
-                  <input type="text" id="vaTextInput" class="va-text-input" placeholder="Digite uma pergunta para o NOVA falar..." value="NOVA, qual é o meu saldo atual?">
+                  <input type="text" id="vaTextInput" class="va-text-input" placeholder="Digite uma pergunta para o NOVA falar..." value="">
                   <button class="btn-va-send md3-button md3-button--filled" onclick="enviarTextoDigitado()">
                     <span class="material-symbols-rounded">send</span>
                     <span>Enviar</span>
@@ -380,20 +368,20 @@
           <!-- TOP 4 SUMMARY CARDS (M3 ELEVATED + SLOTS) -->
           <section class="kpi-grid stats-grid summary-cards-row" id="overview">
             
-            <!-- Card 1: Saldo Líquido -->
+            <!-- Card 1: Saldo Disponível (Conta Corrente) -->
             <div class="summary-card kpi-card md3-card md3-card--elevated card-coral" data-card-type="kpi">
               <div class="card-top-row md3-card__header-slot" data-slot="header">
                 <div class="summary-icon-box coral">
                   <span class="material-symbols-rounded">account_balance_wallet</span>
                 </div>
-                <span class="card-tag positive md3-badge md3-badge--success">+34.5%</span>
+                <span class="card-tag positive md3-badge md3-badge--success" id="kpiSaldoTag">Disponível</span>
               </div>
               <div class="card-value-group md3-card__content-slot" data-slot="content">
-                <span class="card-label">Saldo Líquido (Agosto)</span>
-                <h2 class="card-big-num" id="kpiSaldo">+ R$ 589,23</h2>
+                <span class="card-label" id="kpiSaldoLabel">Saldo Disponível (Conta)</span>
+                <h2 class="card-big-num" id="kpiSaldo">R$ 0,03</h2>
               </div>
               <div class="card-footer-info" data-slot="supporting-text">
-                <span>H2 Persistente • 100% Conciliado</span>
+                <span id="kpiSaldoSub">Liquidez Imediata • Nubank</span>
               </div>
             </div>
 
@@ -542,16 +530,62 @@
              ============================================== -->
         <div id="view-financas" class="view-section view-panel" style="display: none;">
 
-          <div class="tab-view-header">
-            <div>
-              <h2>Gestão Financeira & Inteligência Preditiva</h2>
-              <p>Métricas de fluxo de caixa, evolução semanal no banco H2, categorização e inteligência preditiva</p>
+          <div class="tab-view-header tab-view-header--financas">
+            <div class="tab-header-top-row">
+              <div class="tab-header-info">
+                <h2>Gestão Financeira &amp; Inteligência Preditiva</h2>
+                <p>Métricas de fluxo de caixa, evolução semanal no banco H2, categorização e inteligência preditiva</p>
+              </div>
+              <div class="tab-header-top-actions period-selector-row">
+                <div class="periodo-selector-wrapper">
+                  <label for="selectMesExtrato" class="periodo-selector-label">
+                    <span class="material-symbols-rounded">calendar_month</span>
+                    <span>Mês:</span>
+                  </label>
+                  <select id="selectMesExtrato" class="periodo-select-dropdown" onchange="trocarMesExtrato(this.value)" aria-label="Seletor de Mês do Extrato">
+                    <option value="2026-09">2026-09 - Setembro/2026</option>
+                    <option value="2026-08" selected>2026-08 - Agosto/2026</option>
+                    <option value="2026-07">2026-07 - Julho/2026</option>
+                    <option value="2026-06">2026-06 - Junho/2026</option>
+                    <option value="2026-05">2026-05 - Maio/2026</option>
+                    <option value="2026-04">2026-04 - Abril/2026</option>
+                    <option value="2026-03">2026-03 - Março/2026</option>
+                    <option value="2026-02">2026-02 - Fevereiro/2026</option>
+                    <option value="2026-01">2026-01 - Janeiro/2026</option>
+                  </select>
+                </div>
+                <a id="btnRelatorioPdfMes" href="/download/financeiro/relatorios_pdf/relatorio_agosto_2026.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal" title="Baixar Relatório Financeiro Oficial em PDF">
+                  <span class="material-symbols-rounded">description</span>
+                  <span>Relatório PDF</span>
+                </a>
+              </div>
             </div>
-            <div class="tab-header-actions">
-              <a href="/download/financeiro/relatorios_pdf/relatorio_agosto_2026.pdf" target="_blank" class="btn-panel-ghost md3-button md3-button--tonal">
-                <span class="material-symbols-rounded">description</span>
-                <span>Relatório Financeiro PDF</span>
-              </a>
+
+            <div class="tab-header-actions tab-header-actions--financas">
+              <div class="tab-actions-group">
+                <button id="btnBalanceteMensal" class="btn-pluggy-action btn-fin-action md3-button" onclick="abrirBalanceteMensal()" title="Gerar e baixar Balancete de Verificação Oficial com conciliação contábil">
+                  <span class="material-symbols-rounded">description</span>
+                  <span>Balancete Mensal</span>
+                </button>
+                <button id="btnBalancoPatrimonial" class="btn-pluggy-action btn-fin-action md3-button" onclick="abrirBalancoPatrimonial()" title="Apurar e baixar Balanço Patrimonial &amp; DRE com ativos em conta e caixinhas">
+                  <span class="material-symbols-rounded">account_balance</span>
+                  <span>Balanço Patrimonial</span>
+                </button>
+                <button id="btnCompararMeses" class="btn-pluggy-action btn-fin-action md3-button" onclick="abrirModalCompararMeses()" title="Comparativo horizontal de receitas, despesas e variação líquida entre meses">
+                  <span class="material-symbols-rounded">compare_arrows</span>
+                  <span>Comparar Meses</span>
+                </button>
+              </div>
+              <div class="tab-actions-group">
+                <button id="btnConectarPluggy" class="btn-pluggy-action btn-pluggy-connect md3-button" onclick="abrirModalConectarPluggy()" title="Conectar e gerenciar contas bancárias via Pluggy.ai Open Finance">
+                  <span class="material-symbols-rounded">hub</span>
+                  <span>Conectar Open Finance</span>
+                </button>
+                <button id="btnSincronizarPluggy" class="btn-pluggy-action btn-pluggy-sync md3-button" onclick="sincronizarPluggyBanco()" title="Sincronizar transações recentes com a Pluggy.ai e conciliar no H2">
+                  <span class="material-symbols-rounded" id="iconSyncPluggy">sync</span>
+                  <span>Sincronizar Banco</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -669,43 +703,49 @@
                 </div>
                 <div>
                   <h3 class="panel-heading">Caixinhas Nubank & Patrimônio Líquido Total</h3>
-                  <span class="panel-subtext">Reserva de Emergência, Fundo de Expansão e Saldo Consolidado [MOCK]</span>
+                  <span class="panel-subtext">Investimentos Guardados, Poupança do Casal e Liquidez Imediata</span>
                 </div>
               </div>
               <div class="patrimonio-pill">
-                <span class="md3-badge md3-badge--success" id="kpiPatrimonioTotal">Patrimônio: R$ 607.500,00</span>
+                <span class="md3-badge md3-badge--success" id="kpiPatrimonioTotal">Patrimônio: R$ 1.000,14</span>
               </div>
             </div>
 
             <div class="caixinhas-grid-body md3-card__content-slot" data-slot="content" id="caixinhasContainer">
-              <!-- Caixinha 1: Reserva de Emergência -->
-              <div class="caixinha-item-card">
+              <!-- Caixinha 1: Poupança do Casal 🥰 -->
+              <div class="caixinha-item-card caixinha-card-casal">
                 <div class="caixinha-item-top">
-                  <span class="caixinha-tag md3-badge">🛡️ Reserva Estratégica</span>
-                  <span class="caixinha-rend">+R$ 3.500,00/mês</span>
+                  <span class="caixinha-tag md3-badge">🥰 Poupança do Casal</span>
+                  <span class="caixinha-rend" id="rendFundoCasal">+R$ 16,48 rend.</span>
                 </div>
-                <h4 class="caixinha-val" id="valReservaEmergencia">R$ 350.000,00</h4>
-                <span class="caixinha-sub">Rendimento 100% CDI • Liquidez Imediata</span>
+                <h4 class="caixinha-val" id="valFundoCasal">R$ 1.000,11</h4>
+                <div class="caixinha-meta-row">
+                  <span class="caixinha-sub" id="subFundoCasal">Bruto: R$ 1.004,00 • Meta: R$ 2.700,00</span>
+                  <span class="caixinha-prog-txt" id="progFundoCasal">37%</span>
+                </div>
+                <div class="caixinha-progress-bar">
+                  <div class="caixinha-progress-fill" id="barFundoCasal" style="width: 37%;"></div>
+                </div>
               </div>
 
-              <!-- Caixinha 2: Fundo de Expansão -->
+              <!-- Caixinha 2: Reserva de Emergência -->
               <div class="caixinha-item-card">
                 <div class="caixinha-item-top">
-                  <span class="caixinha-tag md3-badge">📈 Fundo de Expansão & Metas</span>
-                  <span class="caixinha-rend">+R$ 1.500,00/mês</span>
+                  <span class="caixinha-tag md3-badge">🛡️ Reserva de Emergência</span>
+                  <span class="caixinha-rend" id="rendReserva">RDB 100% CDI</span>
                 </div>
-                <h4 class="caixinha-val" id="valFundoCasal">R$ 150.000,00</h4>
-                <span class="caixinha-sub">Alocação de Médio Prazo • Rendimento Automático</span>
+                <h4 class="caixinha-val" id="valReservaEmergencia">R$ 0,00</h4>
+                <span class="caixinha-sub">Liquidez Imediata Nubank</span>
               </div>
 
-              <!-- Caixinha 3: Saldo Conta Corrente H2 -->
+              <!-- Caixinha 3: Saldo Disponível (Conta Operacional H2) -->
               <div class="caixinha-item-card">
                 <div class="caixinha-item-top">
-                  <span class="caixinha-tag md3-badge">💳 Conta Operacional (H2)</span>
-                  <span class="caixinha-rend">Disponível</span>
+                  <span class="caixinha-tag md3-badge">💳 Saldo Disponível</span>
+                  <span class="caixinha-rend">Liquidez Imediata</span>
                 </div>
-                <h4 class="caixinha-val" id="valSaldoConta">R$ 107.500,00</h4>
-                <span class="caixinha-sub">Capital Operacional do Período</span>
+                <h4 class="caixinha-val" id="valSaldoConta">R$ 0,03</h4>
+                <span class="caixinha-sub">Conta Corrente Nubank</span>
               </div>
             </div>
           </section>
@@ -1630,6 +1670,32 @@
 
   </div>
 
+  <!-- ==============================================
+       BOTTOM NAVIGATION DOCK ESTILO IOS (MOBILE ONLY)
+       ============================================== -->
+  <nav class="mobile-bottom-nav" id="mobileDockNav" aria-label="Navegação Mobile">
+    <a href="#dashboard" class="dock-nav-item active" id="dockNavDashboard" onclick="alternarAbaDedicada('view-dashboard', this); return false;" aria-label="Início">
+      <span class="material-symbols-rounded">dashboard</span>
+      <span>Início</span>
+    </a>
+    <a href="#financas" class="dock-nav-item" id="dockNavFinancas" onclick="alternarAbaDedicada('view-financas', this); return false;" aria-label="Finanças">
+      <span class="material-symbols-rounded">account_balance_wallet</span>
+      <span>Finanças</span>
+    </a>
+    <a href="#candidaturas" class="dock-nav-item" id="dockNavCandidaturas" onclick="alternarAbaDedicada('view-candidaturas', this); return false;" aria-label="Vagas">
+      <span class="material-symbols-rounded">work</span>
+      <span>Vagas</span>
+    </a>
+    <a href="#estudos" class="dock-nav-item" id="dockNavEstudos" onclick="alternarAbaDedicada('view-estudos', this); return false;" aria-label="Estudos">
+      <span class="material-symbols-rounded">school</span>
+      <span>Estudos</span>
+    </a>
+    <a href="#voice-studio" class="dock-nav-item" id="dockNavVoice" onclick="alternarAbaDedicada('view-voice-studio', this); return false;" aria-label="Voz">
+      <span class="material-symbols-rounded">graphic_eq</span>
+      <span>Voz</span>
+    </a>
+  </nav>
+
   <!-- Modal Pitch LinkedIn -->
   <div class="modal-overlay" id="pitchModal">
     <div class="modal-window">
@@ -1648,6 +1714,70 @@
           <span class="material-symbols-rounded">content_copy</span>
           <span>Copiar Pitch para Área de Transferência</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Material 3: Open Finance Conector Pluggy.ai -->
+  <div class="modal-overlay pluggy-modal" id="pluggy-modal" data-id="pluggyModal" role="dialog" aria-modal="true" aria-labelledby="pluggyModalTitle">
+    <div class="modal-window pluggy-modal-window">
+      <div class="modal-top">
+        <div class="pluggy-modal-header-info">
+          <div class="pluggy-modal-badge-icon">
+            <span class="material-symbols-rounded">hub</span>
+          </div>
+          <div>
+            <h3 id="pluggyModalTitle">Pluggy.ai • Open Finance</h3>
+            <span class="modal-subheading">Conector Bancário Seguro • Banco Central do Brasil</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="fecharModalPluggy()" aria-label="Fechar modal">&times;</button>
+      </div>
+      <div class="modal-content-area pluggy-modal-content">
+        <div class="pluggy-status-card" id="pluggyStatusCard">
+          <div class="pluggy-status-dot-indicator">
+            <span class="status-dot-green"></span>
+            <strong id="pluggyStatusTitle">Conector Pluggy Ativo</strong>
+          </div>
+          <p id="pluggyStatusDesc" class="pluggy-status-desc">
+            Sincronização configurada para contas correntes, cartões de crédito e caixinhas Nubank.
+          </p>
+          <div class="pluggy-credentials-box">
+            <div class="pluggy-cred-row">
+              <span class="cred-label">Ambiente:</span>
+              <span class="cred-value badge-env" id="pluggyEnvLabel">Sandbox / Produção</span>
+            </div>
+            <div class="pluggy-cred-row">
+              <span class="cred-label">Client ID:</span>
+              <span class="cred-value" id="pluggyClientIdLabel">••••••••••</span>
+            </div>
+            <div class="pluggy-cred-row">
+              <span class="cred-label">Banco Destino:</span>
+              <span class="cred-value">H2 Database ACID (Porta 8081)</span>
+            </div>
+            <div class="pluggy-cred-row">
+              <span class="cred-label">Última Sincronização:</span>
+              <span class="cred-value" id="pluggyLastSyncLabel">Agora mesmo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pluggy-instructions-box">
+          <h4>Como Funciona a Sincronização</h4>
+          <ul>
+            <li><strong>Autenticação OAuth:</strong> Credenciais Pluggy lidas de <code>.env</code> ou variáveis de ambiente.</li>
+            <li><strong>Deduplicação Inteligente:</strong> Nenhuma transação já existente é duplicada no banco H2.</li>
+            <li><strong>Categorização Automática:</strong> Despesas e receitas são classificadas instantaneamente.</li>
+          </ul>
+        </div>
+
+        <div class="pluggy-modal-actions">
+          <button type="button" class="md3-button md3-button--text" onclick="fecharModalPluggy()">Fechar</button>
+          <button type="button" id="btnModalSincronizarPluggy" class="md3-button md3-button--filled btn-pluggy-sync-modal" onclick="sincronizarPluggyBanco(true)">
+            <span class="material-symbols-rounded">sync</span>
+            <span>Sincronizar Agora</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1703,6 +1833,71 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  <!-- Modal Comparativo Contábil de Meses -->
+  <div class="modal-overlay" id="comparar-meses-modal" role="dialog" aria-modal="true" aria-labelledby="compararModalTitle" style="display: none;">
+    <div class="modal-window pluggy-modal-window" style="max-width: 580px;">
+      <div class="modal-top">
+        <div class="modal-title-group">
+          <div class="pluggy-modal-badge">
+            <span class="material-symbols-rounded">compare_arrows</span>
+            <span id="compararModalTitle">Comparativo Contábil Horizontal</span>
+          </div>
+          <span class="modal-subheading">Análise comparativa de variações absolutas e percentuais entre meses</span>
+        </div>
+        <button class="modal-close-btn" onclick="fecharModalCompararMeses()" aria-label="Fechar modal">&times;</button>
+      </div>
+      <div class="modal-content-area pluggy-modal-content">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+          <div>
+            <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--text-secondary);">Mês Base (Mês 1)</label>
+            <select id="selectCompMes1" class="periodo-select-dropdown" style="width: 100%;">
+              <option value="2026-07" selected>2026-07 - Julho/2026</option>
+              <option value="2026-06">2026-06 - Junho/2026</option>
+              <option value="2026-05">2026-05 - Maio/2026</option>
+              <option value="2026-08">2026-08 - Agosto/2026</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--text-secondary);">Mês Comparado (Mês 2)</label>
+            <select id="selectCompMes2" class="periodo-select-dropdown" style="width: 100%;">
+              <option value="2026-08" selected>2026-08 - Agosto/2026</option>
+              <option value="2026-09">2026-09 - Setembro/2026</option>
+              <option value="2026-07">2026-07 - Julho/2026</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="resultadoComparativoArea" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+          <p style="margin: 0 0 10px 0; font-size: 13px; color: var(--text-secondary);" id="comparativoDiagnosticoTexto">Selecione os dois meses e clique em Gerar Análise para comparar receitas, despesas e variação líquida.</p>
+          <div id="comparativoKpiMini" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+            <div style="background: rgba(16,185,129,0.08); padding: 10px; border-radius: 8px; text-align: center;">
+              <span style="font-size: 11px; display: block; color: #10B981; font-weight: 700;">Var. Receitas</span>
+              <span id="compVarRec" style="font-size: 14px; font-weight: 800; color: #10B981;">--</span>
+            </div>
+            <div style="background: rgba(239,68,68,0.08); padding: 10px; border-radius: 8px; text-align: center;">
+              <span style="font-size: 11px; display: block; color: #EF4444; font-weight: 700;">Var. Despesas</span>
+              <span id="compVarDesp" style="font-size: 14px; font-weight: 800; color: #EF4444;">--</span>
+            </div>
+            <div style="background: rgba(99,102,241,0.08); padding: 10px; border-radius: 8px; text-align: center;">
+              <span style="font-size: 11px; display: block; color: #818CF8; font-weight: 700;">Var. Saldo</span>
+              <span id="compVarSaldo" style="font-size: 14px; font-weight: 800; color: #818CF8;">--</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button type="button" class="md3-button md3-button--text" onclick="fecharModalCompararMeses()">Fechar</button>
+          <button type="button" class="md3-button md3-button--tonal" onclick="executarComparativoMeses()">
+            <span class="material-symbols-rounded">analytics</span>
+            <span>Calcular Variação</span>
+          </button>
+          <button type="button" id="btnBaixarComparativoPdf" class="md3-button md3-button--filled" onclick="baixarComparativoPdfModal()" style="display: none;">
+            <span class="material-symbols-rounded">picture_as_pdf</span>
+            <span>Baixar PDF Oficial</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

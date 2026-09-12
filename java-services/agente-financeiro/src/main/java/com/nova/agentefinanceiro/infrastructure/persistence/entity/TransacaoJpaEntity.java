@@ -43,6 +43,9 @@ public class TransacaoJpaEntity {
     @Column(nullable = false)
     private LocalDate data;
 
+    @Column(name = "hash_sha256", length = 64)
+    private String hashSha256;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
 
@@ -51,12 +54,17 @@ public class TransacaoJpaEntity {
     }
 
     public TransacaoJpaEntity(Long id, String descricao, BigDecimal valor, TipoTransacao tipo, CategoriaTransacao categoria, LocalDate data) {
+        this(id, descricao, valor, tipo, categoria, data, null);
+    }
+
+    public TransacaoJpaEntity(Long id, String descricao, BigDecimal valor, TipoTransacao tipo, CategoriaTransacao categoria, LocalDate data, String hashSha256) {
         this.id = id;
         this.descricao = descricao;
         this.valor = valor;
         this.tipo = tipo;
         this.categoria = categoria;
         this.data = data;
+        this.hashSha256 = hashSha256;
         this.criadoEm = LocalDateTime.now();
     }
 
@@ -110,5 +118,13 @@ public class TransacaoJpaEntity {
 
     public LocalDateTime getCriadoEm() {
         return criadoEm;
+    }
+
+    public String getHashSha256() {
+        return hashSha256;
+    }
+
+    public void setHashSha256(String hashSha256) {
+        this.hashSha256 = hashSha256;
     }
 }

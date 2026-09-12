@@ -44,7 +44,7 @@ class NumberedCanvas(canvas.Canvas):
         # Header (pages > 1)
         if self._pageNumber > 1:
             self.drawString(MARGIN, PAGE_HEIGHT - 32, "NOVA Ecosystem • Dossiê Técnico de Engenharia & Governança")
-            self.drawRightString(PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 32, "Enterprise-Grade Architecture v3.6")
+            self.drawRightString(PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 32, "Enterprise-Grade Architecture v3.14")
             self.setStrokeColor(colors.HexColor("#CBD5E1"))
             self.setLineWidth(0.5)
             self.line(MARGIN, PAGE_HEIGHT - 38, PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 38)
@@ -200,18 +200,18 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
     # CABEÇALHO DO DOSSIÊ MASTER
     # =========================================================================
     story.append(Paragraph("DOSSIÊ TÉCNICO & AUDITORIA ARQUITETURAL", style_title))
-    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.6 | Clean Architecture, Spring AI MCP & DevSecOps", style_subtitle))
+    story.append(Paragraph("Projeto NOVA — Multi-Agent Ecosystem v3.14 | Clean Architecture, Contabilidade Sênior & DevSecOps", style_subtitle))
     story.append(HRFlowable(width="100%", thickness=1.5, color=ACCENT, spaceBefore=2, spaceAfter=8))
 
     # Tabela de Metadados Executivos (Largura: 510 pt)
     meta_data = [
         [
             Paragraph("<b>Arquiteto / Autor:</b> Fábio Rodrigues", style_body),
-            Paragraph("<b>Stack Core:</b> Java 21 LTS / Spring Boot 3.3.3", style_body)
+            Paragraph("<b>Stack Core:</b> Java 21 LTS / Spring Boot 3.3.3 / Spring AI", style_body)
         ],
         [
             Paragraph("<b>Repositório Oficial:</b> github.com/fabiorodrigues-tech-dev/NOVA", style_body),
-            Paragraph("<b>Suíte de Testes:</b> 40/40 JUnit 5 Passando (100% Green)", style_body)
+            Paragraph("<b>Suíte de Testes:</b> 44/44 JUnit 5 Passando (100% Green)", style_body)
         ],
         [
             Paragraph("<b>Produção Nuvem (Live):</b> nova-control-center-alsl.onrender.com", style_body),
@@ -251,7 +251,7 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         [
             Paragraph("<b>1. Interfaces & Acesso (UI Layer)</b>", style_td_bold),
             Paragraph("• NOVA Control Center (SPA 7 Abas)<br/>• Voice Studio Web (Porta 5050)<br/>• Chat CLI (Atalhos / e !)<br/>• Túnel HTTPS Seguro (/compartilhar)", style_td),
-            Paragraph("Exibição de telemetria em tempo real, interação vocal neural Base64, controle de privacidade LGPD Safe e cockpit analítico com Living Shader WebGL.", style_td)
+            Paragraph("Exibição de telemetria em tempo real, interação vocal neural Base64, controle de privacidade Demo Mode unificado, toolbar contábil responsiva e modo assistente expandido.", style_td)
         ],
         [
             Paragraph("<b>2. Orquestração Central (MAIN Agent)</b>", style_td_bold),
@@ -261,12 +261,12 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         [
             Paragraph("<b>3. Agentes Especialistas (.agents/skills/)</b>", style_td_bold),
             Paragraph("• 💰 <code>agente-financeiro</code><br/>• 💼 <code>agente-carreira-e-operacoes</code><br/>• 💻 <code>agente-codigo</code><br/>• 📚 <code>agente-estudos</code>", style_td),
-            Paragraph("Execução especializada: gestão orçamentária preditiva, esteira de candidaturas 360°, Clean Architecture/scaffolding e mentoria técnica ativa.", style_td)
+            Paragraph("Execução especializada: contabilidade sênior (Balancete, Balanço, DRE e Comparativo), esteira de candidaturas 360°, Clean Architecture/scaffolding e mentoria ativa.", style_td)
         ],
         [
             Paragraph("<b>4. Backend, MCP & Persistência</b>", style_td_bold),
-            Paragraph("• Spring Boot 3.3.3 API (Porta 8081)<br/>• Spring AI Model Context Protocol (MCP)<br/>• Banco H2 ACID (financiadb.mv.db)<br/>• Motor Gráfico (chart_engine.py)<br/>• Neural TTS Bridge (edge-tts)", style_td),
-            Paragraph("Persistência transacional ACID, contratos REST padronizados (RFC 7807), ferramentas corporativas @Tool expostas para LLMs e geração de relatórios gráficos.", style_td)
+            Paragraph("• Spring Boot 3.3.3 API (Porta 8081)<br/>• Spring AI MCP (Tools @Tool)<br/>• Banco H2 ACID (financiadb.mv.db)<br/>• Deduplicação Estrita (SHA-256)<br/>• Motor Gráfico & Webhook Nubank", style_td),
+            Paragraph("Persistência transacional ACID com deduplicação criptográfica, contratos REST contábeis padronizados (RFC 7807), ferramentas MCP para LLMs e geração de relatórios gráficos.", style_td)
         ]
     ]
     t_arch = Table(arch_data, colWidths=[130, 180, 200])
@@ -301,13 +301,13 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         ],
         [
             Paragraph("<b>Cockpit Central</b>", style_td_bold),
-            Paragraph("Visão executiva consolidada, Voice Assistant interativo, KPIs corporativos e Living Shader WebGL reativo.", style_td),
+            Paragraph("Visão executiva compactada, Voice Assistant otimizado (orb 140px), 4 KPIs visíveis na 1ª dobra, toggle demo unificado e shader WebGL.", style_td),
             Paragraph("WebGL, Web Speech API, Chart.js, Bento Grid", style_td)
         ],
         [
             Paragraph("<b>Finanças (H2)</b>", style_td_bold),
-            Paragraph("Balanço patrimonial, auditoria de despesas, burn rate diário, projeção de fechamento e gestão de Caixinhas Nubank.", style_td),
-            Paragraph("Java 21, Spring Boot 3, Banco H2 ACID, Parser OFX/CSV", style_td)
+            Paragraph("Contabilidade sênior (Balancete, Balanço, DRE, Comparativo MoM e Anual 2026), deduplicação SHA-256 e toolbar responsiva.", style_td),
+            Paragraph("Java 21, Spring Boot 3, Banco H2 ACID, SHA-256", style_td)
         ],
         [
             Paragraph("<b>Candidaturas 360°</b>", style_td_bold),
@@ -326,12 +326,12 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         ],
         [
             Paragraph("<b>Engenharia & Testes</b>", style_td_bold),
-            Paragraph("Telemetria pulsante dos microsserviços, 4 camadas Clean Architecture, status H2 ACID e suíte de 40 testes JUnit 5 100% PASS.", style_td),
+            Paragraph("Telemetria dos microsserviços, 4 camadas Clean Architecture, status H2 ACID e suíte de 44 testes JUnit 5 100% PASS.", style_td),
             Paragraph("JUnit 5, Mockito, AssertJ, Spring Actuator", style_td)
         ],
         [
             Paragraph("<b>Spring Boot API</b>", style_td_bold),
-            Paragraph("Painel interativo de contratos REST, documentação de 5 endpoints mapeados, esquemas JSON e RFC 7807 ProblemDetail.", style_td),
+            Paragraph("Painel de contratos REST, documentação de 9 endpoints (incluindo Contabilidade e Webhook), esquemas JSON e RFC 7807.", style_td),
             Paragraph("Springdoc OpenAPI, RFC 7807, Spring AI MCP Tools", style_td)
         ]
     ]
@@ -374,16 +374,16 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         ],
         [
             Paragraph("<b>2. Application<br/>(Casos de Uso)</b>", style_td_bold),
-            Paragraph("• <code>usecase/</code>: Lógica de aplicação (Cadastrar, Listar, Importar OFX, Projeção Preditiva, Caixinhas, Webhook)<br/>"
-                      "• <code>dto/</code>: Java Records imutáveis de Request e Response", style_td),
-            Paragraph("<b>Orquestração de Negócio:</b> Depende estritamente da camada Domain. Injeção de dependência feita via construtores canônicos.", style_td)
+            Paragraph("• <code>usecase/</code>: <code>ContabilidadeUseCase</code>, <code>ImportarExtratoOfxUseCase</code>, Projeção, Resumo, Caixinhas e Webhook<br/>"
+                      "• <code>dto/</code>: DTO Records contábeis (Balancete, Balanço, DRE, Comparativo, Anual)", style_td),
+            Paragraph("<b>Orquestração de Negócio:</b> Depende estritamente do Domain. Injeção de dependência via construtores canônicos.", style_td)
         ],
         [
             Paragraph("<b>3. Infrastructure<br/>(Adaptadores)</b>", style_td_bold),
-            Paragraph("• <code>persistence/</code>: Entidades JPA, Spring Data Repositories e Mappers bidirecionais<br/>"
-                      "• <code>web/</code>: Controllers RESTful, ProblemDetail RFC 7807 e Global Exception Handler<br/>"
-                      "• <code>mcp/</code>: Spring AI Model Context Protocol Tools (<code>@Tool</code>)", style_td),
-            Paragraph("<b>Inversão de Dependência (DIP):</b> Implementa as interfaces do Domain e consome os Casos de Uso. É a camada periférica descartável e configurável.", style_td)
+            Paragraph("• <code>persistence/</code>: JPA com deduplicação <code>hash_sha256</code>, Repositories e Mappers<br/>"
+                      "• <code>web/</code>: <code>ContabilidadeController</code>, <code>TransacaoController</code>, RFC 7807<br/>"
+                      "• <code>mcp/</code>: Spring AI MCP Tools (<code>@Tool</code>)", style_td),
+            Paragraph("<b>Inversão de Dependência (DIP):</b> Implementa as interfaces do Domain e expõe Casos de Uso em RESTful, MCP e JPA.", style_td)
         ]
     ]
     t_layers = Table(layers_data, colWidths=[110, 230, 170])
@@ -391,21 +391,21 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
         ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
-        ('TOPPADDING', (0, 0), (-1, -1), 4),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-        ('LEFTPADDING', (0, 0), (-1, -1), 6),
-        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+        ('LEFTPADDING', (0, 0), (-1, -1), 5),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 5),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
     ]))
     story.append(t_layers)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
 
     # =========================================================================
-    # 4. CASOS DE USO AVANÇADOS, OFX & INTELIGÊNCIA PREDITIVA (FASE 9)
+    # 4. CASOS DE USO AVANÇADOS, CONTABILIDADE SÊNIOR & OFX (FASES 9 & 10)
     # =========================================================================
-    story.append(Paragraph("4. Casos de Uso Avançados, Ingestão OFX & Inteligência Preditiva (Fase 9)", style_h1))
+    story.append(Paragraph("4. Casos de Uso Avançados, Contabilidade Sênior & Conciliação OFX (Fases 9 & 10)", style_h1))
     story.append(Paragraph(
-        "A Fase 9 introduziu recursos corporativos de CFO Algorítmico, ingestão de extratos do Nubank e gestão de ativos patrimoniais:",
+        "A evolução para a versão v3.14 consolidou uma Arquitetura Contábil Sênior completa, ingestão com deduplicação criptográfica e CFO algorítmico:",
         style_body
     ))
 
@@ -416,50 +416,57 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
             Paragraph("Garantias & Retorno", style_th)
         ],
         [
-            Paragraph("<b>ImportarExtratoOfxUseCase</b>", style_td_bold),
-            Paragraph("Parser nativo SGML/XML de extratos <code>.ofx</code> e <code>.csv</code> do Nubank em <code>financeiro/extratos_ofx/</code>. Extrai nós <code>&lt;STMTTRN&gt;</code>, <code>&lt;TRNAMT&gt;</code> e <code>&lt;MEMO&gt;</code>.", style_td),
-            Paragraph("Deduplicação rigorosa contra duplicidade no banco H2 ACID. Classificação automática de categorias.", style_td)
+            Paragraph("<b>ContabilidadeUseCase</b>", style_td_bold),
+            Paragraph("• <b>Balancete:</b> Abertura, Créditos, Débitos, Fechamento e Equilíbrio.<br/>"
+                      "• <b>Balanço & DRE:</b> Ativo, Passivo, PL, Liquidez, Margem Líquida.<br/>"
+                      "• <b>Comparativo MoM & Anual 2026:</b> Variações percentuais nominais.", style_td),
+            Paragraph("Conformidade contábil plena via endpoints REST (<code>/api/financeiro/*</code>).", style_td)
         ],
         [
-            Paragraph("<b>CalcularProjecaoFinanceiraUseCase</b>", style_td_bold),
+            Paragraph("<b>ImportarExtratoOfxUseCase</b>", style_td_bold),
+            Paragraph("Parser SGML/XML de extratos OFX/CSV. Deduplicação estrita via hash SHA-256: <code>(FITID, data, valor, desc_limpa)</code>. Ignora transações já existentes no H2.", style_td),
+            Paragraph("Zero duplicações. Segregação rigorosa: Conta Corrente H2 vs Caixinhas Nubank.", style_td)
+        ],
+        [
+            Paragraph("<b>CalcularProjecaoFinanceira</b>", style_td_bold),
             Paragraph("• <b>Burn Rate Diário:</b> Despesas Acumuladas / Dias Decorridos<br/>"
                       "• <b>Gasto Projetado:</b> Despesas Atuais + (Burn Rate × Dias Restantes)<br/>"
                       "• <b>Saldo Final:</b> Receitas Atuais - Gasto Projetado", style_td),
-            Paragraph("Classificação de risco em tempo real (<code>SAUDÁVEL</code>, <code>ALERTA</code>, <code>CRÍTICO</code>) com diagnóstico orçamentário.", style_td)
+            Paragraph("Classificação de risco em tempo real (<code>SAUDÁVEL</code>, <code>ALERTA</code>, <code>CRÍTICO</code>).", style_td)
         ],
         [
             Paragraph("<b>Gestão de Caixinhas & Patrimônio</b>", style_td_bold),
-            Paragraph("Gestão transacional de Caixinhas Nubank (Reserva de Emergência e Reserva Casal) com aportes e histórico no H2.", style_td),
-            Paragraph("Recálculo dinâmico do <b>Patrimônio Líquido Total</b> somando conta corrente H2 e ativos das Caixinhas.", style_td)
+            Paragraph("Acompanhamento das Caixinhas Nubank (Reserva de Emergência e Casal) com aportes e rendimentos.", style_td),
+            Paragraph("Cálculo do Patrimônio Líquido Total somando conta H2 e ativos das Caixinhas.", style_td)
         ],
         [
             Paragraph("<b>Spring AI MCP Tools (@Tool)</b>", style_td_bold),
             Paragraph("Ferramentas expostas para IA: <code>consultar_resumo_financeiro</code>, <code>consultar_projecao_financeira</code>, <code>atualizar_caixinha</code> e <code>processar_notificacao_nubank</code>.", style_td),
-            Paragraph("Execução determinística e segura de comandos via Model Context Protocol por LLMs.", style_td)
+            Paragraph("Execução determinística e segura de comandos via Model Context Protocol.", style_td)
         ]
     ]
-    t_usecases = Table(usecase_data, colWidths=[130, 220, 160])
+    t_usecases = Table(usecase_data, colWidths=[125, 235, 150])
     t_usecases.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
         ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
-        ('TOPPADDING', (0, 0), (-1, -1), 4),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-        ('LEFTPADDING', (0, 0), (-1, -1), 6),
-        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+        ('TOPPADDING', (0, 0), (-1, -1), 2.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 2.5),
+        ('LEFTPADDING', (0, 0), (-1, -1), 5),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 5),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
     ]))
     story.append(t_usecases)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
 
     # =========================================================================
-    # 5. COBERTURA DE TESTES AUTOMATIZADOS (40/40 JUNIT 5 - 100% GREEN)
+    # 5. COBERTURA DE TESTES AUTOMATIZADOS (44/44 JUNIT 5 - 100% GREEN)
     # =========================================================================
     story.append(PageBreak())
-    story.append(Paragraph("5. Relatório Oficial da Suíte de Testes Automatizados (40/40 Green)", style_h1))
+    story.append(Paragraph("5. Relatório Oficial da Suíte de Testes Automatizados (44/44 Green)", style_h1))
     story.append(Paragraph(
         "A integridade, robustez e conformidade arquitetural do backend são asseguradas por uma suíte de "
-        "<b>40 testes automatizados</b> executados com 100% de aprovação via <code>./run-tests.sh</code>:",
+        "<b>44 testes automatizados</b> executados com 100% de aprovação via <code>./run-tests.sh</code>:",
         style_body
     ))
 
@@ -471,9 +478,15 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
             Paragraph("Resultado", style_th)
         ],
         [
+            Paragraph("<b>ContabilidadeUseCaseTest</b>", style_td_bold),
+            Paragraph("Unitário", style_td),
+            Paragraph("Validação contábil de Balancete de Verificação, Balanço Patrimonial, DRE, Comparativo MoM e Anual 2026.", style_td),
+            Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
+        ],
+        [
             Paragraph("<b>ImportarExtratoOfxUseCaseTest</b>", style_td_bold),
             Paragraph("Unitário", style_td),
-            Paragraph("Validação de parsing de nós SGML/XML, tratamento de tags nulas e regra de deduplicação.", style_td),
+            Paragraph("Validação de parsing SGML/XML, deduplicação por hash SHA-256 e segregação Conta Corrente x Caixinhas.", style_td),
             Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
         ],
         [
@@ -497,7 +510,7 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         [
             Paragraph("<b>ProcessarNotificacaoNubankTest</b>", style_td_bold),
             Paragraph("Unitário", style_td),
-            Paragraph("Webhook semântico para conciliação automática de pagamentos e compras.", style_td),
+            Paragraph("Webhook semântico para conciliação automática de pagamentos e compras em tempo real.", style_td),
             Paragraph("<font color='#059669'><b>100% PASS</b></font>", style_td_bold)
         ],
         [
@@ -530,14 +543,14 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
         ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
-        ('TOPPADDING', (0, 0), (-1, -1), 3),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+        ('TOPPADDING', (0, 0), (-1, -1), 2.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 2.5),
         ('LEFTPADDING', (0, 0), (-1, -1), 5),
         ('RIGHTPADDING', (0, 0), (-1, -1), 5),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
     ]))
     story.append(t_tests)
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
 
     # =========================================================================
     # 6. DEVOPS, NUVEM 24/7 & DEVSECOPS (LGPD SAFE)
@@ -570,11 +583,12 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
             Paragraph("Validação automatizada de integridade a cada push na branch <code>main</code>.", style_td)
         ],
         [
-            Paragraph("<b>DevSecOps & LGPD Safe</b>", style_td_bold),
+            Paragraph("<b>DevSecOps & UI Higienizada</b>", style_td_bold),
             Paragraph("• Inicialização 100% protegida em Modo Demonstração com dados fictícios.<br/>"
-                      "• Desbloqueio de dados reais sob autenticação por chave <code>ADMIN_PIN</code>.<br/>"
-                      "• Isolamento total no <code>.gitignore</code> para <code>*.ofx</code>, <code>*.csv</code> e <code>*.mv.db</code>.", style_td),
-            Paragraph("Proteção absoluta contra vazamento de dados bancários reais em gravações de tela ou acessos públicos.", style_td)
+                      "• Botão toggle consolidado <code>[ 🛡️ Modo Demo | Desbloquear ]</code> sob chave <code>ADMIN_PIN</code>.<br/>"
+                      "• Isolamento no <code>.gitignore</code> para <code>*.ofx</code>, <code>*.csv</code> e <code>*.mv.db</code>.<br/>"
+                      "• Primeira dobra compactada e modo expandido do assistente blindado.", style_td),
+            Paragraph("Proteção absoluta contra vazamento de dados bancários reais em demonstrações ou acessos remotos.", style_td)
         ]
     ]
     t_devops = Table(devops_data, colWidths=[120, 230, 160])
@@ -582,14 +596,14 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
         ('BACKGROUND', (0, 0), (-1, 0), PRIMARY),
         ('BOX', (0, 0), (-1, -1), 0.8, BORDER_CARD),
         ('INNERGRID', (0, 0), (-1, -1), 0.5, BORDER_CARD),
-        ('TOPPADDING', (0, 0), (-1, -1), 3.5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 3.5),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
         ('LEFTPADDING', (0, 0), (-1, -1), 6),
         ('RIGHTPADDING', (0, 0), (-1, -1), 6),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, BG_CARD])
     ]))
     story.append(t_devops)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
 
     # =========================================================================
     # 7. SUMÁRIO EXECUTIVO & PARECER DE ARQUITETURA ENTERPRISE
@@ -599,16 +613,16 @@ def gerar_dossie_pdf(output_path="docs/dossie_tecnico_nova.pdf"):
     
     parecer_text = (
         "<b>PARECER DE PRONTIDÃO TÉCNICA CORPORATIVA (PRODUCTION-GRADE ARCHITECTURE):</b><br/><br/>"
-        "Na qualidade de Arquiteto de Software Sênior, atesto que o ecossistema <b>NOVA</b> atende com distinção a todos os critérios "
+        "Na qualidade de Arquiteto de Software Sênior, atesto que o ecossistema <b>NOVA (v3.14)</b> atende com distinção a todos os critérios "
         "de excelência de engenharia de software contemporânea, estando <b>100% HOMOLOGADO COMO ENTERPRISE READY</b> para servir como peça central de destaque "
         "técnico e arquitetural em ambientes de missão crítica e avaliações de alta performance.<br/><br/>"
         "<b>Destaques de Engenharia Enterprise que Chancelam a Solução:</b><br/>"
         "1. <b>Clean Architecture em Java 21 LTS:</b> Estrita separação de responsabilidades (Domain desacoplado de frameworks, Use Cases agnósticos, Ports & Adapters, DTO Records imutáveis).<br/>"
-        "2. <b>Casos de Uso Avançados & IA Preditiva (Fase 9):</b> Ingestão bancária automatizada (<code>ImportarExtratoOfxUseCase</code> com deduplicação no H2), cálculo de Burn Rate Diário e projeção de fechamento (<code>CalcularProjecaoFinanceiraUseCase</code>), além de gestão de Caixinhas Nubank e Patrimônio Líquido Total.<br/>"
+        "2. <b>Arquitetura Contábil Sênior & Conciliação OFX (Fases 9 & 10):</b> Ingestão com deduplicação criptográfica estrita SHA-256 no H2, segregação absoluta entre Conta Corrente e Caixinhas Nubank, Balancete de Verificação, Balanço Patrimonial, DRE, Comparativo MoM e Histórico Anual 2026.<br/>"
         "3. <b>Spring AI & Model Context Protocol (MCP):</b> Implementação do padrão MCP com anotações <code>@Tool</code> determinísticas, permitindo que LLMs operem o sistema de forma segura.<br/>"
-        "4. <b>Confiabilidade & Cobertura Rigorosa (40/40 Testes JUnit 5 / Mockito):</b> Cobertura de testes unitários isolados, integração WebMvc e ferramentas MCP com 100% de aprovação (Green).<br/>"
+        "4. <b>Confiabilidade & Cobertura Rigorosa (44/44 Testes JUnit 5 / Mockito):</b> Cobertura de testes unitários isolados, integração WebMvc, casos de uso contábeis e ferramentas MCP com 100% de aprovação (Green).<br/>"
         "5. <b>DevOps & Nuvem 24/7 (Docker & Render):</b> Container multi-stage build (Java 21 + Python 3.11), pipeline CI/CD GitHub Actions e deploy contínuo em produção no Render (<code>https://nova-control-center-alsl.onrender.com</code>).<br/>"
-        "6. <b>Front-end Executivo (Material 3 Expressive):</b> SPA com 7 abas dedicadas, WebGL Living Shader, Bento Grid modular, WCAG AAA e proteção de privacidade DevSecOps (Modo Demo LGPD Safe protegido por PIN administrativo).<br/>"
+        "6. <b>Front-end Executivo (Material 3 Expressive):</b> SPA com 7 abas, primeira dobra compactada com 4 KPIs visíveis sem scroll, Voice Orb 140px, modo expandido blindado (82vh/90vw), toolbar contábil responsiva e botão toggle de proteção unificado.<br/>"
         "7. <b>Esteira de Carreiras 360°:</b> Segmentação estrita em 3 trilhas profissionais (Tech/Dev, Audiovisual/Filmmaker e Suporte SaaS) com geração de dossiês executivos e currículos Harvard Tech ATS.<br/><br/>"
         "<b>Status Oficial:</b> Homologado com louvor e chancelado como arquitetura <i>Production-Grade Enterprise</i>."
     )

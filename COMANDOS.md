@@ -54,8 +54,15 @@ Guia oficial de comandos rápidos e atalhos universais do **NOVA**. Suporta indi
 | :--- | :--- | :--- | :--- |
 | **`/saldo`** | `!saldo` | Consulta imediata do saldo, receitas e despesas no banco H2 | `/saldo` |
 | **`/caixinhas`** | `!caixinhas`, `/patrimonio` | Consulta saldos de Caixinhas Nubank e Patrimônio Líquido Total | `/caixinhas` ou `/patrimonio` |
-| **`/importar`** | `!importar`, `/ofx` | Importa e deduplica arquivos `.ofx` em `financeiro/extratos_ofx/` | `/importar` |
+| **`/balancete [mês]`** | `!balancete [mês]`, `/balancete` | Gera o Balancete de Verificação Oficial (Saldo Inicial, Créditos, Débitos, Saldo Final e PDF autenticado) | `/balancete agosto` ou `/balancete 2026-08` |
+| **`/balanco`** | `!balanco`, `/balanço`, `/dre` | Apura o Balanço Patrimonial & DRE Consolidado (Ativo em Conta, Caixinhas, Passivo e PL com PDF) | `/balanco` |
+| **`/comparativo`** | `!comparativo`, `/comparar` | Análise Comparativa Horizontal entre dois meses com variações em R$, % e PDF oficial | `/comparativo julho agosto` |
+| **`/anual [ano]`** | `!anual`, `/historico` | Histórico Anual Consolidado com apuração de faturamento, superávit acumulado e taxa de poupança | `/anual 2026` |
+| **`/importar`** | `!importar`, `/ofx` | Importa e deduplica arquivos `.ofx` recursivamente com deduplicação estrita baseada na tupla `(FITID, data, valor, desc)` | `/importar` |
+| **`/pluggy`** | `!pluggy`, `/openfinance` | Sincroniza transações bancárias via conector Open Finance Pluggy.ai no H2 | `/pluggy` |
+| **`/webhook`** | `!webhook` | Guia e endpoint do Webhook de Notificações Instantâneas Nubank iOS (`POST /api/transacoes/webhook-notificacao`) | `/webhook` |
 | **`/extrato`** | `!extrato` | Lista os últimos lançamentos financeiros conciliados | `/extrato` |
+| **`/extrato [mês]`** | `!extrato [mês]`, `extrato [mês]` | Consulta o extrato mensal dinâmico com KPIs, saldo líquido e lançamentos por voz, chat e seletor | `/extrato agosto` ou `/extrato 08/2026` |
 | **`/gastos [categoria]`**| `!gastos` | Detalha as despesas de uma categoria (Alimentação, Transporte, etc.) | `/gastos alimentacao` |
 | **`/financeiro [mês]`** | `!financeiro` | Gera e abre o Relatório Financeiro Visual em PDF (`financeiro/relatorios_pdf/`) | `/financeiro 08/2026` |
 

@@ -33,7 +33,7 @@ O usuário pode enviar atalhos rápidos iniciando com `/` ou `!`. O MAIN Agent d
   - `/saldo`, `!saldo` ➔ Consultar e exibir o saldo consolidado no banco H2.
   - `/caixinhas`, `!caixinhas`, `/patrimonio` ➔ Consultar saldos das Caixinhas Nubank (Reserva e Casal) e Patrimônio Líquido Total.
   - `/importar`, `!importar` ➔ Importar todos os arquivos `.ofx` da pasta `financeiro/extratos_ofx/`.
-  - `/extrato`, `!extrato` ➔ Listar lançamentos financeiros recentes.
+  - `/extrato`, `!extrato`, `/extrato [mês]`, `!extrato [mês]` ➔ Listar lançamentos recentes ou consultar extrato mensal dinâmico com KPIs e lançamentos por voz, chat e seletor.
   - `/gastos [categoria]`, `!gastos [categoria]` ➔ Exibir o total despendido na categoria informada.
   - `/financeiro [mês]`, `!financeiro [mês]` ➔ Gerar relatório financeiro visual em PDF salvo em `financeiro/relatorios_pdf/`.
 - **Código & Engenharia:**
@@ -141,3 +141,4 @@ Ao receber qualquer pergunta, requisição ou comando do usuário, o **MAIN Agen
   - `reverse` ou `(reverse)`
   - `/reverse` ou `!reverse`
 - **Evolução Contínua de Carreira:** Manter a documentação técnica, o currículo e o posicionamento profissional sempre vivos e alinhados às implementações reais do repositório.
+- **SEPARAÇÃO TOTAL DESKTOP & MOBILE:** A versão desktop e mobile possuem arquivos CSS e classes totalmente isolados. Alterações em mobile devem ser feitas estritamente em `mobile.css` e classes mobile. Alterações em desktop devem ser feitas estritamente em `desktop.css`. NUNCA misture regras ou altere estilos globais que afetem a outra plataforma.

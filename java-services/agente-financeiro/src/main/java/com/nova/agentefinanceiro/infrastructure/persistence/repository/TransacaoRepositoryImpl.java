@@ -55,4 +55,17 @@ public class TransacaoRepositoryImpl implements TransacaoRepository {
     public boolean existe(LocalDate data, java.math.BigDecimal valor, String descricao) {
         return springDataRepository.existsByDataAndValorAndDescricao(data, valor, descricao);
     }
+
+    @Override
+    public boolean existePorHash(String hashSha256) {
+        if (hashSha256 == null || hashSha256.isBlank()) {
+            return false;
+        }
+        return springDataRepository.existsByHashSha256(hashSha256);
+    }
+
+    @Override
+    public void deletarPorPeriodo(LocalDate inicio, LocalDate fim) {
+        springDataRepository.deleteByDataBetween(inicio, fim);
+    }
 }

@@ -71,6 +71,19 @@
     font-weight: 500;
   }
 
+  /* Badge de status alinhado na sidebar */
+  .dabang-sidebar .menu-pill,
+  .dabang-sidebar .md3-badge--success,
+  .sidebar-menu .menu-pill {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 2px 8px !important;
+    font-size: 10.5px !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+  }
+
   .sidebar-bottom-pro-card {
     display: block;
     margin: 16px 12px 20px;
@@ -78,11 +91,19 @@
     border-radius: var(--radius-md, 16px);
   }
 
-  /* Main Wrapper Deslocado da Sidebar */
+  /* Main Wrapper Deslocado da Sidebar & Blindagem Anti-Overflow */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
   .dabang-main,
   .main-content {
     margin-left: 260px !important;
     width: calc(100% - 260px) !important;
+    max-width: calc(100% - 260px) !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -90,58 +111,343 @@
     padding-bottom: 32px;
   }
 
-  /* Top App Bar Expandida em Linha Única */
+  .view-section,
+  .view-panel {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Top App Bar Expandida em Linha Única (Altura 56px e Centro Vertical Perfeito) */
   .dabang-top-header,
   .top-header {
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    gap: 16px;
-    background: rgba(17, 19, 24, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
-    position: sticky;
-    top: 0;
-    z-index: 90;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 16px 0 20px !important;
+    margin: 0 0 20px 0 !important;
+    box-sizing: border-box !important;
+    border-radius: 20px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 90 !important;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
   }
 
-  .header-search-wrap,
-  .search-bar {
-    width: 320px;
-    max-width: 420px;
-    display: flex;
-    align-items: center;
-    border-radius: var(--radius-pill, 100px);
-    padding: 8px 16px;
-    gap: 10px;
+  /* ===== MODO DIA (Light Theme) ===== */
+  [data-theme="light"] .top-header,
+  [data-theme="light"] .dabang-top-header {
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(0, 0, 0, 0.09) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05), 0 4px 16px rgba(0, 0, 0, 0.02) !important;
   }
 
-  .search-kbd {
-    display: inline-flex;
+  [data-theme="light"] .header-brand-title {
+    color: #1A1C1E !important;
   }
 
+  [data-theme="light"] .header-breadcrumb-divider {
+    color: rgba(0, 0, 0, 0.3) !important;
+  }
+
+  [data-theme="light"] .header-active-view-name {
+    color: #005FB0 !important;
+  }
+
+  [data-theme="light"] .top-header .state-switcher-box,
+  [data-theme="light"] .top-header .header-telemetry-badge {
+    background: #EEF2F8 !important;
+    color: #1B1C1E !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+
+  [data-theme="light"] .top-header .header-voice-chip {
+    background: #EEF2F8 !important;
+    color: #1B1C1E !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+
+  [data-theme="light"] .top-header #demoModeBanner,
+  [data-theme="light"] .top-header .btn-demo-toggle,
+  [data-theme="light"] .top-header #btnPrivacyToggle,
+  [data-theme="light"] .top-header .btn-privacy-toggle {
+    background: #FFF8E6 !important;
+    color: #7A5900 !important;
+    border: 1px solid rgba(122, 89, 0, 0.22) !important;
+  }
+
+  [data-theme="light"] .top-header .theme-toggle-btn,
+  [data-theme="light"] .top-header .btn-theme-toggle,
+  [data-theme="light"] .top-header .btn-refresh,
+  [data-theme="light"] .top-header .btn-icon-refresh {
+    background: #EEF2F8 !important;
+    color: #1B1C1E !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  }
+
+  [data-theme="light"] .top-header .user-info-capsule .user-name,
+  [data-theme="light"] .top-header .user-info-capsule .user-name-txt,
+  [data-theme="light"] .top-header .user-profile-badge .user-name-txt {
+    color: #1A1C1E !important;
+  }
+
+  [data-theme="light"] .top-header .user-info-capsule .user-role,
+  [data-theme="light"] .top-header .user-info-capsule .user-role-txt,
+  [data-theme="light"] .top-header .user-profile-badge .user-role-txt {
+    color: #5E636E !important;
+  }
+
+  [data-theme="light"] .top-header .avatar-circle,
+  [data-theme="light"] .top-header .user-avatar-circle {
+    background: #D8E2FF !important;
+    color: #001A41 !important;
+  }
+
+  /* ===== MODO NOITE (Dark Theme) ===== */
+  [data-theme="dark"] .top-header,
+  [data-theme="dark"] .dabang-top-header,
+  :root:not([data-theme="light"]) .top-header {
+    background: rgba(22, 24, 32, 0.90) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+  }
+
+  [data-theme="dark"] .header-brand-title,
+  :root:not([data-theme="light"]) .header-brand-title {
+    color: #FFFFFF !important;
+  }
+
+  [data-theme="dark"] .header-breadcrumb-divider,
+  :root:not([data-theme="light"]) .header-breadcrumb-divider {
+    color: rgba(255, 255, 255, 0.25) !important;
+  }
+
+  [data-theme="dark"] .header-active-view-name,
+  :root:not([data-theme="light"]) .header-active-view-name {
+    color: #A9C7FF !important;
+  }
+
+  [data-theme="dark"] .top-header .state-switcher-box,
+  [data-theme="dark"] .top-header .header-telemetry-badge,
+  :root:not([data-theme="light"]) .top-header .state-switcher-box,
+  :root:not([data-theme="light"]) .top-header .header-telemetry-badge {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #E2E2E9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  [data-theme="dark"] .top-header .header-voice-chip,
+  :root:not([data-theme="light"]) .top-header .header-voice-chip {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  [data-theme="dark"] .top-header #demoModeBanner,
+  [data-theme="dark"] .top-header .btn-demo-toggle,
+  [data-theme="dark"] .top-header #btnPrivacyToggle,
+  [data-theme="dark"] .top-header .btn-privacy-toggle,
+  :root:not([data-theme="light"]) .top-header #demoModeBanner,
+  :root:not([data-theme="light"]) .top-header .btn-demo-toggle,
+  :root:not([data-theme="light"]) .top-header #btnPrivacyToggle,
+  :root:not([data-theme="light"]) .top-header .btn-privacy-toggle {
+    background: rgba(240, 195, 91, 0.1) !important;
+    color: #F0C35B !important;
+    border: 1px solid rgba(240, 195, 91, 0.25) !important;
+  }
+
+  [data-theme="dark"] .top-header .theme-toggle-btn,
+  [data-theme="dark"] .top-header .btn-theme-toggle,
+  [data-theme="dark"] .top-header .btn-refresh,
+  [data-theme="dark"] .top-header .btn-icon-refresh,
+  :root:not([data-theme="light"]) .top-header .theme-toggle-btn,
+  :root:not([data-theme="light"]) .top-header .btn-theme-toggle,
+  :root:not([data-theme="light"]) .top-header .btn-refresh,
+  :root:not([data-theme="light"]) .top-header .btn-icon-refresh {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  [data-theme="dark"] .top-header .user-info-capsule .user-name,
+  [data-theme="dark"] .top-header .user-info-capsule .user-name-txt,
+  [data-theme="dark"] .top-header .user-profile-badge .user-name-txt,
+  :root:not([data-theme="light"]) .top-header .user-info-capsule .user-name,
+  :root:not([data-theme="light"]) .top-header .user-info-capsule .user-name-txt,
+  :root:not([data-theme="light"]) .top-header .user-profile-badge .user-name-txt {
+    color: #FFFFFF !important;
+  }
+
+  [data-theme="dark"] .top-header .user-info-capsule .user-role,
+  [data-theme="dark"] .top-header .user-info-capsule .user-role-txt,
+  [data-theme="dark"] .top-header .user-profile-badge .user-role-txt,
+  :root:not([data-theme="light"]) .top-header .user-info-capsule .user-role,
+  :root:not([data-theme="light"]) .top-header .user-info-capsule .user-role-txt,
+  :root:not([data-theme="light"]) .top-header .user-profile-badge .user-role-txt {
+    color: #A6AAB4 !important;
+  }
+
+  [data-theme="dark"] .top-header .avatar-circle,
+  [data-theme="dark"] .top-header .user-avatar-circle,
+  :root:not([data-theme="light"]) .top-header .avatar-circle,
+  :root:not([data-theme="light"]) .top-header .user-avatar-circle {
+    background: #00458E !important;
+    color: #D8E2FF !important;
+  }
+
+  /* Breadcrumb Executivo Minimalista (Lado Esquerdo) */
+  .top-header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    width: auto !important;
+    min-width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    box-shadow: none !important;
+    flex-shrink: 0 !important;
+    user-select: none !important;
+  }
+
+  .top-header-left .header-brand-title {
+    font-weight: 800 !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  .top-header-left .header-breadcrumb-divider {
+    font-weight: 400 !important;
+    margin: 0 2px !important;
+  }
+
+  .top-header-left .header-active-view-name {
+    font-weight: 600 !important;
+  }
+
+  /* Grupo da Direita (Controles Centralizados no Centro Vertical Milimétrico) */
+  .top-header-actions,
+  .header-actions-group,
+  .top-header-right,
   .header-user-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Pílulas, Botões e Cápsulas Rigorosamente Alinhados no Centro Vertical */
+  .state-switcher-box,
+  .header-telemetry-badge,
+  .header-voice-chip,
+  #demoModeBanner,
+  .btn-privacy-toggle,
+  .user-info-capsule,
+  .user-profile-badge,
+  .btn-theme-toggle,
+  .btn-icon-refresh,
+  .header-user-actions > * {
+    margin: 0 !important;
+    align-self: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+  }
+
+  .header-telemetry-badge,
+  .header-voice-chip,
+  .btn-privacy-toggle,
+  #btnPrivacyToggle {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    padding: 0 10px !important;
+    font-size: 11.5px !important;
+    border-radius: var(--radius-pill, 100px) !important;
+    gap: 6px !important;
+    line-height: 36px !important;
   }
 
   .telemetry-status-text {
-    display: block;
+    display: block !important;
   }
 
-  .header-voice-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+  .btn-theme-toggle,
+  .btn-icon-refresh {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+
+  /* Perfil do Usuário (.user-info-capsule) Compacto e Centralizado */
+  .user-info-capsule,
+  .user-profile-badge {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 0 4px !important;
+    height: 36px !important;
+    max-height: 36px !important;
+  }
+
+  .user-avatar-circle {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
   }
 
   .user-profile-details {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.15 !important;
+  }
+
+  .user-name-txt {
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+  }
+
+  .user-role-txt {
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
   }
 
   /* Content Body */
@@ -183,63 +489,561 @@
     display: flex !important;
   }
 
-  /* Voice Assistant Hero (2 Colunas Desktop) */
-  .va-main-grid {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 24px;
-    align-items: start;
+  /* Voice Assistant Hero (Card Horizontal no Desktop - Modo Padrão Compacto) */
+  .voice-assistant-hero-card:not(.is-expanded),
+  .voice-card:not(.is-expanded) {
+    display: block;
     width: 100%;
+    padding: 20px 24px !important;
   }
 
-  .va-orb-interactive-panel {
+  .voice-card:not(.is-expanded) > .va-main-grid,
+  .voice-assistant-hero-card:not(.is-expanded) > .va-main-grid,
+  .voice-assistant-hero-card:not(.is-expanded) .va-main-grid {
+    display: grid !important;
+    grid-template-columns: 180px 1fr !important;
+    gap: 20px !important;
+    align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .voice-assistant-hero-card:not(.is-expanded) .va-orb-interactive-panel {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
-  .orb-visual-wrapper {
-    width: 280px;
-    height: 280px;
+  .voice-assistant-hero-card:not(.is-expanded) .orb-visual-wrapper {
+    width: 140px !important;
+    height: 140px !important;
   }
 
-  .nova-shader-orb-canvas {
-    width: 280px !important;
-    height: 280px !important;
+  .voice-assistant-hero-card:not(.is-expanded) .nova-shader-orb-canvas {
+    width: 120px !important;
+    height: 120px !important;
   }
 
-  /* Bento Grid de 4 Colunas (KPIs & Top Summary) */
+  .voice-assistant-hero-card:not(.is-expanded) .va-dialog-box {
+    height: 100px !important;
+    min-height: 100px !important;
+    max-height: 100px !important;
+    overflow-y: auto !important;
+  }
+
+  /* Voice Assistant Hero (Modo Expandido Fullscreen no Desktop) */
+  .voice-assistant-hero-card.is-expanded {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90vw !important;
+    max-width: 1040px !important;
+    height: 82vh !important;
+    max-height: 82vh !important;
+    z-index: 999999 !important;
+    border-radius: 24px !important;
+    padding: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  [data-theme="dark"] .voice-assistant-hero-card.is-expanded,
+  :root:not([data-theme="light"]) .voice-assistant-hero-card.is-expanded {
+    background: #16181F !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.82), 0 25px 60px rgba(0, 0, 0, 0.9) !important;
+  }
+
+  [data-theme="light"] .voice-assistant-hero-card.is-expanded {
+    background: #FFFFFF !important;
+    color: #1B1C1E !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.40), 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-header-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  [data-theme="light"] .voice-assistant-hero-card.is-expanded .va-header-row {
+    border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .btn-close-expanded {
+    display: inline-flex !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .btn-va-expand {
+    display: none !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-main-grid {
+    display: grid !important;
+    grid-template-columns: 280px 1fr !important;
+    gap: 24px !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-orb-interactive-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 16px !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .orb-visual-wrapper {
+    width: 240px !important;
+    height: 240px !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .nova-shader-orb-canvas {
+    width: 220px !important;
+    height: 220px !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-chat-transcription-panel {
+    flex: 1 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    border-radius: 18px !important;
+    padding: 18px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-dialog-box {
+    flex: 1 !important;
+    height: auto !important;
+    min-height: 320px !important;
+    max-height: 480px !important;
+    overflow-y: auto !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Quando o modal expandido estiver ativo no body */
+  body.va-expanded-active {
+    overflow: hidden !important;
+  }
+
+  body.va-expanded-active .views-container,
+  body.va-expanded-active .view-section,
+  body.va-expanded-active .view-panel,
+  body.va-expanded-active .dabang-main,
+  body.va-expanded-active .main-content {
+    overflow: visible !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* Bento Grid de 4 Colunas Largas (KPIs & Top Summary) */
   .summary-cards-row,
   .kpi-grid,
   .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(220px, 1fr)) !important;
+    gap: 16px !important;
+    width: 100% !important;
   }
 
-  /* Bento Grid dos Gráficos */
+  /* Cockpit Quick Destaques Grid (4 Colunas) */
+  .cockpit-destaques-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(240px, 1fr)) !important;
+    gap: 20px !important;
+    width: 100% !important;
+  }
+
+  /* Gráficos em Geral no Desktop (Grade de 2 Colunas Amplas) */
   .charts-master-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 20px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  .chart-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .chart-panel.card-wide,
+  .card-wide {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+  }
+
+  /* ========================================================================
+     RESTAURAÇÃO ESPECÍFICA: ABA FINANÇAS (#financas / #view-financas)
+     Garante 2 colunas amplas para os gráficos de Finanças.
+     NUNCA permite que os gráficos fiquem espremidos em 60px.
+     ======================================================================== */
+  #view-financas .charts-master-grid,
+  #financas.charts-master-grid,
+  #financas {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  #view-financas .chart-panel,
+  #financas .chart-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #view-financas .chart-panel.card-wide,
+  #financas .chart-panel.card-wide,
+  #view-financas .card-wide,
+  #financas .card-wide {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+  }
+
+  /* Canvas Containers para Finanças no Desktop */
+  #view-financas .canvas-holder-large,
+  #financas .canvas-holder-large {
+    position: relative;
+    height: 280px;
     width: 100%;
   }
 
-  .card-wide {
-    grid-column: span 12;
+  #view-financas .canvas-holder-medium,
+  #financas .canvas-holder-medium {
+    position: relative;
+    height: 250px;
+    width: 100%;
   }
 
-  .card-half {
-    grid-column: span 6;
-  }
-
-  .card-third {
-    grid-column: span 4;
-  }
-
-  /* Bottom Navigation Bar fica oculta no desktop */
+  /* Bottom Navigation Bar fica estritamente oculta no desktop */
   .mobile-bottom-nav {
     display: none !important;
+  }
+
+  /* ==========================================================================
+     SELETOR VISUAL DE PERÍODO & CARD DE EXTRATO MENSAL (DESKTOP)
+     ========================================================================== */
+  .periodo-selector-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--nova-surface-container, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--nova-outline-variant, rgba(255, 255, 255, 0.12));
+    border-radius: 9999px;
+    padding: 6px 14px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .periodo-selector-wrapper:hover,
+  .periodo-selector-wrapper:focus-within {
+    border-color: var(--nova-primary, #a9c7ff);
+    background: var(--nova-surface-container-high, rgba(255, 255, 255, 0.08));
+  }
+
+  .periodo-selector-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--nova-on-surface-variant, #c6c6d0);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .periodo-selector-label .material-symbols-rounded {
+    font-size: 16px;
+    color: var(--nova-primary, #a9c7ff);
+  }
+
+  .periodo-select-dropdown {
+    background: transparent;
+    border: none;
+    color: var(--nova-on-surface, #e3e2e6);
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    padding-right: 4px;
+  }
+
+  .periodo-select-dropdown option {
+    background: var(--nova-surface, #1b1c22);
+    color: var(--nova-on-surface, #e3e2e6);
+    font-weight: 600;
+    padding: 8px 12px;
+  }
+
+  /* Card de Extrato Mensal no Diálogo do Assistente (Desktop) */
+  .va-extrato-card {
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: var(--nova-surface-container-low, rgba(27, 28, 34, 0.7));
+    border: 1px solid var(--nova-outline-variant, rgba(255, 255, 255, 0.1));
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .va-extrato-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .va-extrato-pill-count {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--nova-on-surface-variant, #909099);
+    font-weight: 500;
+  }
+
+  .va-extrato-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .va-extrato-kpi-box {
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .va-extrato-kpi-box .va-kpi-lbl {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--nova-on-surface-variant, #909099);
+    font-weight: 600;
+  }
+
+  .va-extrato-kpi-box .va-kpi-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .va-extrato-kpi-box.kpi-receitas .va-kpi-num {
+    color: var(--nova-secondary, #10b981);
+  }
+
+  .va-extrato-kpi-box.kpi-despesas .va-kpi-num {
+    color: var(--nova-error, #f87171);
+  }
+
+  .va-extrato-kpi-box.kpi-saldo.positivo .va-kpi-num {
+    color: var(--nova-primary, #60a5fa);
+  }
+
+  .va-extrato-kpi-box.kpi-saldo.negativo .va-kpi-num {
+    color: var(--nova-error, #f87171);
+  }
+
+  .va-extrato-recent-list {
+    border-top: 1px solid var(--nova-outline-variant, rgba(255, 255, 255, 0.08));
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .va-extrato-recent-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--nova-on-surface-variant, #c6c6d0);
+  }
+
+  .va-extrato-recent-header .material-symbols-rounded {
+    font-size: 14px;
+  }
+
+  .va-extrato-tx-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 11.5px;
+  }
+
+  .va-extrato-tx-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--nova-outline, #909099);
+    flex-shrink: 0;
+  }
+
+  .va-extrato-tx-desc {
+    flex: 1;
+    font-weight: 500;
+    color: var(--nova-on-surface, #e3e2e6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .va-extrato-tx-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .va-extrato-tx-val.rec {
+    color: var(--nova-secondary, #10b981);
+  }
+
+  .va-extrato-tx-val.desp {
+    color: var(--nova-on-surface, #e3e2e6);
+  }
+
+  /* ==========================================================================
+     CABEÇALHO EXECUTIVO E BARRA DE AÇÕES DA ABA FINANÇAS (DESKTOP)
+     ========================================================================== */
+  .tab-view-header.tab-view-header--financas {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    padding: 20px 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    background: var(--nova-surface, #1e1f25) !important;
+    border: 1px solid var(--nova-outline-variant, rgba(255, 255, 255, 0.08)) !important;
+    border-radius: var(--radius-lg, 20px) !important;
+  }
+
+  .tab-view-header--financas .tab-header-top-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .tab-view-header--financas .tab-header-info {
+    flex: 1 1 auto !important;
+    min-width: 260px !important;
+  }
+
+  .tab-view-header--financas .tab-header-info h2 {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    color: var(--nova-on-surface, #e3e2e6) !important;
+    margin: 0 0 4px 0 !important;
+    line-height: 1.25 !important;
+  }
+
+  .tab-view-header--financas .tab-header-info p {
+    font-size: 13px !important;
+    color: var(--nova-on-surface-variant, #c4c6cf) !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+  }
+
+  .tab-view-header--financas .tab-header-top-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .tab-view-header--financas .tab-header-actions--financas {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    width: 100% !important;
+    padding-top: 14px !important;
+    border-top: 1px solid var(--nova-outline-variant, rgba(255, 255, 255, 0.08)) !important;
+    box-sizing: border-box !important;
+  }
+
+  .tab-view-header--financas .tab-actions-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .tab-view-header--financas .btn-pluggy-action {
+    padding: 7px 14px !important;
+    font-size: 12.5px !important;
+    height: 36px !important;
+    border-radius: 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Botões Contábeis de Ação Rápida (Desktop) */
+  .btn-pluggy-action#btnBalanceteMensal,
+  .btn-pluggy-action#btnBalancoPatrimonial,
+  .btn-pluggy-action#btnCompararMeses {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--nova-on-surface, #e3e2e6);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-pluggy-action#btnBalanceteMensal:hover,
+  .btn-pluggy-action#btnBalancoPatrimonial:hover,
+  .btn-pluggy-action#btnCompararMeses:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--nova-primary, #a9c7ff);
+    transform: translateY(-1px);
   }
 }

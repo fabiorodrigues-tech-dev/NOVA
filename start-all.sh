@@ -91,3 +91,6 @@ echo "   • Voz:        tail -f logs/voz.log"
 echo ""
 echo "🛑 Para parar todos os serviços, execute: ./stop-all.sh"
 echo "======================================================================"
+
+# Abertura oficial do NOVA Control Center no Google Chrome
+open -a "Google Chrome" "http://localhost:3000" || open "http://localhost:3000"

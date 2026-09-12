@@ -48,7 +48,7 @@ class NumberedCanvas(canvas.Canvas):
         # Cabeçalho a partir da página 2
         if self._pageNumber > 1:
             self.drawString(MARGIN, PAGE_HEIGHT - 32, "NOVA • MANUAL DE ENGENHARIA & ARQUITETURA DE SOFTWARE")
-            self.drawRightString(PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 32, "Java 21 • Clean Architecture • v3.6")
+            self.drawRightString(PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 32, "Java 21 • Clean Architecture • v3.14")
             self.setStrokeColor(colors.HexColor("#CBD5E1"))
             self.setLineWidth(0.5)
             self.line(MARGIN, PAGE_HEIGHT - 38, PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 38)

@@ -22,4 +22,8 @@ public interface TransacaoRepository {
     Optional<Transacao> buscarPorId(Long id);
 
     boolean existe(LocalDate data, BigDecimal valor, String descricao);
+
+    boolean existePorHash(String hashSha256);
+
+    void deletarPorPeriodo(LocalDate inicio, LocalDate fim);
 }

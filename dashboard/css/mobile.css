@@ -5,28 +5,37 @@
    grid de KPIs 2x2 e Bottom Navigation Bar fixa com touch targets de 44px.
    ========================================================================== */
 
-@media (max-width: 767px) {
-  /* 1. Viewport & Layout Geral */
-  html, body {
-    width: 100vw;
-    max-width: 100%;
+@media (max-width: 768px) {
+  /* 0. Ocultação Total da Sidebar Desktop no Mobile (Elimina textos fantasmas) */
+  aside.dabang-sidebar,
+  .dabang-sidebar,
+  .sidebar-menu,
+  .sidebar-nova-icon,
+  .menu-category,
+  .sidebar-logo-area,
+  .sidebar-bottom-pro-card {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  /* 1. Viewport & Layout Geral (Eliminação Total de Vazamento Lateral) */
+  html, body, .dabang-layout, .dabang-main, main.dabang-content-body {
+    width: 100vw !important;
+    max-width: 100% !important;
     overflow-x: hidden !important;
-    margin: 0;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  html, body {
     padding: 0;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-  }
-
-  body,
-  .dabang-layout,
-  .dabang-main,
-  .dabang-content-body {
-    width: 100vw;
-    max-width: 100%;
-    overflow-x: hidden !important;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
   }
 
   .dabang-layout {
@@ -35,25 +44,30 @@
     min-height: 100vh;
   }
 
-  /* Padding inferior no container principal para não sobrepor a Bottom Navigation */
+  /* Padding inferior no container principal — respiro para a Bottom Navigation Dock */
   .dabang-main,
-  .main-content,
-  .dabang-content-body {
+  .main-content {
     margin-left: 0 !important;
     width: 100% !important;
-    padding: 12px 12px 80px !important;
-    box-sizing: border-box;
+    box-sizing: border-box !important;
+  }
+
+  /* Respiro no rodapé para que nada seja coberto pela Dock */
+  main.dabang-content-body {
+    padding: 12px 14px 100px 14px !important;
   }
 
   /* 2. Header Mobile */
   .dabang-top-header,
   .top-header {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    height: auto !important;
-    padding: 12px 14px !important;
-    gap: 10px !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 12px !important;
+    margin: 0 !important;
     background: rgba(17, 19, 24, 0.96);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
@@ -61,19 +75,25 @@
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-sizing: border-box !important;
   }
 
-  /* Linha Superior do Header: Ações e controles em linha única */
-  .header-user-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 8px;
-    order: 1;
+  /* Linha Superior do Header: Ações e controles centralizados */
+  .header-actions-group,
+  .header-user-actions,
+  #demoModeBanner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin: auto 0 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
-  /* Ocultar badges extensos e elementos dispensáveis em telas pequenas */
+  /* Ocultar barra de busca e badges extensos no mobile */
+  .header-search-wrap,
+  .search-bar,
   .state-switcher-box,
   .telemetry-status-text,
   .header-telemetry-badge,
@@ -85,242 +105,720 @@
     display: none !important;
   }
 
-  /* Controles em linha única compactos */
+  /* Controles rigorosamente centralizados verticalmente no meio da barra de 56px */
   .btn-privacy-toggle,
   .btn-lock-data {
     padding: 6px 12px !important;
-    height: 38px;
-    font-size: 12px;
-    min-height: 38px;
-    flex-shrink: 0;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    font-size: 12px !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    border-radius: var(--radius-pill, 100px) !important;
+    margin: 0 !important;
   }
 
   .btn-theme-toggle,
   .btn-icon-refresh {
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
-    min-height: 38px;
-    border-radius: var(--radius-pill, 100px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    flex-shrink: 0;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    border-radius: var(--radius-pill, 100px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+  }
+
+  .user-profile-badge {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
   }
 
   .user-avatar-circle {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    font-size: 12px;
-    font-weight: 700;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
   }
 
-  /* Barra de busca logo abaixo com 100% de largura */
-  .header-search-wrap,
-  .search-bar {
-    order: 2;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 42px;
-    padding: 0 12px !important;
-    box-sizing: border-box !important;
-    border-radius: var(--radius-pill, 100px);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--nova-surface-container, rgba(255, 255, 255, 0.05));
-    border: 1px solid var(--nova-outline-variant, rgba(255, 255, 255, 0.1));
-  }
-
-  .header-search-input {
-    width: 100% !important;
-    font-size: 13px !important;
-    background: transparent;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-  }
-
-  /* 3. Banner LGPD em Coluna Única */
+  /* 3. Banner Demo (LGPD Safe) — Compacto Horizontal de Linha Única */
   #demoModeBanner,
   .lgpd-banner,
   .demo-presentation-banner {
-    display: flex;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 10px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    padding: 14px !important;
+    padding: 8px 14px !important;
+    min-height: 48px !important;
+    max-height: 52px !important;
+    overflow: hidden !important;
     border-radius: var(--radius-md, 16px);
   }
 
   .demo-banner-content {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* Ícone do banner */
+  .demo-banner-content .banner-icon,
+  .demo-banner-content [data-lucide],
+  .demo-banner-content svg {
+    flex-shrink: 0;
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .demo-banner-texts {
+    min-width: 0;
+    overflow: hidden;
   }
 
   .demo-banner-texts strong {
-    font-size: 13px;
-    line-height: 16px;
-  }
-
-  .demo-banner-texts span {
-    font-size: 11.5px;
+    font-size: 12px;
     line-height: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
   }
 
+  /* Ocultar linha de subtexto longo no banner compacto */
+  .demo-banner-texts span,
+  .demo-banner-texts p,
+  .demo-banner-subtext {
+    display: none !important;
+  }
+
+  /* Botão pílula "Desbloquear" à direita */
   .btn-banner-action {
-    width: 100% !important;
-    height: 44px !important;
-    min-height: 44px;
+    flex-shrink: 0 !important;
+    width: auto !important;
+    min-width: 88px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 14px !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
+    border-radius: 100px !important;
+    white-space: nowrap;
     box-sizing: border-box;
   }
 
   /* 4. Voice Assistant Hero em Coluna Única */
+  .voice-card,
   .voice-assistant-hero-card {
+    display: flex !important;
+    flex-direction: column !important;
     padding: 16px 14px !important;
-    border-radius: var(--radius-md, 16px);
-    box-sizing: border-box;
+    border-radius: var(--radius-md, 16px) !important;
+    box-sizing: border-box !important;
     width: 100% !important;
+    max-width: 100% !important;
   }
 
+  .voice-card > .va-header-row,
+  .voice-assistant-hero-card > .va-header-row,
   .va-header-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .va-brand-title {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .va-brand-title h2 {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: 18px !important;
+    line-height: 22px !important;
   }
 
+  /* Oculta subtítulo excessivamente longo no mobile — mantém apenas título e seletor de voz */
   .va-subtitle {
-    font-size: 11px;
-    line-height: 15px;
+    display: none !important;
   }
 
+  .va-header-controls {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  /* Ajuste do Seletor de Voz no Mobile com label em linha única */
   .va-voice-select-box {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    box-sizing: border-box;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: space-between !important;
+    margin-top: 8px !important;
+    gap: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .va-voice-select-box label {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    font-size: 12px !important;
+    flex-shrink: 0 !important;
   }
 
   .va-select-dropdown {
-    flex: 1;
-    font-size: 12px;
-    height: 38px;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: 0 !important;
+    font-size: 12px !important;
+    height: 38px !important;
+    box-sizing: border-box !important;
   }
 
+  .voice-card > .va-main-grid,
+  .voice-assistant-hero-card > .va-main-grid,
   .va-main-grid {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     gap: 16px !important;
     width: 100% !important;
-    box-sizing: border-box;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .va-orb-interactive-panel {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
+  /* Voice Orb proporcional: 88px de diâmetro confortável para mobile */
   .orb-visual-wrapper {
-    width: 220px !important;
-    height: 220px !important;
-    margin: 0 auto;
+    width: 88px !important;
+    height: 88px !important;
+    margin: 0 auto !important;
   }
 
   .nova-shader-orb-canvas {
-    width: 220px !important;
-    height: 220px !important;
+    width: 88px !important;
+    height: 88px !important;
   }
 
+  /* Botão "Pressione para Falar" centralizado com largura confortável */
   .btn-mic-toggle {
     width: 100% !important;
-    max-width: 280px;
+    max-width: 260px !important;
     height: 48px !important;
     min-height: 44px !important;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    margin: 14px auto 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 100px !important;
   }
 
   .va-chat-transcription-panel {
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
   }
 
   .va-dialog-box {
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
-    padding: 12px;
-    max-height: 220px;
+    padding: 12px !important;
+    max-height: 220px !important;
+  }
+
+  /* Balão de chat sem corte e com quebra segura de palavras */
+  .va-message,
+  .msg-content,
+  .msg-content p {
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
   }
 
   .va-message p {
-    font-size: 12.5px;
-    line-height: 17px;
+    font-size: 12.5px !important;
+    line-height: 17px !important;
   }
 
+  /* Correção da Linha de Input e Botão Enviar */
   .va-input-group {
+    display: flex !important;
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 8px !important;
+    padding: 4px 6px 4px 12px !important;
+    margin-top: 10px !important;
+    align-items: center !important;
   }
 
   .va-text-input {
-    flex: 1;
-    min-width: 0;
-    font-size: 13px;
-    height: 44px;
+    flex: 1 !important;
+    min-width: 0 !important;
+    font-size: 12px !important;
+    height: 40px !important;
+    box-sizing: border-box !important;
   }
 
+  /* Botão [▷ Enviar]: nunca cortado na borda direita */
   .btn-va-send {
-    height: 44px;
-    min-width: 44px;
-    padding: 0 14px;
+    flex-shrink: 0 !important;
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+    height: 40px !important;
+    min-width: auto !important;
+    box-sizing: border-box !important;
   }
 
+  /* Atalhos de Voz em Carrossel Deslizante */
   .va-quick-prompts {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 8px !important;
+    padding: 4px 0 !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
+    scrollbar-width: none !important;
+  }
+
+  .va-quick-prompts::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .va-quick-prompts .qp-label {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    font-size: 11px !important;
+    align-self: center !important;
   }
 
   .btn-qp {
-    font-size: 11px;
-    padding: 6px 10px;
-    min-height: 32px;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    font-size: 11px !important;
+    padding: 5px 12px !important;
+    min-height: 32px !important;
+  }
+
+  /* Modal Expandido em Tela Cheia Nativa (Eliminação do Fundo Vazando) */
+  .voice-assistant-hero-card.is-expanded {
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    margin: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    z-index: 100000 !important;
+    padding: 16px 16px 20px 16px !important;
+    background: #12141A !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+  }
+
+  /* Remoção de qualquer barra lateral estranha ou pseudo-elemento no modo expandido */
+  .voice-assistant-hero-card.is-expanded::before,
+  .voice-assistant-hero-card.is-expanded::after {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+  }
+
+  /* Título no topo sem borda esquerda */
+  .va-header-title,
+  .va-brand-title {
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+
+  /* Oculta ícone squircle no modo expandido mobile para não espremer o título */
+  .voice-assistant-hero-card.is-expanded .va-icon-squircle,
+  .is-expanded .va-icon-squircle,
+  .is-expanded #vaHeroIconSquircle,
+  .voice-assistant-hero-card.is-expanded .living-shader-icon {
+    display: none !important;
+  }
+
+  /* 1. Reorganização do Topo do Modal Expandido */
+  .voice-assistant-hero-card.is-expanded > .va-header-row,
+  .is-expanded .va-header-row,
+  .is-expanded .va-top-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    height: 44px !important;
+    margin-bottom: 8px !important;
+    padding: 0 4px !important;
+    flex-shrink: 0 !important;
+    border-bottom: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-brand-title,
+  .is-expanded .va-brand-title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    border: none !important;
+    border-left: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-brand-title > div,
+  .is-expanded .va-brand-title > div {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /* Título: "NOVA Assistant" com font-size: 15px !important; font-weight: 700 !important; border: none !important; margin: 0 !important; */
+  .voice-assistant-hero-card.is-expanded .va-brand-title h2,
+  .is-expanded .va-brand-title h2 {
+    font-size: 0 !important;
+    line-height: 1 !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-brand-title h2::after,
+  .is-expanded .va-brand-title h2::after {
+    content: "NOVA Assistant" !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    border: none !important;
+    margin: 0 !important;
+    color: var(--nova-on-surface, #e3e2e6) !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-header-controls,
+  .is-expanded .va-header-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+    width: auto !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .btn-va-expand,
+  .is-expanded .btn-va-expand {
+    display: none !important;
+  }
+
+  /* Seletor de voz compacto: max-width: 140px com fonte de 11.5px */
+  .voice-assistant-hero-card.is-expanded .va-voice-select-box,
+  .is-expanded .va-voice-select-box {
+    max-width: 140px !important;
+    width: 140px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-voice-select-box label,
+  .is-expanded .va-voice-select-box label {
+    display: none !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-select-dropdown,
+  .is-expanded .va-select-dropdown {
+    width: 100% !important;
+    max-width: 140px !important;
+    font-size: 11.5px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+    padding: 0 20px 0 8px !important;
+    border-radius: 100px !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: calc(100% - 6px) center !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    color: #FFFFFF !important;
+    box-sizing: border-box !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    cursor: pointer !important;
+  }
+
+  /* Botão Fechar: Botão circular minimalista com apenas o ✕ (32x32px) */
+  .voice-assistant-hero-card.is-expanded .btn-close-expanded,
+  .is-expanded .btn-close-expanded {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    color: #FFFFFF !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    font-size: 0 !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .btn-close-expanded::before,
+  .is-expanded .btn-close-expanded::before {
+    content: "✕" !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-main-grid,
+  .is-expanded .va-main-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: calc(100% - 52px) !important;
+    width: 100% !important;
+    overflow: visible !important;
+    gap: 0 !important;
+    justify-content: space-between !important;
+  }
+
+  /* 2. Esfera de Voz 100% Visível e Sem Cortes */
+  .voice-assistant-hero-card.is-expanded .va-orb-interactive-panel,
+  .is-expanded .va-orb-interactive-panel,
+  .is-expanded .va-orb-canvas-container,
+  .is-expanded .voice-orb-wrapper {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 8px auto 6px auto !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .orb-visual-wrapper,
+  .is-expanded .orb-visual-wrapper,
+  .is-expanded .voice-orb-wrapper,
+  .is-expanded .va-orb-canvas-container {
+    width: 88px !important;
+    height: 88px !important;
+    min-width: 88px !important;
+    min-height: 88px !important;
+    max-width: 88px !important;
+    max-height: 88px !important;
+    margin: 0 auto !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .nova-shader-orb-canvas,
+  .is-expanded .nova-shader-orb-canvas {
+    width: 88px !important;
+    height: 88px !important;
+    border-radius: 50% !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .orb-glass-shield,
+  .is-expanded .orb-glass-shield {
+    width: 88px !important;
+    height: 88px !important;
+    overflow: visible !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-state-feedback,
+  .is-expanded .va-state-feedback {
+    margin: 4px auto !important;
+    font-size: 11.5px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .btn-mic-toggle,
+  .is-expanded .btn-mic-toggle {
+    width: 100% !important;
+    max-width: 220px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    margin: 4px auto !important;
+    padding: 0 16px !important;
+    border-radius: 100px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* 3. Área de Conversa Alinhada à Base Inferior (Crescimento Dinâmico) */
+  [data-theme="dark"] .voice-assistant-hero-card.is-expanded .va-chat-transcription-panel,
+  [data-theme="light"] .voice-assistant-hero-card.is-expanded .va-chat-transcription-panel,
+  .voice-assistant-hero-card.is-expanded .va-chat-transcription-panel,
+  .is-expanded .va-chat-transcription-panel {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-top: auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* Caixa de diálogo com crescimento dinâmico de baixo para cima */
+  .voice-assistant-hero-card.is-expanded .va-dialog-box,
+  .is-expanded .va-dialog-box {
+    flex: 0 1 auto !important;
+    height: auto !important;
+    max-height: 240px !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    background: rgba(26, 29, 38, 0.88) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 18px !important;
+    padding: 12px 14px !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 8px !important;
+    margin-top: 0 !important;
+    box-sizing: border-box !important;
+    order: 1 !important;
+  }
+
+  /* 4. Atalhos de Voz e Campo de Digitação Fixados na Base */
+  .voice-assistant-hero-card.is-expanded .va-quick-prompts,
+  .is-expanded .va-quick-prompts {
+    order: 2 !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 6px !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 8px !important;
+    padding: 2px 0 !important;
+    scrollbar-width: none !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-quick-prompts::-webkit-scrollbar,
+  .is-expanded .va-quick-prompts::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .voice-assistant-hero-card.is-expanded .va-input-group,
+  .is-expanded .va-input-group {
+    order: 3 !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    background: #1C202A !important;
+    border-radius: 22px !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    padding: 4px 6px 4px 12px !important;
+    margin-top: 0 !important;
+    box-sizing: border-box !important;
   }
 
   /* 5. Top Summary Cards (Grid 2x2) */
@@ -328,7 +826,7 @@
   .kpi-grid,
   .stats-grid {
     display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 10px !important;
     width: 100% !important;
     box-sizing: border-box !important;
@@ -336,9 +834,40 @@
 
   .summary-card,
   .kpi-card {
-    padding: 12px !important;
-    border-radius: var(--radius-md, 14px);
-    box-sizing: border-box;
+    padding: 12px 10px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .summary-card .card-top-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .summary-card .summary-icon-box {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    border-radius: 10px !important;
+  }
+
+  .summary-card .summary-icon-box .material-symbols-rounded {
+    font-size: 18px !important;
+  }
+
+  .summary-card .card-tag,
+  .summary-card .md3-badge {
+    font-size: 10px !important;
+    padding: 2px 7px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    max-width: none !important;
   }
 
   .card-big-num {
@@ -401,105 +930,238 @@
     padding: 8px 10px;
   }
 
-  /* 7. Bottom Navigation Bar Nativa Fixa */
-  .dabang-sidebar,
+  /* 7. Bottom Navigation Dock Estilo iOS Nativo (Mobile Only) */
+  #mobileDockNav,
   .mobile-bottom-nav {
     position: fixed !important;
-    top: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    height: 64px !important;
-    background: rgba(17, 19, 24, 0.94) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-    border-top: 1px solid var(--nova-outline-variant, rgba(255, 255, 255, 0.12)) !important;
-    border-right: none !important;
-    border-left: none !important;
-    border-bottom: none !important;
-    z-index: 9999 !important;
+    bottom: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    height: 60px !important;
+    z-index: 99999 !important;
+    margin: 0 auto !important;
+    max-width: 440px !important;
+    background: rgba(18, 20, 26, 0.94) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    border-radius: 22px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
     display: flex !important;
     justify-content: space-around !important;
     align-items: center !important;
-    padding: 0 8px !important;
-    margin: 0 !important;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+    padding: 0 6px !important;
     box-sizing: border-box !important;
   }
 
-  /* Ocultar elementos exclusivos de sidebar desktop */
-  .sidebar-logo-area,
-  .menu-category,
-  .sidebar-bottom-pro-card,
-  .menu-pill,
-  .menu-counter,
-  .menu-tag,
-  .md3-nav-item__active-indicator {
-    display: none !important;
-  }
-
-  /* Menu horizontal de ícones */
-  .sidebar-menu {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-around !important;
-    align-items: center !important;
-    width: 100% !important;
-    height: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    gap: 4px !important;
-  }
-
-  /* Destinos com touch target confortável de 44px mínimo */
-  .menu-link,
-  .nav-item {
+  #mobileDockNav a,
+  #mobileDockNav .dock-nav-item,
+  .mobile-bottom-nav a {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    min-width: 44px !important;
-    min-height: 44px !important;
-    height: 54px !important;
-    padding: 4px 2px !important;
-    text-decoration: none !important;
     flex: 1 !important;
-    border-radius: var(--radius-sm, 8px) !important;
-    transition: background 0.15s ease, color 0.15s ease;
+    text-decoration: none !important;
+    color: #909099 !important;
+    font-size: 9.5px !important;
+    font-weight: 600 !important;
+    gap: 2px !important;
+    height: 100% !important;
+    padding: 4px 2px !important;
+    box-sizing: border-box !important;
+    transition: color 0.18s ease, transform 0.12s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  #mobileDockNav a .material-symbols-rounded,
+  #mobileDockNav .dock-nav-item .material-symbols-rounded,
+  .mobile-bottom-nav a .material-symbols-rounded {
+    font-size: 20px !important;
+    line-height: 1 !important;
+  }
+
+  #mobileDockNav a.active,
+  #mobileDockNav .dock-nav-item.active,
+  .mobile-bottom-nav a.active {
+    color: #86D7A9 !important;
+    font-weight: 700 !important;
+  }
+
+  #mobileDockNav a:active,
+  #mobileDockNav .dock-nav-item:active,
+  .mobile-bottom-nav a:active {
+    transform: scale(0.92) !important;
+  }
+
+  /* Elimina qualquer borda ou sobra abaixo da dock flutuante */
+  .dabang-layout::after,
+  body::after {
+    display: none !important;
+  }
+
+  /* ================================================================
+     8. Correção de Quebra nos Cabeçalhos e Badges (sem overflow)
+     Garante que badges/botões nunca transbordem em telas de 430px
+     ================================================================ */
+
+  /* Cabeçalhos de painéis em coluna única com alinhamento à esquerda */
+  .panel-head-row,
+  .widget-head,
+  .trilha-header,
+  .card-header,
+  .section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  /* Grupos de badges e botões: wrap fluido, sem corte lateral */
+  .badge-group,
+  .panel-actions,
+  .header-badges,
+  .card-tags,
+  .trilha-badges,
+  .module-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  /* Badges e botões individuais: nunca transbordam */
+  .badge,
+  .tag-pill,
+  .btn-badge,
+  .status-chip,
+  .cert-badge,
+  [class*="badge"],
+  [class*="chip"],
+  [class*="tag"] {
+    max-width: 100% !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
     box-sizing: border-box;
   }
 
-  .menu-link.active,
-  .nav-item.active {
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: var(--nova-primary, #90CAF9) !important;
+  /* ================================================================
+     9. Seletor Visual de Período & Card de Extrato Mensal (Mobile)
+     ================================================================ */
+  .periodo-selector-wrapper {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    padding: 8px 12px !important;
   }
 
-  .menu-link .menu-icon,
-  .nav-item .menu-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2px;
+  .periodo-select-dropdown {
+    flex: 1 !important;
+    font-size: 12px !important;
+    text-align: right !important;
+    max-width: 220px !important;
   }
 
-  .menu-link .menu-icon span,
-  .nav-item .menu-icon span {
-    font-size: 20px !important;
+  /* Card de Extrato no Diálogo do Assistente (Mobile) */
+  .va-extrato-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px !important;
+    margin-top: 8px !important;
   }
 
-  .menu-link .menu-text,
-  .nav-item .menu-text {
-    font-size: 9.5px !important;
-    font-weight: 600 !important;
-    line-height: 11px !important;
+  .va-extrato-kpi-grid {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+
+  .va-extrato-kpi-box {
+    padding: 6px 10px !important;
+  }
+
+  .va-extrato-kpi-box .va-kpi-num {
+    font-size: 12.5px !important;
+  }
+
+  .va-extrato-tx-item {
+    font-size: 11px !important;
+    padding: 3px 4px !important;
+  }
+
+  /* Botões Contábeis de Ação Rápida (Mobile) */
+  .tab-header-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .tab-view-header--financas {
+    padding: 16px !important;
+    gap: 14px !important;
+  }
+
+  .tab-view-header--financas .tab-header-top-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  /* Linha de seleção de mês e relatório */
+  .period-selector-row,
+  .tab-header-top-actions,
+  .tab-view-header--financas .tab-header-top-actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .tab-view-header--financas .tab-header-top-actions .periodo-selector-wrapper {
+    flex: 1 1 auto !important;
+    min-width: 160px !important;
+  }
+
+  /* Botão de download com white-space nowrap exibindo "Relatório PDF" inteiro sem cortes */
+  #btnRelatorioPdfMes,
+  .btn-panel-ghost {
     white-space: nowrap !important;
-    text-align: center;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
   }
 
-  /* Ocultar itens excedentes na barra inferior (manter os 5 principais acessíveis) */
-  .sidebar-menu a:nth-child(n+7) {
-    display: none !important;
+  .tab-view-header--financas .tab-actions-group {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .tab-view-header--financas .tab-actions-group .btn-pluggy-action,
+  .btn-fin-action,
+  .btn-pluggy-action#btnBalanceteMensal,
+  .btn-pluggy-action#btnBalancoPatrimonial,
+  .btn-pluggy-action#btnCompararMeses {
+    flex: 1 1 calc(50% - 8px) !important;
+    min-height: 40px !important;
+    font-size: 11.5px !important;
+    justify-content: center !important;
+    padding: 6px 8px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
   }
 }
+

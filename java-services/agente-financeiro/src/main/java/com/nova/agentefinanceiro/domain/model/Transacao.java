@@ -16,14 +16,20 @@ public class Transacao {
     private final TipoTransacao tipo;
     private final CategoriaTransacao categoria;
     private final LocalDate data;
+    private final String hashSha256;
 
     public Transacao(Long id, String descricao, BigDecimal valor, TipoTransacao tipo, CategoriaTransacao categoria, LocalDate data) {
+        this(id, descricao, valor, tipo, categoria, data, null);
+    }
+
+    public Transacao(Long id, String descricao, BigDecimal valor, TipoTransacao tipo, CategoriaTransacao categoria, LocalDate data, String hashSha256) {
         this.id = id;
         this.descricao = validarDescricao(descricao);
         this.valor = validarValor(valor);
         this.tipo = Objects.requireNonNullElse(tipo, TipoTransacao.DESPESA);
         this.categoria = Objects.requireNonNullElse(categoria, CategoriaTransacao.OUTROS);
         this.data = Objects.requireNonNullElseGet(data, LocalDate::now);
+        this.hashSha256 = hashSha256;
     }
 
     private static String validarDescricao(String descricao) {
@@ -62,6 +68,10 @@ public class Transacao {
 
     public LocalDate getData() {
         return data;
+    }
+
+    public String getHashSha256() {
+        return hashSha256;
     }
 
     public boolean isDespesa() {

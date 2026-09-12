@@ -18,7 +18,7 @@ let currentAudioPlayer = null;
 let estadoAtualDashboard = 'normal';
 let novaLivingShaderEngine = null;
 
-const MENSAGEM_BOAS_VINDAS_RECRUITERS = "Olá! Bem-vindo ao NOVA Control Center, o ecossistema autônomo desenvolvido por Fábio Rodrigues. Sou a interface de voz neural conectada a microsserviços em Java 21, Clean Architecture e Spring AI (MCP). Você pode falar pelo microfone ou testar comandos como /status, /vagas ou /financeiro.";
+const MENSAGEM_BOAS_VINDAS_RECRUITERS = "Olá! Sou o assistente de inteligência do NOVA. Posso te ajudar com análises financeiras, esteira de candidaturas e telemetria do sistema. O que deseja consultar?";
 
 // LGPD Safe: Por padrão, todo visitante público inicia SEMPRE em Modo Demonstração (LGPD Safe)
 function obterPinAutenticado() {
@@ -248,7 +248,6 @@ function atualizarBotoesPrivacidade() {
   const icon = document.getElementById('privacyModeIcon');
   const label = document.getElementById('privacyModeLabel');
   const banner = document.getElementById('demoModeBanner');
-  const btnLock = document.getElementById('btnLockRealData');
 
   const isReal = modoPrivacidade === 'real' && Boolean(obterPinAutenticado());
 
@@ -256,22 +255,23 @@ function atualizarBotoesPrivacidade() {
     if (isReal) {
       btn.classList.remove('demo-active');
       btn.classList.add('real-active');
+      btn.title = "Clique para bloquear e retornar imediatamente ao Modo Demonstração (LGPD Safe)";
+      btn.setAttribute('aria-label', "Bloquear e retornar ao Modo Demonstração");
     } else {
       btn.classList.add('demo-active');
       btn.classList.remove('real-active');
+      btn.title = "Clique para desbloquear dados reais com PIN de administrador";
+      btn.setAttribute('aria-label', "Desbloquear dados reais com PIN");
     }
   }
   if (icon) {
     icon.textContent = isReal ? 'lock_open' : 'shield';
   }
   if (label) {
-    label.textContent = isReal ? 'Dados Reais Conectados' : 'Modo Demo (LGPD)';
+    label.textContent = isReal ? 'Dados Reais | Bloquear' : 'Modo Demo | Desbloquear';
   }
   if (banner) {
-    banner.style.display = isReal ? 'none' : 'flex';
-  }
-  if (btnLock) {
-    btnLock.style.display = isReal ? 'inline-flex' : 'none';
+    banner.style.display = 'none';
   }
 }
 window.atualizarBotoesPrivacidade = atualizarBotoesPrivacidade;
@@ -451,44 +451,58 @@ function renderizarDadosNormal(data) {
   if (window.lucide) lucide.createIcons();
 }
 
-function renderizarExtratoFinanceiro(isDemo) {
+function renderizarExtratoFinanceiro(isDemo, transacoesCustom = null) {
   const tbody = document.getElementById('extratoTableBody');
   if (!tbody) return;
 
-  const transacoesDemo = [
-    { data: '28/08/2026', desc: 'Tech Enterprise S/A - Honorários Consultoria', cat: 'Receita Dev', tipo: 'CRÉDITO', valor: 18500.00, isReceita: true },
-    { data: '25/08/2026', desc: 'AWS Cloud Services - Cloud Architecture', cat: 'Infra / DevOps', tipo: 'DÉBITO', valor: -3250.00, isReceita: false },
-    { data: '22/08/2026', desc: 'Apple Developer Program - Licença Anual', cat: 'Licenças Dev', tipo: 'DÉBITO', valor: -699.00, isReceita: false },
-    { data: '20/08/2026', desc: 'Aporte Automático - Caixinha Reserva CDI', cat: 'Investimentos', tipo: 'APLICAÇÃO', valor: -5000.00, isReceita: false },
-    { data: '18/08/2026', desc: 'Coworking Hub Recife - Espaço Executivo', cat: 'Operações', tipo: 'DÉBITO', valor: -1800.00, isReceita: false },
-    { data: '15/08/2026', desc: 'Certificação Spring Professional & AI Lab', cat: 'Educação / DIO', tipo: 'DÉBITO', valor: -1200.00, isReceita: false },
-    { data: '12/08/2026', desc: 'Transferência Pix Recebida - Mentoria Java', cat: 'Consultoria', tipo: 'CRÉDITO', valor: 2500.00, isReceita: true },
-    { data: '08/08/2026', desc: 'Supermercado Gourmet - Suprimentos Home Office', cat: 'Alimentação', tipo: 'DÉBITO', valor: -850.40, isReceita: false }
-  ];
+  let lista;
+  if (transacoesCustom && Array.isArray(transacoesCustom) && transacoesCustom.length > 0) {
+    lista = transacoesCustom;
+  } else {
+    const transacoesDemo = [
+      { data: '28/08/2026', desc: 'Tech Enterprise S/A - Honorários Consultoria', cat: 'Receita Dev', tipo: 'CRÉDITO', valor: 18500.00, isReceita: true },
+      { data: '25/08/2026', desc: 'AWS Cloud Services - Cloud Architecture', cat: 'Infra / DevOps', tipo: 'DÉBITO', valor: -3250.00, isReceita: false },
+      { data: '22/08/2026', desc: 'Apple Developer Program - Licença Anual', cat: 'Licenças Dev', tipo: 'DÉBITO', valor: -699.00, isReceita: false },
+      { data: '20/08/2026', desc: 'Aporte Automático - Caixinha Reserva CDI', cat: 'Investimentos', tipo: 'APLICAÇÃO', valor: -5000.00, isReceita: false },
+      { data: '18/08/2026', desc: 'Coworking Hub Recife - Espaço Executivo', cat: 'Operações', tipo: 'DÉBITO', valor: -1800.00, isReceita: false },
+      { data: '15/08/2026', desc: 'Certificação Spring Professional & AI Lab', cat: 'Educação / DIO', tipo: 'DÉBITO', valor: -1200.00, isReceita: false },
+      { data: '12/08/2026', desc: 'Transferência Pix Recebida - Mentoria Java', cat: 'Consultoria', tipo: 'CRÉDITO', valor: 2500.00, isReceita: true },
+      { data: '08/08/2026', desc: 'Supermercado Gourmet - Suprimentos Home Office', cat: 'Alimentação', tipo: 'DÉBITO', valor: -850.40, isReceita: false }
+    ];
 
-  const transacoesReais = [
-    { data: '28/08/2026', desc: 'Transferência Pix Recebida - Ramon', cat: 'Receita', tipo: 'CRÉDITO', valor: 1500.00, isReceita: true },
-    { data: '26/08/2026', desc: 'Supermercado Extra - Compras do Mês', cat: 'Alimentação', tipo: 'DÉBITO', valor: -245.60, isReceita: false },
-    { data: '24/08/2026', desc: 'Posto Shell - Combustível', cat: 'Transporte', tipo: 'DÉBITO', valor: -151.87, isReceita: false },
-    { data: '22/08/2026', desc: 'Transferência Pix Recebida - Gildeth', cat: 'Receita', tipo: 'CRÉDITO', valor: 500.00, isReceita: true },
-    { data: '20/08/2026', desc: 'Amazon Marketplace - Equipamento e Livros', cat: 'Compras', tipo: 'DÉBITO', valor: -318.52, isReceita: false },
-    { data: '18/08/2026', desc: 'Transferência Pix Recebida - Sheila', cat: 'Receita', tipo: 'CRÉDITO', valor: 299.00, isReceita: true },
-    { data: '15/08/2026', desc: 'Alimentação e Refeições Diversas', cat: 'Alimentação', tipo: 'DÉBITO', valor: -482.78, isReceita: false },
-    { data: '10/08/2026', desc: 'Transferência entre Contas', cat: 'Transferências', tipo: 'DÉBITO', valor: -511.00, isReceita: false }
-  ];
+    const transacoesReais = [
+      { data: '28/08/2026', desc: 'Transferência Pix Recebida - Ramon', cat: 'Receita', tipo: 'CRÉDITO', valor: 1500.00, isReceita: true },
+      { data: '26/08/2026', desc: 'Supermercado Extra - Compras do Mês', cat: 'Alimentação', tipo: 'DÉBITO', valor: -245.60, isReceita: false },
+      { data: '24/08/2026', desc: 'Posto Shell - Combustível', cat: 'Transporte', tipo: 'DÉBITO', valor: -151.87, isReceita: false },
+      { data: '22/08/2026', desc: 'Transferência Pix Recebida - Gildeth', cat: 'Receita', tipo: 'CRÉDITO', valor: 500.00, isReceita: true },
+      { data: '20/08/2026', desc: 'Amazon Marketplace - Equipamento e Livros', cat: 'Compras', tipo: 'DÉBITO', valor: -318.52, isReceita: false },
+      { data: '18/08/2026', desc: 'Transferência Pix Recebida - Sheila', cat: 'Receita', tipo: 'CRÉDITO', valor: 299.00, isReceita: true },
+      { data: '15/08/2026', desc: 'Alimentação e Refeições Diversas', cat: 'Alimentação', tipo: 'DÉBITO', valor: -482.78, isReceita: false },
+      { data: '10/08/2026', desc: 'Transferência entre Contas', cat: 'Transferências', tipo: 'DÉBITO', valor: -511.00, isReceita: false }
+    ];
 
-  const lista = isDemo ? transacoesDemo : transacoesReais;
-  tbody.innerHTML = lista.map(t => `
-    <tr>
-      <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--nova-outline);">${t.data}</td>
-      <td style="font-weight: 600; color: var(--nova-on-surface);">${t.desc}</td>
-      <td><span class="md3-badge" style="font-size: 11px;">${t.cat}</span></td>
-      <td><span class="md3-badge ${t.isReceita ? 'md3-badge--success' : ''}" style="font-size: 11px;">${t.tipo}</span></td>
-      <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; padding-right: 24px; color: ${t.isReceita ? 'var(--nova-secondary)' : 'var(--nova-on-surface)'};">
-        ${t.isReceita ? '+ ' : '- '}R$ ${Math.abs(t.valor).toFixed(2).replace('.', ',')}
-      </td>
-    </tr>
-  `).join('');
+    lista = isDemo ? transacoesDemo : transacoesReais;
+  }
+
+  tbody.innerHTML = lista.map(t => {
+    const isReceita = t.isReceita !== undefined ? t.isReceita : (t.valor > 0 || (t.tipo && t.tipo.includes('CRÉD')));
+    const valorNum = Math.abs(t.valor || t.valorAbs || 0);
+    const desc = t.desc || t.descricao || 'Lançamento';
+    const cat = t.cat || t.categoria || 'OUTROS';
+    const tipo = t.tipo || (isReceita ? 'CRÉDITO' : 'DÉBITO');
+    const data = t.data || t.dataIso || '';
+    return `
+      <tr>
+        <td style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--nova-outline);">${data}</td>
+        <td style="font-weight: 600; color: var(--nova-on-surface);">${desc}</td>
+        <td><span class="md3-badge" style="font-size: 11px;">${cat}</span></td>
+        <td><span class="md3-badge ${isReceita ? 'md3-badge--success' : ''}" style="font-size: 11px;">${tipo}</span></td>
+        <td style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; padding-right: 24px; color: ${isReceita ? 'var(--nova-secondary)' : 'var(--nova-on-surface)'};">
+          ${isReceita ? '+ ' : '- '}R$ ${valorNum.toFixed(2).replace('.', ',')}
+        </td>
+      </tr>
+    `;
+  }).join('');
 
   const pill = document.getElementById('extratoCounterPill');
   if (pill) {
@@ -496,6 +510,69 @@ function renderizarExtratoFinanceiro(isDemo) {
   }
 }
 window.renderizarExtratoFinanceiro = renderizarExtratoFinanceiro;
+
+async function trocarMesExtrato(anoMes) {
+  if (!anoMes) return;
+  const [anoStr, mesStr] = anoMes.split('-');
+  const ano = parseInt(anoStr, 10);
+  const mes = parseInt(mesStr, 10);
+  const nomeMeses = ["", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+  const nomeMes = nomeMeses[mes] || `Mês ${mes}`;
+  const ultDia = new Date(ano, mes, 0).getDate();
+  const inicio = `${ano}-${String(mes).padStart(2, '0')}-01`;
+  const fim = `${ano}-${String(mes).padStart(2, '0')}-${String(ultDia).padStart(2, '0')}`;
+
+  showToast(`Sincronizando extrato de ${nomeMes}/${ano}...`);
+
+  try {
+    const pin = obterPinAutenticado();
+    const isReal = modoPrivacidade === 'real' && Boolean(pin);
+    const queryParam = isReal ? '&demo=false' : '&demo=true';
+
+    const headers = {
+      'X-NOVA-Demo': isReal ? 'false' : 'true',
+      ...obterAuthHeaders()
+    };
+
+    const [resResumo, resTransacoes] = await Promise.all([
+      fetch(`/api/transacoes/resumo?inicio=${inicio}&fim=${fim}${queryParam}`, { headers }),
+      fetch(`/api/transacoes?inicio=${inicio}&fim=${fim}${queryParam}`, { headers })
+    ]);
+
+    if (!resResumo.ok) throw new Error("Erro ao buscar resumo do mês");
+    const resumo = await resResumo.json();
+    const transacoes = resTransacoes.ok ? await resTransacoes.json() : [];
+
+    // 1. Atualiza Top KPIs
+    renderizarTopKPIs(resumo, dadosGlobais?.estudos);
+
+    // 2. Atualiza Gráficos Financeiros
+    renderizarGraficoCategorias(resumo);
+    renderizarGraficoTargetReality(resumo);
+    renderizarGraficoEvolucao(resumo);
+
+    // 3. Atualiza Tabela de Extrato
+    renderizarExtratoFinanceiro(isDemoMode(), transacoes);
+
+    // 4. Atualiza subtítulos com o mês apurado
+    const subtextEvolucao = document.querySelector('#holderEvolucao')?.parentElement?.querySelector('.panel-subtext');
+    if (subtextEvolucao) {
+      subtextEvolucao.textContent = `Histórico comparativo semanal consolidado no banco H2 (${nomeMes}/${ano})`;
+    }
+
+    // 5. Atualiza o link do PDF se disponível
+    const btnPdf = document.getElementById('btnRelatorioPdfMes');
+    if (btnPdf) {
+      btnPdf.href = `/download/financeiro/relatorios_pdf/relatorio_${nomeMes.toLowerCase()}_${ano}.pdf`;
+    }
+
+    showToast(`✅ Extrato de ${nomeMes}/${ano} atualizado com sucesso!`);
+  } catch (err) {
+    console.error("Erro ao trocar mês do extrato:", err);
+    showToast(`⚠️ Não foi possível sincronizar o extrato de ${nomeMes}/${ano}.`);
+  }
+}
+window.trocarMesExtrato = trocarMesExtrato;
 
 /* ==========================================================================
    RENDERIZAÇÃO DA ABA ESTUDOS (100% CONCLUÍDO • TRILHA 1 DIO & TRILHA 2 FULL STACK)
@@ -703,21 +780,45 @@ function renderizarCaixinhas(caixinhasData) {
   const resEl = document.getElementById('valReservaEmergencia');
   const casalEl = document.getElementById('valFundoCasal');
   const contaEl = document.getElementById('valSaldoConta');
+  const rendCasalEl = document.getElementById('rendFundoCasal');
+  const subCasalEl = document.getElementById('subFundoCasal');
+  const progCasalEl = document.getElementById('progFundoCasal');
+  const barCasalEl = document.getElementById('barFundoCasal');
 
+  const patVal = Number(caixinhasData.patrimonioLiquidoTotal != null ? caixinhasData.patrimonioLiquidoTotal : 1000.14);
   if (patTotalEl) {
-    patTotalEl.textContent = `Patrimônio: R$ ${Number(caixinhasData.patrimonioLiquidoTotal || 607500.00).toFixed(2).replace('.', ',')}`;
+    patTotalEl.textContent = `Patrimônio: R$ ${patVal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
+
+  const contaVal = Number(caixinhasData.saldoContaCorrente != null ? caixinhasData.saldoContaCorrente : 0.03);
   if (contaEl) {
-    contaEl.textContent = `R$ ${Number(caixinhasData.saldoContaCorrente || 107500.00).toFixed(2).replace('.', ',')}`;
+    contaEl.textContent = `R$ ${contaVal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  // Sincroniza o Card 1 de Saldo Disponível no Top KPI
+  const kpiSaldoEl = document.getElementById('kpiSaldo');
+  if (kpiSaldoEl && caixinhasData.saldoContaCorrente != null) {
+    kpiSaldoEl.textContent = `R$ ${contaVal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
 
   if (caixinhasData.caixinhas && Array.isArray(caixinhasData.caixinhas)) {
     caixinhasData.caixinhas.forEach(c => {
       const nome = (c.nome || '').toLowerCase();
       if (nome.includes('reserva') || c.tipo === 'RESERVA_EMERGENCIA') {
-        if (resEl) resEl.textContent = `R$ ${Number(c.saldo || 350000.00).toFixed(2).replace('.', ',')}`;
+        const saldoRes = Number(c.saldoLiquido != null ? c.saldoLiquido : (c.saldo || 0));
+        if (resEl) resEl.textContent = `R$ ${saldoRes.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       } else if (nome.includes('casal') || nome.includes('expansão') || c.tipo === 'FUNDO_CASAL') {
-        if (casalEl) casalEl.textContent = `R$ ${Number(c.saldo || 150000.00).toFixed(2).replace('.', ',')}`;
+        const saldoLiq = Number(c.saldoLiquido != null ? c.saldoLiquido : (c.saldo || 1000.11));
+        const saldoBruto = Number(c.saldoBruto != null ? c.saldoBruto : 1004.00);
+        const rend = Number(c.rendimento != null ? c.rendimento : 16.48);
+        const meta = Number(c.meta != null ? c.meta : 2700.00);
+        const prog = Number(c.progresso != null ? c.progresso : 37.0);
+
+        if (casalEl) casalEl.textContent = `R$ ${saldoLiq.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        if (rendCasalEl) rendCasalEl.textContent = `+R$ ${rend.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} rend.`;
+        if (subCasalEl) subCasalEl.textContent = `Bruto: R$ ${saldoBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} • Meta: R$ ${meta.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        if (progCasalEl) progCasalEl.textContent = `${prog.toFixed(0)}%`;
+        if (barCasalEl) barCasalEl.style.width = `${Math.min(100, prog)}%`;
       }
     });
   }
@@ -1354,8 +1455,18 @@ async function enviarComandoParaBackend(comando) {
     if (!res.ok) throw new Error("Erro na resposta do servidor");
     const data = await res.json();
 
-    // Adiciona resposta do assistente no diálogo passando comando para checagem de apresentação
-    adicionarMensagemChat('assistant', data.texto, comando);
+    // Adiciona resposta do assistente no diálogo passando comando, extrato e link de download autenticado
+    adicionarMensagemChat('assistant', data.texto, comando, data.extrato, data.download_url, data.download_label);
+
+    // Sincroniza seletor de mês da aba Finanças se for consulta de extrato mensal
+    if (data.extrato && data.extrato.ano && data.extrato.mes) {
+      const targetVal = `${data.extrato.ano}-${String(data.extrato.mes).padStart(2, '0')}`;
+      const selMes = document.getElementById('selectMesExtrato');
+      if (selMes && selMes.value !== targetVal) {
+        selMes.value = targetVal;
+        trocarMesExtrato(targetVal);
+      }
+    }
 
     // Reproduz o áudio neural retornado em Base64
     if (data.audio_base64) {
@@ -1430,14 +1541,30 @@ function atualizarEstadoVoz(estado, textoStatus) {
   }
 }
 
-function adicionarMensagemChat(remetente, texto, comandoOrigem = '') {
+function adicionarMensagemChat(remetente, texto, comandoOrigem = '', dadosExtrato = null, downloadUrl = null, downloadLabel = null) {
   const dialogBox = document.getElementById('vaDialogBox');
   if (!dialogBox) return;
+
+  // Prevenção de mensagens idênticas duplicadas consecutivas
+  const ultMsg = dialogBox.lastElementChild;
+  if (ultMsg && ultMsg.classList.contains(remetente) && !dadosExtrato && !downloadUrl) {
+    const pExistente = ultMsg.querySelector('.msg-content p');
+    if (pExistente && pExistente.textContent.trim() === (texto || '').trim()) {
+      return;
+    }
+  }
+
   const msg = document.createElement('div');
   msg.className = `va-message ${remetente}`;
 
   const avatar = remetente === 'user' ? '👤' : '🌌';
   const author = remetente === 'user' ? 'Você' : 'NOVA';
+
+  // Se downloadUrl não foi passado diretamente, verifica se consta em dadosExtrato
+  if (!downloadUrl && dadosExtrato && dadosExtrato.download_url) {
+    downloadUrl = dadosExtrato.download_url;
+    downloadLabel = dadosExtrato.download_label || downloadLabel;
+  }
 
   // Identifica intenção de apresentação para renderizar os 4 botões de atalho rápido
   const cmdNorm = (comandoOrigem || "").toLowerCase();
@@ -1482,11 +1609,112 @@ function adicionarMensagemChat(remetente, texto, comandoOrigem = '') {
     `;
   }
 
+  // Identifica consulta de extrato mensal para renderizar card formatado
+  let cardExtratoHtml = '';
+  if (remetente === 'assistant' && (dadosExtrato || cmdNorm.includes('extrato') || txtNorm.includes('extrato consolidado') || txtNorm.includes('extrato de') || txtNorm.includes('extrato protegido'))) {
+    const info = dadosExtrato || {
+      mes_nome: 'Agosto/2026',
+      totalReceitas: 2299.00,
+      totalGasto: 1709.77,
+      saldo: 589.23,
+      quantidadeTransacoes: 43,
+      transacoes: []
+    };
+
+    const recVal = Number(info.totalReceitas || 0);
+    const despVal = Number(info.totalGasto || 0);
+    const saldoVal = Number(info.saldo || (recVal - despVal));
+    const saldoPositivo = saldoVal >= 0;
+
+    const recFmt = recVal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const despFmt = despVal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const saldoFmt = Math.abs(saldoVal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    let transacoesHtml = '';
+    const txList = info.transacoes && Array.isArray(info.transacoes) && info.transacoes.length > 0
+      ? info.transacoes
+      : (isDemoMode() ? [
+          { data: '28/08', desc: 'Tech Enterprise S/A - Consultoria Dev', tipo: 'CRÉDITO', valor: 18500.00, isReceita: true },
+          { data: '25/08', desc: 'AWS Cloud Services - Cloud Architecture', tipo: 'DÉBITO', valor: -3250.00, isReceita: false },
+          { data: '22/08', desc: 'Apple Developer Program - Licença Anual', tipo: 'DÉBITO', valor: -699.00, isReceita: false }
+        ] : [
+          { data: '28/08', desc: 'Transferência Pix Recebida - Ramon', tipo: 'CRÉDITO', valor: 1500.00, isReceita: true },
+          { data: '26/08', desc: 'Supermercado Extra - Compras', tipo: 'DÉBITO', valor: -245.60, isReceita: false },
+          { data: '24/08', desc: 'Posto Shell - Combustível', tipo: 'DÉBITO', valor: -151.87, isReceita: false }
+        ]);
+
+    const txItemsHtml = txList.slice(0, 4).map(t => {
+      const isRec = t.isReceita !== undefined ? t.isReceita : (t.valor > 0 || (t.tipo && t.tipo.includes('CRÉD')));
+      const vNum = Math.abs(t.valor || t.valorAbs || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const dStr = (t.data || '').slice(0, 5);
+      const descStr = t.desc || t.descricao || 'Lançamento';
+      return `
+        <div class="va-extrato-tx-item">
+          <span class="va-extrato-tx-date">${dStr}</span>
+          <span class="va-extrato-tx-desc" title="${descStr}">${descStr}</span>
+          <span class="va-extrato-tx-val ${isRec ? 'rec' : 'desp'}">${isRec ? '+ ' : '- '}R$ ${vNum}</span>
+        </div>
+      `;
+    }).join('');
+
+    transacoesHtml = `
+      <div class="va-extrato-recent-list">
+        <div class="va-extrato-recent-header">
+          <span class="material-symbols-rounded">receipt_long</span>
+          <span>Lançamentos Recentes</span>
+        </div>
+        ${txItemsHtml}
+      </div>
+    `;
+
+    cardExtratoHtml = `
+      <div class="va-extrato-card md3-card md3-card--outlined">
+        <div class="va-extrato-badge-row">
+          <span class="md3-badge md3-badge--tonal" style="display: inline-flex; align-items: center; gap: 4px; font-weight: 700;">
+            <span class="material-symbols-rounded" style="font-size: 14px;">calendar_month</span>
+            ${info.mes_nome || 'Extrato Mensal'}
+          </span>
+          <span class="va-extrato-pill-count">${info.quantidadeTransacoes || txList.length} lançamentos</span>
+        </div>
+        <div class="va-extrato-kpi-grid">
+          <div class="va-extrato-kpi-box kpi-receitas">
+            <span class="va-kpi-lbl">Entradas</span>
+            <span class="va-kpi-num">+ R$ ${recFmt}</span>
+          </div>
+          <div class="va-extrato-kpi-box kpi-despesas">
+            <span class="va-kpi-lbl">Saídas</span>
+            <span class="va-kpi-num">- R$ ${despFmt}</span>
+          </div>
+          <div class="va-extrato-kpi-box kpi-saldo ${saldoPositivo ? 'positivo' : 'negativo'}">
+            <span class="va-kpi-lbl">Saldo Líquido</span>
+            <span class="va-kpi-num">${saldoPositivo ? '+ ' : '- '}R$ ${saldoFmt}</span>
+          </div>
+        </div>
+        ${transacoesHtml}
+      </div>
+    `;
+  }
+
+  // Botão de Ação de Download do Extrato Oficial Autenticado
+  let botaoDownloadHtml = '';
+  if (remetente === 'assistant' && downloadUrl) {
+    const lbl = downloadLabel || 'Baixar Extrato Autenticado em PDF';
+    botaoDownloadHtml = `
+      <div class="va-download-action-row">
+        <a href="${downloadUrl}" target="_blank" class="btn-download-extrato md3-button md3-button--filled">
+          <span class="material-symbols-rounded">verified</span> ${lbl}
+        </a>
+      </div>
+    `;
+  }
+
   msg.innerHTML = `
     <div class="msg-avatar">${avatar}</div>
     <div class="msg-content">
       <span class="msg-author">${author}</span>
       <p>${texto}</p>
+      ${cardExtratoHtml}
+      ${botaoDownloadHtml}
       ${botoesApresentacaoHtml}
     </div>
   `;
@@ -1579,7 +1807,11 @@ function animarContagem(elementId, valorFinal, prefixo = "", sufixo = "", duraca
 
 function renderizarTopKPIs(fin, estudos) {
   if (fin) {
-    animarContagem('kpiSaldo', fin.saldo, fin.saldo >= 0 ? '+ R$ ' : '- R$ ', '', 850, 2);
+    const saldoDisp = (dadosGlobais && dadosGlobais.caixinhas && dadosGlobais.caixinhas.saldoContaCorrente != null)
+      ? dadosGlobais.caixinhas.saldoContaCorrente
+      : (fin.saldoContaCorrente != null ? fin.saldoContaCorrente : 0.03);
+
+    animarContagem('kpiSaldo', saldoDisp, 'R$ ', '', 850, 2);
     animarContagem('kpiReceitas', fin.totalReceitas, 'R$ ', '', 850, 2);
     animarContagem('kpiDespesas', fin.totalGasto, 'R$ ', '', 850, 2);
   }
@@ -2005,7 +2237,7 @@ function alternarAbaDedicada(abaId, linkElem) {
     targetView.classList.add('active', 'active-view');
   }
 
-  // 3. Atualiza destaque ativo na sidebar sem saltos
+  // 3. Atualiza destaque ativo na sidebar e no mobile dock sem saltos
   const mapaMenus = {
     'view-dashboard': 'menu-overview',
     'view-financas': 'menu-financas',
@@ -2015,16 +2247,40 @@ function alternarAbaDedicada(abaId, linkElem) {
     'view-engenharia': 'menu-engenharia',
     'view-api-docs': 'menu-api-docs'
   };
+  const mapaDock = {
+    'view-dashboard': 'dockNavDashboard',
+    'view-financas': 'dockNavFinancas',
+    'view-candidaturas': 'dockNavCandidaturas',
+    'view-estudos': 'dockNavEstudos',
+    'view-voice-studio': 'dockNavVoice'
+  };
 
   document.querySelectorAll('.dabang-sidebar .menu-link').forEach(l => l.classList.remove('active'));
-  if (linkElem) {
-    linkElem.classList.add('active');
-  } else {
-    const menuId = mapaMenus[abaId];
-    if (menuId) {
-      const el = document.getElementById(menuId);
-      if (el) el.classList.add('active');
-    }
+  document.querySelectorAll('#mobileDockNav a, #mobileDockNav .dock-nav-item').forEach(l => l.classList.remove('active'));
+
+  const mapaTitulos = {
+    'view-dashboard': 'Cockpit Executivo',
+    'view-financas': 'Finanças Pessoais (H2)',
+    'view-candidaturas': 'Esteira de Candidaturas 360°',
+    'view-estudos': 'Trilha de Estudos Santander DIO',
+    'view-voice-studio': 'Voice Studio Neural',
+    'view-engenharia': 'Engenharia & Testes',
+    'view-api-docs': 'API REST Spring Boot'
+  };
+  const activeViewNameEl = document.querySelector('.header-active-view-name');
+  if (activeViewNameEl && mapaTitulos[abaId]) {
+    activeViewNameEl.textContent = mapaTitulos[abaId];
+  }
+
+  const menuId = mapaMenus[abaId];
+  if (menuId) {
+    const el = document.getElementById(menuId);
+    if (el) el.classList.add('active');
+  }
+  const dockId = mapaDock[abaId];
+  if (dockId) {
+    const el = document.getElementById(dockId);
+    if (el) el.classList.add('active');
   }
 
   // 4. Sem saltos de tela e sem recarregar a página
@@ -2569,6 +2825,280 @@ function copiarPayloadAtual() {
   });
 }
 window.copiarPayloadAtual = copiarPayloadAtual;
+
+// ==============================================================================
+// 🌟 MODO EXPANDIDO (FULLSCREEN) DO VOICE ASSISTANT
+// ==============================================================================
+function alternarExpansaoVoiceAssistant() {
+  const card = document.getElementById('voice-assistant-section');
+  const icon = document.getElementById('iconExpandVa');
+  const btn = document.getElementById('btnExpandVa');
+  if (!card) return;
+
+  const isExpanded = card.classList.toggle('is-expanded');
+  document.body.classList.toggle('va-expanded-active', isExpanded);
+
+  if (icon) {
+    icon.textContent = isExpanded ? 'close_fullscreen' : 'open_in_full';
+  }
+  if (btn) {
+    btn.title = isExpanded ? 'Reduzir visualização (Esc)' : 'Expandir visualização';
+  }
+
+  // Rola o diálogo suavemente para a última mensagem
+  const dialogBox = document.getElementById('dialogBox');
+  if (dialogBox) {
+    setTimeout(() => {
+      dialogBox.scrollTop = dialogBox.scrollHeight;
+    }, 120);
+  }
+}
+window.alternarExpansaoVoiceAssistant = alternarExpansaoVoiceAssistant;
+
+// Listener global de eventos de teclado (Enter para envio e Esc para fechar modal)
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    const el = document.activeElement;
+    if (el && (el.id === 'vaTextInput' || el.classList.contains('va-text-input'))) {
+      e.preventDefault();
+      enviarTextoDigitado();
+    }
+  }
+  if (e.key === 'Escape' || e.key === 'Esc') {
+    const card = document.getElementById('voice-assistant-section');
+    if (card && card.classList.contains('is-expanded')) {
+      alternarExpansaoVoiceAssistant();
+    }
+    fecharModalPluggy();
+    fecharModalPin();
+  }
+});
+
+// ==============================================================================
+// 💜 CONECTOR OPEN FINANCE PLUGGY.AI (SINCRONIZAÇÃO EM TEMPO REAL)
+// ==============================================================================
+async function abrirModalConectarPluggy() {
+  const modal = document.getElementById('pluggyModal') || document.getElementById('pluggy-modal');
+  if (!modal) return;
+
+  try {
+    const res = await fetch('/api/financeiro/pluggy/status', {
+      headers: obterAuthHeaders()
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const envLabel = document.getElementById('pluggyEnvLabel');
+      const clientLabel = document.getElementById('pluggyClientIdLabel');
+      const lastSyncLabel = document.getElementById('pluggyLastSyncLabel');
+      const statusTitle = document.getElementById('pluggyStatusTitle');
+
+      if (envLabel) envLabel.textContent = (data.status === 'AUTENTICADO_PRODUCAO') ? 'Produção Ativa' : 'Sandbox Ativo';
+      if (clientLabel) clientLabel.textContent = data.client_id || '••••••••••';
+      if (lastSyncLabel && data.ultima_sincronizacao) lastSyncLabel.textContent = data.ultima_sincronizacao;
+      if (statusTitle) statusTitle.textContent = (data.status === 'AUTENTICADO_PRODUCAO') ? 'Conexão Pluggy Produção Ativa' : 'Conector Pluggy Open Finance Ativo';
+    }
+  } catch (err) {
+    console.warn("Falha ao obter status do Pluggy:", err);
+  }
+
+  modal.classList.add('show');
+}
+window.abrirModalConectarPluggy = abrirModalConectarPluggy;
+
+function fecharModalPluggy() {
+  const modal = document.getElementById('pluggyModal') || document.getElementById('pluggy-modal');
+  if (modal) modal.classList.remove('show');
+}
+window.fecharModalPluggy = fecharModalPluggy;
+
+async function sincronizarPluggyBanco(vindoDoModal = false) {
+  const btnHeader = document.getElementById('btnSincronizarPluggy');
+  const btnModal = document.getElementById('btnModalSincronizarPluggy');
+
+  if (btnHeader) {
+    btnHeader.classList.add('is-syncing');
+    btnHeader.disabled = true;
+  }
+  if (btnModal) {
+    btnModal.classList.add('is-syncing');
+    btnModal.disabled = true;
+  }
+
+  showToast("🔄 Sincronizando com a Pluggy.ai e conciliando no H2...");
+
+  try {
+    const res = await fetch('/api/financeiro/pluggy/sync', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...obterAuthHeaders()
+      }
+    });
+
+    const data = await res.json();
+
+    if (res.ok && (data.status === 'SUCESSO' || data.status === 'sucesso')) {
+      const msg = data.mensagem || `Sincronização concluída! ${data.total_importadas || 0} novas transações conciliadas.`;
+      showToast(`💜 Pluggy: ${msg}`);
+
+      if (vindoDoModal) {
+        fecharModalPluggy();
+      }
+
+      // Atualiza os dados na tela sem recarregar a página inteira
+      await carregarDashboard();
+
+      // Se a aba de finanças estiver visível, atualiza extrato
+      if (typeof renderizarExtratoFinanceiro === 'function') {
+        renderizarExtratoFinanceiro(isDemoMode());
+      }
+    } else {
+      const errMsg = data.mensagem || data.erro || "Falha na sincronização com a Pluggy.";
+      showToast(`⚠️ Pluggy: ${errMsg}`);
+    }
+  } catch (err) {
+    console.error("Erro na sincronização Pluggy:", err);
+    showToast("⚠️ Erro de rede ao conectar com o serviço de Open Finance.");
+  } finally {
+    if (btnHeader) {
+      btnHeader.classList.remove('is-syncing');
+      btnHeader.disabled = false;
+    }
+    if (btnModal) {
+      btnModal.classList.remove('is-syncing');
+      btnModal.disabled = false;
+    }
+  }
+}
+window.sincronizarPluggyBanco = sincronizarPluggyBanco;
+
+/* ==========================================================================
+   FUNÇÕES CONTÁBEIS EXECUTIVAS — BALANCETE, BALANÇO E COMPARATIVO (FASE 7)
+   ========================================================================== */
+
+const MAPA_MESES_SLUG = {
+  "01": "Janeiro", "02": "Fevereiro", "03": "Marco", "04": "Abril",
+  "05": "Maio", "06": "Junho", "07": "Julho", "08": "Agosto",
+  "09": "Setembro", "10": "Outubro", "11": "Novembro", "12": "Dezembro"
+};
+
+function extrairSlugMesAno(mesIso) {
+  if (!mesIso || !mesIso.includes('-')) return "Agosto_2026";
+  const [ano, mes] = mesIso.split('-');
+  const nomeSlug = MAPA_MESES_SLUG[mes] || "Agosto";
+  return `${nomeSlug}_${ano}`;
+}
+
+function abrirBalanceteMensal() {
+  const select = document.getElementById('selectMesExtrato');
+  const mesRef = (select && select.value) ? select.value : '2026-08';
+  const slug = extrairSlugMesAno(mesRef);
+  const downloadUrl = `/download/financeiro/relatorios_pdf/Balancete_NOVA_Nubank_${slug}.pdf`;
+
+  showToast(`📄 Gerando Balancete Oficial de ${mesRef}...`);
+  setTimeout(() => {
+    window.open(downloadUrl, '_blank');
+  }, 350);
+}
+window.abrirBalanceteMensal = abrirBalanceteMensal;
+
+function abrirBalancoPatrimonial() {
+  const downloadUrl = `/download/financeiro/relatorios_pdf/Balanco_Patrimonial_NOVA_2026.pdf`;
+  showToast("🏛️ Apurando Balanço Patrimonial & DRE Consolidado...");
+  setTimeout(() => {
+    window.open(downloadUrl, '_blank');
+  }, 350);
+}
+window.abrirBalancoPatrimonial = abrirBalancoPatrimonial;
+
+function abrirModalCompararMeses() {
+  const modal = document.getElementById('comparar-meses-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+  }
+}
+window.abrirModalCompararMeses = abrirModalCompararMeses;
+
+function fecharModalCompararMeses() {
+  const modal = document.getElementById('comparar-meses-modal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+}
+window.fecharModalCompararMeses = fecharModalCompararMeses;
+
+async function executarComparativoMeses() {
+  const m1 = document.getElementById('selectCompMes1')?.value || '2026-07';
+  const m2 = document.getElementById('selectCompMes2')?.value || '2026-08';
+
+  const diagTxt = document.getElementById('comparativoDiagnosticoTexto');
+  const compVarRec = document.getElementById('compVarRec');
+  const compVarDesp = document.getElementById('compVarDesp');
+  const compVarSaldo = document.getElementById('compVarSaldo');
+  const btnPdf = document.getElementById('btnBaixarComparativoPdf');
+
+  if (diagTxt) diagTxt.innerText = "Calculando variações contábeis e auditando partidas...";
+
+  try {
+    const res = await fetch(`/api/financeiro/comparativo?mes1=${m1}&mes2=${m2}`, {
+      headers: {
+        'Accept': 'application/json',
+        ...obterAuthHeaders()
+      }
+    });
+
+    if (!res.ok) throw new Error("Falha ao obter dados comparativos");
+    const data = await res.json();
+
+    if (diagTxt) {
+      diagTxt.innerText = data.diagnosticoContabil || `Comparativo entre ${data.mes1} e ${data.mes2} processado com sucesso.`;
+    }
+
+    const varRec = Number(data.variacaoReceitasPercentual || 0);
+    const varDesp = Number(data.variacaoDespesasPercentual || 0);
+    const varSaldo = Number(data.variacaoSaldoAbsoluta || 0);
+
+    if (compVarRec) {
+      compVarRec.innerText = `${varRec >= 0 ? '+' : ''}${varRec.toFixed(1)}%`;
+      compVarRec.style.color = varRec >= 0 ? '#10B981' : '#EF4444';
+    }
+
+    if (compVarDesp) {
+      compVarDesp.innerText = `${varDesp >= 0 ? '+' : ''}${varDesp.toFixed(1)}%`;
+      compVarDesp.style.color = varDesp <= 0 ? '#10B981' : '#EF4444';
+    }
+
+    if (compVarSaldo) {
+      compVarSaldo.innerText = `R$ ${varSaldo >= 0 ? '+' : ''}${varSaldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+      compVarSaldo.style.color = varSaldo >= 0 ? '#818CF8' : '#F59E0B';
+    }
+
+    if (btnPdf) {
+      btnPdf.style.display = 'inline-flex';
+    }
+  } catch (err) {
+    console.error("Erro no comparativo:", err);
+    if (diagTxt) diagTxt.innerText = "Não foi possível carregar os dados comparativos. Tente novamente.";
+  }
+}
+window.executarComparativoMeses = executarComparativoMeses;
+
+function baixarComparativoPdfModal() {
+  const m1 = document.getElementById('selectCompMes1')?.value || '2026-07';
+  const m2 = document.getElementById('selectCompMes2')?.value || '2026-08';
+
+  const m1Num = m1.split('-')[1] || '07';
+  const m2Num = m2.split('-')[1] || '08';
+  const m1Slug = MAPA_MESES_SLUG[m1Num] || 'Julho';
+  const m2Slug = MAPA_MESES_SLUG[m2Num] || 'Agosto';
+
+  const downloadUrl = `/download/financeiro/relatorios_pdf/Comparativo_NOVA_${m1Slug}_vs_${m2Slug}.pdf`;
+  showToast(`📊 Abrindo Comparativo ${m1Slug} vs ${m2Slug}...`);
+  window.open(downloadUrl, '_blank');
+}
+window.baixarComparativoPdfModal = baixarComparativoPdfModal;
+
+
 
 
 

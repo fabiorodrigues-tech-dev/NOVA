@@ -21,7 +21,8 @@ public class TransacaoMapper {
                 entity.getValor(),
                 entity.getTipo(),
                 entity.getCategoria(),
-                entity.getData()
+                entity.getData(),
+                entity.getHashSha256()
         );
     }
 
@@ -36,7 +37,8 @@ public class TransacaoMapper {
                 domain.getValor(),
                 domain.getTipo(),
                 domain.getCategoria(),
-                domain.getData()
+                domain.getData(),
+                domain.getHashSha256()
         );
     }
 }
