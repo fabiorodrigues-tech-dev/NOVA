@@ -9,10 +9,26 @@
 ![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=flat&logo=docker&logoColor=white)
 [![Render](https://img.shields.io/badge/Render-Live%20Demo-46E3B7?style=flat&logo=render&logoColor=black)](https://nova-control-center-alsl.onrender.com)
 
-> **Enterprise-Grade Multi-Agent Copilot & Autonomous Engineering Ecosystem**  
+> **Enterprise-Grade Multi-Agent Copilot & Autonomous Engineering Ecosystem (v3.14 - Senior Accounting Architecture & Executive UI/UX)**  
 > Desenvolvido por **Fábio Rodrigues** (Recife/PE) | [LinkedIn](https://linkedin.com/in/fabiorodrigues-dev)
 
 O **NOVA** é um ecossistema multi-agente pessoal e profissional orientado a microsserviços, inteligência artificial autônoma e engenharia de software de alta performance. Desenvolvido sob rigorosos princípios de **Clean Architecture (Ports & Adapters)**, **SOLID** e **DevSecOps**, o sistema integra o **Gemini via Google Antigravity**, microsserviço **Java 21 / Spring Boot 3.3.3**, protocolo **Spring AI Model Context Protocol (MCP)**, camada de **Voz Neural Humana** de baixa latência e o **NOVA Control Center** (Dashboard Executivo com Material 3 Expressive, Living Shader WebGL e Sistema de Privacidade LGPD).
+
+### 📸 Interface Executiva & Produção em Nuvem
+
+| ☀️ Modo Dia (Light Theme) | 🌙 Modo Noite (Dark Theme) |
+| :---: | :---: |
+| <img src="docs/assets/dashboard-light.png" width="100%" alt="NOVA Control Center Light Theme" /> | <img src="docs/assets/dashboard-dark.png" width="100%" alt="NOVA Control Center Dark Theme" /> |
+| *Superfície tonal M3 Expressive, alto contraste e visual limpo.* | *Glassmorphism profundo, Living Shader WebGL e imersão noturna.* |
+
+<div align="center">
+  <a href="https://nova-control-center-alsl.onrender.com">
+    <img src="https://img.shields.io/badge/Acessar_Produção_em_Nuvem-Render_Cloud_Live-46E3B7?style=for-the-badge&logo=render&logoColor=black" alt="Render Live" />
+  </a>
+  <a href="https://github.com/fabiorodrigues-tech-dev/NOVA">
+    <img src="https://img.shields.io/badge/Execução_Local-./start--all.sh-234878?style=for-the-badge&logo=gnubash&logoColor=white" alt="Local Run" />
+  </a>
+</div>
 
 ---
 
@@ -39,12 +55,12 @@ O **NOVA Control Center** é a interface executiva e centro de comando unificado
 
 | Módulo / Aba | Escopo Técnico & Funcionalidades | Integrações & Tecnologias |
 | :--- | :--- | :--- |
-| **Cockpit Central** | Visão executiva consolidada, Voice Assistant interativo, KPIs corporativos e living shader reativo. | WebGL, Web Speech API, Chart.js, Bento Grid |
-| **Finanças (H2)** | Balanço patrimonial, auditoria de despesas, burn rate diário, projeção de fechamento e gestão de Caixinhas. | Java 21, Spring Boot 3, Banco H2 ACID, OFX/CSV Nubank |
+| **Cockpit Central** | Visão executiva compactada, Voice Assistant otimizado (orb 140px), 4 KPIs visíveis na 1ª dobra sem scroll, toggle demo unificado e living shader WebGL. | WebGL, Web Speech API, Chart.js, Bento Grid |
+| **Finanças (H2)** | Contabilidade sênior (Balancete, Balanço, DRE, Comparativo MoM e Anual 2026), deduplicação SHA-256 e toolbar responsiva. | Java 21, Spring Boot 3, Banco H2 ACID, SHA-256 |
 | **Candidaturas 360°** | Rastreamento de vagas ativas, índices de aderência técnica (Match %), filtros por trilha e exportação de dossiês. | Harvard Tech ATS, Dossiês PDF/DOCX, Matplotlib Engine |
 | **Estudos & Certificações** | Monitoramento de trilhas ativas (Santander 2026 DIO 26/26 e Full Stack Cloud DevOps 5/5), emissão de certificados e resumos. | Metodologias Ativas, Feynman Engine, Markdown Renderer |
 | **Voice Studio Pro** | Laboratório de síntese vocal neural, catálogo de vozes PT-BR/globais, análise de latência e testes executivos. | Python 3, Microsoft edge-tts, Audio Buffer Stream |
-| **Spring Boot API Explorer** | Painel interativo de contratos REST, documentação de endpoints, inspeção de esquemas JSON e status dos serviços. | Springdoc OpenAPI, RFC 7807 ProblemDetail, Spring AI MCP |
+| **Spring Boot API Explorer** | Painel interativo de contratos REST, documentação de endpoints, inspeção de esquemas JSON e segurança RFC 7807 | Spring Boot 3.3, RESTful API, OpenAPI Spec |
 
 ---
 
@@ -55,13 +71,6 @@ O **NOVA Control Center** é a interface executiva e centro de comando unificado
 - 👁️ **Acessibilidade WCAG AAA & Telemetria em Tempo Real:** Paleta cromática validada com taxas de contraste rigorosas (WCAG AAA), navegação universal assistida por teclado, tooltips de contexto e telemetria pulsante no cabeçalho monitorando a saúde dos microsserviços integrados.
 - 🛡️ **DevSecOps & Zero-Trust Data Protection:** Isolamento de segredos, proteção CSRF/CORS estrita, cabeçalhos de segurança padronizados e esteira de CI/CD automatizada com GitHub Actions para validação contínua de integridade.
 - 🔒 **Modo Demonstração (LGPD Safe) & Autenticação de Administrador:** Inicialização protegida por padrão com datasets sintetizados que preservam integralmente a privacidade de dados bancários e profissionais. O acesso a dados reais em persistência H2 exige autenticação administrativa via modal com validação por chave de acesso segura (configurável via variável de ambiente `ADMIN_PIN`).
-
----
-
-| ☀️ Modo Dia (Light Theme) | 🌙 Modo Noite (Dark Theme) |
-| :---: | :---: |
-| <img src="docs/assets/dashboard-light.png" width="100%" alt="NOVA Control Center - Light Theme"> | <img src="docs/assets/dashboard-dark.png" width="100%" alt="NOVA Control Center - Dark Theme"> |
-| **Light Theme:** Superfície tonal Material 3 Expressive, contraste balanceado WCAG AAA e tipografia otimizada para foco diurno. | **Dark Theme:** Glassmorphism com Living Shader WebGL, chips vibrantes de alta saturação e conforto visual em baixa luminosidade. |
 
 ---
 
@@ -112,7 +121,11 @@ flowchart TD
 
 1. 💰 **Agente Financeiro (`agente-financeiro`):**
    - Microsserviço Java 21 / Spring Boot 3 na porta `8081` com persistência H2 ACID (`financiadb.mv.db`).
-   - Parser nativo de extratos `.ofx` e `.csv` do Nubank com deduplicação semântica.
+   - **Arquitetura Contábil Sênior (v3.14):** Endpoints regulamentares para Balancete de Verificação (`GET /api/financeiro/balancete`), Balanço Patrimonial & DRE (`GET /api/financeiro/balanco-patrimonial`), Comparativo Horizontal MoM (`GET /api/financeiro/comparativo`) e Histórico Anual Consolidado (`GET /api/financeiro/anual`).
+   - **Deduplicação Estrita por Hash SHA-256 & Segregação de Ativos:** Deduplicação criptográfica transação a transação pela tupla `(FITID, data_transacao, valor, descricao_limpa)` e separação estrita entre Conta Corrente H2 persistente (R$ 0,03) e Caixinhas Nubank (R$ 1.000,11 líquido / R$ 1.000,14 total).
+   - **Webhook de Notificações Instantâneas do iPhone (Tempo Real):** Endpoint `POST /api/transacoes/webhook-notificacao` com autenticação por chave de segurança (`7770`), parser Regex inteligente para notificações Nubank (Compras Débito/Crédito, Pix Enviado/Recebido, NuPay e Faturas), categorização semântica automática e persistência idempotente no banco H2.
+   - **Conector Open Finance Pluggy.ai:** Script executivo `financeiro/scripts/pluggy_sync.py` e rotas `/api/financeiro/pluggy/sync` integradas ao Dashboard com sincronização em lote de transações bancárias e conciliação direta no H2.
+   - Parser nativo de extratos `.ofx` e `.csv` do Nubank com importação recursiva em lote e idempotência garantida.
    - Gestão de Caixinhas Nubank com recálculo automático de Patrimônio Líquido Total.
    - Inteligência Preditiva (Fase 9): Cálculo em tempo real de **Burn Rate Diário**, saldo projetado de fechamento e alertas orçamentários.
    - Ferramentas `@Tool` expostas via **Spring AI Model Context Protocol (MCP)**.
@@ -141,7 +154,7 @@ Consulte o catálogo completo em [`COMANDOS.md`](file:///Users/fabioandre/Downlo
 - 🧭 **Central & Acesso:** `/dashboard` (ou `/painel`), `/compartilhar` (ou `/share`), `/atalhos` (ou `!atalhos`), `/menu`, `/ajuda`, `/status`, `/reverter`.
 - 💼 **Carreira 360°:** `/candidatura [link]`, `/vagas`, `/pitch [empresa]`, `/cv`.
 - 📚 **Estudos (DIO):** `/estudos`, `/feynman [tópico]`, `/desafio [tema]`, `/manual`.
-- 💰 **Finanças:** `/saldo`, `/caixinhas`, `/extrato`, `/gastos [categoria]`, `/financeiro [mês]`.
+- 💰 **Finanças:** `/saldo`, `/caixinhas`, `/extrato`, `/extrato [mês]`, `/gastos [categoria]`, `/financeiro [mês]`.
 - 💻 **Código & Qualidade:** `/testes`, `/review [arquivo]`, `/scaffold [Feature]`.
 - 🗂️ **Operações & Foco:** `/dia`, `/semana`, `/foco`.
 - 🎙️ **Voz & Studio:** `/studio`, `/voz`, `/voz [nome]`.
@@ -213,7 +226,7 @@ open http://localhost:10000
 
 ---
 
-## 🧪 Relatório Oficial da Suíte de Testes Automatizados (100% Green)
+## 🧪 Relatório Oficial da Suíte de Testes Automatizados — 40 Tests Passed (JUnit 5 + Mockito 100%)
 
 ```text
 ==========================================
@@ -228,7 +241,7 @@ Total de Testes Encontrados: 40
 🎉 TODOS OS TESTES PASSARAM COM SUCESSO! (100% GREEN)
 ```
 
-- **Use Cases Unitários:** `ImportarExtratoOfxUseCaseTest`, `CalcularProjecaoFinanceiraUseCaseTest`, `CalcularResumoFinanceiroUseCaseTest`, `SalvarCaixinhaUseCaseTest`, `ListarCaixinhasUseCaseTest`, `ProcessarNotificacaoNubankUseCaseTest`, `ProcessarComandoVozUseCaseTest`.
+- **Use Cases Unitários:** `ContabilidadeUseCaseTest` (Balancete, Balanço, DRE, Comparativo e Anual), `ImportarExtratoOfxUseCaseTest` (com SHA-256), `CalcularProjecaoFinanceiraUseCaseTest`, `CalcularResumoFinanceiroUseCaseTest`, `SalvarCaixinhaUseCaseTest`, `ListarCaixinhasUseCaseTest`, `ProcessarNotificacaoNubankUseCaseTest`, `ProcessarComandoVozUseCaseTest`.
 - **Integração WebMvc:** `TransacaoControllerTest`, `CaixinhaControllerTest`.
 - **Spring AI MCP Tools:** `FinanceiroMcpToolsTest` (@Tool determinísticas).
 
